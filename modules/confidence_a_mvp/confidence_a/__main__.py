@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .contracts import ContractError, exported_schemas
 from .metrics import evaluate_runs
+from .render import render_scorecard_markdown
 from .scoring import score_snapshot
 
 
@@ -30,6 +31,9 @@ def main():
     metrics.add_argument("--output", required=True)
     schemas = subs.add_parser("schemas")
     schemas.add_argument("--output-dir", default="schemas")
+    render = subs.add_parser("render")
+    render.add_argument("input")
+    render.add_argument("--output", required=True)
     args = parser.parse_args()
     try:
         if args.command == "schemas":
@@ -38,9 +42,14 @@ def main():
             return 0
         source = Path(args.input).resolve()
         target = Path(args.output).resolve()
-        if source == target or (args.command == "score" and args.policy and Path(args.policy).resolve() == target):
+        policy = Path(args.policy).resolve() if args.command == "score" and args.policy else None
+        if source == target or policy == target:
             raise ContractError("输出路径不能覆盖输入或策略文件")
         payload = read_json(source)
+        if args.command == "render":
+            target.write_text(render_scorecard_markdown(payload), encoding="utf-8")
+            print(f"Written: {target}")
+            return 0
         result = (score_snapshot(payload, read_json(args.policy) if args.policy else None)
                   if args.command == "score" else evaluate_runs(payload))
         write_json(target, result)

@@ -1,0 +1,337 @@
+{
+  "schema_version": "0.2-draft",
+  "scoring_version": "graph-risk-0.2.0",
+  "scoring_policy_version": "graph-risk-demo-0.2",
+  "policy_status": "PROVISIONAL",
+  "task_id": "DYN-01",
+  "run_id": "DYN-01-RUN",
+  "graph_version": "dyn01-graph-1",
+  "answer_version": "dyn01-answer-1",
+  "rules_version": "demo-only-not-01a",
+  "synthetic_demo": true,
+  "version_consistent": true,
+  "recommendation": "undetermined",
+  "workflow_status": "checking",
+  "stop_reason": "AWAITING_TICKET_EVIDENCE",
+  "level": "证据不足",
+  "level_code": "INSUFFICIENT_EVIDENCE",
+  "level_reasons": [
+    "STRUCTURE_EXPANSION_OPEN: 结构增量仍指向未关闭对象。专属合同返回后出现新的 24 小时工单依赖；工单未取得，建议不能维持。",
+    "CRITICAL_OBLIGATION_UNRESOLVED: 关键或必查条件为 UNKNOWN。合同返回后才出现该条件。工单尚未取得，不能沿用补合同之前的建议。"
+  ],
+  "score": null,
+  "raw_design_score": 71.43,
+  "display_score_suppressed": true,
+  "score_semantics": "该等级反映已声明范围内的证据与过程质量，不能证明图完整，不能证明已发现全部规则，也不是答案正确概率。",
+  "gate_passed": false,
+  "may_present_definitive_decision": false,
+  "upstream_recommendation_blocked": false,
+  "dimensions": {
+    "baseline_coverage": {
+      "label": "基础必查覆盖",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "claim_coverage": {
+      "label": "答案主张覆盖",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "recognized_conditions": {
+      "label": "已识别条件证据完成",
+      "numerator": 2,
+      "denominator": 3,
+      "value": 0.6666666666666666
+    },
+    "expansion_and_semantics": {
+      "label": "材料展开与语义审核",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0,
+      "unexpanded_count": 0,
+      "critical_unresolved_count": 0
+    },
+    "source_and_query": {
+      "label": "来源适用与查询完整",
+      "numerator": 10,
+      "denominator": 15,
+      "value": 0.6666666666666666,
+      "checks": {
+        "source_allowed": {
+          "passed": 2,
+          "denominator": 3
+        },
+        "scope_valid": {
+          "passed": 2,
+          "denominator": 3
+        },
+        "version_valid": {
+          "passed": 2,
+          "denominator": 3
+        },
+        "time_valid": {
+          "passed": 2,
+          "denominator": 3
+        },
+        "query_sufficient": {
+          "passed": 2,
+          "denominator": 3
+        }
+      }
+    }
+  },
+  "claim_refs": [
+    {
+      "claim_id": "DYN-C-ELIGIBLE",
+      "statement": "补偿主张取决于合同、时长，以及新出现的 24 小时工单条件。",
+      "mapped": true,
+      "affects_answer": true,
+      "obligation_ids": [
+        "DYN-O-CONTRACT",
+        "DYN-O-DURATION",
+        "DYN-O-TICKET-24H"
+      ],
+      "evidence_ids": [
+        "DYN-E-CONTRACT",
+        "DYN-E-DURATION"
+      ],
+      "reason": "新条件已经映射到主张，但工单证据还未回来。"
+    }
+  ],
+  "condition_refs": [
+    {
+      "obligation_id": "DYN-O-CONTRACT",
+      "statement": "已核对客户专属合同",
+      "status": "SUPPORT",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": true,
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "DYN-E-CONTRACT"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    },
+    {
+      "obligation_id": "DYN-O-DURATION",
+      "statement": "本次事故的有效时长达到适用阈值",
+      "status": "SUPPORT",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": true,
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "DYN-E-DURATION"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    },
+    {
+      "obligation_id": "DYN-O-TICKET-24H",
+      "statement": "故障后 24 小时内提交工单",
+      "status": "UNKNOWN",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": false,
+      "checks": {
+        "source_allowed": null,
+        "scope_valid": null,
+        "version_valid": null,
+        "time_valid": null,
+        "query_sufficient": null
+      },
+      "evidence_ids": [],
+      "reason_codes": [
+        "NOT_QUERIED"
+      ],
+      "reason": "合同返回后才出现该条件。工单尚未取得，不能沿用补合同之前的建议。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    }
+  ],
+  "evidence_refs": [
+    {
+      "evidence_id": "DYN-E-CONTRACT",
+      "source_type": "CRM_CONTRACT_DB",
+      "citation": "demo://v2/DYN-E-CONTRACT（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "DYN-E-DURATION",
+      "source_type": "MONITORING_SYSTEM",
+      "citation": "demo://v2/DYN-E-DURATION（合成引用，无真实业务凭证）"
+    }
+  ],
+  "graph_build_risks": [
+    {
+      "code": "STRUCTURE_EXPANSION_OPEN",
+      "blocking": true,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "DYN-O-TICKET-24H"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [],
+        "change_ids": [
+          "DYN01-CHG-TICKET-ADDED"
+        ]
+      },
+      "reason": "结构增量仍指向未关闭对象。专属合同返回后出现新的 24 小时工单依赖；工单未取得，建议不能维持。",
+      "cause": null
+    }
+  ],
+  "residual_gaps": [
+    {
+      "obligation_id": "DYN-O-TICKET-24H",
+      "status": "UNKNOWN",
+      "criticality": "critical",
+      "reason_codes": [
+        "NOT_QUERIED"
+      ],
+      "reason": "合同返回后才出现该条件。工单尚未取得，不能沿用补合同之前的建议。",
+      "cause": null,
+      "pruned": false,
+      "prune_source": null,
+      "prune_reason": null,
+      "evidence_ids": []
+    }
+  ],
+  "reservations": [],
+  "repair_actions": [
+    {
+      "action_id": "DYN-REPAIR-TICKET",
+      "summary": "查询该故障后 24 小时内的工单提交记录。",
+      "target_source": "TICKET_SYSTEM",
+      "origin_code": "obligation",
+      "origin_id": "DYN-O-TICKET-24H"
+    }
+  ],
+  "structure_changes": [
+    {
+      "change_id": "DYN01-CHG-TICKET-ADDED",
+      "kind": "added",
+      "object_type": "obligation",
+      "object_id": "DYN-O-TICKET-24H",
+      "statement": "合同原文新增条件：故障后 24 小时内提交工单。初始图没有为该案例预写这个节点。",
+      "trigger_evidence_ids": [
+        "DYN-E-CONTRACT"
+      ],
+      "from_graph_version": "dyn01-graph-0",
+      "to_graph_version": "dyn01-graph-1",
+      "affected_claim_ids": [
+        "DYN-C-ELIGIBLE"
+      ],
+      "from_recommendation": "eligible",
+      "to_recommendation": "undetermined",
+      "explanation": "专属合同返回后出现新的 24 小时工单依赖；工单未取得，建议不能维持。"
+    }
+  ],
+  "advice_change_notes": [
+    "结构变化 DYN01-CHG-TICKET-ADDED：新增条件 DYN-O-TICKET-24H。合同原文新增条件：故障后 24 小时内提交工单。初始图没有为该案例预写这个节点。专属合同返回后出现新的 24 小时工单依赖；工单未取得，建议不能维持。上游记录的建议变化：eligible → undetermined。当前证据链 B 将该条件记为 UNKNOWN，取得并校验前不能给出确定建议。"
+  ],
+  "human_review_order": [
+    {
+      "code": "STRUCTURE_EXPANSION_OPEN",
+      "blocking": true,
+      "priority": 15,
+      "reason": "结构增量仍指向未关闭对象。专属合同返回后出现新的 24 小时工单依赖；工单未取得，建议不能维持。",
+      "cause": null,
+      "repair_action": null,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "DYN-O-TICKET-24H"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [],
+        "change_ids": [
+          "DYN01-CHG-TICKET-ADDED"
+        ]
+      },
+      "order": 1
+    },
+    {
+      "code": "CRITICAL_OBLIGATION_UNRESOLVED",
+      "blocking": true,
+      "priority": 20,
+      "reason": "关键或必查条件为 UNKNOWN。合同返回后才出现该条件。工单尚未取得，不能沿用补合同之前的建议。",
+      "cause": null,
+      "repair_action": {
+        "action_id": "DYN-REPAIR-TICKET",
+        "summary": "查询该故障后 24 小时内的工单提交记录。",
+        "target_source": "TICKET_SYSTEM"
+      },
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "DYN-O-TICKET-24H"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [],
+        "change_ids": []
+      },
+      "order": 2
+    }
+  ],
+  "scope_declaration": {
+    "scope_id": "V2-SCOPE",
+    "statement": "演示范围只覆盖已声明的客户故障补偿资格，不是全量政策发现。",
+    "covers": [
+      "stated-compensation-eligibility"
+    ],
+    "known_limits": [
+      "未在已见材料中出现的隐含政策不在本图范围内。"
+    ],
+    "affects_answer": false,
+    "status": "declared",
+    "reason": "上游声明本范围已经明确，没有影响本次答案的范围不明。"
+  },
+  "notes": [
+    "该等级反映已声明范围内的证据与过程质量，不能证明图完整，不能证明已发现全部规则，也不是答案正确概率。",
+    "四态、审核状态、必查覆盖、剪枝理由与结构增量均消费上游声明；评分器不重新判定证据，也不读取评测 gold。",
+    "SUPPORT 与 REFUTE 都表示该条件已判定。具备资格的否定证据可以对应已建模范围内证据充分。",
+    "硬门槛先于设计分。证据不足时默认不展示总分。",
+    "这里的说明是模板，只复述已记录原因。",
+    "硬门槛同时阻断无依据的肯定建议和否定建议，不只阻断建议补偿。"
+  ]
+}

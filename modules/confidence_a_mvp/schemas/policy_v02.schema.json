@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "policy_v02",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.2-draft"
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "PROVISIONAL",
+        "TEAM_CONFIRMED"
+      ]
+    },
+    "suppress_display_score_on_hard_gate": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "policy_version",
+    "status",
+    "suppress_display_score_on_hard_gate",
+    "description"
+  ],
+  "additionalProperties": false
+}

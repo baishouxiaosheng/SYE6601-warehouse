@@ -15,7 +15,10 @@ class CliTests(unittest.TestCase):
 
     def test_score_and_metrics_commands(self):
         with tempfile.TemporaryDirectory() as temp:
-            for command, source in (("score", "03_contract_unknown.snapshot.json"), ("metrics", "runs.demo.json")):
+            for command, source in (("score", "03_contract_unknown.snapshot.json"),
+                                    ("score", "v2/01_missing_baseline.input.json"),
+                                    ("metrics", "runs.demo.json"),
+                                    ("metrics", "runs.v2.json")):
                 target = Path(temp) / f"{command}.json"
                 result = self.run_cli(command, ROOT / "examples" / source, "--output", target)
                 self.assertEqual(result.returncode, 0, result.stderr)

@@ -1,0 +1,164 @@
+{
+  "schema_version": "0.2-draft",
+  "task_id": "V2-PAGINATION",
+  "run_id": "V2-PAGINATION-RUN",
+  "graph_version": "V2-PAGINATION-GRAPH",
+  "answer_version": "V2-PAGINATION-ANSWER",
+  "rules_version": "demo-only-not-01a",
+  "synthetic_demo": true,
+  "recommendation": "ineligible",
+  "workflow_status": "escalated",
+  "stop_reason": "PAGINATION_INCOMPLETE",
+  "answer_binding": {
+    "task_id": "V2-PAGINATION",
+    "run_id": "V2-PAGINATION-RUN",
+    "graph_version": "V2-PAGINATION-GRAPH",
+    "answer_version": "V2-PAGINATION-ANSWER"
+  },
+  "baseline_checks": [
+    {
+      "check_id": "V2-PAGINATION-B-CONTRACT",
+      "statement": "核对适用的客户专属合同",
+      "required": true,
+      "built": true,
+      "status": "INCOMPLETE",
+      "obligation_ids": [
+        "V2-PAGINATION-O-CONTRACT"
+      ],
+      "reason_codes": [
+        "PAGINATION_INCOMPLETE"
+      ],
+      "reason": "维护记录只返回了第一页。辅助证据不能把未完成分页当成查询充分。",
+      "repair_action": null
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "V2-PAGINATION-C-ELIGIBLE",
+      "statement": "本次故障满足已建模补偿条件",
+      "mapped": true,
+      "obligation_ids": [
+        "V2-PAGINATION-O-CONTRACT",
+        "V2-PAGINATION-O-DURATION"
+      ],
+      "evidence_ids": [
+        "V2-PAGINATION-E-CONTRACT",
+        "V2-PAGINATION-E-DURATION"
+      ],
+      "affects_answer": true,
+      "reason": "主张已映射到上游给出的条件检查。"
+    }
+  ],
+  "obligations": [
+    {
+      "obligation_id": "V2-PAGINATION-O-CONTRACT",
+      "rule_id": "DEMO-RULE-V2",
+      "statement": "适用的客户专属合同允许本次事故补偿",
+      "applicability": "APPLICABLE",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "status": "UNKNOWN",
+      "checks": {
+        "source_allowed": null,
+        "scope_valid": null,
+        "version_valid": null,
+        "time_valid": null,
+        "query_sufficient": null
+      },
+      "evidence_ids": [],
+      "reason_codes": [
+        "PAGINATION_INCOMPLETE"
+      ],
+      "reason": "维护记录只返回了第一页。辅助证据不能把未完成分页当成查询充分。",
+      "prune": null,
+      "repair_action": null
+    },
+    {
+      "obligation_id": "V2-PAGINATION-O-DURATION",
+      "rule_id": "DEMO-RULE-V2",
+      "statement": "本次事故的有效时长达到适用阈值",
+      "applicability": "APPLICABLE",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "status": "SUPPORT",
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "V2-PAGINATION-E-DURATION"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "prune": null,
+      "repair_action": null
+    }
+  ],
+  "clauses": [],
+  "relations": [
+    {
+      "relation_id": "V2-PAGINATION-R-CONTRACT",
+      "relation_type": "supports",
+      "review_status": "accepted",
+      "critical": true,
+      "subject_id": "V2-PAGINATION-E-CONTRACT",
+      "object_id": "V2-PAGINATION-O-CONTRACT",
+      "reason": "证据链 B 已给出该关系的审核状态。",
+      "prune": null,
+      "repair_action": null
+    }
+  ],
+  "changes": [],
+  "scope_declaration": {
+    "scope_id": "V2-SCOPE",
+    "statement": "演示范围只覆盖已声明的客户故障补偿资格，不是全量政策发现。",
+    "covers": [
+      "stated-compensation-eligibility"
+    ],
+    "known_limits": [
+      "未在已见材料中出现的隐含政策不在本图范围内。"
+    ],
+    "affects_answer": false,
+    "status": "declared",
+    "reason": "上游声明本范围已经明确，没有影响本次答案的范围不明。"
+  },
+  "evidence": [
+    {
+      "evidence_id": "V2-PAGINATION-E-CONTRACT",
+      "source_type": "CRM_CONTRACT_DB",
+      "citation": "demo://v2/V2-PAGINATION-E-CONTRACT（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-PAGINATION-E-DURATION",
+      "source_type": "MONITORING_SYSTEM",
+      "citation": "demo://v2/V2-PAGINATION-E-DURATION（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-PAGINATION-E-AUX-1",
+      "source_type": "AUXILIARY_NOTE",
+      "citation": "demo://v2/V2-PAGINATION-E-AUX-1（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-PAGINATION-E-AUX-2",
+      "source_type": "AUXILIARY_NOTE",
+      "citation": "demo://v2/V2-PAGINATION-E-AUX-2（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-PAGINATION-E-AUX-3",
+      "source_type": "AUXILIARY_NOTE",
+      "citation": "demo://v2/V2-PAGINATION-E-AUX-3（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-PAGINATION-E-AUX-4",
+      "source_type": "AUXILIARY_NOTE",
+      "citation": "demo://v2/V2-PAGINATION-E-AUX-4（合成引用，无真实业务凭证）"
+    }
+  ]
+}

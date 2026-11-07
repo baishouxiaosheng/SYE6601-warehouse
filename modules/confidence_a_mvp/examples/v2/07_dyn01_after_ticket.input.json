@@ -1,0 +1,211 @@
+{
+  "schema_version": "0.2-draft",
+  "task_id": "DYN-01",
+  "run_id": "DYN-01-RUN",
+  "graph_version": "dyn01-graph-2",
+  "answer_version": "dyn01-answer-2",
+  "rules_version": "demo-only-not-01a",
+  "synthetic_demo": true,
+  "recommendation": "eligible",
+  "workflow_status": "completed",
+  "stop_reason": "TICKET_CONDITION_RESOLVED",
+  "answer_binding": {
+    "task_id": "DYN-01",
+    "run_id": "DYN-01-RUN",
+    "graph_version": "dyn01-graph-2",
+    "answer_version": "dyn01-answer-2"
+  },
+  "baseline_checks": [
+    {
+      "check_id": "DYN-B-CONTRACT",
+      "statement": "核对适用的客户专属合同",
+      "required": true,
+      "built": true,
+      "status": "COMPLETE",
+      "obligation_ids": [
+        "DYN-O-CONTRACT"
+      ],
+      "reason_codes": [],
+      "reason": "独立必查确认该项已建入并完成。",
+      "repair_action": null
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "DYN-C-ELIGIBLE",
+      "statement": "补偿主张取决于合同、时长，以及新出现的 24 小时工单条件。",
+      "mapped": true,
+      "obligation_ids": [
+        "DYN-O-CONTRACT",
+        "DYN-O-DURATION",
+        "DYN-O-TICKET-24H"
+      ],
+      "evidence_ids": [
+        "DYN-E-CONTRACT",
+        "DYN-E-DURATION",
+        "DYN-E-TICKET"
+      ],
+      "affects_answer": true,
+      "reason": "新条件已经映射到主张，但工单证据还未回来。"
+    }
+  ],
+  "obligations": [
+    {
+      "obligation_id": "DYN-O-CONTRACT",
+      "rule_id": "DEMO-RULE-V2",
+      "statement": "已核对客户专属合同",
+      "applicability": "APPLICABLE",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "status": "SUPPORT",
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "DYN-E-CONTRACT"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "prune": null,
+      "repair_action": null
+    },
+    {
+      "obligation_id": "DYN-O-DURATION",
+      "rule_id": "DEMO-RULE-V2",
+      "statement": "本次事故的有效时长达到适用阈值",
+      "applicability": "APPLICABLE",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "status": "SUPPORT",
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "DYN-E-DURATION"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "prune": null,
+      "repair_action": null
+    },
+    {
+      "obligation_id": "DYN-O-TICKET-24H",
+      "rule_id": "DEMO-RULE-V2",
+      "statement": "故障后 24 小时内提交工单",
+      "applicability": "APPLICABLE",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "status": "SUPPORT",
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "DYN-E-TICKET"
+      ],
+      "reason_codes": [],
+      "reason": "工单记录显示故障后 24 小时内已提交。该新条件由 UNKNOWN 改为 SUPPORT。",
+      "prune": null,
+      "repair_action": null
+    }
+  ],
+  "clauses": [],
+  "relations": [
+    {
+      "relation_id": "DYN-R-CONTRACT",
+      "relation_type": "supports",
+      "review_status": "accepted",
+      "critical": true,
+      "subject_id": "DYN-E-CONTRACT",
+      "object_id": "DYN-O-CONTRACT",
+      "reason": "证据链 B 已给出该关系的审核状态。",
+      "prune": null,
+      "repair_action": null
+    }
+  ],
+  "changes": [
+    {
+      "change_id": "DYN01-CHG-TICKET-ADDED",
+      "kind": "added",
+      "object_type": "obligation",
+      "object_id": "DYN-O-TICKET-24H",
+      "statement": "合同原文新增条件：故障后 24 小时内提交工单。初始图没有为该案例预写这个节点。",
+      "trigger_evidence_ids": [
+        "DYN-E-CONTRACT"
+      ],
+      "from_graph_version": "dyn01-graph-0",
+      "to_graph_version": "dyn01-graph-1",
+      "affected_claim_ids": [
+        "DYN-C-ELIGIBLE"
+      ],
+      "from_recommendation": "eligible",
+      "to_recommendation": "undetermined",
+      "explanation": "专属合同返回后出现新的 24 小时工单依赖；工单未取得，建议不能维持。"
+    },
+    {
+      "change_id": "DYN01-CHG-TICKET-RESOLVED",
+      "kind": "revised",
+      "object_type": "obligation",
+      "object_id": "DYN-O-TICKET-24H",
+      "statement": "工单证据表明故障后 24 小时内已提交工单，该新条件由 UNKNOWN 改为 SUPPORT。",
+      "trigger_evidence_ids": [
+        "DYN-E-TICKET"
+      ],
+      "from_graph_version": "dyn01-graph-1",
+      "to_graph_version": "dyn01-graph-2",
+      "affected_claim_ids": [
+        "DYN-C-ELIGIBLE"
+      ],
+      "from_recommendation": "undetermined",
+      "to_recommendation": "eligible",
+      "explanation": "新的 24 小时工单条件已查明并支持资格主张，建议由未确定改为可补偿。"
+    }
+  ],
+  "scope_declaration": {
+    "scope_id": "V2-SCOPE",
+    "statement": "演示范围只覆盖已声明的客户故障补偿资格，不是全量政策发现。",
+    "covers": [
+      "stated-compensation-eligibility"
+    ],
+    "known_limits": [
+      "未在已见材料中出现的隐含政策不在本图范围内。"
+    ],
+    "affects_answer": false,
+    "status": "declared",
+    "reason": "上游声明本范围已经明确，没有影响本次答案的范围不明。"
+  },
+  "evidence": [
+    {
+      "evidence_id": "DYN-E-CONTRACT",
+      "source_type": "CRM_CONTRACT_DB",
+      "citation": "demo://v2/DYN-E-CONTRACT（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "DYN-E-DURATION",
+      "source_type": "MONITORING_SYSTEM",
+      "citation": "demo://v2/DYN-E-DURATION（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "DYN-E-TICKET",
+      "source_type": "TICKET_SYSTEM",
+      "citation": "demo://v2/DYN-E-TICKET（合成引用，无真实业务凭证）"
+    }
+  ]
+}

@@ -1,0 +1,422 @@
+{
+  "schema_version": "0.2-draft",
+  "n_records": 4,
+  "measurement_status": "NOT_A_MEASURED_RESULT",
+  "target_status": {
+    "status": "PROPOSED_NOT_MEASURED",
+    "items": [
+      {
+        "name": "relative_improvement",
+        "proposed_target": "+30%",
+        "measured": null
+      },
+      {
+        "name": "unsupported_answer_rate",
+        "proposed_target": "<5%",
+        "measured": null
+      },
+      {
+        "name": "query_reduction",
+        "proposed_target": "-50%",
+        "measured": null
+      }
+    ]
+  },
+  "groups": [
+    {
+      "scope": {
+        "method": "dynamic",
+        "comparison_group": "demo-v2-identical-environment",
+        "dataset_version": "demo-0.2",
+        "rules_version": "demo-only-not-01a",
+        "permissions_id": "demo-permissions",
+        "execution_mode": "SIMULATED",
+        "fault_origin": "INJECTED",
+        "synthetic_demo": true,
+        "cost_unit": "demo_unit",
+        "rubric_version": "demo-rubric-0.2"
+      },
+      "n_runs": 1,
+      "run_ids": [
+        "V2-METRIC-INJECTED"
+      ],
+      "terminal_accuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "assertion_accuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "unsupported_answer_rate": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "automatic_coverage": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "automatic_success_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "escalation_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "proper_escalations": 0,
+      "failed_runs": 0,
+      "costs": {
+        "tool_calls": {
+          "mean": 2,
+          "measured_count": 1,
+          "missing_count": 0
+        },
+        "cost_units": {
+          "mean": 2.0,
+          "measured_count": 1,
+          "missing_count": 0
+        },
+        "latency_ms": {
+          "mean": null,
+          "measured_count": 0,
+          "missing_count": 1
+        }
+      },
+      "critical_omission_rate": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5
+      },
+      "accepted_wrong_relation_rate": {
+        "numerator": 1,
+        "denominator": 4,
+        "value": 0.25
+      },
+      "critical_gap_miss_rate": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5
+      },
+      "structure_expansion_path_success": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "structure_expansion_stage_success": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5
+      },
+      "answer_scorecard_version_consistency": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      }
+    },
+    {
+      "scope": {
+        "method": "dynamic",
+        "comparison_group": "demo-v2-identical-environment",
+        "dataset_version": "demo-0.2",
+        "rules_version": "demo-only-not-01a",
+        "permissions_id": "demo-permissions",
+        "execution_mode": "SIMULATED",
+        "fault_origin": "NATURAL",
+        "synthetic_demo": true,
+        "cost_unit": "demo_unit",
+        "rubric_version": "demo-rubric-0.2"
+      },
+      "n_runs": 1,
+      "run_ids": [
+        "V2-METRIC-NATURAL"
+      ],
+      "terminal_accuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "assertion_accuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "unsupported_answer_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "automatic_coverage": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "automatic_success_rate": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "escalation_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "proper_escalations": 0,
+      "failed_runs": 0,
+      "costs": {
+        "tool_calls": {
+          "mean": 3,
+          "measured_count": 1,
+          "missing_count": 0
+        },
+        "cost_units": {
+          "mean": 3.0,
+          "measured_count": 1,
+          "missing_count": 0
+        },
+        "latency_ms": {
+          "mean": null,
+          "measured_count": 0,
+          "missing_count": 1
+        }
+      },
+      "critical_omission_rate": {
+        "numerator": 0,
+        "denominator": 2,
+        "value": 0.0
+      },
+      "accepted_wrong_relation_rate": {
+        "numerator": 0,
+        "denominator": 3,
+        "value": 0.0
+      },
+      "critical_gap_miss_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "structure_expansion_path_success": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "structure_expansion_stage_success": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1.0
+      },
+      "answer_scorecard_version_consistency": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      }
+    },
+    {
+      "scope": {
+        "method": "fixed_full",
+        "comparison_group": "demo-v2-identical-environment",
+        "dataset_version": "demo-0.2",
+        "rules_version": "demo-only-not-01a",
+        "permissions_id": "demo-permissions",
+        "execution_mode": "SIMULATED",
+        "fault_origin": "INJECTED",
+        "synthetic_demo": true,
+        "cost_unit": "demo_unit",
+        "rubric_version": "demo-rubric-0.2"
+      },
+      "n_runs": 1,
+      "run_ids": [
+        "V2-METRIC-FIXED"
+      ],
+      "terminal_accuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "assertion_accuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "unsupported_answer_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "automatic_coverage": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "automatic_success_rate": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "escalation_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "proper_escalations": 0,
+      "failed_runs": 0,
+      "costs": {
+        "tool_calls": {
+          "mean": 6,
+          "measured_count": 1,
+          "missing_count": 0
+        },
+        "cost_units": {
+          "mean": 6.0,
+          "measured_count": 1,
+          "missing_count": 0
+        },
+        "latency_ms": {
+          "mean": null,
+          "measured_count": 0,
+          "missing_count": 1
+        }
+      },
+      "critical_omission_rate": {
+        "numerator": 0,
+        "denominator": 2,
+        "value": 0.0
+      },
+      "accepted_wrong_relation_rate": {
+        "numerator": 0,
+        "denominator": 0,
+        "value": null
+      },
+      "critical_gap_miss_rate": {
+        "numerator": 0,
+        "denominator": 0,
+        "value": null
+      },
+      "structure_expansion_path_success": {
+        "numerator": 0,
+        "denominator": 0,
+        "value": null
+      },
+      "structure_expansion_stage_success": {
+        "numerator": 0,
+        "denominator": 0,
+        "value": null
+      },
+      "answer_scorecard_version_consistency": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      }
+    },
+    {
+      "scope": {
+        "method": "prompt_mock",
+        "comparison_group": "demo-v2-identical-environment",
+        "dataset_version": "demo-0.2",
+        "rules_version": "demo-only-not-01a",
+        "permissions_id": "demo-permissions",
+        "execution_mode": "SIMULATED",
+        "fault_origin": "NATURAL",
+        "synthetic_demo": true,
+        "cost_unit": "demo_unit",
+        "rubric_version": "demo-rubric-0.2"
+      },
+      "n_runs": 1,
+      "run_ids": [
+        "V2-METRIC-MISMATCH"
+      ],
+      "terminal_accuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "assertion_accuracy": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "unsupported_answer_rate": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "automatic_coverage": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "automatic_success_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "escalation_rate": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      },
+      "proper_escalations": 0,
+      "failed_runs": 0,
+      "costs": {
+        "tool_calls": {
+          "mean": 1,
+          "measured_count": 1,
+          "missing_count": 0
+        },
+        "cost_units": {
+          "mean": 1.0,
+          "measured_count": 1,
+          "missing_count": 0
+        },
+        "latency_ms": {
+          "mean": null,
+          "measured_count": 0,
+          "missing_count": 1
+        }
+      },
+      "critical_omission_rate": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "accepted_wrong_relation_rate": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "critical_gap_miss_rate": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "structure_expansion_path_success": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "structure_expansion_stage_success": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0
+      },
+      "answer_scorecard_version_consistency": {
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0
+      }
+    }
+  ],
+  "notes": [
+    "图质量计数只来自离线评测记录，线上单例评分不得读取这些 gold。",
+    "自然错误与注入故障按 fault_origin 分开，不合并成一个成绩。",
+    "关键条件漏建率、错误接纳关系、关键缺口漏报、结构扩展路径和版本一致性的分母仍待与 06 冻结。",
+    "+30%、<5%、-50% 只是拟验证目标，本报告不声称已经测得。",
+    "合成样例只验证公式，不是实验成绩。"
+  ]
+}

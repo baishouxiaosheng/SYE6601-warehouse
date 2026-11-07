@@ -1,0 +1,313 @@
+{
+  "schema_version": "0.2-draft",
+  "scoring_version": "graph-risk-0.2.0",
+  "scoring_policy_version": "graph-risk-demo-0.2",
+  "policy_status": "PROVISIONAL",
+  "task_id": "V2-ACCESS-DENIED",
+  "run_id": "V2-ACCESS-DENIED-RUN",
+  "graph_version": "V2-ACCESS-DENIED-GRAPH",
+  "answer_version": "V2-ACCESS-DENIED-ANSWER",
+  "rules_version": "demo-only-not-01a",
+  "synthetic_demo": true,
+  "version_consistent": true,
+  "recommendation": "eligible",
+  "workflow_status": "escalated",
+  "stop_reason": "ACCESS_DENIED",
+  "level": "证据不足",
+  "level_code": "INSUFFICIENT_EVIDENCE",
+  "level_reasons": [
+    "BASELINE_INCOMPLETE: 必查未完成。原因码：ACCESS_DENIED。客户合同来源返回 403。辅助材料再多也不能代替这份关键来源。",
+    "CRITICAL_OBLIGATION_UNRESOLVED: 关键或必查条件为 UNKNOWN。客户合同来源返回 403。辅助材料再多也不能代替这份关键来源。"
+  ],
+  "score": null,
+  "raw_design_score": 53.33,
+  "display_score_suppressed": true,
+  "score_semantics": "该等级反映已声明范围内的证据与过程质量，不能证明图完整，不能证明已发现全部规则，也不是答案正确概率。",
+  "gate_passed": false,
+  "may_present_definitive_decision": false,
+  "upstream_recommendation_blocked": true,
+  "dimensions": {
+    "baseline_coverage": {
+      "label": "基础必查覆盖",
+      "numerator": 0,
+      "denominator": 1,
+      "value": 0.0
+    },
+    "claim_coverage": {
+      "label": "答案主张覆盖",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "recognized_conditions": {
+      "label": "已识别条件证据完成",
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5
+    },
+    "expansion_and_semantics": {
+      "label": "材料展开与语义审核",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0,
+      "unexpanded_count": 0,
+      "critical_unresolved_count": 0
+    },
+    "source_and_query": {
+      "label": "来源适用与查询完整",
+      "numerator": 5,
+      "denominator": 10,
+      "value": 0.5,
+      "checks": {
+        "source_allowed": {
+          "passed": 1,
+          "denominator": 2
+        },
+        "scope_valid": {
+          "passed": 1,
+          "denominator": 2
+        },
+        "version_valid": {
+          "passed": 1,
+          "denominator": 2
+        },
+        "time_valid": {
+          "passed": 1,
+          "denominator": 2
+        },
+        "query_sufficient": {
+          "passed": 1,
+          "denominator": 2
+        }
+      }
+    }
+  },
+  "claim_refs": [
+    {
+      "claim_id": "V2-ACCESS-DENIED-C-ELIGIBLE",
+      "statement": "本次故障满足已建模补偿条件",
+      "mapped": true,
+      "affects_answer": true,
+      "obligation_ids": [
+        "V2-ACCESS-DENIED-O-CONTRACT",
+        "V2-ACCESS-DENIED-O-DURATION"
+      ],
+      "evidence_ids": [
+        "V2-ACCESS-DENIED-E-CONTRACT",
+        "V2-ACCESS-DENIED-E-DURATION"
+      ],
+      "reason": "主张已映射到上游给出的条件检查。"
+    }
+  ],
+  "condition_refs": [
+    {
+      "obligation_id": "V2-ACCESS-DENIED-O-CONTRACT",
+      "statement": "适用的客户专属合同允许本次事故补偿",
+      "status": "UNKNOWN",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": false,
+      "checks": {
+        "source_allowed": null,
+        "scope_valid": null,
+        "version_valid": null,
+        "time_valid": null,
+        "query_sufficient": null
+      },
+      "evidence_ids": [],
+      "reason_codes": [
+        "ACCESS_DENIED"
+      ],
+      "reason": "客户合同来源返回 403。辅助材料再多也不能代替这份关键来源。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    },
+    {
+      "obligation_id": "V2-ACCESS-DENIED-O-DURATION",
+      "statement": "本次事故的有效时长达到适用阈值",
+      "status": "SUPPORT",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": true,
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "V2-ACCESS-DENIED-E-DURATION"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    }
+  ],
+  "evidence_refs": [
+    {
+      "evidence_id": "V2-ACCESS-DENIED-E-CONTRACT",
+      "source_type": "CRM_CONTRACT_DB",
+      "citation": "demo://v2/V2-ACCESS-DENIED-E-CONTRACT（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-ACCESS-DENIED-E-DURATION",
+      "source_type": "MONITORING_SYSTEM",
+      "citation": "demo://v2/V2-ACCESS-DENIED-E-DURATION（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-ACCESS-DENIED-E-AUX-1",
+      "source_type": "AUXILIARY_NOTE",
+      "citation": "demo://v2/V2-ACCESS-DENIED-E-AUX-1（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-ACCESS-DENIED-E-AUX-2",
+      "source_type": "AUXILIARY_NOTE",
+      "citation": "demo://v2/V2-ACCESS-DENIED-E-AUX-2（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-ACCESS-DENIED-E-AUX-3",
+      "source_type": "AUXILIARY_NOTE",
+      "citation": "demo://v2/V2-ACCESS-DENIED-E-AUX-3（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-ACCESS-DENIED-E-AUX-4",
+      "source_type": "AUXILIARY_NOTE",
+      "citation": "demo://v2/V2-ACCESS-DENIED-E-AUX-4（合成引用，无真实业务凭证）"
+    }
+  ],
+  "graph_build_risks": [
+    {
+      "code": "BASELINE_INCOMPLETE",
+      "blocking": true,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "V2-ACCESS-DENIED-O-CONTRACT"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [
+          "V2-ACCESS-DENIED-B-CONTRACT"
+        ],
+        "change_ids": []
+      },
+      "reason": "必查未完成。原因码：ACCESS_DENIED。客户合同来源返回 403。辅助材料再多也不能代替这份关键来源。",
+      "cause": "ACCESS_DENIED"
+    },
+    {
+      "code": "TOOL_LIMIT",
+      "blocking": true,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "V2-ACCESS-DENIED-O-CONTRACT"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [],
+        "change_ids": []
+      },
+      "reason": "关键或必查条件为 UNKNOWN。客户合同来源返回 403。辅助材料再多也不能代替这份关键来源。",
+      "cause": "ACCESS_DENIED"
+    }
+  ],
+  "residual_gaps": [
+    {
+      "obligation_id": "V2-ACCESS-DENIED-O-CONTRACT",
+      "status": "UNKNOWN",
+      "criticality": "critical",
+      "reason_codes": [
+        "ACCESS_DENIED"
+      ],
+      "reason": "客户合同来源返回 403。辅助材料再多也不能代替这份关键来源。",
+      "cause": "ACCESS_DENIED",
+      "pruned": false,
+      "prune_source": null,
+      "prune_reason": null,
+      "evidence_ids": []
+    }
+  ],
+  "reservations": [],
+  "repair_actions": [],
+  "structure_changes": [],
+  "advice_change_notes": [],
+  "human_review_order": [
+    {
+      "code": "BASELINE_INCOMPLETE",
+      "blocking": true,
+      "priority": 10,
+      "reason": "必查未完成。原因码：ACCESS_DENIED。客户合同来源返回 403。辅助材料再多也不能代替这份关键来源。",
+      "cause": "ACCESS_DENIED",
+      "repair_action": null,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "V2-ACCESS-DENIED-O-CONTRACT"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [
+          "V2-ACCESS-DENIED-B-CONTRACT"
+        ],
+        "change_ids": []
+      },
+      "order": 1
+    },
+    {
+      "code": "CRITICAL_OBLIGATION_UNRESOLVED",
+      "blocking": true,
+      "priority": 20,
+      "reason": "关键或必查条件为 UNKNOWN。客户合同来源返回 403。辅助材料再多也不能代替这份关键来源。",
+      "cause": "ACCESS_DENIED",
+      "repair_action": null,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "V2-ACCESS-DENIED-O-CONTRACT"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [],
+        "change_ids": []
+      },
+      "order": 2
+    }
+  ],
+  "scope_declaration": {
+    "scope_id": "V2-SCOPE",
+    "statement": "演示范围只覆盖已声明的客户故障补偿资格，不是全量政策发现。",
+    "covers": [
+      "stated-compensation-eligibility"
+    ],
+    "known_limits": [
+      "未在已见材料中出现的隐含政策不在本图范围内。"
+    ],
+    "affects_answer": false,
+    "status": "declared",
+    "reason": "上游声明本范围已经明确，没有影响本次答案的范围不明。"
+  },
+  "notes": [
+    "该等级反映已声明范围内的证据与过程质量，不能证明图完整，不能证明已发现全部规则，也不是答案正确概率。",
+    "四态、审核状态、必查覆盖、剪枝理由与结构增量均消费上游声明；评分器不重新判定证据，也不读取评测 gold。",
+    "SUPPORT 与 REFUTE 都表示该条件已判定。具备资格的否定证据可以对应已建模范围内证据充分。",
+    "硬门槛先于设计分。证据不足时默认不展示总分。",
+    "这里的说明是模板，只复述已记录原因。",
+    "硬门槛同时阻断无依据的肯定建议和否定建议，不只阻断建议补偿。"
+  ]
+}

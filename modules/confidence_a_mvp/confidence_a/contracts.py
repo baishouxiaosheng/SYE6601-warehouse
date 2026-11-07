@@ -194,26 +194,33 @@ def validate_snapshot(snapshot):
     return snapshot
 
 
+def check_run_semantics(row):
+    """Shared offline-run checks. Graph-quality counts are validated only on 0.2 records."""
+    a = row["assessment"]
+    asserted = row["actual_decision"] in DEFINITE
+    if asserted and a["assertion_supported"] is None:
+        raise ContractError(f"{row['run_id']}: asserted decision requires independent support assessment")
+    if not asserted and a["assertion_supported"] is not None:
+        raise ContractError(f"{row['run_id']}: no assertion; support assessment must be null")
+    if row["actual_escalated"] and asserted:
+        raise ContractError(f"{row['run_id']}: escalation and assertion cannot coexist in MVP")
+    if a["expected_escalated"] and a["reference_decision"] in DEFINITE:
+        raise ContractError(f"{row['run_id']}: reference escalation must be UNDETERMINED")
+
+
 def validate_runs(payload):
     validate(payload, RUNS_SCHEMA, "runs")
     unique_index(payload["records"], "run_id", "records")
     for row in payload["records"]:
-        a = row["assessment"]
-        asserted = row["actual_decision"] in DEFINITE
-        if asserted and a["assertion_supported"] is None:
-            raise ContractError(f"{row['run_id']}: asserted decision requires independent support assessment")
-        if not asserted and a["assertion_supported"] is not None:
-            raise ContractError(f"{row['run_id']}: no assertion; support assessment must be null")
-        if row["actual_escalated"] and asserted:
-            raise ContractError(f"{row['run_id']}: escalation and assertion cannot coexist in MVP")
-        if a["expected_escalated"] and a["reference_decision"] in DEFINITE:
-            raise ContractError(f"{row['run_id']}: reference escalation must be UNDETERMINED")
+        check_run_semantics(row)
     return payload
 
 
 def exported_schemas():
-    return {name: {"$schema": "https://json-schema.org/draft/2020-12/schema",
-                   "title": name, **schema} for name, schema in {
+    from .contracts_v02 import V02_SCHEMAS
+    schemas = {
         "snapshot": SNAPSHOT_SCHEMA, "policy": POLICY_SCHEMA, "runs": RUNS_SCHEMA,
-        "scorecard": SCORECARD_SCHEMA,
-    }.items()}
+        "scorecard": SCORECARD_SCHEMA, **V02_SCHEMAS,
+    }
+    return {name: {"$schema": "https://json-schema.org/draft/2020-12/schema",
+                   "title": name, **schema} for name, schema in schemas.items()}

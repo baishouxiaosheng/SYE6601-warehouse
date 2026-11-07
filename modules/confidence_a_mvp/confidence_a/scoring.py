@@ -11,7 +11,7 @@ DEFAULT_POLICY = {
 }
 
 
-def score_snapshot(snapshot, policy=None):
+def score_snapshot_v01(snapshot, policy=None):
     """Return a new JSON-serializable card, without mutating either input."""
     validate_snapshot(snapshot)
     policy = DEFAULT_POLICY if policy is None else policy
@@ -77,3 +77,20 @@ def score_snapshot(snapshot, policy=None):
                   "诊断维度不重复计入总分；评分不选择工具、不生成补偿结论。",
                   "来源与时间适用性由 Checker 判断；本模块只验证其声明和引用自洽。"],
     }
+
+
+def score_snapshot(snapshot, policy=None):
+    """Score a 0.1 or 0.2 snapshot. 0.1 cards stay on the legacy contract."""
+    from .contracts_v02 import VERSION_V02
+    from .scoring_v02 import score_snapshot_v02
+    if not isinstance(snapshot, dict):
+        raise ContractError("snapshot: expected object")
+    version = snapshot.get("schema_version")
+    if version == VERSION:
+        return score_snapshot_v01(snapshot, policy)
+    if version == VERSION_V02:
+        return score_snapshot_v02(snapshot, policy)
+    raise ContractError(
+        f"snapshot.schema_version: expected {VERSION!r} or {VERSION_V02!r}, got {version!r}. "
+        "0.1-draft snapshots are not auto-upgraded."
+    )
