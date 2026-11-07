@@ -1,0 +1,281 @@
+{
+  "schema_version": "0.2-draft",
+  "scoring_version": "graph-risk-0.2.0",
+  "scoring_policy_version": "graph-risk-demo-0.2",
+  "policy_status": "PROVISIONAL",
+  "task_id": "V2-PRUNED",
+  "run_id": "V2-PRUNED-RUN",
+  "graph_version": "V2-PRUNED-GRAPH",
+  "answer_version": "V2-PRUNED-ANSWER",
+  "rules_version": "demo-only-not-01a",
+  "synthetic_demo": true,
+  "version_consistent": true,
+  "recommendation": "eligible",
+  "workflow_status": "completed",
+  "stop_reason": "NONCRITICAL_PRUNED",
+  "level": "附保留说明",
+  "level_code": "WITH_RESERVATIONS",
+  "level_reasons": [
+    "PRUNED_RESIDUAL: 非关键残留已由 loop 记录为不影响本次结论。Loop 依赖分析记录该备注不影响本次补偿结论，且不是程序必查。"
+  ],
+  "score": 71.43,
+  "raw_design_score": 71.43,
+  "display_score_suppressed": false,
+  "score_semantics": "该等级反映已声明范围内的证据与过程质量，不能证明图完整，不能证明已发现全部规则，也不是答案正确概率。",
+  "gate_passed": true,
+  "may_present_definitive_decision": true,
+  "upstream_recommendation_blocked": false,
+  "dimensions": {
+    "baseline_coverage": {
+      "label": "基础必查覆盖",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "claim_coverage": {
+      "label": "答案主张覆盖",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "recognized_conditions": {
+      "label": "已识别条件证据完成",
+      "numerator": 2,
+      "denominator": 3,
+      "value": 0.6666666666666666
+    },
+    "expansion_and_semantics": {
+      "label": "材料展开与语义审核",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0,
+      "unexpanded_count": 0,
+      "critical_unresolved_count": 0
+    },
+    "source_and_query": {
+      "label": "来源适用与查询完整",
+      "numerator": 10,
+      "denominator": 15,
+      "value": 0.6666666666666666,
+      "checks": {
+        "source_allowed": {
+          "passed": 2,
+          "denominator": 3
+        },
+        "scope_valid": {
+          "passed": 2,
+          "denominator": 3
+        },
+        "version_valid": {
+          "passed": 2,
+          "denominator": 3
+        },
+        "time_valid": {
+          "passed": 2,
+          "denominator": 3
+        },
+        "query_sufficient": {
+          "passed": 2,
+          "denominator": 3
+        }
+      }
+    }
+  },
+  "claim_refs": [
+    {
+      "claim_id": "V2-PRUNED-C-ELIGIBLE",
+      "statement": "本次故障满足已建模补偿条件",
+      "mapped": true,
+      "affects_answer": true,
+      "obligation_ids": [
+        "V2-PRUNED-O-CONTRACT",
+        "V2-PRUNED-O-DURATION"
+      ],
+      "evidence_ids": [
+        "V2-PRUNED-E-CONTRACT",
+        "V2-PRUNED-E-DURATION"
+      ],
+      "reason": "主张已映射到上游给出的条件检查。"
+    }
+  ],
+  "condition_refs": [
+    {
+      "obligation_id": "V2-PRUNED-O-CONTRACT",
+      "statement": "适用的客户专属合同允许本次事故补偿",
+      "status": "SUPPORT",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": true,
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "V2-PRUNED-E-CONTRACT"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    },
+    {
+      "obligation_id": "V2-PRUNED-O-DURATION",
+      "statement": "本次事故的有效时长达到适用阈值",
+      "status": "SUPPORT",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": true,
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "V2-PRUNED-E-DURATION"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    },
+    {
+      "obligation_id": "V2-PRUNED-O-NOTE",
+      "statement": "备注字段是否填写",
+      "status": "UNKNOWN",
+      "applicability": "APPLICABLE",
+      "criticality": "non_critical",
+      "required_for_decision": false,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": false,
+      "checks": {
+        "source_allowed": null,
+        "scope_valid": null,
+        "version_valid": null,
+        "time_valid": null,
+        "query_sufficient": null
+      },
+      "evidence_ids": [],
+      "reason_codes": [
+        "NOT_QUERIED"
+      ],
+      "reason": "备注字段没有取值。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": "V2-PRUNED-PRUNE-1",
+      "prune_source": "loop",
+      "prune_reason": "Loop 依赖分析记录该备注不影响本次补偿结论，且不是程序必查。"
+    }
+  ],
+  "evidence_refs": [
+    {
+      "evidence_id": "V2-PRUNED-E-CONTRACT",
+      "source_type": "CRM_CONTRACT_DB",
+      "citation": "demo://v2/V2-PRUNED-E-CONTRACT（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-PRUNED-E-DURATION",
+      "source_type": "MONITORING_SYSTEM",
+      "citation": "demo://v2/V2-PRUNED-E-DURATION（合成引用，无真实业务凭证）"
+    }
+  ],
+  "graph_build_risks": [],
+  "residual_gaps": [
+    {
+      "obligation_id": "V2-PRUNED-O-NOTE",
+      "status": "UNKNOWN",
+      "criticality": "non_critical",
+      "reason_codes": [
+        "NOT_QUERIED"
+      ],
+      "reason": "备注字段没有取值。",
+      "cause": null,
+      "pruned": true,
+      "prune_source": "loop",
+      "prune_reason": "Loop 依赖分析记录该备注不影响本次补偿结论，且不是程序必查。",
+      "evidence_ids": []
+    }
+  ],
+  "reservations": [
+    {
+      "code": "PRUNED_RESIDUAL",
+      "blocking": false,
+      "priority": 100,
+      "reason": "非关键残留已由 loop 记录为不影响本次结论。Loop 依赖分析记录该备注不影响本次补偿结论，且不是程序必查。",
+      "cause": null,
+      "repair_action": null,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "V2-PRUNED-O-NOTE"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [],
+        "change_ids": []
+      },
+      "order": 1
+    }
+  ],
+  "repair_actions": [],
+  "structure_changes": [],
+  "advice_change_notes": [],
+  "human_review_order": [
+    {
+      "code": "PRUNED_RESIDUAL",
+      "blocking": false,
+      "priority": 100,
+      "reason": "非关键残留已由 loop 记录为不影响本次结论。Loop 依赖分析记录该备注不影响本次补偿结论，且不是程序必查。",
+      "cause": null,
+      "repair_action": null,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [
+          "V2-PRUNED-O-NOTE"
+        ],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [],
+        "change_ids": []
+      },
+      "order": 1
+    }
+  ],
+  "scope_declaration": {
+    "scope_id": "V2-SCOPE",
+    "statement": "演示范围只覆盖已声明的客户故障补偿资格，不是全量政策发现。",
+    "covers": [
+      "stated-compensation-eligibility"
+    ],
+    "known_limits": [
+      "未在已见材料中出现的隐含政策不在本图范围内。"
+    ],
+    "affects_answer": false,
+    "status": "declared",
+    "reason": "上游声明本范围已经明确，没有影响本次答案的范围不明。"
+  },
+  "notes": [
+    "该等级反映已声明范围内的证据与过程质量，不能证明图完整，不能证明已发现全部规则，也不是答案正确概率。",
+    "四态、审核状态、必查覆盖、剪枝理由与结构增量均消费上游声明；评分器不重新判定证据，也不读取评测 gold。",
+    "SUPPORT 与 REFUTE 都表示该条件已判定。具备资格的否定证据可以对应已建模范围内证据充分。",
+    "硬门槛先于设计分。证据不足时默认不展示总分。",
+    "这里的说明是模板，只复述已记录原因。",
+    "保留项来自 Loop 或证据链 B 已记录的说明。评分器不自动升级，也不自行认定无关。"
+  ]
+}

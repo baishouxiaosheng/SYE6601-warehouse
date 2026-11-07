@@ -1,0 +1,236 @@
+{
+  "schema_version": "0.2-draft",
+  "scoring_version": "graph-risk-0.2.0",
+  "scoring_policy_version": "graph-risk-demo-0.2",
+  "policy_status": "PROVISIONAL",
+  "task_id": "V2-MISSING-BASELINE",
+  "run_id": "V2-MISSING-BASELINE-RUN",
+  "graph_version": "V2-MISSING-BASELINE-GRAPH",
+  "answer_version": "V2-MISSING-BASELINE-ANSWER",
+  "rules_version": "demo-only-not-01a",
+  "synthetic_demo": true,
+  "version_consistent": true,
+  "recommendation": "eligible",
+  "workflow_status": "completed",
+  "stop_reason": "UPSTREAM_DECLARED_COMPLETE",
+  "level": "证据不足",
+  "level_code": "INSUFFICIENT_EVIDENCE",
+  "level_reasons": [
+    "BASELINE_INCOMPLETE: 必查未建入图，按未完成计。原因码：MISSING_FROM_GRAPH。独立必查指出应建客户专属合同义务，但图中没有该节点。其余已通过节点不能填补。"
+  ],
+  "score": null,
+  "raw_design_score": 93.33,
+  "display_score_suppressed": true,
+  "score_semantics": "该等级反映已声明范围内的证据与过程质量，不能证明图完整，不能证明已发现全部规则，也不是答案正确概率。",
+  "gate_passed": false,
+  "may_present_definitive_decision": false,
+  "upstream_recommendation_blocked": true,
+  "dimensions": {
+    "baseline_coverage": {
+      "label": "基础必查覆盖",
+      "numerator": 0,
+      "denominator": 1,
+      "value": 0.0
+    },
+    "claim_coverage": {
+      "label": "答案主张覆盖",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0
+    },
+    "recognized_conditions": {
+      "label": "已识别条件证据完成",
+      "numerator": 2,
+      "denominator": 2,
+      "value": 1.0
+    },
+    "expansion_and_semantics": {
+      "label": "材料展开与语义审核",
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0,
+      "unexpanded_count": 0,
+      "critical_unresolved_count": 0
+    },
+    "source_and_query": {
+      "label": "来源适用与查询完整",
+      "numerator": 10,
+      "denominator": 10,
+      "value": 1.0,
+      "checks": {
+        "source_allowed": {
+          "passed": 2,
+          "denominator": 2
+        },
+        "scope_valid": {
+          "passed": 2,
+          "denominator": 2
+        },
+        "version_valid": {
+          "passed": 2,
+          "denominator": 2
+        },
+        "time_valid": {
+          "passed": 2,
+          "denominator": 2
+        },
+        "query_sufficient": {
+          "passed": 2,
+          "denominator": 2
+        }
+      }
+    }
+  },
+  "claim_refs": [
+    {
+      "claim_id": "V2-MISSING-BASELINE-C-ELIGIBLE",
+      "statement": "除合同以外的已建条件均已通过",
+      "mapped": true,
+      "affects_answer": true,
+      "obligation_ids": [
+        "V2-MISSING-BASELINE-O-DURATION",
+        "V2-MISSING-BASELINE-O-PLAN"
+      ],
+      "evidence_ids": [
+        "V2-MISSING-BASELINE-E-DURATION",
+        "V2-MISSING-BASELINE-E-PLAN"
+      ],
+      "reason": "模型只映射了自己建出的节点。"
+    }
+  ],
+  "condition_refs": [
+    {
+      "obligation_id": "V2-MISSING-BASELINE-O-DURATION",
+      "statement": "本次事故的有效时长达到适用阈值",
+      "status": "SUPPORT",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": true,
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "V2-MISSING-BASELINE-E-DURATION"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    },
+    {
+      "obligation_id": "V2-MISSING-BASELINE-O-PLAN",
+      "statement": "本次事故对应套餐在适用范围内",
+      "status": "SUPPORT",
+      "applicability": "APPLICABLE",
+      "criticality": "critical",
+      "required_for_decision": true,
+      "must_verify": false,
+      "included_in_denominator": true,
+      "resolved": true,
+      "checks": {
+        "source_allowed": true,
+        "scope_valid": true,
+        "version_valid": true,
+        "time_valid": true,
+        "query_sufficient": true
+      },
+      "evidence_ids": [
+        "V2-MISSING-BASELINE-E-PLAN"
+      ],
+      "reason_codes": [],
+      "reason": "证据链 B 声明该条件已判定。",
+      "applicability_reason": "演示用上游适用性说明，不是正式业务规则。",
+      "prune_record_id": null,
+      "prune_source": null,
+      "prune_reason": null
+    }
+  ],
+  "evidence_refs": [
+    {
+      "evidence_id": "V2-MISSING-BASELINE-E-DURATION",
+      "source_type": "MONITORING_SYSTEM",
+      "citation": "demo://v2/V2-MISSING-BASELINE-E-DURATION（合成引用，无真实业务凭证）"
+    },
+    {
+      "evidence_id": "V2-MISSING-BASELINE-E-PLAN",
+      "source_type": "PLAN_DB",
+      "citation": "demo://v2/V2-MISSING-BASELINE-E-PLAN（合成引用，无真实业务凭证）"
+    }
+  ],
+  "graph_build_risks": [
+    {
+      "code": "BASELINE_INCOMPLETE",
+      "blocking": true,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [
+          "V2-MISSING-BASELINE-B-CONTRACT"
+        ],
+        "change_ids": []
+      },
+      "reason": "必查未建入图，按未完成计。原因码：MISSING_FROM_GRAPH。独立必查指出应建客户专属合同义务，但图中没有该节点。其余已通过节点不能填补。",
+      "cause": null
+    }
+  ],
+  "residual_gaps": [],
+  "reservations": [],
+  "repair_actions": [],
+  "structure_changes": [],
+  "advice_change_notes": [],
+  "human_review_order": [
+    {
+      "code": "BASELINE_INCOMPLETE",
+      "blocking": true,
+      "priority": 10,
+      "reason": "必查未建入图，按未完成计。原因码：MISSING_FROM_GRAPH。独立必查指出应建客户专属合同义务，但图中没有该节点。其余已通过节点不能填补。",
+      "cause": null,
+      "repair_action": null,
+      "refs": {
+        "claim_ids": [],
+        "obligation_ids": [],
+        "evidence_ids": [],
+        "relation_ids": [],
+        "clause_ids": [],
+        "baseline_ids": [
+          "V2-MISSING-BASELINE-B-CONTRACT"
+        ],
+        "change_ids": []
+      },
+      "order": 1
+    }
+  ],
+  "scope_declaration": {
+    "scope_id": "V2-SCOPE",
+    "statement": "演示范围只覆盖已声明的客户故障补偿资格，不是全量政策发现。",
+    "covers": [
+      "stated-compensation-eligibility"
+    ],
+    "known_limits": [
+      "未在已见材料中出现的隐含政策不在本图范围内。"
+    ],
+    "affects_answer": false,
+    "status": "declared",
+    "reason": "上游声明本范围已经明确，没有影响本次答案的范围不明。"
+  },
+  "notes": [
+    "该等级反映已声明范围内的证据与过程质量，不能证明图完整，不能证明已发现全部规则，也不是答案正确概率。",
+    "四态、审核状态、必查覆盖、剪枝理由与结构增量均消费上游声明；评分器不重新判定证据，也不读取评测 gold。",
+    "SUPPORT 与 REFUTE 都表示该条件已判定。具备资格的否定证据可以对应已建模范围内证据充分。",
+    "硬门槛先于设计分。证据不足时默认不展示总分。",
+    "这里的说明是模板，只复述已记录原因。",
+    "硬门槛同时阻断无依据的肯定建议和否定建议，不只阻断建议补偿。"
+  ]
+}

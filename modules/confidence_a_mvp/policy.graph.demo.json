@@ -1,0 +1,7 @@
+{
+  "schema_version": "0.2-draft",
+  "policy_version": "graph-risk-demo-0.2",
+  "status": "PROVISIONAL",
+  "suppress_display_score_on_hard_gate": true,
+  "description": "演示约定：硬门槛失败时不展示设计分。设计分是五类计数的等权合并，不是概率，也不是已确认业务规则。"
+}

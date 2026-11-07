@@ -8,8 +8,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from confidence_a.contracts import VERSION, exported_schemas
-from confidence_a.scoring import DEFAULT_POLICY, score_snapshot
+from confidence_a.demo_fixtures import all_cases, metric_runs
 from confidence_a.metrics import evaluate_runs
+from confidence_a.scoring import DEFAULT_POLICY, score_snapshot
+from confidence_a.scoring_v02 import DEFAULT_POLICY_V02
 
 
 def write(relative, value):
@@ -87,7 +89,14 @@ def main():
     runs = {"schema_version": VERSION, "records": rows}
     write("examples/runs.demo.json", runs)
     write("examples/metrics.demo.json", evaluate_runs(runs))
-    print("Generated 3 snapshots/cards, schemas, policy and illustrative metrics. No real experiment run.")
+    write("policy.graph.demo.json", DEFAULT_POLICY_V02)
+    for name, snapshot in all_cases():
+        write(f"examples/v2/{name}.input.json", snapshot)
+        write(f"examples/v2/{name}.scorecard.json", score_snapshot(snapshot))
+    v2_runs = metric_runs()
+    write("examples/runs.v2.json", v2_runs)
+    write("examples/metrics.v2.json", evaluate_runs(v2_runs))
+    print("Generated 0.1 and 0.2 fixtures, schemas, policies and illustrative metrics. No real experiment run.")
 
 
 if __name__ == "__main__":
