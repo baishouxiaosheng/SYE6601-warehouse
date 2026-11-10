@@ -3,6 +3,9 @@ A place where put our group project product.
 
 ## Modules
 
+The November dynamic evidence prototype has a [local demo and integration guide](docs/dynamic-evidence/README.md).
+Run `python -m dynamic_evidence --case DYN-01` from the repository root to replay the workflow with fixture models.
+
 | Module | Purpose | Status |
 | --- | --- | --- |
 | [07A Confidence A MVP](modules/confidence_a_mvp/README.md) | Explainable evidence scorecards and per-run evaluation metrics | Standalone MVP; interface and business assumptions pending team confirmation |
