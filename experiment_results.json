@@ -8,7 +8,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-001",
@@ -19,7 +20,8 @@
     "actual_decision": "补偿",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-001",
@@ -28,9 +30,10 @@
     "expected_decision": "补偿",
     "actual_status": "SUPPORT",
     "actual_decision": "补偿",
-    "queries": 2,
-    "cost": 0.02,
-    "is_correct": true
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：补偿\n【理由】：证据符合规则，无 TIMEOUT, FORBIDDEN, UNCHECKED, EXPIRED, TRIAL, Free, CLIENT_CONFIG_ERROR，且 pagination_complete=true。"
   },
   {
     "task_id": "A-002",
@@ -41,7 +44,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-002",
@@ -52,7 +56,8 @@
     "actual_decision": "不补偿",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-002",
@@ -61,9 +66,10 @@
     "expected_decision": "不补偿",
     "actual_status": "REFUTE",
     "actual_decision": "不补偿",
-    "queries": 2,
-    "cost": 0.02,
-    "is_correct": true
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：不补偿\n【理由】：未找到专属合同，适用通用政策，但规则中未提及通用政策的具体条款，且现有信息不足以判断是否符合补偿条件。"
   },
   {
     "task_id": "A-003",
@@ -74,7 +80,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-003",
@@ -85,7 +92,8 @@
     "actual_decision": "转人工",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-003",
@@ -95,8 +103,9 @@
     "actual_status": "UNKNOWN",
     "actual_decision": "转人工",
     "queries": 1,
-    "cost": 0.01,
-    "is_correct": true
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：转人工\n【理由】：证据中包含 TIMEOUT，根据规则必须直接判定为“证据不足”，结论为“转人工”。"
   },
   {
     "task_id": "A-004",
@@ -107,7 +116,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-004",
@@ -118,7 +128,8 @@
     "actual_decision": "转人工",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-004",
@@ -128,8 +139,9 @@
     "actual_status": "UNKNOWN",
     "actual_decision": "转人工",
     "queries": 1,
-    "cost": 0.01,
-    "is_correct": true
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：转人工\n【理由】：证据中包含 FORBIDDEN，根据规则必须判定为“证据不足”，结论为“转人工”。"
   },
   {
     "task_id": "A-005",
@@ -140,7 +152,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-005",
@@ -151,18 +164,20 @@
     "actual_decision": "补偿",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-005",
     "method": "dynamic_requery",
     "expected_status": "SUPPORT",
     "expected_decision": "补偿",
-    "actual_status": "SUPPORT",
-    "actual_decision": "补偿",
-    "queries": 2,
-    "cost": 0.02,
-    "is_correct": true
+    "actual_status": "REFUTE",
+    "actual_decision": "不补偿",
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": false,
+    "model_output": "【结论】：不补偿\n【理由】：故障时长未达到30分钟，且无其他符合补偿条件的证据。"
   },
   {
     "task_id": "A-006",
@@ -173,7 +188,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-006",
@@ -184,18 +200,20 @@
     "actual_decision": "补偿",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-006",
     "method": "dynamic_requery",
     "expected_status": "SUPPORT",
     "expected_decision": "补偿",
-    "actual_status": "SUPPORT",
-    "actual_decision": "补偿",
-    "queries": 2,
-    "cost": 0.02,
-    "is_correct": true
+    "actual_status": "REFUTE",
+    "actual_decision": "不补偿",
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": false,
+    "model_output": "【结论】：不补偿\n【理由】：故障时长为12分钟，未达到通用政策中故障满30分钟补偿的标准。"
   },
   {
     "task_id": "A-007",
@@ -206,7 +224,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-007",
@@ -217,7 +236,8 @@
     "actual_decision": "不补偿",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-007",
@@ -226,9 +246,10 @@
     "expected_decision": "不补偿",
     "actual_status": "REFUTE",
     "actual_decision": "不补偿",
-    "queries": 2,
-    "cost": 0.02,
-    "is_correct": true
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：不补偿\n【理由】：证据中包含 TRIAL"
   },
   {
     "task_id": "A-008",
@@ -239,7 +260,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-008",
@@ -250,7 +272,8 @@
     "actual_decision": "不补偿",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-008",
@@ -259,9 +282,10 @@
     "expected_decision": "不补偿",
     "actual_status": "REFUTE",
     "actual_decision": "不补偿",
-    "queries": 2,
-    "cost": 0.02,
-    "is_correct": true
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：不补偿\n【理由】：证据中包含 CLIENT_CONFIG_ERROR。"
   },
   {
     "task_id": "A-009",
@@ -272,7 +296,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-009",
@@ -283,7 +308,8 @@
     "actual_decision": "不补偿",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-009",
@@ -292,9 +318,10 @@
     "expected_decision": "转人工",
     "actual_status": "UNKNOWN",
     "actual_decision": "转人工",
-    "queries": 3,
-    "cost": 0.03,
-    "is_correct": true
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：转人工\n【理由】：证据中包含 pagination_complete=false，根据规则必须判定为“证据不足”，结论为“转人工”。"
   },
   {
     "task_id": "A-010",
@@ -305,7 +332,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-010",
@@ -316,7 +344,8 @@
     "actual_decision": "不补偿",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-010",
@@ -325,9 +354,10 @@
     "expected_decision": "转人工",
     "actual_status": "UNKNOWN",
     "actual_decision": "转人工",
-    "queries": 2,
-    "cost": 0.02,
-    "is_correct": true
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：转人工\n【理由】：证据中包含 EXPIRED，判定为“证据不足”。"
   },
   {
     "task_id": "A-011",
@@ -338,7 +368,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-011",
@@ -349,18 +380,20 @@
     "actual_decision": "转人工",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-011",
     "method": "dynamic_requery",
     "expected_status": "CONFLICT",
     "expected_decision": "转人工",
-    "actual_status": "CONFLICT",
-    "actual_decision": "转人工",
-    "queries": 3,
-    "cost": 0.03,
-    "is_correct": true
+    "actual_status": "REFUTE",
+    "actual_decision": "不补偿",
+    "queries": 1,
+    "cost": 0.001,
+    "is_correct": false,
+    "model_output": "【结论】：不补偿\n【理由】：监控显示有效故障时间为35分钟，超过30分钟满足补偿条件，但维护日历显示该时段为计划内维护窗口，属于免责情况。"
   },
   {
     "task_id": "A-012",
@@ -371,7 +404,8 @@
     "actual_decision": "补偿",
     "queries": 1,
     "cost": 0.01,
-    "is_correct": false
+    "is_correct": false,
+    "model_output": ""
   },
   {
     "task_id": "A-012",
@@ -382,7 +416,8 @@
     "actual_decision": "转人工",
     "queries": 5,
     "cost": 0.05,
-    "is_correct": true
+    "is_correct": true,
+    "model_output": ""
   },
   {
     "task_id": "A-012",
@@ -392,7 +427,8 @@
     "actual_status": "UNKNOWN",
     "actual_decision": "转人工",
     "queries": 1,
-    "cost": 0.01,
-    "is_correct": true
+    "cost": 0.001,
+    "is_correct": true,
+    "model_output": "【结论】：转人工\n【理由】：证据中包含 UNCHECKED，达到调用上限，不符合直接补偿条件。"
   }
 ]
