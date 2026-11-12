@@ -30,27 +30,24 @@ import atexit
 
 # ================= 1. 加载并清洗 A 同学的案例 =================
 def load_cases_runtime():
-    """加载 48 条运行侧案例 (适配 runtime_side 嵌套结构)"""
-    # 读取 A 同学的新文件 (请确保文件名完全一致)
-    case_path = os.path.join(os.path.dirname(__file__), '..', 'test_cases', '起步案例集_48条_运行侧_按PM规则.json')
+    """加载 60 条运行侧案例 (适配 runtime_side 嵌套结构)"""
+    # 修改这里：指向新的 60 条文件
+    case_path = os.path.join(os.path.dirname(__file__), '..', 'test_cases', '起步案例集_60条_运行侧_按PM规则.json')
     with open(case_path, 'r', encoding='utf-8') as f:
         raw_cases = json.load(f)
 
     formatted_cases = []
     for case in raw_cases:
-        # 提取 runtime_side 数据
         rs = case.get('runtime_side', {})
-
         formatted_cases.append({
             "task_id": rs.get("task_id", "").strip(),
-            "scenario_type": case.get("scenario_type", ""),  # 场景类型在外层
-            "question": rs.get("question", ""),  # 客户问题
-            "db_config": rs.get("synthetic_db_config", {}),  # 关键：数据库证据状态
-            "tool_config": rs.get("tool_config", {}),  # 工具故障注入
-            "candidate_answers": rs.get("candidate_answers", [])  # 候选回答
+            "scenario_type": case.get("scenario_type", ""),
+            "question": rs.get("question", ""),
+            "db_config": rs.get("synthetic_db_config", {}),
+            "tool_config": rs.get("tool_config", {}),
+            "candidate_answers": rs.get("candidate_answers", [])
         })
     return formatted_cases
-
 
 # ================= 2. 三种基线方法 =================
 def run_simple_prompt(input_data, mock_data):

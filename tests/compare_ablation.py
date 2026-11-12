@@ -78,7 +78,7 @@ def compare_results(auto_file, manual_file):
 
 if __name__ == "__main__":
     # 确保文件名和你实际生成的一致
-    FILE_AUTO = "experiment_results_48.json"
+    FILE_AUTO = "experiment_results_60.json"
     FILE_MANUAL = "experiment_results_ablation_manual.json"
 
     compare_results(FILE_AUTO, FILE_MANUAL)

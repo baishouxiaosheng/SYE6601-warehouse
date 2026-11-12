@@ -30,27 +30,24 @@ import atexit
 
 # ================= 1. 加载并清洗 A 同学的案例 =================
 def load_cases_runtime():
-    """加载 48 条运行侧案例 (适配 runtime_side 嵌套结构)"""
-    # 读取 A 同学的新文件 (请确保文件名完全一致)
-    case_path = os.path.join(os.path.dirname(__file__), '..', 'test_cases', '起步案例集_48条_运行侧_按PM规则.json')
+    """加载 60 条运行侧案例 (适配 runtime_side 嵌套结构)"""
+    # 修改这里：指向新的 60 条文件
+    case_path = os.path.join(os.path.dirname(__file__), '..', 'test_cases', '起步案例集_60条_运行侧_按PM规则.json')
     with open(case_path, 'r', encoding='utf-8') as f:
         raw_cases = json.load(f)
 
     formatted_cases = []
     for case in raw_cases:
-        # 提取 runtime_side 数据
         rs = case.get('runtime_side', {})
-
         formatted_cases.append({
             "task_id": rs.get("task_id", "").strip(),
-            "scenario_type": case.get("scenario_type", ""),  # 场景类型在外层
-            "question": rs.get("question", ""),  # 客户问题
-            "db_config": rs.get("synthetic_db_config", {}),  # 关键：数据库证据状态
-            "tool_config": rs.get("tool_config", {}),  # 工具故障注入
-            "candidate_answers": rs.get("candidate_answers", [])  # 候选回答
+            "scenario_type": case.get("scenario_type", ""),
+            "question": rs.get("question", ""),
+            "db_config": rs.get("synthetic_db_config", {}),
+            "tool_config": rs.get("tool_config", {}),
+            "candidate_answers": rs.get("candidate_answers", [])
         })
     return formatted_cases
-
 
 # ================= 2. 三种基线方法 =================
 def run_simple_prompt(input_data, mock_data):
@@ -201,33 +198,45 @@ def test_compensation_runtime(case):
 
     print(f"\n>>> 正在处理案例: {task_id} ({case['scenario_type']})")
 
-    # 1. 构造 Prompt (让模型根据 db_config 进行推理)
+    # 1. 极简 System Prompt (小模型只听得懂这种)
     system_prompt = """
-    你是一个企业故障补偿审核专家。
-    请根据提供的【客户问题】和【系统证据状态】，判断是否应该赔偿。
+    你是一个严格的逻辑判断引擎。请根据【证据状态】和【业务规则】输出 JSON 结论。
 
-    你必须严格输出以下 JSON 格式（不要输出其他文字）：
-    {
-      "status": "SUPPORT" (支持赔偿) 或 "REFUTE" (拒绝赔偿) 或 "UNKNOWN" (证据不足/阻断) 或 "CONFLICT" (证据冲突),
-      "decision": "补偿" 或 "不补偿" 或 "转人工",
-      "reasoning": "简短的推理过程，说明你看到了什么证据，为什么得出这个结论",
-      "discovered_conditions": ["列出你从证据中发现的关键条件，如'故障满30分钟'"]
-    }
+    【第一优先级：异常阻断（一票否决）】
+    仔细检查【证据状态】中每一个字段的值（包括括号里的内容）。如果包含以下任何关键词，必须立即判定 status="UNKNOWN", decision="转人工"，绝对不要判 SUPPORT 或 REFUTE：
+    - TIMEOUT
+    - FORBIDDEN 或 403
+    - UNCHECKED
+    - EXPIRED
+    - pagination_complete=false
+    - NOT_FOUND (针对关键身份库)
 
-    注意：
-    - 如果证据中有 TIMEOUT, FORBIDDEN, UNCHECKED，必须判 UNKNOWN (转人工)。
-    - 如果证据中有矛盾（如一个说赔，一个说不赔），必须判 CONFLICT (转人工)。
-    - 如果证据中有 NOT_FOUND (合同缺失)，请考虑降级规则。
+    【第二优先级：数字与逻辑（仔细计算）】
+    如果没有触发第一优先级，请进行以下判断：
+    1. 时间比较（非常重要，请在 reasoning 中写出比较过程）：
+       - 如果合同要求"24h内"，实际是"20小时" -> 20 < 24，满足条件！-> 支持赔偿。
+       - 如果合同要求"24h内"，实际是"30小时" -> 30 > 24，不满足！-> 拒绝赔偿。
+       - 如果合同要求"≤24h"，实际是"24.0小时" -> 满足！
+    2. 免责判断：故障原因含 CLIENT_CONFIG_ERROR, DDoS, FORCE_MAJEURE, 计划内维护 -> REFUTE。
+    3. 时长门槛：VIP>=30, 金融>=15, KA>=10, 通用>=60。
+
+    【输出格式】
+    严格输出 JSON：
+    {"status": "SUPPORT/REFUTE/UNKNOWN/CONFLICT", "decision": "补偿/不补偿/转人工", "reasoning": "简述理由，必须包含数字比较过程，例如'20小于24，满足条件'"}
     """
 
-    # 把 db_config 转成字符串给模型看
-    db_config_str = json.dumps(db_config, ensure_ascii=False)
+    evidence_lines = []
+    for key, value in db_config.items():
+        evidence_lines.append(f"- {key}: {value}")
+    evidence_str = "\n".join(evidence_lines)
 
     user_prompt = f"""
     【客户问题】：{question}
-    【系统证据状态 (synthetic_db_config)】：{db_config_str}
 
-    请分析并输出 JSON。
+    【当前证据状态】：
+    {evidence_str}
+
+    请根据【铁律】进行判断，输出 JSON。
     """
 
     # 2. 调用模型
@@ -266,7 +275,7 @@ def test_compensation_runtime(case):
 def save_results_on_exit():
     if not results_log:
         return
-    log_path = os.path.join(os.getcwd(), 'experiment_results_48.json')
+    log_path = os.path.join(os.getcwd(), 'experiment_results_60.json')
     print(f"\n 正在保存 {len(results_log)} 条结果到: {log_path}")
     with open(log_path, 'w', encoding='utf-8') as f:
         json.dump(results_log, f, ensure_ascii=False, indent=2)

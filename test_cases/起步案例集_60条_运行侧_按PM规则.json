@@ -1,0 +1,1942 @@
+[
+  {
+    "task_id": "A-001",
+    "scenario_type": "正常（证据齐全）",
+    "runtime_side": {
+      "task_id": "A-001",
+      "run_id": "A-001-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟, 故障原因=系统侧硬件故障(非免责), 查询时间2026-09-01",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED",
+        "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-002",
+    "scenario_type": "漏专属合同 → 降级通用政策",
+    "runtime_side": {
+      "task_id": "A-002",
+      "run_id": "A-002-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟, 故障原因=系统侧故障",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：专属合同返回 NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-003",
+    "scenario_type": "工具超时 → 阻断转人工",
+    "runtime_side": {
+      "task_id": "A-003",
+      "run_id": "A-003-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "TIMEOUT"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同库超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-004",
+    "scenario_type": "无权限(403) → 阻断转人工",
+    "runtime_side": {
+      "task_id": "A-004",
+      "run_id": "A-004-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=20分钟",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "FORBIDDEN(403)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：403无权限",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-005",
+    "scenario_type": "正常（金融专区补偿）",
+    "runtime_side": {
+      "task_id": "A-005",
+      "run_id": "A-005-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=20分钟, 故障原因=机房供电故障(非DDoS/非配置错)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-006",
+    "scenario_type": "正常（KA大客户极速补偿）",
+    "runtime_side": {
+      "task_id": "A-006",
+      "run_id": "A-006-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=12分钟, 故障原因=系统侧故障(非客户破坏)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED",
+        "TICKET_SYSTEM": "VERIFIED"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-007",
+    "scenario_type": "正常（试用/沙盒免赔）",
+    "runtime_side": {
+      "task_id": "A-007",
+      "run_id": "A-007-r1",
+      "question": "客户tier=TRIAL, plan=Free_Tier, 故障时长=120分钟",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "TRIAL_ACCOUNTS_DB": "VERIFIED",
+        "SANDBOX_LOGS": "VERIFIED"
+      },
+      "tool_config": {
+        "injected_fault": "无（现实自然：本就不提供SLA赔偿）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-008",
+    "scenario_type": "正常（命中免责例外 → 不赔）",
+    "runtime_side": {
+      "task_id": "A-008",
+      "run_id": "A-008-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=45分钟, 故障原因=CLIENT_CONFIG_ERROR(客户自己配错)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+      },
+      "tool_config": {
+        "injected_fault": "无（现实自然存在的免责场景）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-009",
+    "scenario_type": "分页不完整 → 需补查翻页",
+    "runtime_side": {
+      "task_id": "A-009",
+      "run_id": "A-009-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；MAINTENANCE_CALENDAR 仅返回第1页(空)且 pagination_complete=false",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "需补查缺失证据后重新评估"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED",
+        "MAINTENANCE_CALENDAR": "VERIFIED(page1为空, pagination_complete=false)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：分页不完整",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-010",
+    "scenario_type": "错版本/过期合同 → 需补查正确版本",
+    "runtime_side": {
+      "task_id": "A-010",
+      "run_id": "A-010-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；CRM返回合同版本v2已过期(EXPIRED)，当前查询时间应适用v3",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "需补查缺失证据后重新评估"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "EXPIRED(命中到 v2 过期版本, 不适用当前查询)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：错版本",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-011",
+    "scenario_type": "证据冲突 → CONFLICT 转人工",
+    "runtime_side": {
+      "task_id": "A-011",
+      "run_id": "A-011-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=35分钟；监控显示有效故障35分钟(满30)，但维护日历显示该时段为计划内维护窗口(免责)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(35分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：证据冲突",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-012",
+    "scenario_type": "达到调用上限 → 阻断转人工",
+    "runtime_side": {
+      "task_id": "A-012",
+      "run_id": "A-012-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=18分钟；前置步骤 VERIFY_FINANCE_ZONE_IDENTITY 多次尝试未确认，达到调用上限",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "UNCHECKED(前置身份核验未完成, 达到调用上限)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：达到调用上限",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-013",
+    "scenario_type": "VIP阈值边界值（刚好30分钟）",
+    "runtime_side": {
+      "task_id": "A-013",
+      "run_id": "A-013-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=30分钟(刚好等于门槛), 故障原因=系统侧硬件故障(非免责), 查询时间2026-09-01",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(30分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+      },
+      "tool_config": {
+        "injected_fault": "无（边界值正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-014",
+    "scenario_type": "通用客户正常补偿（RULE-002首次覆盖）",
+    "runtime_side": {
+      "task_id": "A-014",
+      "run_id": "A-014-r1",
+      "question": "客户tier=STANDARD, plan=STANDARD, 故障时长=65分钟, 故障原因=系统侧故障(非免责)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(65分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-015",
+    "scenario_type": "通用客户时长不足",
+    "runtime_side": {
+      "task_id": "A-015",
+      "run_id": "A-015-r1",
+      "question": "客户tier=STANDARD, plan=STANDARD, 故障时长=45分钟, 故障原因=系统侧故障",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(45分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然反例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-016",
+    "scenario_type": "金融专区DDoS攻击免责",
+    "runtime_side": {
+      "task_id": "A-016",
+      "run_id": "A-016-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=25分钟, 故障原因=DDoS_ATTACK(黑客攻击导致服务中断)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(故障原因=DDoS_ATTACK)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然免责场景）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-017",
+    "scenario_type": "KA客户人为主动破坏免责",
+    "runtime_side": {
+      "task_id": "A-017",
+      "run_id": "A-017-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=15分钟, 故障原因=CLIENT_MALICIOUS_ACTION(客户人为主动破坏系统)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_MALICIOUS_ACTION)",
+        "TICKET_SYSTEM": "VERIFIED"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然免责场景）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-018",
+    "scenario_type": "VIP不可抗力免责",
+    "runtime_side": {
+      "task_id": "A-018",
+      "run_id": "A-018-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=50分钟, 故障原因=FORCE_MAJEURE(地震导致机房损毁)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(故障原因=FORCE_MAJEURE)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然免责场景）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-019",
+    "scenario_type": "KA合同缺失降级→时长不足不赔",
+    "runtime_side": {
+      "task_id": "A-019",
+      "run_id": "A-019-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=12分钟",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(12分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：KA客户数据库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-020",
+    "scenario_type": "金融专区阈值边界值（刚好15分钟）",
+    "runtime_side": {
+      "task_id": "A-020",
+      "run_id": "A-020-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=15分钟(刚好等于门槛), 故障原因=机房网络故障(非DDoS/非配置错)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(15分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "无（边界值正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-021",
+    "scenario_type": "试用账户未找到→降级标准规则→时长不足不赔",
+    "runtime_side": {
+      "task_id": "A-021",
+      "run_id": "A-021-r1",
+      "question": "客户tier=TRIAL, plan=Free_Tier, 故障时长=45分钟；TRIAL_ACCOUNTS_DB返回NOT_FOUND",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(45分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：试用账户数据库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-022",
+    "scenario_type": "VIP合同缺失降级→时长足够赔偿",
+    "runtime_side": {
+      "task_id": "A-022",
+      "run_id": "A-022-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=70分钟；CRM_CONTRACT_DB返回NOT_FOUND",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(70分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-023",
+    "scenario_type": "KA合同缺失降级→时长足够(走VIP规则)赔偿",
+    "runtime_side": {
+      "task_id": "A-023",
+      "run_id": "A-023-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=35分钟；KA_CLIENT_DB返回NOT_FOUND",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(35分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：KA客户数据库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-024",
+    "scenario_type": "通用客户合同缺失→降级通用政策自身→时长足够赔偿",
+    "runtime_side": {
+      "task_id": "A-024",
+      "run_id": "A-024-r1",
+      "question": "客户tier=STANDARD, plan=STANDARD, 故障时长=70分钟；CRM_CONTRACT_DB返回NOT_FOUND",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(70分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-025",
+    "scenario_type": "KA阈值边界值（刚好10分钟）",
+    "runtime_side": {
+      "task_id": "A-025",
+      "run_id": "A-025-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=10分钟(刚好等于门槛), 故障原因=系统侧故障(非客户破坏), 查询时间2026-09-01",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(10分钟)",
+        "TICKET_SYSTEM": "VERIFIED"
+      },
+      "tool_config": {
+        "injected_fault": "无（边界值正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-026",
+    "scenario_type": "通用客户配置错误免责",
+    "runtime_side": {
+      "task_id": "A-026",
+      "run_id": "A-026-r1",
+      "question": "客户tier=STANDARD, plan=STANDARD, 故障时长=70分钟, 故障原因=CLIENT_CONFIG_ERROR(客户自己配错配置导致故障)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然免责场景）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-027",
+    "scenario_type": "金融专区配置错误免责",
+    "runtime_side": {
+      "task_id": "A-027",
+      "run_id": "A-027-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=20分钟, 故障原因=CLIENT_CONFIG_ERROR(客户配置错误导致服务中断)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然免责场景）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-028",
+    "scenario_type": "VIP计划内维护免责（维护日历返回有记录）",
+    "runtime_side": {
+      "task_id": "A-028",
+      "run_id": "A-028-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；MAINTENANCE_CALENDAR返回该故障时段存在计划内维护记录（非空、非分页不完整）",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口, pagination_complete=true)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然免责场景）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-029",
+    "scenario_type": "通用客户合同库超时→阻断转人工",
+    "runtime_side": {
+      "task_id": "A-029",
+      "run_id": "A-029-r1",
+      "question": "客户tier=STANDARD, plan=STANDARD, 故障时长=70分钟；CRM_CONTRACT_DB超时",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "TIMEOUT"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同库超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-030",
+    "scenario_type": "试用账户VERIFIED但沙盒日志超时",
+    "runtime_side": {
+      "task_id": "A-030",
+      "run_id": "A-030-r1",
+      "question": "客户tier=TRIAL, plan=Free_Tier, 故障时长=120分钟；TRIAL_ACCOUNTS_DB=VERIFIED但SANDBOX_LOGS=TIMEOUT",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "TRIAL_ACCOUNTS_DB": "VERIFIED",
+        "SANDBOX_LOGS": "TIMEOUT"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：沙盒日志超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-031",
+    "scenario_type": "VIP合同过期+监控超时组合故障",
+    "runtime_side": {
+      "task_id": "A-031",
+      "run_id": "A-031-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；CRM_CONTRACT_DB返回EXPIRED(过期版本)且MONITORING_SYSTEM=TIMEOUT",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "EXPIRED(命中到过期版本, 不适用当前查询)",
+        "MONITORING_SYSTEM": "TIMEOUT",
+        "MAINTENANCE_CALENDAR": "未查询(前置依赖未满足)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同过期+监控超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-032",
+    "scenario_type": "KA合同缺失降级→刚好30分钟(走VIP规则)边界",
+    "runtime_side": {
+      "task_id": "A-032",
+      "run_id": "A-032-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=30分钟(刚好等于VIP门槛)；KA_CLIENT_DB返回NOT_FOUND",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(30分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：KA客户数据库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-033",
+    "scenario_type": "通用客户阈值边界值（刚好60分钟）",
+    "runtime_side": {
+      "task_id": "A-033",
+      "run_id": "A-033-r1",
+      "question": "客户tier=STANDARD, plan=STANDARD, 故障时长=60分钟(刚好等于门槛), 故障原因=系统侧故障(非免责), 查询时间2026-09-01",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(60分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "无（边界值正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-034",
+    "scenario_type": "VIP合同VERIFIED但监控超时",
+    "runtime_side": {
+      "task_id": "A-034",
+      "run_id": "A-034-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；CRM_CONTRACT_DB=VERIFIED但MONITORING_SYSTEM=TIMEOUT",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "TIMEOUT",
+        "MAINTENANCE_CALENDAR": "未查询(前置依赖CHECK_EXCLUSIVE_CONTRACT未满足)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：监控系统超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-035",
+    "scenario_type": "通用客户合同缺失降级→配置错误免责",
+    "runtime_side": {
+      "task_id": "A-035",
+      "run_id": "A-035-r1",
+      "question": "客户tier=STANDARD, plan=STANDARD, 故障时长=70分钟；CRM_CONTRACT_DB返回NOT_FOUND，故障原因=CLIENT_CONFIG_ERROR",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-036",
+    "scenario_type": "试用账户NOT_FOUND降级通用→刚好60分钟边界",
+    "runtime_side": {
+      "task_id": "A-036",
+      "run_id": "A-036-r1",
+      "question": "客户tier=TRIAL, plan=Free_Tier, 故障时长=60分钟(刚好等于门槛)；TRIAL_ACCOUNTS_DB返回NOT_FOUND",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(60分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：试用账户数据库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-037",
+    "scenario_type": "金融双工具超时→阻断",
+    "runtime_side": {
+      "task_id": "A-037",
+      "run_id": "A-037-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=20分钟；FINANCE_ZONE_DB=TIMEOUT且MONITORING_SYSTEM=TIMEOUT",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "TIMEOUT",
+        "MONITORING_SYSTEM": "TIMEOUT"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：金融专区数据库超时+监控系统超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-038",
+    "scenario_type": "金融合同缺失→阻断(不降级)",
+    "runtime_side": {
+      "task_id": "A-038",
+      "run_id": "A-038-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=20分钟；FINANCE_ZONE_DB返回NOT_FOUND",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "NOT_FOUND"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：金融专区数据库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-039",
+    "scenario_type": "合同身份矛盾→冲突",
+    "runtime_side": {
+      "task_id": "A-039",
+      "run_id": "A-039-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=35分钟；CRM_CONTRACT_DB返回VERIFIED但合同内customer_tier字段=STANDARD(与查询tier不一致)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED(但customer_tier=STANDARD,与查询tier=VIP矛盾)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同内部字段矛盾",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-040",
+    "scenario_type": "监控vs工单矛盾→冲突",
+    "runtime_side": {
+      "task_id": "A-040",
+      "run_id": "A-040-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=15分钟；MONITORING_SYSTEM显示故障15分钟，但TICKET_SYSTEM显示该时段系统healthy且无故障工单",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(15分钟)",
+        "TICKET_SYSTEM": "VERIFIED(系统healthy,无故障工单)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：监控与工单系统证据矛盾",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-041",
+    "scenario_type": "试用沙盒日志403权限不足→阻断",
+    "runtime_side": {
+      "task_id": "A-041",
+      "run_id": "A-041-r1",
+      "question": "客户tier=TRIAL, plan=Free_Tier, 故障时长=120分钟；TRIAL_ACCOUNTS_DB=VERIFIED但SANDBOX_LOGS=FORBIDDEN(403)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "TRIAL_ACCOUNTS_DB": "VERIFIED",
+        "SANDBOX_LOGS": "FORBIDDEN(403)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：沙盒日志返回403无权限",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-042",
+    "scenario_type": "BASIC tier客户正常补偿",
+    "runtime_side": {
+      "task_id": "A-042",
+      "run_id": "A-042-r1",
+      "question": "客户tier=BASIC, plan=ALL, 故障时长=65分钟, 故障原因=系统侧故障(非免责), 查询时间2026-09-01",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：故障时长满足适用规则门槛且无免责例外"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：需进一步核查免责条款与合同有效性"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(65分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "无（自然正例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-043",
+    "scenario_type": "金融专区差1分钟不赔",
+    "runtime_side": {
+      "task_id": "A-043",
+      "run_id": "A-043-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=14分钟(差1分钟到15分钟门槛), 故障原因=机房网络故障(非DDoS/非配置错)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(14分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "无（边界值反例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-044",
+    "scenario_type": "VIP维护日历403权限不足→阻断",
+    "runtime_side": {
+      "task_id": "A-044",
+      "run_id": "A-044-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；CRM_CONTRACT_DB=VERIFIED, MONITORING_SYSTEM=VERIFIED(40分钟), 但MAINTENANCE_CALENDAR=FORBIDDEN(403)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "FORBIDDEN(403)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：维护日历返回403无权限",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-045",
+    "scenario_type": "KA合同缺失降级+配置错误免责",
+    "runtime_side": {
+      "task_id": "A-045",
+      "run_id": "A-045-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=35分钟；KA_CLIENT_DB返回NOT_FOUND，故障原因=CLIENT_CONFIG_ERROR(客户自己配错配置)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "NOT_FOUND",
+        "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：KA客户数据库返回NOT_FOUND",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-046",
+    "scenario_type": "试用账户NOT_FOUND+沙盒日志超时→多源故障",
+    "runtime_side": {
+      "task_id": "A-046",
+      "run_id": "A-046-r1",
+      "question": "客户tier=TRIAL, plan=Free_Tier, 故障时长=120分钟；TRIAL_ACCOUNTS_DB返回NOT_FOUND，SANDBOX_LOGS=TIMEOUT",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+        "SANDBOX_LOGS": "TIMEOUT"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：试用账户数据库返回NOT_FOUND+沙盒日志超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-047",
+    "scenario_type": "通用客户合同过期+监控超时→组合故障",
+    "runtime_side": {
+      "task_id": "A-047",
+      "run_id": "A-047-r1",
+      "question": "客户tier=STANDARD, plan=STANDARD, 故障时长=70分钟；CRM_CONTRACT_DB返回EXPIRED(过期版本)，MONITORING_SYSTEM=TIMEOUT",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "根据现有信息尝试作出裁决"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：关键证据不可用或证据冲突无法自动消解"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "EXPIRED(命中到过期版本, 不适用当前查询)",
+        "MONITORING_SYSTEM": "TIMEOUT"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同库返回过期版本+监控系统超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-048",
+    "scenario_type": "VIP客户差1分钟不赔",
+    "runtime_side": {
+      "task_id": "A-048",
+      "run_id": "A-048-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=29分钟(差1分钟到30分钟门槛), 故障原因=系统侧硬件故障(非免责), 查询时间2026-09-01",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：不满足补偿条件（时长不足/免责/免赔）"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：故障时长达到门槛应补偿"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(29分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+      },
+      "tool_config": {
+        "injected_fault": "无（边界值反例）",
+        "fault_class": "自然"
+      }
+    }
+  },
+  {
+    "task_id": "A-049",
+    "scenario_type": "DYN-01主案例：合同新增‘24h内提交工单’适用条件(满足)",
+    "runtime_side": {
+      "task_id": "A-049",
+      "run_id": "A-049-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟, 故障原因=系统侧硬件故障(非免责)；适用合同新增条款：申请赔偿须在故障后24小时内提交工单。工单系统记录显示故障后20小时提交工单",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：时长达标、无免责、且工单在合同要求的24小时内提交"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：合同有额外条件无法满足"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+        "TICKET_SYSTEM": "VERIFIED(故障后20小时提交工单)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同新增适用条件(工单时限)并配齐证据",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-050",
+    "scenario_type": "DYN-01配对①：合同新增工单条件不满足(超24h时限)",
+    "runtime_side": {
+      "task_id": "A-050",
+      "run_id": "A-050-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟, 故障原因=系统侧硬件故障(非免责)；合同新增条款：须故障后24小时内提交工单。工单系统记录显示故障后30小时才提交工单",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：时长达标且无免责"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：未满足合同‘24h内提交工单’新增条件"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+        "TICKET_SYSTEM": "VERIFIED(故障后30小时提交工单)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同新增工单时限条件且实际超时",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-051",
+    "scenario_type": "DYN-01配对②：工单时限刚好24h边界值(满足)",
+    "runtime_side": {
+      "task_id": "A-051",
+      "run_id": "A-051-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟, 故障原因=系统侧硬件故障(非免责)；合同新增条款：须故障后24小时内(≤24h)提交工单。工单系统记录显示故障后刚好24小时整提交工单",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：工单恰在24h边界内提交"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：24小时已超时"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED(合同含‘≤24h内提交工单’新增条款, pagination_complete=true)",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+        "TICKET_SYSTEM": "VERIFIED(故障后恰好24.0小时提交工单)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：工单时限边界值",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-052",
+    "scenario_type": "DYN-01配对③：工单系统403权限不足无法验证时限→阻断",
+    "runtime_side": {
+      "task_id": "A-052",
+      "run_id": "A-052-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；合同新增‘24h内提交工单’条件；查询TICKET_SYSTEM核验工单提交时限时返回403权限不足",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：时长达标且无免责"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：无法核验合同新增的工单时限条件"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+        "TICKET_SYSTEM": "403_FORBIDDEN"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：工单系统403权限不足",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-053",
+    "scenario_type": "DYN-01配对④：工单条款原文在合同第二页(转引/跨页取证)",
+    "runtime_side": {
+      "task_id": "A-053",
+      "run_id": "A-053-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟, 无免责；‘24h内提交工单’条款以‘详见附件第2页’形式转引，CRM_CONTRACT_DB第1页pagination_complete=false且未见该条款",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：第1页未见该条件即视为无此限制"
+        },
+        {
+          "answer_id": "B",
+          "content": "需补查缺失证据后重新评估"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED(page1未见工单条款, pagination_complete=false, 存在‘详见附件第2页’转引)",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：关键条款跨页转引且分页未完整",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-054",
+    "scenario_type": "相同材料不同问题(身份驱动适用规则)",
+    "runtime_side": {
+      "task_id": "A-054",
+      "run_id": "A-054-r1",
+      "question": "同一客户材料tier=FINANCE, plan=FINANCE_ZONE, 故障时长=20分钟, 故障原因=系统侧故障。问题：该次故障是否满足SLA赔偿(注意：材料中亦可查询VIP合同库，但客户身份为FINANCE)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "拒绝赔偿：按VIP规则RULE-001门槛30分钟，20<30不赔"
+        },
+        {
+          "answer_id": "B",
+          "content": "同意赔偿：按客户身份FINANCE适用RULE-003门槛15分钟，20>=15应赔"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：相同材料下以身份正确选择适用规则",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-055",
+    "scenario_type": "回答额外承诺金额或程序(超出规则范围)",
+    "runtime_side": {
+      "task_id": "A-055",
+      "run_id": "A-055-r1",
+      "question": "客户tier=KA_STRATEGIC, plan=Custom_Dedicated, 故障时长=15分钟, 故障原因=系统侧故障(非人为破坏)。候选回答A声称：‘除SLA赔付外，额外赔偿500元并赠送2个月服务’",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：接受回答A的额外赔偿500元+赠2个月服务"
+        },
+        {
+          "answer_id": "B",
+          "content": "按规则范围支持SLA赔偿，不接受无规则依据的额外金额/程序"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "KA_CLIENT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(15分钟)",
+        "TICKET_SYSTEM": "VERIFIED"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：候选回答含超范围承诺",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-056",
+    "scenario_type": "规则覆盖及旧依据失效(查询时间落在规则失效期后)",
+    "runtime_side": {
+      "task_id": "A-056",
+      "run_id": "A-056-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=20分钟；查询时间=2027-06-01(已超出RULE-003生效期end=2026-12-31)，且FINANCE档位无其它现行规则",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：沿用RULE-003门槛15分钟，20>=15应赔"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：适用规则在该查询时间已失效，无现行规则可套用"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：旧规则已失效(effective_time结束)",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-057",
+    "scenario_type": "同义改写/否定/单位变化(时长约半小时且未超时)",
+    "runtime_side": {
+      "task_id": "A-057",
+      "run_id": "A-057-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro；用户描述：‘服务中断大约持续了半小时’，‘未处于任何计划维护时段’，‘故障并非我方配置导致’。问题：该次故障是否满足SLA赔偿",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：半小时=30分钟恰满足RULE-001门槛，且否定表述排除了维护与配置免责"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：表述模糊无法判定"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(服务中断持续约30分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：自然语言改写/否定/单位换算",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-058",
+    "scenario_type": "正确元数据但支持方向为反驳(免责易被误判为支持)",
+    "runtime_side": {
+      "task_id": "A-058",
+      "run_id": "A-058-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；所有数据源元数据均status=VERIFIED：MONITORING_SYSTEM=VERIFIED(40分钟)，MAINTENANCE_CALENDAR=VERIFIED(故障时段确为计划内维护窗口)",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：所有证据status=VERIFIED(元数据正确)且时长40>=30达标"
+        },
+        {
+          "answer_id": "B",
+          "content": "拒绝赔偿：维护日历显示该时段为计划内维护，属免责，支持方向为反驳"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：元数据正确但支持关系指向反驳",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-059",
+    "scenario_type": "模型漏建基础必查条件(prerequisite未先完成)",
+    "runtime_side": {
+      "task_id": "A-059",
+      "run_id": "A-059-r1",
+      "question": "客户tier=FINANCE, plan=FINANCE_ZONE, 故障时长=20分钟；执行顺序错误：未先完成VERIFY_FINANCE_ZONE_IDENTITY(核验金融专区身份)就直接读取MONITORING_SYSTEM时长证据",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：监控20分钟>=15门槛，可赔"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：obligations要求先核验金融专区身份，前置依赖未完成不得据未校验链路裁决"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "FINANCE_ZONE_DB": "UNCHECKED(前置步骤VERIFY_FINANCE_ZONE_IDENTITY未执行)",
+        "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：必查前置依赖(FINANCE身份核验)被漏建",
+        "fault_class": "人为注入"
+      }
+    }
+  },
+  {
+    "task_id": "A-060",
+    "scenario_type": "新要求无法表达或取证(合同新增条件无对应证据源)",
+    "runtime_side": {
+      "task_id": "A-060",
+      "run_id": "A-060-r1",
+      "question": "客户tier=VIP, plan=Enterprise_Pro, 故障时长=40分钟；合同新增条款：申请赔偿须附‘第三方独立审计报告’。系统中无任何工具/数据源可提供第三方审计报告，且现有建链schema无法表达该取证义务",
+      "candidate_answers": [
+        {
+          "answer_id": "A",
+          "content": "同意赔偿：时长达标且其余证据齐全，忽略无法取证的新条件"
+        },
+        {
+          "answer_id": "B",
+          "content": "转人工复核：合同新增条件在当前证据体系中无法表达/取证"
+        }
+      ],
+      "user_provided_materials": [
+        "客户等级(tier)与套餐(plan)信息",
+        "故障时长与故障原因记录",
+        "查询时间"
+      ],
+      "synthetic_db_config": {
+        "CRM_CONTRACT_DB": "VERIFIED(合同含‘须附第三方独立审计报告’新增条款, pagination_complete=true)",
+        "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+        "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+        "THIRD_PARTY_AUDIT": "NO_REGISTERED_SOURCE(无已注册工具/证据源可取证)"
+      },
+      "tool_config": {
+        "injected_fault": "人为注入：合同新增条件无对应可取证的证据源",
+        "fault_class": "人为注入"
+      }
+    }
+  }
+]

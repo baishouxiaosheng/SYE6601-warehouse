@@ -1,0 +1,922 @@
+[
+  {
+    "task_id": "A-001",
+    "scenario_type": "正常（证据齐全）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户为VIP级别，时长门槛为30分钟，故障时长为40分钟，40分钟大于30分钟，满足赔偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户为VIP级别，时长门槛为30分钟，故障时长为40分钟，40分钟大于30分钟，满足赔偿条件。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED",
+      "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-002",
+    "scenario_type": "漏专属合同 → 降级通用政策",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词 NOT_FOUND，根据第一优先级的异常阻断规则，必须判定为 UNKNOWN 并转人工。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词 NOT_FOUND，根据第一优先级的异常阻断规则，必须判定为 UNKNOWN 并转人工。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-003",
+    "scenario_type": "工具超时 → 阻断转人工",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词 TIMEOUT，根据铁律必须判定为 UNKNOWN 并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词 TIMEOUT，根据铁律必须判定为 UNKNOWN 并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "TIMEOUT"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-004",
+    "scenario_type": "无权限(403) → 阻断转人工",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词FORBIDDEN(403)，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词FORBIDDEN(403)，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "FORBIDDEN(403)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-005",
+    "scenario_type": "正常（金融专区补偿）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户tier为FINANCE，故障时长为20分钟，满足金融类≥15分钟的时长门槛，且故障原因不是DDoS、配置错误等免责情况，因此支持赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户tier为FINANCE，故障时长为20分钟，满足金融类≥15分钟的时长门槛，且故障原因不是DDoS、配置错误等免责情况，因此支持赔偿。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-006",
+    "scenario_type": "正常（KA大客户极速补偿）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户级别为KA_STRATEGIC，时长门槛为≥10分钟，故障时长为12分钟，满足时长门槛条件。因此，支持赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户级别为KA_STRATEGIC，时长门槛为≥10分钟，故障时长为12分钟，满足时长门槛条件。因此，支持赔偿。\"\n}\n```",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED",
+      "TICKET_SYSTEM": "VERIFIED"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-007",
+    "scenario_type": "正常（试用/沙盒免赔）",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "客户为TRIAL账户，不符合时长门槛要求（VIP>=30, 金融>=15, KA>=10, 通用>=60），且当前证据状态中未发现异常阻断关键词，但账户类型不符合赔偿条件，因此转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"客户为TRIAL账户，不符合时长门槛要求（VIP>=30, 金融>=15, KA>=10, 通用>=60），且当前证据状态中未发现异常阻断关键词，但账户类型不符合赔偿条件，因此转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "VERIFIED",
+      "SANDBOX_LOGS": "VERIFIED"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-008",
+    "scenario_type": "正常（命中免责例外 → 不赔）",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据免责判断，故障原因包含 CLIENT_CONFIG_ERROR，因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据免责判断，故障原因包含 CLIENT_CONFIG_ERROR，因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-009",
+    "scenario_type": "分页不完整 → 需补查翻页",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中 MAINTENANCE_CALENDAR 的 pagination_complete=false，触发了异常阻断规则，必须转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中 MAINTENANCE_CALENDAR 的 pagination_complete=false，触发了异常阻断规则，必须转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED",
+      "MAINTENANCE_CALENDAR": "VERIFIED(page1为空, pagination_complete=false)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-010",
+    "scenario_type": "错版本/过期合同 → 需补查正确版本",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词 'EXPIRED'，根据铁律必须判定为 UNKNOWN 并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词 'EXPIRED'，根据铁律必须判定为 UNKNOWN 并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "EXPIRED(命中到 v2 过期版本, 不适用当前查询)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-011",
+    "scenario_type": "证据冲突 → CONFLICT 转人工",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据免责条款，故障原因包含计划内维护，因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据免责条款，故障原因包含计划内维护，因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(35分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-012",
+    "scenario_type": "达到调用上限 → 阻断转人工",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词 'UNCHECKED'，根据铁律必须判定为 UNKNOWN 并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词 'UNCHECKED'，根据铁律必须判定为 UNKNOWN 并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "UNCHECKED(前置身份核验未完成, 达到调用上限)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-013",
+    "scenario_type": "VIP阈值边界值（刚好30分钟）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户tier为VIP，时长门槛为30分钟，故障时长为30分钟，满足时长门槛条件。且故障原因为系统侧硬件故障，不属于免责情况。因此，支持赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户tier为VIP，时长门槛为30分钟，故障时长为30分钟，满足时长门槛条件。且故障原因为系统侧硬件故障，不属于免责情况。因此，支持赔偿。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(30分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-014",
+    "scenario_type": "通用客户正常补偿（RULE-002首次覆盖）",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据时长门槛规则，客户等级为STANDARD，对应的时长门槛为60分钟。故障时长为65分钟，超过了60分钟的时长门槛，因此不符合赔偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据时长门槛规则，客户等级为STANDARD，对应的时长门槛为60分钟。故障时长为65分钟，超过了60分钟的时长门槛，因此不符合赔偿条件。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(65分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-015",
+    "scenario_type": "通用客户时长不足",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据时长门槛规则，客户等级为STANDARD，对应的时长门槛为60分钟。故障时长为45分钟，未达到60分钟的门槛，因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据时长门槛规则，客户等级为STANDARD，对应的时长门槛为60分钟。故障时长为45分钟，未达到60分钟的门槛，因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(45分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-016",
+    "scenario_type": "金融专区DDoS攻击免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "故障原因包含DDoS_ATTACK，属于免责条款，因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"故障原因包含DDoS_ATTACK，属于免责条款，因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=DDoS_ATTACK)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-017",
+    "scenario_type": "KA客户人为主动破坏免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据时长门槛规则，KA客户的时长门槛是≥10小时。故障时长为15分钟，即0.25小时，不满足时长门槛。同时，故障原因是CLIENT_MALICIOUS_ACTION，属于免责条款。因此，不支持赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据时长门槛规则，KA客户的时长门槛是≥10小时。故障时长为15分钟，即0.25小时，不满足时长门槛。同时，故障原因是CLIENT_MALICIOUS_ACTION，属于免责条款。因此，不支持赔偿。\"\n}\n```",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_MALICIOUS_ACTION)",
+      "TICKET_SYSTEM": "VERIFIED"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-018",
+    "scenario_type": "VIP不可抗力免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据免责条款，故障原因含 FORCE_MAJEURE（地震导致机房损毁），因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据免责条款，故障原因含 FORCE_MAJEURE（地震导致机房损毁），因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=FORCE_MAJEURE)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-019",
+    "scenario_type": "KA合同缺失降级→时长不足不赔",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中 KA_CLIENT_DB 字段包含关键词 NOT_FOUND，根据铁律必须判定为 UNKNOWN 并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中 KA_CLIENT_DB 字段包含关键词 NOT_FOUND，根据铁律必须判定为 UNKNOWN 并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "KA_CLIENT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(12分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-020",
+    "scenario_type": "金融专区阈值边界值（刚好15分钟）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户 tier 为 FINANCE，故障时长为 15 分钟，刚好等于门槛 15 分钟。根据业务规则，金融类客户的时长门槛为 15 分钟，满足条件，因此支持赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户 tier 为 FINANCE，故障时长为 15 分钟，刚好等于门槛 15 分钟。根据业务规则，金融类客户的时长门槛为 15 分钟，满足条件，因此支持赔偿。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(15分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-021",
+    "scenario_type": "试用账户未找到→降级标准规则→时长不足不赔",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "TRIAL_ACCOUNTS_DB返回NOT_FOUND，触发了异常阻断规则，必须转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"TRIAL_ACCOUNTS_DB返回NOT_FOUND，触发了异常阻断规则，必须转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(45分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-022",
+    "scenario_type": "VIP合同缺失降级→时长足够赔偿",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中CRM_CONTRACT_DB字段的值为NOT_FOUND，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中CRM_CONTRACT_DB字段的值为NOT_FOUND，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(70分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-023",
+    "scenario_type": "KA合同缺失降级→时长足够(走VIP规则)赔偿",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "KA_CLIENT_DB返回NOT_FOUND，触发了异常阻断规则，必须转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"KA_CLIENT_DB返回NOT_FOUND，触发了异常阻断规则，必须转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "KA_CLIENT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(35分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-024",
+    "scenario_type": "通用客户合同缺失→降级通用政策自身→时长足够赔偿",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中CRM_CONTRACT_DB返回NOT_FOUND，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中CRM_CONTRACT_DB返回NOT_FOUND，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(70分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-025",
+    "scenario_type": "KA阈值边界值（刚好10分钟）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户 tier 为 KA_STRATEGIC，门槛为 ≥10 小时，虽然故障时长为 10 分钟（刚好等于门槛），但属于系统侧故障，非客户破坏，且证据状态为 VERIFIED。因此，满足补偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户 tier 为 KA_STRATEGIC，门槛为 ≥10 小时，虽然故障时长为 10 分钟（刚好等于门槛），但属于系统侧故障，非客户破坏，且证据状态为 VERIFIED。因此，满足补偿条件。\"\n}\n```",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(10分钟)",
+      "TICKET_SYSTEM": "VERIFIED"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-026",
+    "scenario_type": "通用客户配置错误免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "故障原因包含 CLIENT_CONFIG_ERROR，根据业务规则，这种情况属于免责情况，因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"故障原因包含 CLIENT_CONFIG_ERROR，根据业务规则，这种情况属于免责情况，因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-027",
+    "scenario_type": "金融专区配置错误免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "故障原因包含 CLIENT_CONFIG_ERROR，根据业务规则，此情况属于免责条款，因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"故障原因包含 CLIENT_CONFIG_ERROR，根据业务规则，此情况属于免责条款，因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-028",
+    "scenario_type": "VIP计划内维护免责（维护日历返回有记录）",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据时长门槛规则，VIP级别的服务要求故障时长小于30分钟，而实际故障时长为40分钟，超过了30分钟的门槛。另外，故障期间存在计划内维护记录，属于免责情况。因此，不满足赔偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据时长门槛规则，VIP级别的服务要求故障时长小于30分钟，而实际故障时长为40分钟，超过了30分钟的门槛。另外，故障期间存在计划内维护记录，属于免责情况。因此，不满足赔偿条件。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口, pagination_complete=true)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-029",
+    "scenario_type": "通用客户合同库超时→阻断转人工",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词 TIMEOUT，根据铁律必须判定为 UNKNOWN 并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词 TIMEOUT，根据铁律必须判定为 UNKNOWN 并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "TIMEOUT"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-030",
+    "scenario_type": "试用账户VERIFIED但沙盒日志超时",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "SANDBOX_LOGS 的状态为 TIMEOUT，根据铁律，必须判定为 UNKNOWN 并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"SANDBOX_LOGS 的状态为 TIMEOUT，根据铁律，必须判定为 UNKNOWN 并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "VERIFIED",
+      "SANDBOX_LOGS": "TIMEOUT"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-031",
+    "scenario_type": "VIP合同过期+监控超时组合故障",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词\"TIMEOUT\"，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词\\\"TIMEOUT\\\"，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "EXPIRED(命中到过期版本, 不适用当前查询)",
+      "MONITORING_SYSTEM": "TIMEOUT",
+      "MAINTENANCE_CALENDAR": "未查询(前置依赖未满足)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-032",
+    "scenario_type": "KA合同缺失降级→刚好30分钟(走VIP规则)边界",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中KA_CLIENT_DB为NOT_FOUND，触发了异常阻断规则，必须转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中KA_CLIENT_DB为NOT_FOUND，触发了异常阻断规则，必须转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "KA_CLIENT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(30分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-033",
+    "scenario_type": "通用客户阈值边界值（刚好60分钟）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户tier=STANDARD，计划为STANDARD，故障时长为60分钟，刚好等于通用时长门槛60分钟，且故障原因系统侧故障不属于免责情况，因此满足赔偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户tier=STANDARD，计划为STANDARD，故障时长为60分钟，刚好等于通用时长门槛60分钟，且故障原因系统侧故障不属于免责情况，因此满足赔偿条件。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(60分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-034",
+    "scenario_type": "VIP合同VERIFIED但监控超时",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词'TIMEOUT'，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词'TIMEOUT'，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "TIMEOUT",
+      "MAINTENANCE_CALENDAR": "未查询(前置依赖CHECK_EXCLUSIVE_CONTRACT未满足)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-035",
+    "scenario_type": "通用客户合同缺失降级→配置错误免责",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中CRM_CONTRACT_DB返回NOT_FOUND，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中CRM_CONTRACT_DB返回NOT_FOUND，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-036",
+    "scenario_type": "试用账户NOT_FOUND降级通用→刚好60分钟边界",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中TRIAL_ACCOUNTS_DB返回NOT_FOUND，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中TRIAL_ACCOUNTS_DB返回NOT_FOUND，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(60分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-037",
+    "scenario_type": "金融双工具超时→阻断",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词'TIMEOUT'，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词'TIMEOUT'，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "TIMEOUT",
+      "MONITORING_SYSTEM": "TIMEOUT"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-038",
+    "scenario_type": "金融合同缺失→阻断(不降级)",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词NOT_FOUND，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词NOT_FOUND，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "NOT_FOUND"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-039",
+    "scenario_type": "合同身份矛盾→冲突",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中CRM_CONTRACT_DB返回VERIFIED，但customer_tier字段与查询的客户tier不一致（查询tier=VIP，合同中customer_tier=STANDARD），触发了异常阻断规则。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中CRM_CONTRACT_DB返回VERIFIED，但customer_tier字段与查询的客户tier不一致（查询tier=VIP，合同中customer_tier=STANDARD），触发了异常阻断规则。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(但customer_tier=STANDARD,与查询tier=VIP矛盾)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-040",
+    "scenario_type": "监控vs工单矛盾→冲突",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含VERIFIED，但TICKET_SYSTEM显示系统healthy且无故障工单，与MONITORING_SYSTEM显示的故障情况不符，存在异常。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含VERIFIED，但TICKET_SYSTEM显示系统healthy且无故障工单，与MONITORING_SYSTEM显示的故障情况不符，存在异常。\"\n}\n```\n\n**解析：**\n- 证据状态中没有出现第一优先级中的关键词，因此不触发第一优先级。\n- 第二优先级中没有直接适用的规则，但TICKET_SYSTEM和MONITORING_SYSTEM的显示结果存在明显矛盾，需要进一步人工判断。",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(15分钟)",
+      "TICKET_SYSTEM": "VERIFIED(系统healthy,无故障工单)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-041",
+    "scenario_type": "试用沙盒日志403权限不足→阻断",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中SANDBOX_LOGS字段的值为FORBIDDEN(403)，触发了第一优先级的异常阻断规则，因此判定为UNKNOWN，需要转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中SANDBOX_LOGS字段的值为FORBIDDEN(403)，触发了第一优先级的异常阻断规则，因此判定为UNKNOWN，需要转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "VERIFIED",
+      "SANDBOX_LOGS": "FORBIDDEN(403)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-042",
+    "scenario_type": "BASIC tier客户正常补偿",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "客户tier为BASIC，根据业务规则，BASIC级别的时长门槛为60分钟，而故障时长为65分钟，超过了时长门槛，因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户tier为BASIC，根据业务规则，BASIC级别的时长门槛为60分钟，而故障时长为65分钟，超过了时长门槛，因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(65分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-043",
+    "scenario_type": "金融专区差1分钟不赔",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户tier为FINANCE，故障时长为14分钟，差1分钟到15分钟门槛，满足时长门槛条件。因此，应支持赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户tier为FINANCE，故障时长为14分钟，差1分钟到15分钟门槛，满足时长门槛条件。因此，应支持赔偿。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(14分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-044",
+    "scenario_type": "VIP维护日历403权限不足→阻断",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词FORBIDDEN(403)，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词FORBIDDEN(403)，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "FORBIDDEN(403)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-045",
+    "scenario_type": "KA合同缺失降级+配置错误免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据免责判断，故障原因包含CLIENT_CONFIG_ERROR，因此拒绝赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据免责判断，故障原因包含CLIENT_CONFIG_ERROR，因此拒绝赔偿。\"\n}\n```",
+    "db_config_input": {
+      "KA_CLIENT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-046",
+    "scenario_type": "试用账户NOT_FOUND+沙盒日志超时→多源故障",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词NOT_FOUND和TIMEOUT，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词NOT_FOUND和TIMEOUT，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+      "SANDBOX_LOGS": "TIMEOUT"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-047",
+    "scenario_type": "通用客户合同过期+监控超时→组合故障",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词\"TIMEOUT\"，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词\\\"TIMEOUT\\\"，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "EXPIRED(命中到过期版本, 不适用当前查询)",
+      "MONITORING_SYSTEM": "TIMEOUT"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-048",
+    "scenario_type": "VIP客户差1分钟不赔",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户为VIP级别，时长门槛为30分钟，故障时长为29分钟，差1分钟未达到30分钟门槛，但根据业务规则，VIP级别的时长门槛为30分钟，因此满足赔偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户为VIP级别，时长门槛为30分钟，故障时长为29分钟，差1分钟未达到30分钟门槛，但根据业务规则，VIP级别的时长门槛为30分钟，因此满足赔偿条件。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(29分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-049",
+    "scenario_type": "DYN-01主案例：合同新增‘24h内提交工单’适用条件(满足)",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含'TIMEOUT'关键词（实际提交工单时间超过24小时），根据铁律必须判定为UNKNOWN并转人工。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含'TIMEOUT'关键词（实际提交工单时间超过24小时），根据铁律必须判定为UNKNOWN并转人工。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "TICKET_SYSTEM": "VERIFIED(故障后20小时提交工单)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-050",
+    "scenario_type": "DYN-01配对①：合同新增工单条件不满足(超24h时限)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据合同条款，故障后需在24小时内提交工单。实际工单是在故障后30小时才提交，超过了24小时的时限。因此，不满足赔偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据合同条款，故障后需在24小时内提交工单。实际工单是在故障后30小时才提交，超过了24小时的时限。因此，不满足赔偿条件。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "TICKET_SYSTEM": "VERIFIED(故障后30小时提交工单)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-051",
+    "scenario_type": "DYN-01配对②：工单时限刚好24h边界值(满足)",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "根据合同条款，故障后需在≤24小时内提交工单。实际工单是在故障后24.0小时提交，满足条件24小时内的要求。因此支持赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"根据合同条款，故障后需在≤24小时内提交工单。实际工单是在故障后24.0小时提交，满足条件24小时内的要求。因此支持赔偿。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘≤24h内提交工单’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "TICKET_SYSTEM": "VERIFIED(故障后恰好24.0小时提交工单)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-052",
+    "scenario_type": "DYN-01配对③：工单系统403权限不足无法验证时限→阻断",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中TICKET_SYSTEM字段包含关键词'403_FORBIDDEN'，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中TICKET_SYSTEM字段包含关键词'403_FORBIDDEN'，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "TICKET_SYSTEM": "403_FORBIDDEN"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-053",
+    "scenario_type": "DYN-01配对④：工单条款原文在合同第二页(转引/跨页取证)",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中CRM_CONTRACT_DB的pagination_complete=false，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中CRM_CONTRACT_DB的pagination_complete=false，触发了异常阻断规则，因此判定为UNKNOWN，需要转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(page1未见工单条款, pagination_complete=false, 存在‘详见附件第2页’转引)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-054",
+    "scenario_type": "相同材料不同问题(身份驱动适用规则)",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "根据合同要求，金融类（FINANCE）的时长门槛是≥15分钟。实际故障时长为20分钟，满足条件。因此，该次故障满足SLA赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"根据合同要求，金融类（FINANCE）的时长门槛是≥15分钟。实际故障时长为20分钟，满足条件。因此，该次故障满足SLA赔偿。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-055",
+    "scenario_type": "回答额外承诺金额或程序(超出规则范围)",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户 tier 为 KA_STRATEGIC，满足 VIP>=10 的时长门槛。故障时长为 15 分钟，满足条件。因此，根据业务规则，应支持赔偿。",
+    "model_raw_output": "```json\n{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户 tier 为 KA_STRATEGIC，满足 VIP>=10 的时长门槛。故障时长为 15 分钟，满足条件。因此，根据业务规则，应支持赔偿。\"\n}\n```",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(15分钟)",
+      "TICKET_SYSTEM": "VERIFIED"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-056",
+    "scenario_type": "规则覆盖及旧依据失效(查询时间落在规则失效期后)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据时长门槛规则，FINANCE档位的时长门槛为≥15分钟。虽然故障时长20分钟满足时长门槛，但查询时间已超出RULE-003生效期（end=2026-12-31），且FINANCE档位无其它现行规则，因此不满足赔偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据时长门槛规则，FINANCE档位的时长门槛为≥15分钟。虽然故障时长20分钟满足时长门槛，但查询时间已超出RULE-003生效期（end=2026-12-31），且FINANCE档位无其它现行规则，因此不满足赔偿条件。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-057",
+    "scenario_type": "同义改写/否定/单位变化(时长约半小时且未超时)",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含 MONITORING_SYSTEM: VERIFIED(服务中断持续约30分钟)，关键词为30分钟，触发了第一优先级的异常阻断规则，因为超过了合同要求的24小时内的限制，必须转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含 MONITORING_SYSTEM: VERIFIED(服务中断持续约30分钟)，关键词为30分钟，触发了第一优先级的异常阻断规则，因为超过了合同要求的24小时内的限制，必须转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(服务中断持续约30分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-058",
+    "scenario_type": "正确元数据但支持方向为反驳(免责易被误判为支持)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据时长门槛规则，VIP级别的客户要求时长门槛为30分钟，而故障时长为40分钟，超过了30分钟的门槛。因此，不满足赔偿条件。",
+    "model_raw_output": "```json\n{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据时长门槛规则，VIP级别的客户要求时长门槛为30分钟，而故障时长为40分钟，超过了30分钟的门槛。因此，不满足赔偿条件。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-059",
+    "scenario_type": "模型漏建基础必查条件(prerequisite未先完成)",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词 'UNCHECKED'，根据铁律必须判定为 UNKNOWN 并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词 'UNCHECKED'，根据铁律必须判定为 UNKNOWN 并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "UNCHECKED(前置步骤VERIFY_FINANCE_ZONE_IDENTITY未执行)",
+      "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-060",
+    "scenario_type": "新要求无法表达或取证(合同新增条件无对应证据源)",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "证据状态中包含关键词'NO_REGISTERED_SOURCE'，表示无已注册工具/证据源可取证，根据铁律必须判定为UNKNOWN并转人工处理。",
+    "model_raw_output": "```json\n{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"转人工\",\n  \"reasoning\": \"证据状态中包含关键词'NO_REGISTERED_SOURCE'，表示无已注册工具/证据源可取证，根据铁律必须判定为UNKNOWN并转人工处理。\"\n}\n```",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘须附第三方独立审计报告’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "THIRD_PARTY_AUDIT": "NO_REGISTERED_SOURCE(无已注册工具/证据源可取证)"
+    },
+    "method": "auto_chain",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  }
+]

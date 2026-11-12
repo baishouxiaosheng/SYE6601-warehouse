@@ -1,0 +1,922 @@
+[
+  {
+    "task_id": "A-001",
+    "scenario_type": "正常（证据齐全）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户为VIP级别，且故障时长超过30分钟，故障原因为系统侧硬件故障（非免责）。系统证据显示无计划维护，且硬件故障符合免责条款。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户为VIP级别，且故障时长超过30分钟，故障原因为系统侧硬件故障（非免责）。系统证据显示无计划维护，且硬件故障符合免责条款。\",\n  \"discovered_conditions\": [\"故障时长=40分钟\", \"故障原因=系统侧硬件故障(非免责)\", \"无计划维护\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED",
+      "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-002",
+    "scenario_type": "漏专属合同 → 降级通用政策",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "证据中synthetic_db_config中的CRM_CONTRACT_DB字段为NOT_FOUND，根据规则必须直接判定为REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"证据中synthetic_db_config中的CRM_CONTRACT_DB字段为NOT_FOUND，根据规则必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"CRM_CONTRACT_DB NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-003",
+    "scenario_type": "工具超时 → 阻断转人工",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "证据状态显示synthetic_db_config中的CRM_CONTRACT_DB为TIMEOUT，根据规则必须直接判定为REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"证据状态显示synthetic_db_config中的CRM_CONTRACT_DB为TIMEOUT，根据规则必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"synthetic_db_config中的CRM_CONTRACT_DB为TIMEOUT\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "TIMEOUT"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-004",
+    "scenario_type": "无权限(403) → 阻断转人工",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "证据中 synthetic_db_config 显示 FINANCE_ZONE_DB 被 FORBIDDEN(403)，这直接表明数据库访问被禁止，无法提供有效的故障补偿依据。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"证据中 synthetic_db_config 显示 FINANCE_ZONE_DB 被 FORBIDDEN(403)，这直接表明数据库访问被禁止，无法提供有效的故障补偿依据。\",\n  \"discovered_conditions\": [\"FINANCE_ZONE_DB 被 FORBIDDEN(403)\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "FORBIDDEN(403)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-005",
+    "scenario_type": "正常（金融专区补偿）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题显示故障时长为20分钟，符合补偿条件。系统证据状态显示FINANCE_ZONE_DB和MONITORING_SYSTEM均已验证，确认了机房供电故障的原因，且该故障属于非DDoS/非配置错的情况，因此支持赔偿。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题显示故障时长为20分钟，符合补偿条件。系统证据状态显示FINANCE_ZONE_DB和MONITORING_SYSTEM均已验证，确认了机房供电故障的原因，且该故障属于非DDoS/非配置错的情况，因此支持赔偿。\",\n  \"discovered_conditions\": [\"故障时长=20分钟\", \"故障原因=机房供电故障(非DDoS/非配置错)\", \"FINANCE_ZONE_DB=VERIFIED\", \"MONITORING_SYSTEM=VERIFIED\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-006",
+    "scenario_type": "正常（KA大客户极速补偿）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题显示客户为KA_STRATEGIC级别，计划为Custom_Dedicated，故障时长为12分钟，且故障原因是系统侧故障。系统证据状态中synthetic_db_config均被验证为VERIFIED，没有出现NOT_FOUND或TIMEOUT的情况，符合赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题显示客户为KA_STRATEGIC级别，计划为Custom_Dedicated，故障时长为12分钟，且故障原因是系统侧故障。系统证据状态中synthetic_db_config均被验证为VERIFIED，没有出现NOT_FOUND或TIMEOUT的情况，符合赔偿条件。\",\n  \"discovered_conditions\": [\"客户tier=KA_STRATEGIC\", \"plan=Custom_Dedicated\", \"故障时长=12分钟\", \"故障原因=系统侧故障\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED",
+      "TICKET_SYSTEM": "VERIFIED"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-007",
+    "scenario_type": "正常（试用/沙盒免赔）",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "JSON解析错误",
+    "model_raw_output": "{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"证据中未发现与故障补偿直接相关的条件，且没有出现NOT_FOUND或TIMEOUT情况。\",\n  \"discovered_conditions\": [\"TRIAL_ACCOUNTS_DB\": \"VERIFIED\", \"SANDBOX_LOGS\": \"VERIFIED\"]\n}",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "VERIFIED",
+      "SANDBOX_LOGS": "VERIFIED"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-008",
+    "scenario_type": "正常（命中免责例外 → 不赔）",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，故障原因是CLIENT_CONFIG_ERROR，即客户自己配置错误，不在服务提供商的责任范围内。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，故障原因是CLIENT_CONFIG_ERROR，即客户自己配置错误，不在服务提供商的责任范围内。\",\n  \"discovered_conditions\": [\"故障原因=CLIENT_CONFIG_ERROR\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-009",
+    "scenario_type": "分页不完整 → 需补查翻页",
+    "model_status": "UNKNOWN",
+    "model_decision": "不补偿",
+    "model_reasoning": "证据显示 MAINTENANCE_CALENDAR 仅返回第1页且 pagination_complete=false，这表明还有更多页面需要检查，无法确定是否包含客户故障期间的维护计划。因此，证据不足。",
+    "model_raw_output": "{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"证据显示 MAINTENANCE_CALENDAR 仅返回第1页且 pagination_complete=false，这表明还有更多页面需要检查，无法确定是否包含客户故障期间的维护计划。因此，证据不足。\",\n  \"discovered_conditions\": [\"MAINTENANCE_CALENDAR 仅返回第1页\", \"pagination_complete=false\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED",
+      "MAINTENANCE_CALENDAR": "VERIFIED(page1为空, pagination_complete=false)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-010",
+    "scenario_type": "错版本/过期合同 → 需补查正确版本",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "JSON解析错误",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，CRM返回的合同版本v2已过期，当前查询时间应适用v3，但synthetic_db_config中命中到EXPIRED(命中到 v2 过期版本, 不适用当前查询)。因此，证据直接表明当前合同版本不适用，无法支持赔偿请求。\",\n  \"discovered_conditions\": [\"CRM_CONTRACT_DB\": \"EXPIRED(命中到 v2 过期版本, 不适用当前查询)\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "EXPIRED(命中到 v2 过期版本, 不适用当前查询)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-011",
+    "scenario_type": "证据冲突 → CONFLICT 转人工",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，监控系统显示故障时长为35分钟，且维护日历显示该时段为计划内维护窗口，属于免责情况。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，监控系统显示故障时长为35分钟，且维护日历显示该时段为计划内维护窗口，属于免责情况。\",\n  \"discovered_conditions\": [\"故障时长=35分钟\", \"维护日历显示故障时段为计划内维护窗口\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(35分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-012",
+    "scenario_type": "达到调用上限 → 阻断转人工",
+    "model_status": "UNKNOWN",
+    "model_decision": "不补偿",
+    "model_reasoning": "证据中提到FINANCE_ZONE_DB状态为UNCHECKED，且前置身份核验未完成，达到调用上限。这表明故障并非系统本身的问题，而是由于调用上限导致的，不属于补偿范围。",
+    "model_raw_output": "{\n  \"status\": \"UNKNOWN\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"证据中提到FINANCE_ZONE_DB状态为UNCHECKED，且前置身份核验未完成，达到调用上限。这表明故障并非系统本身的问题，而是由于调用上限导致的，不属于补偿范围。\",\n  \"discovered_conditions\": [\"前置身份核验未完成\", \"达到调用上限\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "UNCHECKED(前置身份核验未完成, 达到调用上限)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-013",
+    "scenario_type": "VIP阈值边界值（刚好30分钟）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户为VIP级别，且故障时长为30分钟，符合赔偿条件。系统证据显示故障时长为30分钟，且无计划维护，故障原因为系统侧硬件故障，不在免责范围内。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户为VIP级别，且故障时长为30分钟，符合赔偿条件。系统证据显示故障时长为30分钟，且无计划维护，故障原因为系统侧硬件故障，不在免责范围内。\",\n  \"discovered_conditions\": [\"故障时长=30分钟\", \"无计划维护\", \"故障原因=系统侧硬件故障\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(30分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-014",
+    "scenario_type": "通用客户正常补偿（RULE-002首次覆盖）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题显示故障时长为65分钟，且故障原因是系统侧故障（非免责）。系统证据状态显示监控系统验证了65分钟的故障时长，与客户问题一致，因此支持赔偿。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题显示故障时长为65分钟，且故障原因是系统侧故障（非免责）。系统证据状态显示监控系统验证了65分钟的故障时长，与客户问题一致，因此支持赔偿。\",\n  \"discovered_conditions\": [\"故障时长=65分钟\", \"故障原因是系统侧故障(非免责)\", \"监控系统验证了65分钟的故障时长\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(65分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-015",
+    "scenario_type": "通用客户时长不足",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题显示故障时长为45分钟，且系统证据状态显示监控系统验证了45分钟的故障，符合补偿条件。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题显示故障时长为45分钟，且系统证据状态显示监控系统验证了45分钟的故障，符合补偿条件。\",\n  \"discovered_conditions\": [\"故障时长=45分钟\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(45分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-016",
+    "scenario_type": "金融专区DDoS攻击免责",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题显示故障时长为25分钟，符合补偿条件。系统证据状态显示FINANCE_ZONE_DB和MONITORING_SYSTEM均验证通过，且故障原因一致为DDoS_ATTACK，符合服务协议中的不可抗力条款。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题显示故障时长为25分钟，符合补偿条件。系统证据状态显示FINANCE_ZONE_DB和MONITORING_SYSTEM均验证通过，且故障原因一致为DDoS_ATTACK，符合服务协议中的不可抗力条款。\",\n  \"discovered_conditions\": [\"故障时长=25分钟\", \"故障原因=DDoS_ATTACK\", \"FINANCE_ZONE_DB验证通过\", \"MONITORING_SYSTEM验证通过\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=DDoS_ATTACK)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-017",
+    "scenario_type": "KA客户人为主动破坏免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "客户人为主动破坏系统，不属于系统故障，因此不应赔偿。系统证据状态显示故障原因是CLIENT_MALICIOUS_ACTION，与客户描述一致。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户人为主动破坏系统，不属于系统故障，因此不应赔偿。系统证据状态显示故障原因是CLIENT_MALICIOUS_ACTION，与客户描述一致。\",\n  \"discovered_conditions\": [\"故障原因是CLIENT_MALICIOUS_ACTION\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_MALICIOUS_ACTION)",
+      "TICKET_SYSTEM": "VERIFIED"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-018",
+    "scenario_type": "VIP不可抗力免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "客户故障原因是FORCE_MAJEURE(地震导致机房损毁)，根据企业故障补偿政策，自然灾害不在补偿范围内。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户故障原因是FORCE_MAJEURE(地震导致机房损毁)，根据企业故障补偿政策，自然灾害不在补偿范围内。\",\n  \"discovered_conditions\": [\"故障原因=FORCE_MAJEURE\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=FORCE_MAJEURE)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-019",
+    "scenario_type": "KA合同缺失降级→时长不足不赔",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "由于synthetic_db_config中KA_CLIENT_DB字段为NOT_FOUND，根据规则必须直接判定为REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"由于synthetic_db_config中KA_CLIENT_DB字段为NOT_FOUND，根据规则必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"KA_CLIENT_DB: NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(12分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-020",
+    "scenario_type": "金融专区阈值边界值（刚好15分钟）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户故障时长为15分钟，刚好等于门槛，且系统证据显示监控系统验证通过15分钟，故障原因为机房网络故障，符合赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户故障时长为15分钟，刚好等于门槛，且系统证据显示监控系统验证通过15分钟，故障原因为机房网络故障，符合赔偿条件。\",\n  \"discovered_conditions\": [\"故障时长=15分钟\", \"监控系统验证通过15分钟\", \"故障原因为机房网络故障\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(15分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-021",
+    "scenario_type": "试用账户未找到→降级标准规则→时长不足不赔",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "客户为TRIAL账号，且TRIAL_ACCOUNTS_DB返回NOT_FOUND，根据规则必须直接判定为拒绝赔偿。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户为TRIAL账号，且TRIAL_ACCOUNTS_DB返回NOT_FOUND，根据规则必须直接判定为拒绝赔偿。\",\n  \"discovered_conditions\": [\"TRIAL_ACCOUNTS_DB返回NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(45分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-022",
+    "scenario_type": "VIP合同缺失降级→时长足够赔偿",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "由于synthetic_db_config中的CRM_CONTRACT_DB返回NOT_FOUND，根据规则必须直接判定为REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"由于synthetic_db_config中的CRM_CONTRACT_DB返回NOT_FOUND，根据规则必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"CRM_CONTRACT_DB返回NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(70分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-023",
+    "scenario_type": "KA合同缺失降级→时长足够(走VIP规则)赔偿",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "JSON解析错误",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户问题中提到KA_CLIENT_DB返回NOT_FOUND，根据规则必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"KA_CLIENT_DB\": \"NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(35分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-024",
+    "scenario_type": "通用客户合同缺失→降级通用政策自身→时长足够赔偿",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "由于synthetic_db_config中的CRM_CONTRACT_DB返回NOT_FOUND，根据规则必须直接判定为REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"由于synthetic_db_config中的CRM_CONTRACT_DB返回NOT_FOUND，根据规则必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"CRM_CONTRACT_DB返回NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(70分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-025",
+    "scenario_type": "KA阈值边界值（刚好10分钟）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题中提到故障时长为10分钟，刚好等于补偿门槛，且系统证据状态显示监控系统记录了10分钟的故障，同时客户tier和plan符合补偿条件，因此支持赔偿。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题中提到故障时长为10分钟，刚好等于补偿门槛，且系统证据状态显示监控系统记录了10分钟的故障，同时客户tier和plan符合补偿条件，因此支持赔偿。\",\n  \"discovered_conditions\": [\"故障时长=10分钟\", \"客户tier=KA_STRATEGIC\", \"plan=Custom_Dedicated\", \"故障原因=系统侧故障\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(10分钟)",
+      "TICKET_SYSTEM": "VERIFIED"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-026",
+    "scenario_type": "通用客户配置错误免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "客户自己配置错误导致的故障，不在补偿范围内。系统证据显示故障原因是CLIENT_CONFIG_ERROR，与客户描述一致。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户自己配置错误导致的故障，不在补偿范围内。系统证据显示故障原因是CLIENT_CONFIG_ERROR，与客户描述一致。\",\n  \"discovered_conditions\": [\"故障原因=CLIENT_CONFIG_ERROR\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-027",
+    "scenario_type": "金融专区配置错误免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据系统证据状态，synthetic_db_config 中的 MONITORING_SYSTEM 显示故障原因是 CLIENT_CONFIG_ERROR，这表明故障是由客户配置错误引起的，不在服务提供商的责任范围内。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据系统证据状态，synthetic_db_config 中的 MONITORING_SYSTEM 显示故障原因是 CLIENT_CONFIG_ERROR，这表明故障是由客户配置错误引起的，不在服务提供商的责任范围内。\",\n  \"discovered_conditions\": [\"故障原因是CLIENT_CONFIG_ERROR\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-028",
+    "scenario_type": "VIP计划内维护免责（维护日历返回有记录）",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，MAINTENANCE_CALENDAR显示故障时段存在计划内维护记录，因此故障属于计划内维护，不在补偿范围内。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，MAINTENANCE_CALENDAR显示故障时段存在计划内维护记录，因此故障属于计划内维护，不在补偿范围内。\",\n  \"discovered_conditions\": [\"故障时段=计划内维护窗口\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口, pagination_complete=true)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-029",
+    "scenario_type": "通用客户合同库超时→阻断转人工",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据提供的证据，synthetic_db_config 中 CRM_CONTRACT_DB 出现了 TIMEOUT，按照规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，synthetic_db_config 中 CRM_CONTRACT_DB 出现了 TIMEOUT，按照规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"CRM_CONTRACT_DB TIMEOUT\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "TIMEOUT"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-030",
+    "scenario_type": "试用账户VERIFIED但沙盒日志超时",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据提供的证据，SANDBOX_LOGS 的状态为 TIMEOUT，按照规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，SANDBOX_LOGS 的状态为 TIMEOUT，按照规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"SANDBOX_LOGS=TIMEOUT\"]\n}",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "VERIFIED",
+      "SANDBOX_LOGS": "TIMEOUT"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-031",
+    "scenario_type": "VIP合同过期+监控超时组合故障",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据状态，synthetic_db_config 中 MONITORING_SYSTEM 出现了 TIMEOUT，按照规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据状态，synthetic_db_config 中 MONITORING_SYSTEM 出现了 TIMEOUT，按照规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"MONITORING_SYSTEM=TIMEOUT\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "EXPIRED(命中到过期版本, 不适用当前查询)",
+      "MONITORING_SYSTEM": "TIMEOUT",
+      "MAINTENANCE_CALENDAR": "未查询(前置依赖未满足)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-032",
+    "scenario_type": "KA合同缺失降级→刚好30分钟(走VIP规则)边界",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "客户问题中提到KA_CLIENT_DB返回NOT_FOUND，根据规则必须直接判定为REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户问题中提到KA_CLIENT_DB返回NOT_FOUND，根据规则必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"KA_CLIENT_DB返回NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(30分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-033",
+    "scenario_type": "通用客户阈值边界值（刚好60分钟）",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户故障时长为60分钟，达到了赔偿门槛，且故障原因是系统侧故障，不在免责范围内。证据显示监控系统记录了60分钟的故障时长。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户故障时长为60分钟，达到了赔偿门槛，且故障原因是系统侧故障，不在免责范围内。证据显示监控系统记录了60分钟的故障时长。\",\n  \"discovered_conditions\": [\"故障时长=60分钟\", \"故障原因=系统侧故障\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(60分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-034",
+    "scenario_type": "VIP合同VERIFIED但监控超时",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据提供的证据，synthetic_db_config 中 MONITORING_SYSTEM 的状态为 TIMEOUT，按照规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，synthetic_db_config 中 MONITORING_SYSTEM 的状态为 TIMEOUT，按照规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"MONITORING_SYSTEM=TIMEOUT\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "TIMEOUT",
+      "MAINTENANCE_CALENDAR": "未查询(前置依赖CHECK_EXCLUSIVE_CONTRACT未满足)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-035",
+    "scenario_type": "通用客户合同缺失降级→配置错误免责",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，synthetic_db_config 中 CRM_CONTRACT_DB 返回 NOT_FOUND，按照规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，synthetic_db_config 中 CRM_CONTRACT_DB 返回 NOT_FOUND，按照规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"synthetic_db_config 中 CRM_CONTRACT_DB 返回 NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-036",
+    "scenario_type": "试用账户NOT_FOUND降级通用→刚好60分钟边界",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "客户 tier 为 TRIAL，且 synthetic_db_config 中 TRIAL_ACCOUNTS_DB 返回 NOT_FOUND，根据规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户 tier 为 TRIAL，且 synthetic_db_config 中 TRIAL_ACCOUNTS_DB 返回 NOT_FOUND，根据规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"TRIAL_ACCOUNTS_DB返回NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(60分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-037",
+    "scenario_type": "金融双工具超时→阻断",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据提供的证据，synthetic_db_config 中 FINANCE_ZONE_DB 和 MONITORING_SYSTEM 均为 TIMEOUT，按照规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，synthetic_db_config 中 FINANCE_ZONE_DB 和 MONITORING_SYSTEM 均为 TIMEOUT，按照规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"FINANCE_ZONE_DB=TIMEOUT\", \"MONITORING_SYSTEM=TIMEOUT\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "TIMEOUT",
+      "MONITORING_SYSTEM": "TIMEOUT"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-038",
+    "scenario_type": "金融合同缺失→阻断(不降级)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据提供的证据，synthetic_db_config 中 FINANCE_ZONE_DB 返回 NOT_FOUND，按照规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，synthetic_db_config 中 FINANCE_ZONE_DB 返回 NOT_FOUND，按照规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"FINANCE_ZONE_DB返回NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "NOT_FOUND"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-039",
+    "scenario_type": "合同身份矛盾→冲突",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "客户查询的tier为VIP，但系统证据显示CRM_CONTRACT_DB中customer_tier字段为STANDARD，与客户查询的tier不一致。因此，无法确认客户是否符合VIP级别的赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户查询的tier为VIP，但系统证据显示CRM_CONTRACT_DB中customer_tier字段为STANDARD，与客户查询的tier不一致。因此，无法确认客户是否符合VIP级别的赔偿条件。\",\n  \"discovered_conditions\": [\"customer_tier字段=STANDARD\", \"与查询tier=VIP矛盾\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(但customer_tier=STANDARD,与查询tier=VIP矛盾)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-040",
+    "scenario_type": "监控vs工单矛盾→冲突",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，MONITORING_SYSTEM显示故障15分钟，但TICKET_SYSTEM显示该时段系统healthy且无故障工单。TICKET_SYSTEM的证据更为直接，表明系统在该时段内没有故障，因此不符合赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，MONITORING_SYSTEM显示故障15分钟，但TICKET_SYSTEM显示该时段系统healthy且无故障工单。TICKET_SYSTEM的证据更为直接，表明系统在该时段内没有故障，因此不符合赔偿条件。\",\n  \"discovered_conditions\": [\"TICKET_SYSTEM显示系统healthy且无故障工单\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(15分钟)",
+      "TICKET_SYSTEM": "VERIFIED(系统healthy,无故障工单)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-041",
+    "scenario_type": "试用沙盒日志403权限不足→阻断",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据提供的证据，synthetic_db_config 中 SANDBOX_LOGS 为 FORBIDDEN(403)，直接判定为拒绝赔偿。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，synthetic_db_config 中 SANDBOX_LOGS 为 FORBIDDEN(403)，直接判定为拒绝赔偿。\",\n  \"discovered_conditions\": [\"SANDBOX_LOGS=FORBIDDEN(403)\"]\n}",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "VERIFIED",
+      "SANDBOX_LOGS": "FORBIDDEN(403)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-042",
+    "scenario_type": "BASIC tier客户正常补偿",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户故障时长为65分钟，符合赔偿条件。系统证据状态显示监控系统验证了65分钟的故障时长，且客户计划为BASIC且包含ALL，故障原因为系统侧非免责故障。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户故障时长为65分钟，符合赔偿条件。系统证据状态显示监控系统验证了65分钟的故障时长，且客户计划为BASIC且包含ALL，故障原因为系统侧非免责故障。\",\n  \"discovered_conditions\": [\"故障时长=65分钟\", \"客户计划为BASIC且包含ALL\", \"故障原因为系统侧非免责故障\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(65分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-043",
+    "scenario_type": "金融专区差1分钟不赔",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题显示故障时长为14分钟，差1分钟到15分钟的门槛，系统证据状态显示监控系统记录了14分钟的故障时长，且客户确认故障原因为机房网络故障，非DDoS/非配置错。因此，满足补偿条件。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题显示故障时长为14分钟，差1分钟到15分钟的门槛，系统证据状态显示监控系统记录了14分钟的故障时长，且客户确认故障原因为机房网络故障，非DDoS/非配置错。因此，满足补偿条件。\",\n  \"discovered_conditions\": [\"故障时长=14分钟\", \"监控系统记录了14分钟的故障时长\", \"故障原因为机房网络故障\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(14分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-044",
+    "scenario_type": "VIP维护日历403权限不足→阻断",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "从证据中发现MAINTENANCE_CALENDAR状态为FORBIDDEN(403)，这表明在故障期间正在进行维护，因此不应赔偿。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"从证据中发现MAINTENANCE_CALENDAR状态为FORBIDDEN(403)，这表明在故障期间正在进行维护，因此不应赔偿。\",\n  \"discovered_conditions\": [\"MAINTENANCE_CALENDAR=FORBIDDEN(403)\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "FORBIDDEN(403)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-045",
+    "scenario_type": "KA合同缺失降级+配置错误免责",
+    "model_status": "UNKNOWN",
+    "model_decision": "转人工",
+    "model_reasoning": "JSON解析错误",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"客户问题中提到KA_CLIENT_DB返回NOT_FOUND，根据规则必须直接判定为REFUTE。尽管监控系统验证了故障原因是CLIENT_CONFIG_ERROR，但根据规则，此情况不支持赔偿。\",\n  \"discovered_conditions\": [\"KA_CLIENT_DB\": \"NOT_FOUND\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "NOT_FOUND",
+      "MONITORING_SYSTEM": "VERIFIED(故障原因=CLIENT_CONFIG_ERROR)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-046",
+    "scenario_type": "试用账户NOT_FOUND+沙盒日志超时→多源故障",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据提供的证据，TRIAL_ACCOUNTS_DB返回NOT_FOUND，SANDBOX_LOGS出现TIMEOUT。根据规则，遇到NOT_FOUND必须直接判定为REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，TRIAL_ACCOUNTS_DB返回NOT_FOUND，SANDBOX_LOGS出现TIMEOUT。根据规则，遇到NOT_FOUND必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"TRIAL_ACCOUNTS_DB返回NOT_FOUND\", \"SANDBOX_LOGS出现TIMEOUT\"]\n}",
+    "db_config_input": {
+      "TRIAL_ACCOUNTS_DB": "NOT_FOUND",
+      "SANDBOX_LOGS": "TIMEOUT"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-047",
+    "scenario_type": "通用客户合同过期+监控超时→组合故障",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据状态，synthetic_db_config 中 MONITORING_SYSTEM 出现了 TIMEOUT，按照规则必须直接判定为 REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据状态，synthetic_db_config 中 MONITORING_SYSTEM 出现了 TIMEOUT，按照规则必须直接判定为 REFUTE。\",\n  \"discovered_conditions\": [\"MONITORING_SYSTEM=TIMEOUT\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "EXPIRED(命中到过期版本, 不适用当前查询)",
+      "MONITORING_SYSTEM": "TIMEOUT"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-048",
+    "scenario_type": "VIP客户差1分钟不赔",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户为VIP级别，且故障时长为29分钟，接近30分钟的补偿门槛。系统证据显示故障时长为29分钟，且无计划维护，故障原因为系统侧硬件故障，不在免责范围内。因此，应支持赔偿。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户为VIP级别，且故障时长为29分钟，接近30分钟的补偿门槛。系统证据显示故障时长为29分钟，且无计划维护，故障原因为系统侧硬件故障，不在免责范围内。因此，应支持赔偿。\",\n  \"discovered_conditions\": [\"故障时长=29分钟\", \"无计划维护\", \"故障原因=系统侧硬件故障\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(29分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(pagination_complete=true, 故障时段无计划维护)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-049",
+    "scenario_type": "DYN-01主案例：合同新增‘24h内提交工单’适用条件(满足)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，客户在故障后20小时提交工单，超过了合同中规定的24小时内提交工单的要求。因此，不符合赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，客户在故障后20小时提交工单，超过了合同中规定的24小时内提交工单的要求。因此，不符合赔偿条件。\",\n  \"discovered_conditions\": [\"故障时长=40分钟\", \"合同含‘24h内提交工单’新增条款\", \"故障后20小时提交工单\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "TICKET_SYSTEM": "VERIFIED(故障后20小时提交工单)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-050",
+    "scenario_type": "DYN-01配对①：合同新增工单条件不满足(超24h时限)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，客户在故障后30小时才提交工单，违反了合同中新增的24小时内提交工单的条款。因此，不符合赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，客户在故障后30小时才提交工单，违反了合同中新增的24小时内提交工单的条款。因此，不符合赔偿条件。\",\n  \"discovered_conditions\": [\"合同含‘24h内提交工单’新增条款\", \"故障后30小时提交工单\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "TICKET_SYSTEM": "VERIFIED(故障后30小时提交工单)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-051",
+    "scenario_type": "DYN-01配对②：工单时限刚好24h边界值(满足)",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "根据证据，客户在故障后24小时内提交了工单，符合合同中新增的条款。同时，系统故障时长为40分钟，且非免责原因，因此应支持赔偿。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"根据证据，客户在故障后24小时内提交了工单，符合合同中新增的条款。同时，系统故障时长为40分钟，且非免责原因，因此应支持赔偿。\",\n  \"discovered_conditions\": [\"故障时长=40分钟\", \"故障原因=系统侧硬件故障(非免责)\", \"工单提交时间=故障后24小时整\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘≤24h内提交工单’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "TICKET_SYSTEM": "VERIFIED(故障后恰好24.0小时提交工单)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-052",
+    "scenario_type": "DYN-01配对③：工单系统403权限不足无法验证时限→阻断",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "从证据中发现TICKET_SYSTEM返回403权限不足，无法验证工单提交时限，因此无法确认客户是否在24小时内提交了工单。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"从证据中发现TICKET_SYSTEM返回403权限不足，无法验证工单提交时限，因此无法确认客户是否在24小时内提交了工单。\",\n  \"discovered_conditions\": [\"TICKET_SYSTEM返回403权限不足\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘24h内提交工单’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "TICKET_SYSTEM": "403_FORBIDDEN"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-053",
+    "scenario_type": "DYN-01配对④：工单条款原文在合同第二页(转引/跨页取证)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，CRM_CONTRACT_DB第1页未见24h内提交工单的条款，且pagination_complete=false，无法验证该条款的存在。因此，无法支持赔偿请求。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，CRM_CONTRACT_DB第1页未见24h内提交工单的条款，且pagination_complete=false，无法验证该条款的存在。因此，无法支持赔偿请求。\",\n  \"discovered_conditions\": [\"CRM_CONTRACT_DB第1页未见工单条款\", \"pagination_complete=false\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(page1未见工单条款, pagination_complete=false, 存在‘详见附件第2页’转引)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-054",
+    "scenario_type": "相同材料不同问题(身份驱动适用规则)",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "根据客户问题，故障时长为20分钟，且故障原因是系统侧故障。系统证据状态显示MONITORING_SYSTEM验证通过且记录了20分钟的故障时长。因此，该次故障满足SLA赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"根据客户问题，故障时长为20分钟，且故障原因是系统侧故障。系统证据状态显示MONITORING_SYSTEM验证通过且记录了20分钟的故障时长。因此，该次故障满足SLA赔偿条件。\",\n  \"discovered_conditions\": [\"故障时长=20分钟\", \"故障原因=系统侧故障\", \"MONITORING_SYSTEM验证通过\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-055",
+    "scenario_type": "回答额外承诺金额或程序(超出规则范围)",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题显示故障时长为15分钟，符合系统证据状态中MONITORING_SYSTEM的验证结果。客户tier为KA_STRATEGIC，且故障原因是系统侧故障，符合候选回答A的赔付条件，因此应支持赔偿。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题显示故障时长为15分钟，符合系统证据状态中MONITORING_SYSTEM的验证结果。客户tier为KA_STRATEGIC，且故障原因是系统侧故障，符合候选回答A的赔付条件，因此应支持赔偿。\",\n  \"discovered_conditions\": [\"故障时长=15分钟\", \"故障原因是系统侧故障\", \"客户tier=KA_STRATEGIC\"]\n}",
+    "db_config_input": {
+      "KA_CLIENT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(15分钟)",
+      "TICKET_SYSTEM": "VERIFIED"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-056",
+    "scenario_type": "规则覆盖及旧依据失效(查询时间落在规则失效期后)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据提供的证据，synthetic_db_config 中未发现 NOT_FOUND 或 TIMEOUT，但查询时间已超出 RULE-003 生效期，且 FINANCE 档位无其它现行规则，因此不符合赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据提供的证据，synthetic_db_config 中未发现 NOT_FOUND 或 TIMEOUT，但查询时间已超出 RULE-003 生效期，且 FINANCE 档位无其它现行规则，因此不符合赔偿条件。\",\n  \"discovered_conditions\": [\"查询时间=2027-06-01(已超出RULE-003生效期end=2026-12-31)\", \"FINANCE档位无其它现行规则\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-057",
+    "scenario_type": "同义改写/否定/单位变化(时长约半小时且未超时)",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "根据客户描述和系统证据，服务中断持续约30分钟，且故障时段无计划维护，同时确认故障并非由客户方配置导致。这些信息符合SLA赔偿条件。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"根据客户描述和系统证据，服务中断持续约30分钟，且故障时段无计划维护，同时确认故障并非由客户方配置导致。这些信息符合SLA赔偿条件。\",\n  \"discovered_conditions\": [\"故障满30分钟\", \"无计划维护时段\", \"故障非客户方配置导致\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(服务中断持续约30分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-058",
+    "scenario_type": "正确元数据但支持方向为反驳(免责易被误判为支持)",
+    "model_status": "SUPPORT",
+    "model_decision": "补偿",
+    "model_reasoning": "客户问题中提到故障时长为40分钟，系统证据状态中的MONITORING_SYSTEM和MAINTENANCE_CALENDAR均被验证为VERIFIED，且故障时段确为计划内维护窗口，符合补偿条件。",
+    "model_raw_output": "{\n  \"status\": \"SUPPORT\",\n  \"decision\": \"补偿\",\n  \"reasoning\": \"客户问题中提到故障时长为40分钟，系统证据状态中的MONITORING_SYSTEM和MAINTENANCE_CALENDAR均被验证为VERIFIED，且故障时段确为计划内维护窗口，符合补偿条件。\",\n  \"discovered_conditions\": [\"故障时长=40分钟\", \"MONITORING_SYSTEM=VERIFIED(40分钟)\", \"MAINTENANCE_CALENDAR=VERIFIED(故障时段=计划内维护窗口)\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段=计划内维护窗口)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-059",
+    "scenario_type": "模型漏建基础必查条件(prerequisite未先完成)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，FINANCE_ZONE_DB的证据状态为UNCHECKED，说明前置步骤VERIFY_FINANCE_ZONE_IDENTITY未执行。根据规则，遇到synthetic_db_config中出现NOT_FOUND必须直接判定为REFUTE。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，FINANCE_ZONE_DB的证据状态为UNCHECKED，说明前置步骤VERIFY_FINANCE_ZONE_IDENTITY未执行。根据规则，遇到synthetic_db_config中出现NOT_FOUND必须直接判定为REFUTE。\",\n  \"discovered_conditions\": [\"FINANCE_ZONE_DB: UNCHECKED\"]\n}",
+    "db_config_input": {
+      "FINANCE_ZONE_DB": "UNCHECKED(前置步骤VERIFY_FINANCE_ZONE_IDENTITY未执行)",
+      "MONITORING_SYSTEM": "VERIFIED(20分钟)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  },
+  {
+    "task_id": "A-060",
+    "scenario_type": "新要求无法表达或取证(合同新增条件无对应证据源)",
+    "model_status": "REFUTE",
+    "model_decision": "不补偿",
+    "model_reasoning": "根据证据，客户合同中新增条款要求赔偿须附第三方独立审计报告，但系统中无任何工具或数据源可提供该报告，且现有建链schema无法表达该取证义务。",
+    "model_raw_output": "{\n  \"status\": \"REFUTE\",\n  \"decision\": \"不补偿\",\n  \"reasoning\": \"根据证据，客户合同中新增条款要求赔偿须附第三方独立审计报告，但系统中无任何工具或数据源可提供该报告，且现有建链schema无法表达该取证义务。\",\n  \"discovered_conditions\": [\"合同含‘须附第三方独立审计报告’新增条款\", \"无已注册工具/证据源可取证\"]\n}",
+    "db_config_input": {
+      "CRM_CONTRACT_DB": "VERIFIED(合同含‘须附第三方独立审计报告’新增条款, pagination_complete=true)",
+      "MONITORING_SYSTEM": "VERIFIED(40分钟)",
+      "MAINTENANCE_CALENDAR": "VERIFIED(故障时段无计划维护, pagination_complete=true)",
+      "THIRD_PARTY_AUDIT": "NO_REGISTERED_SOURCE(无已注册工具/证据源可取证)"
+    },
+    "method": "manual_config",
+    "model_manifest": "Qwen/Qwen2.5-7B-Instruct",
+    "prompt_version": "v1.0_20261112"
+  }
+]
