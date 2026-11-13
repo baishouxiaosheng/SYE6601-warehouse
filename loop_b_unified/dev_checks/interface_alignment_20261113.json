@@ -1,0 +1,135 @@
+{
+  "report_type": "engineering_interface_inventory",
+  "assessment": "UNRESOLVED",
+  "business_acceptance": false,
+  "aliases_enabled": false,
+  "scope_note": "Name matches do not establish semantic or business compatibility. No business decisions made.",
+  "current_module_path": "loop_b_unified",
+  "source_inventory": [
+    {
+      "requested_source": "CRM_CONTRACT_DB",
+      "state": "NAME_MATCH_ONLY",
+      "candidate_provider_source": "CRM_CONTRACT_DB",
+      "alias_enabled": false
+    },
+    {
+      "requested_source": "FINANCE_ZONE_DB",
+      "state": "NOT_IMPLEMENTED",
+      "candidate_provider_source": null,
+      "alias_enabled": false
+    },
+    {
+      "requested_source": "KA_CLIENT_DB",
+      "state": "NOT_IMPLEMENTED",
+      "candidate_provider_source": null,
+      "alias_enabled": false
+    },
+    {
+      "requested_source": "MAINTENANCE_CALENDAR",
+      "state": "NAME_MATCH_ONLY",
+      "candidate_provider_source": "MAINTENANCE_CALENDAR",
+      "alias_enabled": false
+    },
+    {
+      "requested_source": "MONITORING_SYSTEM",
+      "state": "NEEDS_OWNER_CONFIRMATION",
+      "candidate_provider_source": "INCIDENT_DB",
+      "alias_enabled": false
+    },
+    {
+      "requested_source": "SANDBOX_LOGS",
+      "state": "NOT_IMPLEMENTED",
+      "candidate_provider_source": null,
+      "alias_enabled": false
+    },
+    {
+      "requested_source": "TICKET_SYSTEM",
+      "state": "NEEDS_OWNER_CONFIRMATION",
+      "candidate_provider_source": "TICKET_DB",
+      "alias_enabled": false
+    },
+    {
+      "requested_source": "TRIAL_ACCOUNTS_DB",
+      "state": "NOT_IMPLEMENTED",
+      "candidate_provider_source": null,
+      "alias_enabled": false
+    }
+  ],
+  "controller_at_expected_path": false,
+  "unresolved": [
+    {
+      "kind": "NOT_IMPLEMENTED",
+      "source": "FINANCE_ZONE_DB"
+    },
+    {
+      "kind": "NOT_IMPLEMENTED",
+      "source": "KA_CLIENT_DB"
+    },
+    {
+      "kind": "NEEDS_OWNER_CONFIRMATION",
+      "source": "MONITORING_SYSTEM"
+    },
+    {
+      "kind": "NOT_IMPLEMENTED",
+      "source": "SANDBOX_LOGS"
+    },
+    {
+      "kind": "NEEDS_OWNER_CONFIRMATION",
+      "source": "TICKET_SYSTEM"
+    },
+    {
+      "kind": "NOT_IMPLEMENTED",
+      "source": "TRIAL_ACCOUNTS_DB"
+    },
+    {
+      "kind": "QUERY_FIELDS_NOT_REQUIRED_BY_PROPOSAL",
+      "fields": [
+        "customer_id",
+        "event_time",
+        "incident_id"
+      ],
+      "owner": "Loop A: ensure values before querying"
+    },
+    {
+      "kind": "LOCATOR_REPRESENTATION",
+      "proposal": "string",
+      "tool": "object: start/end/unit",
+      "owner": "Evidence chain"
+    },
+    {
+      "kind": "DIFFERENT_STAGE_VERSION_CONTRACT",
+      "proposal": "string",
+      "terminal_snapshot": "integer",
+      "owner": "Loop A / evidence chain"
+    },
+    {
+      "kind": "PROPOSAL_NODE_TYPE_NOT_LISTED",
+      "types": [
+        "exemption"
+      ],
+      "owner": "Evidence chain / rule owner"
+    },
+    {
+      "kind": "IDENTITY_MATERIAL_NOT_PROVIDED",
+      "fields": [
+        "customer_tier",
+        "plan_type"
+      ],
+      "owner": "Rule/data owner, then Loop B"
+    },
+    {
+      "kind": "MAINTENANCE_CALCULATION_NEEDS_SIGNOFF",
+      "detail": "planned is not excluded; overlap intervals and subtraction policy need confirmation",
+      "owner": "Rule owner / Checker / Loop B raw data"
+    },
+    {
+      "kind": "TEAM_CONTROLLER_NOT_AT_EXPECTED_PATH",
+      "expected": "dynamic_evidence/controller.py",
+      "owner": "Loop A / team lead"
+    }
+  ],
+  "manual_review": [
+    "Contract thresholds and scope/version priority must be signed off",
+    "Loop A must provide an audited terminal snapshot, not only a GraphProposal"
+  ]
+}
