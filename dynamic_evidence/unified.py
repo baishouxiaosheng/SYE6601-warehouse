@@ -3,8 +3,7 @@
 import argparse
 from pathlib import Path
 
-from loop_b_unified.provider_setup import create_provider
-from loop_b_unified.review_handoff import make_review_packet
+from loop_b_unified import create_provider, make_review_packet
 
 from .__main__ import dump
 from .cases import make_case

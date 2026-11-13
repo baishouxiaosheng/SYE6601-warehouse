@@ -1,6 +1,6 @@
 # 动态证据接口草案
 
-当前集成以 upstream/main 04da37d 的统一 Loop B 为基准。团队的 GraphProposal Schema 是独立协议，接入可执行建链器后在 builder 边界做字段映射。
+当前集成使用 PR #9 合入的 Loop B 公共包入口。团队的 GraphProposal Schema 是独立协议，接入可执行建链器后在 builder 边界做字段映射。
 
 | 对象 | 字段 |
 |---|---|

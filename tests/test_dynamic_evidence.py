@@ -11,7 +11,7 @@ from dynamic_evidence.models import Replay
 from dynamic_evidence.report import IDENTITY, markdown
 from dynamic_evidence.tools import CONTRACT, MAINTENANCE, TICKET, LoopBAdapter
 from dynamic_evidence.unified import run_unified
-from loop_b_unified.provider_setup import create_provider
+from loop_b_unified import create_provider
 
 
 def run(case="DYN-01", model=None, budget=None, strategy="dynamic"):
