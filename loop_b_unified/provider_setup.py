@@ -4,8 +4,12 @@ The selection table binds frozen upstream synthetic ticket datasets to the
 corresponding raw-material bundle; it is environment setup, not a business label.
 The builder only receives actual query receipts, never this setup configuration.
 """
-from raw_evidence import RawEvidenceTools
-from vendor.pr5_dynamic.cases import make_case
+if __package__:
+    from .raw_evidence import RawEvidenceTools
+    from .vendor.pr5_dynamic.cases import make_case
+else:
+    from raw_evidence import RawEvidenceTools
+    from vendor.pr5_dynamic.cases import make_case
 
 _TICKET_FIXTURES = {
     'bundle-01': 'DYN-01', 'bundle-02': 'NO-TICKET', 'bundle-03': 'REFERRAL',

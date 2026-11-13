@@ -10,6 +10,8 @@ from dynamic_evidence.mock_model import FixtureModel
 from dynamic_evidence.models import Replay
 from dynamic_evidence.report import IDENTITY, markdown
 from dynamic_evidence.tools import CONTRACT, MAINTENANCE, TICKET, LoopBAdapter
+from dynamic_evidence.unified import run_unified
+from loop_b_unified.provider_setup import create_provider
 
 
 def run(case="DYN-01", model=None, budget=None, strategy="dynamic"):
@@ -18,6 +20,32 @@ def run(case="DYN-01", model=None, budget=None, strategy="dynamic"):
 
 
 class HarnessTests(unittest.TestCase):
+    def test_unified_contract_pagination_and_reference(self):
+        result = run_unified(FixtureModel())
+        self.assertEqual(result["answer"]["recommendation"], "eligible")
+        pages = [r for r in result["tool_receipts"] if r["source_type"] == CONTRACT]
+        self.assertEqual([r["pagination_complete"] for r in pages], [False, True])
+        ref = next(e for e in result["scorecard"]["evidence"] if "24 hours" in e["excerpt"])
+        original = next(r for r in pages if r["call_id"] == ref["call_id"])
+        self.assertEqual(original["records"][0]["locator"], ref["locator"])
+        self.assertEqual(original["records"][0]["source_id"], ref["source_id"])
+        self.assertTrue(original["provider_call_id"])
+
+    def test_unified_403_builds_team_review_packet(self):
+        result = run_unified(FixtureModel(), ticket_forbidden=True)
+        self.assertEqual(result["graph"]["stop_reason"], "ACCESS_DENIED")
+        packet = result["review_packet"]
+        self.assertEqual(packet["total_tool_calls"], result["usage"]["tool_calls"])
+        self.assertEqual(packet["failed_tools"][0]["source_type"], TICKET)
+        self.assertTrue(any("24 hours" in (row["excerpt"] or "") for row in packet["original_materials"]))
+
+    def test_planned_maintenance_does_not_prove_exclusion(self):
+        task, _ = make_case()
+        result = Harness(FixtureModel(), create_provider("bundle-08")).run(task)
+        self.assertEqual(result["answer"]["recommendation"], "undetermined")
+        condition = next(n for n in result["graph"]["nodes"] if n["id"] == "condition:no-maintenance-exclusion")
+        self.assertEqual(condition["state"], "UNKNOWN")
+
     def test_dynamic_contract_expansion_and_reference_chain(self):
         result = run()
         self.assertTrue(assess(result)["dynamic_path"])

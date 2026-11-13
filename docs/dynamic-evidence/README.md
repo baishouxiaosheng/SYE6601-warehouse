@@ -7,10 +7,12 @@
 Python 3.10+。后端与单元测试只用标准库。以下命令从仓库根目录运行。
 
 ```powershell
-python -m unittest discover -s tests -v
+python -m unittest discover -s tests -p test_dynamic_evidence.py -v
 python -m dynamic_evidence --case DYN-01
 python -m dynamic_evidence --suite
 python -m dynamic_evidence --replay docs/dynamic-evidence/records/dyn01-model-replay.json
+python -m dynamic_evidence.unified
+python -m dynamic_evidence.unified --ticket-forbidden
 ```
 
 模拟运行标为 `simulated`，缓存重放标为 `replay`。实时运行从进程环境读取 `OPENROUTER_API_KEY`，无需把密钥填入文档。真实 API 推理使用合成业务数据，工具仍是合成环境。
@@ -53,7 +55,7 @@ provider = LoopBAdapter(team_query, extensions=extension_query)
 bundle = Harness(model, provider, builder=team_build, reviewer=team_review).run(task)
 ```
 
-上述 team 函数需由调用方提供。现阶段默认合成适配器提供原始条款；现有 Loop B 草稿可提供合同和维护元数据及故障回执，正式合同缺原文时会产生缺口。没有复制或强依赖未合并分支。原 07A 模块与已有历史实验仍可独立使用。
+上述 team 函数需由调用方提供。常规入口保留原合成数据以重放历史结果。`dynamic_evidence.unified` 直接调用团队主分支的 `loop_b_unified`，保留工具原调用编号、结构化原文定位及人工复核包。见 [集成与开会交接](integration.md)。
 
 详细约定见 [接口草案](contracts.md)，评估口径和试验记录见 [测试记录](validation.md)。人类复核对照说明见 [复核方案](review-study.md)。
 

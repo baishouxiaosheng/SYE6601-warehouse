@@ -204,7 +204,8 @@ def review_graph(task, previous_graph, proposal, tool_receipts, call_model, cach
         node(f"claim-unmapped-{index}", "claim", text=item["text"], state="UNKNOWN", review_status="unresolved")
     for rid, row in sorted(records.items()):
         node(f"evidence:{rid}", "evidence", reference={
-            "source_id": row["source_type"], "record_id": rid, "locator": row.get("citation"),
+            "source_id": row.get("source_id", row["source_type"]), "record_id": rid,
+            "locator": row.get("locator", row.get("citation")),
             "excerpt": row.get("statement"), "call_id": row["call_id"]},
              metadata={k: row.get(k) for k in ("customer_id", "incident_id", "scope", "version",
                        "effective_from", "effective_to", "fetched_at", "tool_status", "pagination_complete")})
@@ -269,10 +270,11 @@ def review_graph(task, previous_graph, proposal, tool_receipts, call_model, cach
                 target if target and not received(tool_receipts, target) else None)
 
     maintenance = [r for r in records.values() if r["source_type"] == MAINTENANCE]
-    if any(type(r.get("excluded")) is not bool for r in maintenance):
+    unresolved_maintenance = any(type(r.get("excluded")) is not bool for r in maintenance)
+    if unresolved_maintenance:
         gap("UNRESOLVED_SEMANTICS", "维护材料缺少可验证的例外字段")
     state = ("REFUTE" if any(r.get("excluded") is True for r in maintenance) else "SUPPORT")
-    if not next(c["completed"] for c in coverage if c["source"] == MAINTENANCE):
+    if unresolved_maintenance or not next(c["completed"] for c in coverage if c["source"] == MAINTENANCE):
         state = "UNKNOWN"
     node("condition:no-maintenance-exclusion", "obligation", state=state,
          receipt_ids=[r["call_id"] for r in tool_receipts if r["source_type"] == MAINTENANCE])

@@ -1,6 +1,6 @@
 # 动态证据接口草案
 
-仓库依据为 upstream/main 14fae4f 与 Loop B 草稿 d74ec4e。正式接口以团队后续签认为准。本版以 Python 函数和 JSON 对象交接。
+当前集成以 upstream/main 04da37d 的统一 Loop B 为基准。团队的 GraphProposal Schema 是独立协议，接入可执行建链器后在 builder 边界做字段映射。
 
 | 对象 | 字段 |
 |---|---|
