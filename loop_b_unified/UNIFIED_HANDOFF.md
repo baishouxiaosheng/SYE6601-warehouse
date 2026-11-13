@@ -1,4 +1,10 @@
-# 新版交接契约 0.2-draft
+# 新版交接契约 0.2-draft（路径修订）
+
+当前正式目录：仓库根目录 `loop_b_unified/`。
+从仓库根目录统一导入：`from loop_b_unified import create_provider, make_review_packet`。
+新规则与字段对照见 INTERFACE_ALIGNMENT.md；未确认来源不自动改名。
+GraphProposal 是建链提案，不能直接当作 make_review_packet 所需的终止快照。
+
 
 ## 版本和来源
 

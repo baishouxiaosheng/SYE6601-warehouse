@@ -1,72 +1,66 @@
-# Loop B 唯一新版交接
+# Loop B 统一入口
 
-**新代码统一使用 modules/loop_b_unified。旧 modules/loop_b_mock 是待清理历史版本。**
-**工单统一调用 PR #5 原版实现；本目录没有私有 get_ticket 工单实现。**
+当前仓库目录是根目录下的 `loop_b_unified/`，不是 `modules/loop_b_unified/`。
+本修订依据 main 提交 04da37d906ff359317033b56c970d69cd902721b（2026-11-13）。
+PR #7 已合并；无需重新打开 PR #6，也不要重新上传旧版 loop_b_mock。
 
-## 本岗位做什么
+## 在 PyCharm 运行
 
-原始合成材料、可定位引用、查询范围与版本信息、分页/错误回执、任务与运行编号、调用日志，以及按Loop A提供的终止快照整理人工复核包。
-不建图、不判断四态、不判断补偿、不控制重试或停止，不调用付费模型。
+打开整个项目或 loop_b_unified 文件夹。右键 run_raw_demo.py 运行独立演示，
+结果保存在本模块 raw_outputs/本次编号/。右键 test_raw_evidence.py 运行原有31项开发检查。
+无需模型密钥，仅用 Python 标准库。根 main.py 当前仍是示例文件，不是本模块入口。
 
-## 先运行
-
-完整解压“LoopB_唯一新版交接包.zip”，在PyCharm打开 modules/loop_b_unified 整个文件夹。
-右键 run_raw_demo.py → Run。结果保存到 raw_outputs/本次编号/。
-右键 test_raw_evidence.py → Run：31项新版开发检查。
-只用Python标准库，不用装依赖或配置API密钥。
-
-## 文件分工
-
-| 文件/目录 | 用途 |
-| --- | --- |
-| provider_setup.py | 唯一推荐查询入口，创建一次运行使用的provider |
-| raw_evidence.py | 原文查询、定位、范围、分页、回执与日志 |
-| review_handoff.py | 按Loop A终止快照整理复核包 |
-| run_raw_demo.py | 给组员看的演示入口 |
-| test_raw_evidence.py | 31项开发检查 |
-| runtime_data/ | 四类本地来源原文和记录，不含标准图或答案 |
-| vendor/pr5_dynamic/ | PR5未修改的固定源码及许可证，工单从这里取得 |
-| tool_registry.json | 五个注册来源与参数约定 |
-| examples/raw/ | 实跑返回、复核包和验证摘要 |
-| dev_checks/ | 开发场景来源说明，不提供给模型 |
-| UNIFIED_HANDOFF.md | 完整接口、数据来源、限制 |
-| run_raw_integration.py | 可选，接PR5全框架的模拟验证，需 --team-root 参数 |
-
-## Loop A怎样调用
+## Loop A 从仓库根目录调用
 
 ```python
-from provider_setup import create_provider
+from loop_b_unified import create_provider, make_review_packet
 
-tools = create_provider(log_path="outputs/calls.jsonl")
+provider = create_provider(log_path="outputs/calls.jsonl")
 task = {
     "task_id": "TASK-001", "run_id": "RUN-001",
     "customer_id": "C-DEMO", "incident_id": "I-DEMO",
     "event_time": "2026-10-01T00:00:00Z"
 }
-receipt = tools("CRM_CONTRACT_DB", task)
+receipt = provider("CRM_CONTRACT_DB", task)
 ```
 
-需要下一页时由Loop A传回next_page_token。需要工单时，仍用同一tools调用TICKET_DB，只会转接PR5。不要把整个测试配置、所有材料或开发场景路由拼给建链模型。
+每次运行创建一个 provider；由 Loop A 选择工具和传回下一页游标。
+正式工单沿用 PR5：可注入 `pr5_ticket_provider`；内置 vendor 固定副本用于独立演示。
+在模块文件夹内仍可使用 `from provider_setup import create_provider`，兼容现有演示。
 
-每个运行建议创建一个provider。集成项目需要将本模块目录放到Python可导入路径，避免同时加载旧目录的同名入口。已有PR5票据provider可通过pr5_ticket_provider参数注入，内置固定源码仅保证独立演示可运行。
+## 文件和职责
 
-## 已验证与未解决
+- provider_setup.py：构建查询入口；raw_evidence.py：原文、引用、分页、异常和日志。
+- review_handoff.py：接收 Loop A 的停止快照，整理人工复核包。
+- runtime_data/：冻结合成材料；vendor/pr5_dynamic/：保留来源与许可的 PR5 固定副本。
+- tool_registry.json：五个当前支持的来源；examples/raw/：历史开发样例。
+- UNIFIED_HANDOFF.md：详细接口；INTERFACE_ALIGNMENT.md：对照新规则的差异和待确认项。
+- check_team_interfaces.py：只核对接口，不调用模型，不输出补偿结论。
 
-31项开发检查通过，独立演示成功。另运行PR5模拟接入13例，12例输出一致，1例维护字段语义待确认。这里不是独立业务验收或真实模型成绩。
+本模块不建图、不计算四态、不改变补偿规则、不选择重试或停止。
+原31项检查和历史13例模拟对接（12例结论一致）都不是正式团队验收。
+维护 planned/excluded 语义待确认；现有材料也不足以计算新规则要求的维护扣除分钟数。
 
-维护待确认：PR5审核代码读excluded，本版原始资料提供planned。计划维护不直接等于本次事故免责，不能由工具自动赋值。当前该例安全保留undetermined。
-服务范围和转引上下文尚无补充业务签认；工具明确标明范围限制，不补造材料。
+## 核对最新规则
 
-工具日志包含task_id/run_id/call_id/provider_call_id，PR5控制器若重命名顶层call_id，需要保留与provider_call_id的映射。升级包由Loop A显式调用，不按日志条数推算补查轮数。
+在仓库根目录运行：
 
-## 上传和旧版清理
+```text
+python loop_b_unified/check_team_interfaces.py --team-root .
+```
 
-只用这一个包。GitHub选loop-b-mock分支，停在仓库首页，Add file → Upload files，拖入解压后的整个modules文件夹。
-检查路径：modules/loop_b_unified/provider_setup.py。
-提交标题：Replace Loop B handoff with unified raw-evidence module
+报告保存到 raw_outputs/interface_alignment.json。退出码0表示核对程序执行成功，
+不表示待确认接口已解决。加 --strict 时，有未解决项会返回退出码1。
+开发核对报告不应整份输入业务模型。
 
-确认新版文件上传成功后，可以在同一分支整体删除 modules/loop_b_mock，不要逐个删旧py文件。
-删除前通知Loop A：后续改用新目录与上面的入口。旧目录的历史内容仍可从Git提交历史恢复。
-其他组目录、根README、.github和PR5代码均不删除。
+## 完整流程对接
 
-这次上传只会新增新版文件，网页上传不会自动删除旧目录。旧目录清理需要单独执行一次删除提交，详见MIGRATION.md。
+run_raw_integration.py 需要包含 dynamic_evidence/controller.py 的团队项目，
+用 --team-root 指定。当前核对的 main 没有该目录；不能宣称已在此 main 跑通完整流程。
+请 Loop A／组长确认正式控制器位置和终止快照。
+
+## 更新 GitHub
+
+在基于最新 main 的工作分支，从仓库根目录上传本修订增量包里的整个 loop_b_unified 文件夹。
+应出现 loop_b_unified/README.md，不能出现 modules/loop_b_unified 或双层 loop_b_unified。
+增量包仅含本次修改，不必再上传全部旧文件。合并后以本 README 为当前入口说明。
