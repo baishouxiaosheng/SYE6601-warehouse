@@ -1,0 +1,206 @@
+{
+  "case_id": "IND-004",
+  "run_id": "IND-004-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 2018,
+    "completion_tokens": 6252,
+    "total_tokens": 8270
+  },
+  "latency_seconds": 41.328,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-004-r1",
+      "case_id": "IND-004",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "上午A线灌装的批次检完了吗？"
+          },
+          {
+            "id": "G2",
+            "text": "能放行吗？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "上午A线两个批次都已检完",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.batches"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.status"
+              }
+            ],
+            "reason": "c1 按 morning 返回 BT-261114-A01、BT-261114-A02 两个批次；c2、c3 的 status 均为 COMPLETED。"
+          },
+          {
+            "id": "C2",
+            "text": "并放行",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.results[0].release_status"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.results[1].release_status"
+              }
+            ],
+            "reason": "c4 中 BT-261114-A01 与 BT-261114-A02 的 release_status 均为 RELEASED。"
+          },
+          {
+            "id": "C3",
+            "text": "BT-261114-A01和BT-261114-A02的微生物、pH值、密封性检测均合格",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[0].result"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[1].result"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[2].result"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.items[0].result"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.items[1].result"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.items[2].result"
+              }
+            ],
+            "reason": "c2 与 c3 的微生物、pH值、密封性三项 result 均为合格。"
+          },
+          {
+            "id": "C4",
+            "text": "质检主管李明已分别于11:00和14:20",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.results[0].released_by"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.results[0].released_at"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.results[1].released_by"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.results[1].released_at"
+              }
+            ],
+            "reason": "c4 中两批次 released_by 均为质检主管 李明，released_at 分别为 2026-11-14T11:00:00+08:00 和 2026-11-14T14:20:00+08:00。"
+          },
+          {
+            "id": "C5",
+            "text": "签字",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [],
+            "reason": "trace 中仅有 release_status、released_by、released_at，没有签字、电子签名或签名时间字段，无法核验“签字”。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "MEDIUM",
+            "description": "回答称“签字”，但日志未返回签字/电子签名记录，无法确认签字动作。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": null,
+            "arguments": {},
+            "pending_arguments": {
+              "batch_ids": [
+                "BT-261114-A01",
+                "BT-261114-A02"
+              ],
+              "required_fields": [
+                "signature",
+                "signed_by",
+                "signed_at"
+              ]
+            },
+            "success_criterion": "返回两批次签字或电子签名记录，且签字人与时间分别为质检主管李明、11:00和14:20；或明确返回无签字记录。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 41.328
+}

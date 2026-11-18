@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "confidence_07a/experiment_metrics.v1.schema.json",
+  "title": "07A 离线评测结果（08B 读取，spec §5.5）",
+  "description": "rows 每项一个方法；false_support/gap_locate/insufficient_as_err 为 0-1 或 null（08B 兼容），其余为扩展字段。",
+  "type": "object",
+  "required": ["schema", "generated_at", "data_version", "gold_version", "rows"],
+  "properties": {
+    "schema": {"const": "experiment_metrics.v1"},
+    "generated_at": {"type": "string"},
+    "data_version": {"type": ["string", "null"]},
+    "gold_version": {"type": ["string", "null"]},
+    "eval_version": {"type": "string"},
+    "score_semantics": {"type": "string"},
+    "caveats": {"type": "array", "items": {"type": "string"}},
+    "rows": {"type": "array", "items": {"$ref": "#/definitions/row"}}
+  },
+  "definitions": {
+    "unit_or_null": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "ratio": {
+      "type": "object",
+      "required": ["numerator", "denominator", "value", "reason", "ci95"],
+      "properties": {
+        "numerator": {"type": "number"},
+        "denominator": {"type": "number"},
+        "value": {"type": ["number", "null"], "minimum": -1, "maximum": 1},
+        "reason": {"type": ["string", "null"]},
+        "ci95": {
+          "anyOf": [
+            {"type": "null"},
+            {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number"}}
+          ]
+        },
+        "definition": {"type": "string"},
+        "excluded_unaligned": {"type": "integer", "minimum": 0},
+        "ci_valid_resamples": {"type": "integer", "minimum": 0}
+      }
+    },
+    "row": {
+      "type": "object",
+      "required": ["method", "false_support", "gap_locate", "insufficient_as_err", "note"],
+      "properties": {
+        "method": {"type": "string"},
+        "false_support": {"$ref": "#/definitions/unit_or_null"},
+        "gap_locate": {"$ref": "#/definitions/unit_or_null"},
+        "insufficient_as_err": {"$ref": "#/definitions/unit_or_null"},
+        "note": {"type": "string"},
+        "n_runs": {"type": "integer", "minimum": 0},
+        "n_gold_claims": {"type": "integer", "minimum": 0},
+        "n_aligned_claims": {"type": "integer", "minimum": 0},
+        "gold_runs_draft": {"type": "integer", "minimum": 0},
+        "metric_mapping": {"type": "object"},
+        "metrics": {"type": "object", "additionalProperties": {"$ref": "#/definitions/ratio"}},
+        "strata": {"type": "object"},
+        "cost": {"type": "object"}
+      }
+    }
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "scorecard_version": "IND-024-scorecard-v1",
+  "run_id": "IND-024-r1",
+  "case_id": "IND-024",
+  "rule_version": "1.0.0",
+  "dimensions": {
+    "evidence_support": {
+      "name": "证据支持度",
+      "score": 0.3333333333333333,
+      "weight": 0.5,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 0,
+      "total": 6,
+      "details": [
+        {
+          "claim": "CLM-001",
+          "status": "REFUTE",
+          "value": 0.0
+        },
+        {
+          "claim": "CLM-002",
+          "status": "REFUTE",
+          "value": 0.0
+        },
+        {
+          "claim": "CLM-003",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-004",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-006",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-007",
+          "status": "UNKNOWN",
+          "value": 0.5
+        }
+      ]
+    },
+    "question_coverage": {
+      "name": "问题回应覆盖度",
+      "score": 0.5,
+      "weight": 0.3,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 1,
+      "total": 2,
+      "details": [
+        {
+          "goal": "GOAL-001",
+          "text": "液压机 HP-03 的压力读数是多少",
+          "answered": true,
+          "claims": [
+            "CLM-001"
+          ]
+        },
+        {
+          "goal": "GOAL-002",
+          "text": "正常吗",
+          "answered": false,
+          "claims": []
+        }
+      ]
+    },
+    "uncertainty_accuracy": {
+      "name": "不确定性表达准确性",
+      "score": 0.0,
+      "weight": 0.2,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 0,
+      "total": 6,
+      "details": [
+        {
+          "claim": "CLM-001",
+          "status": "REFUTE",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-002",
+          "status": "REFUTE",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-003",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-004",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-006",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-007",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        }
+      ]
+    }
+  },
+  "overall": 0.31666666666666665,
+  "grade": "E",
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "液压机 HP-03 当前系统压力为 21500 MPa",
+      "evidence_status": "REFUTE",
+      "assertion_strength": "reading",
+      "main_basis": [
+        "field_restatement@ trace[c1].result.asset_id：字段 asset_id=HP-03 与结论复述的 HP-03 逐字一致",
+        "rule_content_support@ trace[c2].result.results[0].content：结论内容与依据 RULE-001 一致（覆盖度 0.50）"
+      ],
+      "missing_or_conflicting": [
+        "REFUTE（unit_consistency）：原始读数 21500 kPa（换算为 21.5 MPa），回答写作 21500.0 MPa，数字相同但单位不同，属于可直接证实的单位错误"
+      ],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "已严重超出最大工作压力 25 MPa",
+      "evidence_status": "REFUTE",
+      "assertion_strength": "reading",
+      "main_basis": [
+        "rule_content_support@ trace[c2].result.results[0].content：结论内容与依据 RULE-001 一致（覆盖度 0.58）"
+      ],
+      "missing_or_conflicting": [
+        "REFUTE（range_check）：读数 21500 kPa 与正常区间 [18000, 25000] kPa 比对：并未超出，结论与证据矛盾"
+      ],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "超出约 86000 倍",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "inference",
+      "main_basis": [],
+      "missing_or_conflicting": [
+        "UNKNOWN（range_basis_missing）：日志中未找到该参数对应的正常区间或判定基准，按规则保留未知状态",
+        "UNKNOWN（inference_basis）：该结论是推测，日志未给出可直接确认的现场/诊断依据，按规则保留未知状态",
+        "GAP-001（MISSING_DEPENDENCY）：缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论",
+        "GAP-002（MISSING_EVIDENCE）：推测性结论缺少现场检查或诊断依据，无法确认"
+      ],
+      "affected_goals": [],
+      "next_action": "补证动作：ACT-001、ACT-002",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "属于极度危险状态",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-006",
+      "text": "近2小时压力波动范围 20800～22100",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-007",
+      "text": "趋势稳定",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    }
+  ],
+  "severity_flags": [
+    {
+      "claim": "CLM-001",
+      "status": "REFUTE",
+      "assertion_strength": "reading",
+      "severity": "MEDIUM",
+      "high_risk_keywords": [],
+      "reason": "结论状态为 REFUTE，与证据/规则冲突或缺少判定依据",
+      "content": "液压机 HP-03 当前系统压力为 21500 MPa"
+    },
+    {
+      "claim": "CLM-002",
+      "status": "REFUTE",
+      "assertion_strength": "reading",
+      "severity": "MEDIUM",
+      "high_risk_keywords": [],
+      "reason": "结论状态为 REFUTE，与证据/规则冲突或缺少判定依据",
+      "content": "已严重超出最大工作压力 25 MPa"
+    }
+  ],
+  "notes": [
+    "三个维度均由可复算检查结果推导，不使用模型主观打分。",
+    "负向状态 ['CONFLICT', 'MISSING_RULE', 'REFUTE'] 会直接拉低证据支持度并触发高风险标记。",
+    "评级仅供参考，不能替代人工复核；grade 为 N/A 表示未配置评级阈值。"
+  ]
+}

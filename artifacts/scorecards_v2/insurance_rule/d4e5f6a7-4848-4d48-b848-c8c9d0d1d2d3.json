@@ -1,0 +1,636 @@
+{
+  "scorecard_version": "07a-scorecard-v2",
+  "rule_version": "2.1.0",
+  "policy_version": "2.1.0",
+  "policy_status": "PROVISIONAL",
+  "policy_sha256": "f6a12bb2d19e5a3951f4048022ac07f146bd5aef15074754e8b283b2f65db86f",
+  "run_id": "d4e5f6a7-4848-4d48-b848-c8c9d0d1d2d3",
+  "case_id": "INS-A48",
+  "upstream_versions": {
+    "graph_version": "INS-A48-evidence-graph-v1",
+    "plan_version": "INS-A48-supplementary-plan-v1",
+    "answer_version": null,
+    "answer_sha256": "732bd950f5b97d8d",
+    "proposal_status": "proposed"
+  },
+  "source": {
+    "method": "rule",
+    "engine": "01A-egraph",
+    "adapter": "egraph_v1",
+    "adapter_version": "1.0.0",
+    "log_record_available": true,
+    "files": {
+      "graph": "INS-A48_graph.json",
+      "plan": "INS-A48_plan.json"
+    }
+  },
+  "question": "客户的重疾险刚买 90 天就确诊了甲状腺癌，等待期到底是 90 天还是 180 天？能不能赔？",
+  "grade": "QUALIFIED",
+  "grade_label_zh": "附保留说明",
+  "high_risk_alert": false,
+  "high_risk_alert_text": "",
+  "support_score": 0.4444,
+  "coverage_score": 0.0,
+  "uncertainty_score": 0.4444,
+  "overall": 0.3333,
+  "overall_display": true,
+  "blockers": [],
+  "qualifications": [
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-003",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-004",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-005",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-008",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-009",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q1_UNADDRESSED_GOAL",
+      "claim_id": null,
+      "goal_id": "GOAL-001",
+      "reason_zh": "用户目标未被任何结论回应，也未声明无法确定",
+      "detail": "能不能赔"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "claims_without_checks=5"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "goals_without_claims=1"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "orphan_evidence=2"
+    }
+  ],
+  "severe_issues": [],
+  "dimensions": {
+    "support": {
+      "numerator": 4,
+      "denominator": 9,
+      "value": 0.4444,
+      "breakdown": {
+        "SUPPORT": 4,
+        "REFUTE": 0,
+        "UNKNOWN": 5,
+        "CONFLICT": 0,
+        "MISSING_RULE": 0,
+        "excluded_declared_unknown": 0
+      },
+      "rule": "分母=措辞为 DEFINITE/HEDGED/SCOPED_PARTIAL 的结论数；分子=其中上游状态为 SUPPORT 的条数。UNKNOWN 不给半分。DECLARED_UNKNOWN 不计入。",
+      "weight": 0.5
+    },
+    "coverage": {
+      "numerator": 0,
+      "denominator": 1,
+      "value": 0.0,
+      "breakdown": {
+        "ADDRESSED_SUPPORTED": 0,
+        "ADDRESSED_DECLARED_UNKNOWN": 0,
+        "ADDRESSED_UNSUPPORTED": 0,
+        "NOT_ADDRESSED": 1,
+        "lexical_fallback_goals": 0
+      },
+      "rule": "分母=用户目标数；分子=有关联结论（DEFINITE/HEDGED/SCOPED_PARTIAL）或明确声明无法确定（DECLARED_UNKNOWN）的目标数。关联优先用上游 related_goals/covers_goals/边，退化为词面匹配时标 lexical_fallback。",
+      "weight": 0.25
+    },
+    "uncertainty": {
+      "numerator": 4.0,
+      "denominator": 9,
+      "value": 0.4444,
+      "breakdown": {
+        "judgements": {
+          "APPROPRIATE": 4,
+          "OVERCLAIM": 5
+        },
+        "cells": {
+          "DEFINITE×SUPPORT": 4,
+          "DEFINITE×UNKNOWN": 5
+        },
+        "unchecked_default_unknown": 5,
+        "checked_only": {
+          "numerator": 4.0,
+          "denominator": 4,
+          "value": 1.0
+        }
+      },
+      "rule": "对每条结论按 policy.expression_matrix 的 (措辞×状态) 查表得分，分母=全部结论。如实声明无法确定（DECLARED_UNKNOWN×UNKNOWN/MISSING_RULE/CONFLICT）得满分。breakdown.checked_only 仅供参考：排除了“未被任何 check 命中而默认 UNKNOWN”的结论。",
+      "weight": 0.25
+    }
+  },
+  "review_sequence": [
+    "CLM-003",
+    "CLM-004",
+    "CLM-005",
+    "CLM-008",
+    "CLM-009"
+  ],
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "保单 CI-260801-2267 生效日 2026 年 8 月 1 日",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-001",
+          "kind": "field_restatement",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-001",
+          "run_id": "d4e5f6a7-4848-4d48-b848-c8c9d0d1d2d3",
+          "event_id": "c1",
+          "json_path": "trace[c1].result.policy_id",
+          "pointer": "/trace/0/result/policy_id",
+          "excerpt": "字段 policy_id=CI-260801-2267 与结论复述的 CI-260801-2267 逐字一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "等待期 90 天",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-002",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-003",
+          "run_id": "d4e5f6a7-4848-4d48-b848-c8c9d0d1d2d3",
+          "event_id": "c3",
+          "json_path": "trace[c3].result.excerpt",
+          "pointer": "/trace/2/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.75）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "d4e5f6a7-4848-4d48-b848-c8c9d0d1d2d3",
+          "event_id": "c3",
+          "json_path": "trace[c3].result.excerpt",
+          "pointer": "/trace/2/result/excerpt",
+          "excerpt": "自保单生效日起 90 日内为等待期。被保险人在等待期内确诊的，保险人不承担给付保险金的责任。等待期届满日（含当日）仍属于等待期内。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:等待期"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "系统计算等待期届满日为 2026 年 10 月 30 日",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:等待期"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "且 waiting_period_expired = false（等待期尚未届满）",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:等待期"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "客户确诊日也是 10 月 30 日",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-006",
+      "text": "条款明确'等待期届满日（含当日）仍属于等待期内'",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-003",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-003",
+          "run_id": "d4e5f6a7-4848-4d48-b848-c8c9d0d1d2d3",
+          "event_id": "c3",
+          "json_path": "trace[c3].result.excerpt",
+          "pointer": "/trace/2/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.76）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "d4e5f6a7-4848-4d48-b848-c8c9d0d1d2d3",
+          "event_id": "c3",
+          "json_path": "trace[c3].result.excerpt",
+          "pointer": "/trace/2/result/excerpt",
+          "excerpt": "自保单生效日起 90 日内为等待期。被保险人在等待期内确诊的，保险人不承担给付保险金的责任。等待期届满日（含当日）仍属于等待期内。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:等待期"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-007",
+      "text": "因此确诊日仍在等待期内",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-004",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-003",
+          "run_id": "d4e5f6a7-4848-4d48-b848-c8c9d0d1d2d3",
+          "event_id": "c3",
+          "json_path": "trace[c3].result.excerpt",
+          "pointer": "/trace/2/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.60）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "d4e5f6a7-4848-4d48-b848-c8c9d0d1d2d3",
+          "event_id": "c3",
+          "json_path": "trace[c3].result.excerpt",
+          "pointer": "/trace/2/result/excerpt",
+          "excerpt": "自保单生效日起 90 日内为等待期。被保险人在等待期内确诊的，保险人不承担给付保险金的责任。等待期届满日（含当日）仍属于等待期内。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:等待期"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-008",
+      "text": "按条款不应赔付重疾保险金",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:赔付",
+        "lexicon:保险金"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-009",
+      "text": "不过起算日是否含当天存在一定歧义（如从 8 月 1 日起算第 90 天为 10 月 29 日）",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    }
+  ],
+  "goals": [
+    {
+      "goal_id": "GOAL-001",
+      "text": "能不能赔",
+      "question_type": "status_query",
+      "coverage_state": "NOT_ADDRESSED",
+      "coverage_state_zh": "未回应",
+      "linked_claims": [],
+      "linkage_method": "none",
+      "upstream_answered": false
+    }
+  ],
+  "gaps": [],
+  "build_risks": {
+    "unmapped_sentences": {
+      "count": 0,
+      "items": []
+    },
+    "goals_without_claims": [
+      "GOAL-001"
+    ],
+    "goals_lexical_fallback": [],
+    "lexical_fallback_links": 0,
+    "orphan_evidence": [
+      "MAT-002",
+      "MAT-004"
+    ],
+    "claims_without_checks": [
+      "CLM-003",
+      "CLM-004",
+      "CLM-005",
+      "CLM-008",
+      "CLM-009"
+    ],
+    "unchecked_default_unknown": [
+      "CLM-003",
+      "CLM-004",
+      "CLM-005",
+      "CLM-008",
+      "CLM-009"
+    ],
+    "review_status": {
+      "proposed_nodes": 11,
+      "unresolved_nodes": 0,
+      "proposed_edges": 0,
+      "unresolved_edges": 0,
+      "proposed_claims": 9
+    },
+    "gap_missing_condition_not_node": [],
+    "dangling_action_gap_refs": [],
+    "recommendations_unscored": [
+      {
+        "id": "OBL-010",
+        "text": "建议转核赔部门确认起算规则后最终定论"
+      }
+    ],
+    "b_review_unmatched": [],
+    "scope_statement": "本成绩单只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。"
+  },
+  "supplement": {
+    "plan_action_count": 0,
+    "executable": 0,
+    "needs_confirmation": 0,
+    "manual": 0,
+    "actions": []
+  },
+  "scope_note": "本成绩单只评价上游（01A 建图 / 02B 审核）已建模的结论、证据与缺口；结论状态由上游给出，07A 不重新判断。未被抽取的结论、未被发现的规则与日志外事实不在评价范围内。",
+  "score_semantics": "本成绩单的分数是“基于现有日志的证据审核结果”，不是回答正确的概率；未经独立标注数据校准前不得解读为正确率。等级只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。",
+  "notes": [
+    "1 条推荐类结论（OBL）上游未给出前提关联，未计入评分，只在建链风险中披露。"
+  ],
+  "generated_by": {
+    "package": "confidence_07a",
+    "package_version": "2.1.0",
+    "scorecard_version": "07a-scorecard-v2",
+    "adapter": "egraph_v1",
+    "model_called": false
+  }
+}

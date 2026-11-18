@@ -1,0 +1,532 @@
+{
+  "graph_version": "IND-043-evidence-graph-v1",
+  "run_id": "IND-043-r1",
+  "case_id": "IND-043",
+  "task": {
+    "task_id": "IND-043",
+    "run_id": "IND-043-r1",
+    "question": "D线昨天的产量是多少？",
+    "customer_id": null,
+    "incident_id": "Line-D",
+    "event_time": "2026-11-14T07:30:22+08:00"
+  },
+  "scope_declaration": {
+    "scope": "IND-043：D线昨天的产量是多少",
+    "in_scope": [
+      "D线昨天的产量是多少"
+    ],
+    "out_of_scope": [
+      "未经日志证据支持的具体故障诊断或因果结论",
+      "日志未提供依据的业务规则、参数基准与适用范围"
+    ]
+  },
+  "goals": [
+    {
+      "id": "GOAL-001",
+      "text": "D线昨天的产量是多少",
+      "question_type": "value_query",
+      "subject": "D线昨天的产量是多少",
+      "answered": true,
+      "coverage_note": "由 CLM-001 回应"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "GOAL-001",
+      "type": "goal",
+      "content": "D线昨天的产量是多少",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "question_type": "value_query",
+        "subject": "D线昨天的产量是多少"
+      }
+    },
+    {
+      "id": "NOTE-001",
+      "type": "note",
+      "content": "正在查询D线昨日产量数据...",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "s1",
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "event": "assistant_progress_note"
+      }
+    },
+    {
+      "id": "NOTE-002",
+      "type": "note",
+      "content": "已获取D线昨日产量",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "s2",
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "event": "assistant_progress_note"
+      }
+    },
+    {
+      "id": "MAT-001",
+      "type": "evidence",
+      "content": "production.daily_output 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "production",
+      "record_id": "c1",
+      "locator": "trace[c1].result",
+      "excerpt": null,
+      "tool": "production.daily_output",
+      "arguments": {
+        "line_id": "Line-D",
+        "date_from": "2026-11-13T06:00:00+08:00",
+        "date_to": "2026-11-13T22:00:00+08:00"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "database_query",
+        "signal_count": 16
+      }
+    },
+    {
+      "id": "MAT-002",
+      "type": "evidence",
+      "content": "production.daily_output 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "production",
+      "record_id": "c2",
+      "locator": "trace[c2].result",
+      "excerpt": null,
+      "tool": "production.daily_output",
+      "arguments": {
+        "line_id": "Line-D",
+        "date_from": "2026-11-13T22:00:00+08:00",
+        "date_to": "2026-11-14T06:00:00+08:00"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "database_query",
+        "signal_count": 11
+      }
+    },
+    {
+      "id": "MAT-003",
+      "type": "evidence",
+      "content": "production.daily_output 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "production",
+      "record_id": "u1",
+      "locator": "trace[u1].result",
+      "excerpt": null,
+      "tool": "production.daily_output",
+      "arguments": {
+        "line_id": "Line-D",
+        "date_from": "2026-11-12T22:00:00+08:00",
+        "date_to": "2026-11-13T06:00:00+08:00"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "database_query",
+        "signal_count": 10
+      }
+    },
+    {
+      "id": "RULE-001",
+      "type": "rule",
+      "content": "本厂日报按业务日期统计：白班、中班归属开始当天；22:00至次日06:00的夜班归属结束当天。",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "MAT-001",
+      "record_id": "c1",
+      "locator": "trace[c1].result.attribution_rule",
+      "excerpt": "本厂日报按业务日期统计：白班、中班归属开始当天；22:00至次日06:00的夜班归属结束当天。",
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "kind": "attribution_rule",
+        "applicable_to": null,
+        "threshold": null
+      }
+    },
+    {
+      "id": "RULE-002",
+      "type": "rule",
+      "content": "本厂日报按业务日期统计：白班、中班归属开始当天；22:00至次日06:00的夜班归属结束当天。",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "MAT-002",
+      "record_id": "c2",
+      "locator": "trace[c2].result.attribution_rule",
+      "excerpt": "本厂日报按业务日期统计：白班、中班归属开始当天；22:00至次日06:00的夜班归属结束当天。",
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "kind": "attribution_rule",
+        "applicable_to": null,
+        "threshold": null
+      }
+    },
+    {
+      "id": "RULE-003",
+      "type": "rule",
+      "content": "本厂日报按业务日期统计：白班、中班归属开始当天；22:00至次日06:00的夜班归属结束当天。",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "MAT-003",
+      "record_id": "u1",
+      "locator": "trace[u1].result.attribution_rule",
+      "excerpt": "本厂日报按业务日期统计：白班、中班归属开始当天；22:00至次日06:00的夜班归属结束当天。",
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "kind": "attribution_rule",
+        "applicable_to": null,
+        "threshold": null
+      }
+    },
+    {
+      "id": "COND-001",
+      "type": "condition",
+      "content": "整期汇总类结论要求目标业务时段的全部区间均被工具返回覆盖",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-001",
+        "status": "satisfied",
+        "kind": "time_window_coverage"
+      }
+    },
+    {
+      "id": "CLM-001",
+      "type": "claim",
+      "content": "D线昨天（11月13日）的产量为4200件",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "reading",
+      "related_goals": [
+        "GOAL-001"
+      ],
+      "scope_limited": false,
+      "value": 4200.0,
+      "unit": "件",
+      "meta": {
+        "order": 0,
+        "numerals": [
+          {
+            "value": 4200.0,
+            "unit": "件",
+            "raw": "4200件",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [
+          0
+        ],
+        "source_span": "D线昨天（11月13日）的产量为4200件",
+        "verdict_reason": "现有证据条件全部满足",
+        "checks": [
+          "CHK-001"
+        ]
+      }
+    },
+    {
+      "id": "CLM-002",
+      "type": "claim",
+      "content": "其中白班1800件",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 1800.0,
+      "unit": "件",
+      "meta": {
+        "order": 1,
+        "numerals": [
+          {
+            "value": 1800.0,
+            "unit": "件",
+            "raw": "1800件",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "其中白班1800件",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "CLM-003",
+      "type": "claim",
+      "content": "中班2400件",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 2400.0,
+      "unit": "件",
+      "meta": {
+        "order": 2,
+        "numerals": [
+          {
+            "value": 2400.0,
+            "unit": "件",
+            "raw": "2400件",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "中班2400件",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "CLM-004",
+      "type": "claim",
+      "content": "生产运行正常",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 3,
+        "numerals": [],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "生产运行正常",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "E-0001",
+      "source": "COND-001",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：整期汇总类结论要求目标业务时段的全部区间均被工具返回覆盖",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0002",
+      "source": "CLM-001",
+      "target": "GOAL-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "该结论用于回答此目标",
+      "created_by": "rule",
+      "review_status": "verified"
+    }
+  ],
+  "checks": [
+    {
+      "check_id": "CHK-001",
+      "kind": "time_window_coverage",
+      "description": "整期汇总类结论要求目标业务时段的全部区间均被工具返回覆盖",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": null,
+      "locator": null,
+      "expected": {
+        "start": "2026-11-12T22:00:00+08:00",
+        "end": "2026-11-13T22:00:00+08:00"
+      },
+      "actual": {
+        "covered": [
+          "2026-11-12T22:00:00+08:00 ~ 2026-11-14T06:00:00+08:00"
+        ]
+      },
+      "detail": "目标时段已被现有调用完整覆盖",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "PATH-001",
+      "goal_claim": "CLM-001",
+      "conditions": [
+        "COND-001"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-001"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 __direct__，需同时满足 1 个条件：整期汇总类结论要求目标业务时段的全部区间均被工具返回覆盖",
+      "created_by": "rule"
+    }
+  ],
+  "gaps": [],
+  "common_necessary_conditions": [
+    {
+      "claim": "CLM-001",
+      "condition": "COND-001",
+      "content": "整期汇总类结论要求目标业务时段的全部区间均被工具返回覆盖",
+      "status": "satisfied",
+      "paths": [
+        "PATH-001"
+      ],
+      "necessary_for_all_paths": true
+    }
+  ],
+  "changes": [
+    {
+      "kind": "claim_status",
+      "claim": "CLM-001",
+      "content": "D线昨天（11月13日）的产量为4200件",
+      "before": "UNKNOWN",
+      "after": "SUPPORT",
+      "reason": "补证后证据增强"
+    },
+    {
+      "kind": "gap_resolved",
+      "gap": "GAP-001",
+      "description": "目标时段存在未覆盖区间：2026-11-12T22:00:00+08:00 ~ 2026-11-13T06:00:00+08:00",
+      "before": "OPEN",
+      "after": "RESOLVED"
+    }
+  ],
+  "limitations": [
+    "本图仅覆盖单份监控日志可核查的范围；数据源的现实真实性、业务规则完备性不在验证范围内。"
+  ],
+  "proposal_status": "proposed"
+}

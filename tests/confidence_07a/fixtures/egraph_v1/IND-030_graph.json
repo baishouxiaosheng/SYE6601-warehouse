@@ -1,0 +1,693 @@
+{
+  "graph_version": "IND-030-evidence-graph-v1",
+  "run_id": "IND-030-r1",
+  "case_id": "IND-030",
+  "task": {
+    "task_id": "IND-030",
+    "run_id": "IND-030-r1",
+    "question": "库房里有没有 M8 的钛合金螺栓？",
+    "customer_id": null,
+    "incident_id": null,
+    "event_time": "2026-11-14T10:45:00+08:00"
+  },
+  "scope_declaration": {
+    "scope": "IND-030：库房里有没有 M8 的钛合金螺栓",
+    "in_scope": [
+      "库房里有没有 M8 的钛合金螺栓"
+    ],
+    "out_of_scope": [
+      "未经日志证据支持的具体故障诊断或因果结论",
+      "日志未提供依据的业务规则、参数基准与适用范围"
+    ]
+  },
+  "goals": [
+    {
+      "id": "GOAL-001",
+      "text": "库房里有没有 M8 的钛合金螺栓",
+      "question_type": "list",
+      "subject": "库房里有没有 M8 的钛合金螺栓",
+      "answered": true,
+      "coverage_note": "由 CLM-001, CLM-002 回应"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "GOAL-001",
+      "type": "goal",
+      "content": "库房里有没有 M8 的钛合金螺栓",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "question_type": "list",
+        "subject": "库房里有没有 M8 的钛合金螺栓"
+      }
+    },
+    {
+      "id": "NOTE-001",
+      "type": "note",
+      "content": "已搜索 M8 螺栓库存",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "s1",
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "event": "assistant_progress_note"
+      }
+    },
+    {
+      "id": "MAT-001",
+      "type": "evidence",
+      "content": "inventory.search 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "inventory",
+      "record_id": "c1",
+      "locator": "trace[c1].result",
+      "excerpt": null,
+      "tool": "inventory.search",
+      "arguments": {
+        "keyword": "M8 螺栓",
+        "page_size": 20
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "database_query",
+        "signal_count": 85
+      }
+    },
+    {
+      "id": "MAT-002",
+      "type": "evidence",
+      "content": "inventory.material_category_lookup 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "inventory",
+      "record_id": "c2",
+      "locator": "trace[c2].result",
+      "excerpt": null,
+      "tool": "inventory.material_category_lookup",
+      "arguments": {
+        "category": "钛合金紧固件"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "basic_lookup",
+        "signal_count": 6
+      }
+    },
+    {
+      "id": "MAT-003",
+      "type": "evidence",
+      "content": "warehouse.location_check 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "warehouse",
+      "record_id": "c3",
+      "locator": "trace[c3].result",
+      "excerpt": null,
+      "tool": "warehouse.location_check",
+      "arguments": {
+        "warehouse": "特种材料库-B2"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "basic_lookup",
+        "signal_count": 4
+      }
+    },
+    {
+      "id": "MAT-004",
+      "type": "evidence",
+      "content": "inventory.search 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "inventory",
+      "record_id": "c4",
+      "locator": "trace[c4].result",
+      "excerpt": null,
+      "tool": "inventory.search",
+      "arguments": {
+        "keyword": "M8 螺栓",
+        "page_size": 20,
+        "page": 1,
+        "material_filter": "钛合金"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "database_query",
+        "signal_count": 10
+      }
+    },
+    {
+      "id": "COND-001",
+      "type": "condition",
+      "content": "全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-001",
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-001",
+        "status": "violated",
+        "kind": "pagination_completeness"
+      }
+    },
+    {
+      "id": "COND-002",
+      "type": "condition",
+      "content": "全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-004",
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-002",
+        "status": "violated",
+        "kind": "pagination_completeness"
+      }
+    },
+    {
+      "id": "COND-003",
+      "type": "condition",
+      "content": "筛选条件应实际生效，否则返回结果的范围与问题不一致",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-004",
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-003",
+        "status": "violated",
+        "kind": "filter_effectiveness"
+      }
+    },
+    {
+      "id": "CLM-001",
+      "type": "claim",
+      "content": "库房中未找到 M8 钛合金螺栓",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "negative_finding",
+      "related_goals": [
+        "GOAL-001"
+      ],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 1,
+        "numerals": [],
+        "entities": [
+          "钛合金"
+        ],
+        "covers_goals": [
+          0
+        ],
+        "source_span": "库房中未找到 M8 钛合金螺栓",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": [
+          "CHK-001",
+          "CHK-002",
+          "CHK-003"
+        ]
+      }
+    },
+    {
+      "id": "CLM-002",
+      "type": "claim",
+      "content": "当前 M8 螺栓库存以不锈钢（304/316）",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "related_goals": [
+        "GOAL-001"
+      ],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 2,
+        "numerals": [],
+        "entities": [
+          "M8 螺栓"
+        ],
+        "covers_goals": [],
+        "source_span": "当前 M8 螺栓库存以不锈钢（304/316）",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "CLM-003",
+      "type": "claim",
+      "content": "碳钢和铝合金材质为主",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 3,
+        "numerals": [],
+        "entities": [
+          "碳钢",
+          "铝合金"
+        ],
+        "covers_goals": [],
+        "source_span": "碳钢和铝合金材质为主",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "CLM-004",
+      "type": "claim",
+      "content": "合计 156 个品规",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 156.0,
+      "unit": "个",
+      "meta": {
+        "order": 4,
+        "numerals": [
+          {
+            "value": 156.0,
+            "unit": "个",
+            "raw": "156 个",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "合计 156 个品规",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "CLM-005",
+      "type": "claim",
+      "content": "钛合金紧固件存放于特种材料库B2区",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 8,
+        "numerals": [],
+        "entities": [
+          "钛合金",
+          "钛合金紧固件"
+        ],
+        "covers_goals": [],
+        "source_span": "钛合金紧固件存放于特种材料库B2区",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "CLM-006",
+      "type": "claim",
+      "content": "也可联系库管员周芳确认",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 9,
+        "numerals": [],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "也可联系库管员周芳确认",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "E-0001",
+      "source": "MAT-001",
+      "target": "CLM-001",
+      "type": "checks",
+      "logic": null,
+      "rationale": "全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0002",
+      "source": "COND-001",
+      "target": "CLM-001",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（violated）：全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0003",
+      "source": "MAT-004",
+      "target": "CLM-001",
+      "type": "checks",
+      "logic": null,
+      "rationale": "全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0004",
+      "source": "COND-002",
+      "target": "CLM-001",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（violated）：全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0005",
+      "source": "COND-003",
+      "target": "CLM-001",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（violated）：筛选条件应实际生效，否则返回结果的范围与问题不一致",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0006",
+      "source": "CLM-001",
+      "target": "GOAL-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "该结论用于回答此目标",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0007",
+      "source": "CLM-002",
+      "target": "GOAL-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "该结论用于回答此目标",
+      "created_by": "rule",
+      "review_status": "verified"
+    }
+  ],
+  "checks": [
+    {
+      "check_id": "CHK-001",
+      "kind": "pagination_completeness",
+      "description": "全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "status": "violated",
+      "target_node": null,
+      "evidence_ref": "MAT-001",
+      "locator": null,
+      "expected": {
+        "total_pages": 8
+      },
+      "actual": {
+        "page": 1,
+        "total_matches": 156
+      },
+      "detail": "仅返回第 1/8 页，共 156 条匹配，其余页未检索",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "UNKNOWN",
+      "category": "insufficient"
+    },
+    {
+      "check_id": "CHK-002",
+      "kind": "pagination_completeness",
+      "description": "全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "status": "violated",
+      "target_node": null,
+      "evidence_ref": "MAT-004",
+      "locator": null,
+      "expected": {
+        "total_pages": 8
+      },
+      "actual": {
+        "page": 1,
+        "total_matches": 156
+      },
+      "detail": "仅返回第 1/8 页，共 156 条匹配，其余页未检索",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "UNKNOWN",
+      "category": "insufficient"
+    },
+    {
+      "check_id": "CHK-003",
+      "kind": "filter_effectiveness",
+      "description": "筛选条件应实际生效，否则返回结果的范围与问题不一致",
+      "status": "violated",
+      "target_node": null,
+      "evidence_ref": "MAT-004",
+      "locator": null,
+      "expected": null,
+      "actual": "material_filter 参数未生效，返回全量结果第1页。请使用精确搜索或翻页查看完整结果。",
+      "detail": "工具返回显式说明筛选参数未生效，返回的是全量结果",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "UNKNOWN",
+      "category": "insufficient"
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "PATH-003",
+      "goal_claim": "CLM-001",
+      "conditions": [],
+      "satisfied": false,
+      "satisfied_conditions": [],
+      "missing_conditions": [],
+      "rationale": "该结论存在 2 条可替代路径（OR）；任一路径满足即可成立。",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-001",
+      "goal_claim": "CLM-001",
+      "conditions": [
+        "COND-001"
+      ],
+      "satisfied": false,
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "COND-001"
+      ],
+      "rationale": "路径来源 MAT-001，需同时满足 1 个条件：全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-002",
+      "goal_claim": "CLM-001",
+      "conditions": [
+        "COND-002",
+        "COND-003"
+      ],
+      "satisfied": false,
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "COND-002",
+        "COND-003"
+      ],
+      "rationale": "路径来源 MAT-004，需同时满足 2 个条件：全库结论要求翻完所有分页；仅第 1 页不足以支撑“全库无此物料”；筛选条件应实际生效，否则返回结果的范围与问题不一致",
+      "created_by": "rule"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "GAP-001",
+      "type": "INCOMPLETE_RESULT",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "description": "检索结果不完整：仅第 1/8 页，全库结论缺证",
+      "criticality": "HIGH",
+      "mandatory": false,
+      "target_source": "翻页检索或使用精确筛选条件重新查询",
+      "missing_condition": null
+    },
+    {
+      "id": "GAP-002",
+      "type": "INCOMPLETE_RESULT",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "description": "检索结果不完整：仅第 1/8 页，全库结论缺证",
+      "criticality": "HIGH",
+      "mandatory": false,
+      "target_source": "翻页检索或使用精确筛选条件重新查询",
+      "missing_condition": null
+    },
+    {
+      "id": "GAP-003",
+      "type": "LIMITED_SCOPE",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "description": "筛选参数未生效，返回范围与问题口径不一致，需使用精确条件重查",
+      "criticality": "MEDIUM",
+      "mandatory": false,
+      "target_source": "使用生效的筛选参数重新查询",
+      "missing_condition": null
+    }
+  ],
+  "common_necessary_conditions": [],
+  "changes": [],
+  "limitations": [
+    "本图仅覆盖单份监控日志可核查的范围；数据源的现实真实性、业务规则完备性不在验证范围内。"
+  ],
+  "proposal_status": "proposed"
+}

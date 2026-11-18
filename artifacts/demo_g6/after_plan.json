@@ -1,0 +1,13 @@
+{
+  "plan_version": "IND-043-supplementary-plan-v1",
+  "run_id": "IND-043-r1",
+  "case_id": "IND-043",
+  "actions": [],
+  "notes": [
+    "本次运行未发现需要补证的缺口，无需额外动作。",
+    "动作按「同一来源 + 同一动作类型」合并，避免对同一接口重复往返。",
+    "executable 表示参数齐备可直接执行；needs_confirmation 表示需先确认参数或适用范围；manual 表示必须现场或走审批流程。",
+    "执行后用 register_execution() 回填 executed_at（发起时间）、evidence_time（业务时点）、acquired_at（取证时间），三者不可互相代替。",
+    "本次为补证后重算，changes 记录相对上一次运行的变化。"
+  ]
+}

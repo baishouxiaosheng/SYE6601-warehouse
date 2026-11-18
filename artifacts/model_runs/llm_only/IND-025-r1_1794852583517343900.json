@@ -1,0 +1,315 @@
+{
+  "case_id": "IND-025",
+  "run_id": "IND-025-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1712,
+    "completion_tokens": 9554,
+    "total_tokens": 11266
+  },
+  "latency_seconds": 58.156,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-025-r1",
+      "case_id": "IND-025",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "批次 BT-261113-C07 的质检结果出来了吗？"
+          },
+          {
+            "id": "G2",
+            "text": "能放行吗？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "42CrMo",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.material"
+              }
+            ],
+            "reason": "c1.material 为 42CrMo。"
+          },
+          {
+            "id": "C2",
+            "text": "29.5",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[0].result"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[0].method"
+              }
+            ],
+            "reason": "硬度 HRC 结果为 29.5。"
+          },
+          {
+            "id": "C3",
+            "text": "硬度 29.5 HRC（合格）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[0].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[0].requirement"
+              }
+            ],
+            "reason": "硬度状态 PASS，要求 28-34，29.5 在区间内。"
+          },
+          {
+            "id": "C4",
+            "text": "1095",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[1].result"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[1].unit"
+              }
+            ],
+            "reason": "抗拉强度结果为 1095 MPa。"
+          },
+          {
+            "id": "C5",
+            "text": "抗拉强度 1095 MPa（合格）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[1].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[1].requirement"
+              }
+            ],
+            "reason": "抗拉强度状态 PASS，要求 ≥1080，1095 满足。"
+          },
+          {
+            "id": "C6",
+            "text": "冲击试验已完成",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[2].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[2].result"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.pending_items"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.estimated_completion"
+              }
+            ],
+            "reason": "冲击试验 status 为 PENDING 且 result 为 null，release_check 仍列为 pending_items，排程预计 2026-11-14T16:00 完成，未完成。"
+          },
+          {
+            "id": "C7",
+            "text": "各项指标均符合 GB/T 3077-2015 要求",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.specification"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[2].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.test_items[2].result"
+              }
+            ],
+            "reason": "规格为 GB/T 3077-2015，但冲击试验未出结果且 PENDING，不能认定各项指标均符合。"
+          },
+          {
+            "id": "C8",
+            "text": "该批次判定合格",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.overall_status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.release_eligible"
+              }
+            ],
+            "reason": "overall_status 为 IN_PROGRESS，release_eligible 为 false，未判定合格。"
+          },
+          {
+            "id": "C9",
+            "text": "可以放行",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.release_eligible"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.pending_items"
+              }
+            ],
+            "reason": "release_check 明确 release_eligible=false，且 pending_items 含冲击试验。"
+          },
+          {
+            "id": "C10",
+            "text": "炉号 H26111307",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.heat_no"
+              }
+            ],
+            "reason": "c4.heat_no 为 H26111307。"
+          },
+          {
+            "id": "C11",
+            "text": "电炉 EF-03 冶炼",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.furnace_no"
+              }
+            ],
+            "reason": "c4 仅给出 furnace_no=EF-03，未给出炉型为电炉或该炉用于冶炼的字段，无法确认完整表述。"
+          },
+          {
+            "id": "C12",
+            "text": "目前位于质检区",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.current_location"
+              }
+            ],
+            "reason": "current_location 为 质检区-待判定，包含质检区。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C11"
+            ],
+            "criticality": "LOW",
+            "description": "日志缺少炉型/冶炼用途字段，无法确认 EF-03 是否为电炉及该批次是否由 EF-03 冶炼。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C11"
+            ],
+            "tool": "equipment.furnace_lookup",
+            "arguments": {
+              "furnace_no": "EF-03"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回 furnace_type 或 process 字段，能确认 EF-03 为电炉/冶炼炉，或与批次冶炼记录一致。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 58.156
+}

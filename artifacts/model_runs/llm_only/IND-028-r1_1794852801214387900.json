@@ -1,0 +1,259 @@
+{
+  "case_id": "IND-028",
+  "run_id": "IND-028-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1690,
+    "completion_tokens": 11807,
+    "total_tokens": 13497
+  },
+  "latency_seconds": 60.266,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-028-r1",
+      "case_id": "IND-028",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "滤芯 FC-200 现在库房还有多少可以领用的？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "累计入库 500 支",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_received"
+              }
+            ],
+            "reason": "c1.total_received=500，与回答一致。"
+          },
+          {
+            "id": "C2",
+            "text": "累计领用 380 支",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_issued"
+              }
+            ],
+            "reason": "c1.total_issued=380，与回答一致。"
+          },
+          {
+            "id": "C3",
+            "text": "在库 120 支",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.on_hand"
+              }
+            ],
+            "reason": "c1.on_hand=120，与回答一致。"
+          },
+          {
+            "id": "C4",
+            "text": "500 - 380 = 120 支",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_received"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_issued"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.on_hand"
+              }
+            ],
+            "reason": "500-380=120，且 c1.on_hand=120，计算与字段一致。"
+          },
+          {
+            "id": "C5",
+            "text": "可领用数量为 500 - 380 = 120 支",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.breakdown.available"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.breakdown.quality_hold"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.breakdown.quality_hold_reason"
+              }
+            ],
+            "reason": "c1.breakdown.available=75，另有 quality_hold=45 且原因为复检中；可领用数量应为75，不是120。"
+          },
+          {
+            "id": "C6",
+            "text": "另外有一笔在途采购 PO-261110-033，200 支预计 11月18日到货",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.pending_orders[0].po_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.pending_orders[0].qty"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.pending_orders[0].status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.pending_orders[0].eta"
+              }
+            ],
+            "reason": "c2.pending_orders[0] 的 po_id=PO-261110-033、qty=200、status=IN_TRANSIT、eta=2026-11-18，与回答一致。"
+          },
+          {
+            "id": "C7",
+            "text": "近7天日均消耗约12支",
+            "status": "REFUTE",
+            "expression": "HEDGED",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].arguments.period"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.avg_daily_consumption"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.recent_issuances"
+              }
+            ],
+            "reason": "c3.avg_daily_consumption=12 的 period 是30d，不是近7天；c4 近7天领用合计为15+12+10+14=51，按7天自然日均为7.29，按有领用天数4天为12.75，均不能支持近7天约12。"
+          },
+          {
+            "id": "C8",
+            "text": "当前库存可满足约10天用量",
+            "status": "REFUTE",
+            "expression": "HEDGED",
+            "goal_ids": [],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.days_of_supply"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.note"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.breakdown.available"
+              }
+            ],
+            "reason": "c3.days_of_supply=6.25，且 note 明确基于当前可用库存75支计算；回答约10天与6.25天矛盾。"
+          },
+          {
+            "id": "C9",
+            "text": "当前库存充足，可满足领用需求",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.days_of_supply"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.breakdown.available"
+              }
+            ],
+            "reason": "日志仅提供 available=75 和 days_of_supply=6.25，未提供“库存充足”的判定阈值、安全库存/最低可供应天数或未来领用需求，无法判断是否充足。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "HIGH",
+            "description": "判断“当前库存充足，可满足领用需求”需要库存充足阈值（如安全库存、最低可供应天数）或未来领用需求/订单需求，日志中未提供可引用规则或需求数据。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": null,
+            "arguments": {
+              "material_code": "FC-200"
+            },
+            "pending_arguments": {
+              "safety_stock_threshold": null,
+              "min_days_of_supply": null,
+              "future_demand_qty": null
+            },
+            "success_criterion": "获得可引用的安全库存阈值、最低可供应天数或未来领用需求，以判断当前可用库存75支是否充足。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 60.266
+}

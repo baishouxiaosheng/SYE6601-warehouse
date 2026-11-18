@@ -1,0 +1,193 @@
+{
+  "case_id": "IND-022",
+  "run_id": "IND-022-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1734,
+    "completion_tokens": 10684,
+    "total_tokens": 12418
+  },
+  "latency_seconds": 68.203,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-022-r1",
+      "case_id": "IND-022",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "B线昨天（11月13日）夜班产量是多少？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "B线11月13日（昨日）夜班产量为 8500 件",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_output"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.unit"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.shift_breakdown.night_shift.output"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.shift_breakdown.night_shift.time"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.note"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.shifts[2].name"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.shifts[2].start"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.shifts[2].end"
+              }
+            ],
+            "reason": "c1 中 2026-11-13 B线 total_output=8500 件，是全天总产量；night_shift.output=2200 件，且 c2 夜班为 22:00-06:00，因此夜班产量不是 8500 件。"
+          },
+          {
+            "id": "C2",
+            "text": "良率 98.2%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.yield_rate_pct"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.date"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.total_inspected"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.defect_count"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.note"
+              }
+            ],
+            "reason": "c3 给出 2026-11-13 B线 yield_rate_pct=98.2，且 total_inspected=8347、defect_count=153 可复算约 98.2%；note 说明为全天综合数据。"
+          },
+          {
+            "id": "C3",
+            "text": "产线利用率 97.7%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.utilization_pct"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.date"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.actual_hours"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.planned_hours"
+              }
+            ],
+            "reason": "c4 给出 2026-11-13 B线 utilization_pct=97.7，actual_hours=21.5、planned_hours=22 可复算约 97.7%。"
+          },
+          {
+            "id": "C4",
+            "text": "仅有30分钟换模停机",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.downtime_minutes"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.downtime_reason"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.date"
+              }
+            ],
+            "reason": "c4 给出 2026-11-13 B线 downtime_minutes=30，downtime_reason=换模。"
+          },
+          {
+            "id": "C5",
+            "text": "如需进一步了解各时段明细或不良品分析请告知。",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.shift_breakdown"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.defect_count"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.top_defect"
+              }
+            ],
+            "reason": "c1 提供班次产量明细，c3 提供不良品数量与主要不良，支持可进一步提供相关明细或不良品信息。"
+          }
+        ],
+        "gaps": [],
+        "actions": []
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 68.203
+}

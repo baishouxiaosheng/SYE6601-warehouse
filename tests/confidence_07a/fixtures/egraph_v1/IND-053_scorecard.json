@@ -1,0 +1,212 @@
+{
+  "scorecard_version": "IND-053-scorecard-v1",
+  "run_id": "IND-053-r1",
+  "case_id": "IND-053",
+  "rule_version": "1.0.0",
+  "dimensions": {
+    "evidence_support": {
+      "name": "证据支持度",
+      "score": 0.7,
+      "weight": 0.5,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 3,
+      "total": 5,
+      "details": [
+        {
+          "claim": "CLM-001",
+          "status": "SUPPORT",
+          "value": 1.0
+        },
+        {
+          "claim": "CLM-002",
+          "status": "SUPPORT",
+          "value": 1.0
+        },
+        {
+          "claim": "CLM-003",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-004",
+          "status": "SUPPORT",
+          "value": 1.0
+        },
+        {
+          "claim": "CLM-005",
+          "status": "REFUTE",
+          "value": 0.0
+        }
+      ]
+    },
+    "question_coverage": {
+      "name": "问题回应覆盖度",
+      "score": 0.5,
+      "weight": 0.3,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 1,
+      "total": 2,
+      "details": [
+        {
+          "goal": "GOAL-001",
+          "text": "今天要吊装一个18吨的设备，行车检验过了吗",
+          "answered": true,
+          "claims": [
+            "CLM-004"
+          ]
+        },
+        {
+          "goal": "GOAL-002",
+          "text": "可以吊吗",
+          "answered": false,
+          "claims": []
+        }
+      ]
+    },
+    "uncertainty_accuracy": {
+      "name": "不确定性表达准确性",
+      "score": 0.6,
+      "weight": 0.2,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 3,
+      "total": 5,
+      "details": [
+        {
+          "claim": "CLM-001",
+          "status": "SUPPORT",
+          "hedged": false,
+          "value": 1.0,
+          "reason": "证据充分且表述肯定"
+        },
+        {
+          "claim": "CLM-002",
+          "status": "SUPPORT",
+          "hedged": false,
+          "value": 1.0,
+          "reason": "证据充分且表述肯定"
+        },
+        {
+          "claim": "CLM-003",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-004",
+          "status": "SUPPORT",
+          "hedged": false,
+          "value": 1.0,
+          "reason": "证据充分且表述肯定"
+        },
+        {
+          "claim": "CLM-005",
+          "status": "REFUTE",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        }
+      ]
+    }
+  },
+  "overall": 0.62,
+  "grade": "C",
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "CRANE-02桥式起重机已于2026年11月1日通过市特检院的定期检验",
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "assertion",
+      "main_basis": [
+        "field_restatement@ trace[c1].result.equipment_id：字段 equipment_id=CRANE-02 与结论复述的 CRANE-02 逐字一致",
+        "status_assertion@ trace[c1].result.inspection_result：字段 inspection_result=合格 支持该状态断言"
+      ],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "检验结果为合格",
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "assertion",
+      "main_basis": [
+        "status_assertion@ trace[c1].result.inspection_result：字段 inspection_result=合格 支持该状态断言"
+      ],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "证书有效期至2027年5月",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "今天吊装18吨设备没有问题",
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "reading",
+      "main_basis": [
+        "value_match@ trace[c2].result.load_weight_tons：字段值 18 t 与结论数值 18.0 吨 一致"
+      ],
+      "missing_or_conflicting": [],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "可以正常作业",
+      "evidence_status": "REFUTE",
+      "assertion_strength": "approval",
+      "main_basis": [],
+      "missing_or_conflicting": [
+        "REFUTE（limit_threshold）：日志给出的限制为 <= 15.0 吨，但存在超出该限值的事实：rated_capacity_tons=20 t；load_weight_tons=18 t",
+        "MISSING_RULE（release_precondition）：审批或前置校验尚未完成：permit_status=待审批（trace[c3].result.permit_status）；status=待审核（trace[c3].result.checks[2].status）",
+        "GAP-001（CONFLICT）：结论与日志给出的限值/降级使用限制冲突，需按限制重新核算或取得放行依据",
+        "GAP-002（MISSING_RULE）：缺少已生效的放行/审批依据（相关审批仍在待办状态）"
+      ],
+      "affected_goals": [],
+      "next_action": "补证动作：ACT-001、ACT-002",
+      "severity": "HIGH"
+    }
+  ],
+  "severity_flags": [
+    {
+      "claim": "CLM-005",
+      "status": "REFUTE",
+      "assertion_strength": "approval",
+      "severity": "HIGH",
+      "high_risk_keywords": [
+        "作业"
+      ],
+      "reason": "结论状态为 REFUTE，与证据/规则冲突或缺少判定依据",
+      "content": "可以正常作业"
+    }
+  ],
+  "notes": [
+    "三个维度均由可复算检查结果推导，不使用模型主观打分。",
+    "负向状态 ['CONFLICT', 'MISSING_RULE', 'REFUTE'] 会直接拉低证据支持度并触发高风险标记。",
+    "评级仅供参考，不能替代人工复核；grade 为 N/A 表示未配置评级阈值。"
+  ]
+}

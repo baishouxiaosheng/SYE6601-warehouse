@@ -1,0 +1,307 @@
+{
+  "case_id": "IND-020",
+  "run_id": "IND-020-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1598,
+    "completion_tokens": 8217,
+    "total_tokens": 9815
+  },
+  "latency_seconds": 111.266,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-020-r1",
+      "case_id": "IND-020",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "最近一周C线良率整体水平/范围"
+          },
+          {
+            "id": "G2",
+            "text": "最近一周C线良率最低/异常日期"
+          },
+          {
+            "id": "G3",
+            "text": "11月11日良率异常的主要原因"
+          },
+          {
+            "id": "G4",
+            "text": "是否已生成异常报告"
+          },
+          {
+            "id": "G5",
+            "text": "其余几天良率是否正常"
+          },
+          {
+            "id": "G6",
+            "text": "具体虚焊原因如何获取"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "上周C线良率整体在97.5%-98.5%之间",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[4].yield_percent"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[2].yield_percent"
+              }
+            ],
+            "reason": "2026-11-11 yield_percent=96.1，低于97.5；一周有产量日良率最低为96.1、最高为98.5，因此不能表述为整体在97.5%-98.5%之间。"
+          },
+          {
+            "id": "C2",
+            "text": "11月10日计划保养停产",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[3].note"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[3].output"
+              }
+            ],
+            "reason": "2026-11-10 note=计划停机保养，output=0，支持计划保养停产。"
+          },
+          {
+            "id": "C3",
+            "text": "11月11日良率降到96.1%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[4].yield_percent"
+              }
+            ],
+            "reason": "2026-11-11 yield_percent=96.1。"
+          },
+          {
+            "id": "C4",
+            "text": "是整周最低",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[0].yield_percent"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[1].yield_percent"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[2].yield_percent"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[4].yield_percent"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[5].yield_percent"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield[6].yield_percent"
+              }
+            ],
+            "reason": "有产量日良率分别为98.2、97.8、98.5、96.1、97.5、98.0，最低为96.1。"
+          },
+          {
+            "id": "C5",
+            "text": "主要原因是当天虚焊不良占比异常偏高",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.top_reject_reasons[0]"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.note"
+              }
+            ],
+            "reason": "2026-11-11 top_reject_reasons[0]为焊接虚焊，count=78，percent=60.5，且note说明虚焊比例异常偏高，可支持其为当天主要不良原因。"
+          },
+          {
+            "id": "C6",
+            "text": "78件，占当日不良品60.5%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.top_reject_reasons[0].count"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.top_reject_reasons[0].percent"
+              }
+            ],
+            "reason": "焊接虚焊 count=78，percent=60.5。"
+          },
+          {
+            "id": "C7",
+            "text": "系统已生成了异常报告AR-261111-003",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G4"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.note"
+              }
+            ],
+            "reason": "note明确包含“已生成异常报告AR-261111-003”。"
+          },
+          {
+            "id": "C8",
+            "text": "其余几天良率正常",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G5"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.daily_yield"
+              }
+            ],
+            "reason": "日志给出其余日期良率数值，但没有C线良率正常区间或判定规则，无法据此判断“正常”。"
+          },
+          {
+            "id": "C9",
+            "text": "具体虚焊原因需要看那份异常报告的分析",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G6"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.note"
+              }
+            ],
+            "reason": "日志仅说明已生成异常报告AR-261111-003，未提供该报告的分析内容，无法核验具体虚焊原因或必须查看该报告。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C8"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少C线良率正常区间或判定规则，无法判断其余几天良率是否正常。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少异常报告AR-261111-003的分析内容，无法核验具体虚焊原因。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C8"
+            ],
+            "tool": "quality_rules.get_yield_normal_range",
+            "arguments": {
+              "site": "华南二厂",
+              "line": "C线",
+              "period": "2026-11-07_to_2026-11-13"
+            },
+            "pending_arguments": {
+              "rule_source": "待定"
+            },
+            "success_criterion": "返回C线该周期良率正常区间或判定规则，可据此判断其余日期是否异常。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": "quality_reports.get_anomaly_report",
+            "arguments": {
+              "report_id": "AR-261111-003"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回异常报告分析内容，包含虚焊具体原因或根因说明。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 111.266
+}

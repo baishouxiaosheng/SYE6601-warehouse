@@ -1,0 +1,299 @@
+{
+  "case_id": "IND-033",
+  "run_id": "IND-033-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1654,
+    "completion_tokens": 13522,
+    "total_tokens": 15176
+  },
+  "latency_seconds": 76.86,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-033-r1",
+      "case_id": "IND-033",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "RXT-03 反应釜现在温度 102℃，这个温度正常吗？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "RXT-03 反应釜当前温度 102℃",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.current_temp_c"
+              }
+            ],
+            "reason": "c1 返回 current_temp_c=102，时间戳为 2026-11-14T14:29:30+08:00。"
+          },
+          {
+            "id": "C2",
+            "text": "根据工艺参数卡（R2版本）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].doc_id"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].title"
+              }
+            ],
+            "reason": "c3 返回 KB-RXT-088-R2，标题为 R-2026-088/R2 工艺参数卡，说明回答引用的是 R2 版本参数卡。"
+          },
+          {
+            "id": "C3",
+            "text": "该配方反应温度控制范围为 85-95℃（建议值）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "c3 内容明确 R2 反应温度控制范围 85-95℃（建议）。"
+          },
+          {
+            "id": "C4",
+            "text": "当前温度 102℃ 已超过建议上限 95℃",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.current_temp_c"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "c1 current_temp_c=102，c3 R2 建议上限为 95℃，102>95。"
+          },
+          {
+            "id": "C5",
+            "text": "偏高约 7℃",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.current_temp_c"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "基于 c1 的 102℃ 与 c3 R2 建议上限 95℃，102-95=7℃。"
+          },
+          {
+            "id": "C6",
+            "text": "且超过 98℃ 的降速搅拌警戒线",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.current_temp_c"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "c1 current_temp_c=102，c3 规定温度超过 98℃ 需降速搅拌，102>98。"
+          },
+          {
+            "id": "C7",
+            "text": "建议立即将温度回调至 95℃ 以内",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.active_version"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "c3 仅给出 R2 建议上限 95℃，但 c2 显示当前 active_version 为 R3；日志未提供 R3 温度控制范围或立即回调许可条件。"
+          },
+          {
+            "id": "C8",
+            "text": "并降低搅拌转速至安全范围",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.active_version"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "c3 仅说明超过 98℃ 需降速搅拌，未给出安全转速范围；当前 R3 搅拌参数也未查询。"
+          },
+          {
+            "id": "C9",
+            "text": "如温度持续偏高请检查加热系统控制回路",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志未提供温度持续偏高时检查加热系统控制回路的规程或判断依据。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "INCOMPLETE_RESULT",
+            "affects": [
+              "C7",
+              "C8"
+            ],
+            "criticality": "HIGH",
+            "description": "当前 active_recipe 版本为 R3，但 trace 只查询了 R2 工艺参数卡，未获取 R3 的温度控制范围、回调条件和搅拌安全范围，因此无法确认基于 R2 的操作建议适用于当前配方。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C7",
+              "C8"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少 R3 下温度回调至 95℃ 以内以及搅拌转速安全范围/降速条件的规则或阈值。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少温度持续偏高时检查加热系统控制回路的故障排查或维护规程。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1",
+              "GAP2"
+            ],
+            "target_claims": [
+              "C7",
+              "C8"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "asset_id": "RXT-03",
+              "recipe_version": "R3",
+              "query": "RXT-03 反应温度控制范围 回调条件 搅拌转速安全范围 降速条件"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回 R-2026-088/R3 工艺参数卡，明确反应温度控制范围、上限/警戒线、温度回调条件及搅拌转速安全范围或降速条件。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "asset_id": "RXT-03",
+              "query": "RXT-03 温度持续偏高 加热系统控制回路 检查"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回温度持续偏高时检查加热系统控制回路的故障排查/维护规程，或明确无此要求。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C8"
+            ],
+            "tool": "ops.process_monitor",
+            "arguments": {
+              "asset_id": "RXT-03"
+            },
+            "pending_arguments": {
+              "parameter": "stirring_speed"
+            },
+            "success_criterion": "返回 RXT-03 当前搅拌转速读数，用于判断当前转速是否处于安全范围或需要降速。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 76.86
+}

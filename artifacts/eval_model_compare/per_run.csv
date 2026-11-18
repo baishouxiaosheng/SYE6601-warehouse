@@ -1,0 +1,17 @@
+method,run_id,case_id,variant_id,variant_kind,stratum,pred_available,gold_review_status,n_gold_claims,n_pred_claims,n_aligned,n_missed_gold,n_extra_pred,n_gold_gaps,n_pred_gaps,gap_tp,param_total,param_value_hit,param_key_hit,gold_severe,high_risk_alert,alert_source,grade,support_score,support_score_source,answer_has_error,answer_honest_about_limits,elapsed_seconds,model_calls
+rule+v2,IND-002-r1,IND-002,,,natural,True,DRAFT,9,7,7,2,0,2,3,1,9,1,2,False,True,high_risk_alert,INSUFFICIENT,0.5714,support_score,False,False,0.01577,0
+rule+v2,IND-024-r1,IND-024,,,natural,True,DRAFT,8,6,5,3,1,0,2,0,0,0,0,True,True,high_risk_alert,INSUFFICIENT,0.0,support_score,True,False,0.003801,0
+rule+v2,IND-030-r1,IND-030,,,natural,True,DRAFT,6,6,5,1,1,2,3,1,9,4,6,False,False,high_risk_alert,INSUFFICIENT,0.0,support_score,False,False,0.002973,0
+rule+v2,IND-005-r1,IND-005,,,natural,True,DRAFT,10,10,9,1,1,1,1,0,4,0,0,False,False,high_risk_alert,QUALIFIED,0.2,support_score,False,True,0.003736,0
+rule+v2,IND-010-r1,IND-010,,,natural,True,DRAFT,10,12,10,0,2,1,0,0,6,0,0,False,False,high_risk_alert,QUALIFIED,0.3636,support_score,False,True,0.002907,0
+rule+v2,IND-015-r1,IND-015,,,natural,True,DRAFT,8,10,8,0,2,2,1,0,10,1,1,False,False,high_risk_alert,INSUFFICIENT,0.0,support_score,False,True,0.002001,0
+rule+v2,IND-019-r1,IND-019,,,natural,True,DRAFT,6,6,6,0,0,2,0,0,8,0,0,False,False,high_risk_alert,QUALIFIED,0.1667,support_score,False,True,0.001839,0
+rule+v2,IND-027-r1,IND-027,,,natural,True,DRAFT,6,7,6,0,1,0,3,0,0,0,0,True,False,high_risk_alert,QUALIFIED,0.1429,support_score,True,False,0.003051,0
+llm_only+v2,IND-002-r1,IND-002,,,natural,True,DRAFT,9,9,8,1,1,2,2,1,9,1,1,False,True,high_risk_alert,INSUFFICIENT,0.7778,support_score,False,False,56.047,1
+llm_only+v2,IND-024-r1,IND-024,,,natural,True,DRAFT,8,9,7,1,2,0,1,0,0,0,0,True,True,high_risk_alert,INSUFFICIENT,0.2222,support_score,True,False,70.781,1
+llm_only+v2,IND-030-r1,IND-030,,,natural,True,DRAFT,6,6,6,0,0,2,3,2,9,5,6,False,False,high_risk_alert,INSUFFICIENT,0.5,support_score,False,False,29.156,1
+llm_only+v2,IND-005-r1,IND-005,,,natural,True,DRAFT,10,10,10,0,0,1,3,0,4,2,2,False,False,high_risk_alert,INSUFFICIENT,0.9,support_score,False,True,69.453,1
+llm_only+v2,IND-010-r1,IND-010,,,natural,True,DRAFT,10,10,10,0,0,1,1,1,6,5,5,False,False,high_risk_alert,QUALIFIED,1.0,support_score,False,True,72.484,1
+llm_only+v2,IND-015-r1,IND-015,,,natural,True,DRAFT,8,9,8,0,1,2,3,1,10,5,5,False,False,high_risk_alert,INSUFFICIENT,0.6667,support_score,False,True,130.156,1
+llm_only+v2,IND-019-r1,IND-019,,,natural,True,DRAFT,6,7,6,0,1,2,2,1,8,3,3,False,False,high_risk_alert,INSUFFICIENT,0.7143,support_score,False,True,53.593,1
+llm_only+v2,IND-027-r1,IND-027,,,natural,True,DRAFT,6,9,6,0,3,0,2,0,0,0,0,True,True,high_risk_alert,INSUFFICIENT,0.5556,support_score,True,False,75.078,1

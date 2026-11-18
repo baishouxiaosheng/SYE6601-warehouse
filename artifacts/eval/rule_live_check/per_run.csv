@@ -1,0 +1,16 @@
+method,run_id,case_id,variant_id,variant_kind,stratum,pred_available,gold_review_status,n_gold_claims,n_pred_claims,n_aligned,n_missed_gold,n_extra_pred,n_gold_gaps,n_pred_gaps,gap_tp,param_total,param_value_hit,param_key_hit,gold_severe,high_risk_alert,alert_source,grade,support_score,support_score_source,answer_has_error,answer_honest_about_limits,elapsed_seconds,model_calls
+rule_live,IND-002-r1,IND-002,,,natural,True,DRAFT,9,7,7,2,0,2,3,1,9,1,2,False,,no_scorecard,,,no_scorecard,False,False,0.007515,0
+rule_live,IND-024-r1,IND-024,,,natural,True,DRAFT,8,6,5,3,1,0,2,0,0,0,0,True,,no_scorecard,,,no_scorecard,True,False,0.002898,0
+rule_live,IND-030-r1,IND-030,,,natural,True,DRAFT,6,6,5,1,1,2,3,1,9,4,6,False,,no_scorecard,,,no_scorecard,False,False,0.002901,0
+rule_live,IND-043-r1,IND-043,,,natural,True,DRAFT,4,4,4,0,0,2,1,1,9,2,2,False,,no_scorecard,,,no_scorecard,False,False,0.002276,0
+rule_live,IND-053-r1,IND-053,,,natural,True,DRAFT,4,5,4,0,1,1,2,0,3,0,0,True,,no_scorecard,,,no_scorecard,True,False,0.002625,0
+rule_live,IND-005-r1,IND-005,,,natural,True,DRAFT,10,10,9,1,1,1,1,0,4,0,0,False,,no_scorecard,,,no_scorecard,False,True,0.002882,0
+rule_live,IND-010-r1,IND-010,,,natural,True,DRAFT,10,12,10,0,2,1,0,0,6,0,0,False,,no_scorecard,,,no_scorecard,False,True,0.002953,0
+rule_live,IND-015-r1,IND-015,,,natural,True,DRAFT,8,10,8,0,2,2,1,0,10,1,1,False,,no_scorecard,,,no_scorecard,False,True,0.003024,0
+rule_live,IND-019-r1,IND-019,,,natural,True,DRAFT,6,6,6,0,0,2,0,0,8,0,0,False,,no_scorecard,,,no_scorecard,False,True,0.003142,0
+rule_live,IND-027-r1,IND-027,,,natural,True,DRAFT,6,7,6,0,1,0,3,0,0,0,0,True,,no_scorecard,,,no_scorecard,True,False,0.002648,0
+rule_live,IND-034-r1,IND-034,,,natural,True,DRAFT,10,10,9,1,1,0,0,0,0,0,0,True,,no_scorecard,,,no_scorecard,True,False,0.004074,0
+rule_live,IND-038-r1,IND-038,,,natural,True,DRAFT,9,11,9,0,2,2,0,0,10,0,0,True,,no_scorecard,,,no_scorecard,True,False,0.00256,0
+rule_live,IND-046-r1,IND-046,,,natural,True,DRAFT,4,4,3,1,1,2,0,0,9,0,0,False,,no_scorecard,,,no_scorecard,False,False,0.001486,0
+rule_live,IND-050-r1,IND-050,,,natural,True,DRAFT,6,6,6,0,0,1,4,1,5,0,0,False,,no_scorecard,,,no_scorecard,False,False,0.002006,0
+rule_live,IND-058-r1,IND-058,,,natural,True,DRAFT,5,6,4,1,2,1,0,0,4,0,0,True,,no_scorecard,,,no_scorecard,True,False,0.001788,0

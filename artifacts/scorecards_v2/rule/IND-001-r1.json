@@ -1,0 +1,826 @@
+{
+  "scorecard_version": "07a-scorecard-v2",
+  "rule_version": "2.1.0",
+  "policy_version": "2.1.0",
+  "policy_status": "PROVISIONAL",
+  "policy_sha256": "f6a12bb2d19e5a3951f4048022ac07f146bd5aef15074754e8b283b2f65db86f",
+  "run_id": "IND-001-r1",
+  "case_id": "IND-001",
+  "upstream_versions": {
+    "graph_version": "IND-001-evidence-graph-v1",
+    "plan_version": "IND-001-supplementary-plan-v1",
+    "answer_version": null,
+    "answer_sha256": "2e97eee5d8fe4f43",
+    "proposal_status": "proposed"
+  },
+  "source": {
+    "method": "rule",
+    "engine": "01A-egraph",
+    "adapter": "egraph_v1",
+    "adapter_version": "1.0.0",
+    "log_record_available": true,
+    "files": {
+      "graph": "IND-001_graph.json",
+      "plan": "IND-001_plan.json"
+    }
+  },
+  "question": "三号锅炉排烟温度偏高了，看看怎么回事。",
+  "grade": "QUALIFIED",
+  "grade_label_zh": "附保留说明",
+  "high_risk_alert": false,
+  "high_risk_alert_text": "",
+  "support_score": 0.6,
+  "coverage_score": 1.0,
+  "uncertainty_score": 0.8182,
+  "overall": 0.7546,
+  "overall_display": true,
+  "blockers": [],
+  "qualifications": [
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-003",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q2_RESIDUAL_UNCERTAINTY",
+      "claim_id": "CLM-005",
+      "goal_id": null,
+      "reason_zh": "非确定措辞的结论仍有未解决状态或残留缺口（已如实限定，但证据未补齐）",
+      "detail": "HEDGED×UNKNOWN；缺口 ['GAP-001']"
+    },
+    {
+      "code": "Q2_RESIDUAL_UNCERTAINTY",
+      "claim_id": "CLM-006",
+      "goal_id": null,
+      "reason_zh": "非确定措辞的结论仍有未解决状态或残留缺口（已如实限定，但证据未补齐）",
+      "detail": "HEDGED×UNKNOWN；缺口 ['GAP-002']"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-011",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q3_OPEN_GAP",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在未被阻断项覆盖的开放缺口",
+      "detail": "GAP-001 MISSING_EVIDENCE MEDIUM：推测性结论缺少现场检查或诊断依据，无法确认",
+      "gap_id": "GAP-001"
+    },
+    {
+      "code": "Q3_OPEN_GAP",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在未被阻断项覆盖的开放缺口",
+      "detail": "GAP-002 MISSING_EVIDENCE MEDIUM：推测性结论缺少现场检查或诊断依据，无法确认",
+      "gap_id": "GAP-002"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "claims_without_checks=3"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "orphan_evidence=2"
+    }
+  ],
+  "severe_issues": [],
+  "dimensions": {
+    "support": {
+      "numerator": 6,
+      "denominator": 10,
+      "value": 0.6,
+      "breakdown": {
+        "SUPPORT": 6,
+        "REFUTE": 0,
+        "UNKNOWN": 4,
+        "CONFLICT": 0,
+        "MISSING_RULE": 0,
+        "excluded_declared_unknown": 1
+      },
+      "rule": "分母=措辞为 DEFINITE/HEDGED/SCOPED_PARTIAL 的结论数；分子=其中上游状态为 SUPPORT 的条数。UNKNOWN 不给半分。DECLARED_UNKNOWN 不计入。",
+      "weight": 0.5
+    },
+    "coverage": {
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0,
+      "breakdown": {
+        "ADDRESSED_SUPPORTED": 1,
+        "ADDRESSED_DECLARED_UNKNOWN": 0,
+        "ADDRESSED_UNSUPPORTED": 0,
+        "NOT_ADDRESSED": 0,
+        "lexical_fallback_goals": 0
+      },
+      "rule": "分母=用户目标数；分子=有关联结论（DEFINITE/HEDGED/SCOPED_PARTIAL）或明确声明无法确定（DECLARED_UNKNOWN）的目标数。关联优先用上游 related_goals/covers_goals/边，退化为词面匹配时标 lexical_fallback。",
+      "weight": 0.25
+    },
+    "uncertainty": {
+      "numerator": 9.0,
+      "denominator": 11,
+      "value": 0.8182,
+      "breakdown": {
+        "judgements": {
+          "APPROPRIATE": 9,
+          "OVERCLAIM": 2
+        },
+        "cells": {
+          "DECLARED_UNKNOWN×SUPPORT(gap_confirmed)": 1,
+          "DEFINITE×SUPPORT": 6,
+          "DEFINITE×UNKNOWN": 2,
+          "HEDGED×UNKNOWN": 2
+        },
+        "unchecked_default_unknown": 2,
+        "checked_only": {
+          "numerator": 8.0,
+          "denominator": 8,
+          "value": 1.0
+        }
+      },
+      "rule": "对每条结论按 policy.expression_matrix 的 (措辞×状态) 查表得分，分母=全部结论。如实声明无法确定（DECLARED_UNKNOWN×UNKNOWN/MISSING_RULE/CONFLICT）得满分。breakdown.checked_only 仅供参考：排除了“未被任何 check 命中而默认 UNKNOWN”的结论。",
+      "weight": 0.25
+    }
+  },
+  "review_sequence": [
+    "CLM-003",
+    "CLM-005",
+    "CLM-006",
+    "CLM-011"
+  ],
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "三号锅炉排烟温度目前218℃",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:reading"
+      ],
+      "upstream_strength": "reading",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-003",
+          "kind": "value_match",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-002",
+          "run_id": "IND-001-r1",
+          "event_id": "c2",
+          "json_path": "trace[c2].result.sensors[0].current_c",
+          "pointer": "/trace/1/result/sensors/0/current_c",
+          "excerpt": "字段值 218 ℃ 与结论数值 218.0 ℃ 一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "linkage_method": "upstream",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": true,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:温度",
+        "goal_lexicon:温度",
+        "sole_goal_main_claim"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "超出正常范围（140-190℃）",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:reading"
+      ],
+      "upstream_strength": "reading",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-001",
+          "kind": "range_check",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-002",
+          "run_id": "IND-001-r1",
+          "event_id": "c2",
+          "json_path": "trace[c2].result.sensors[0].current_c",
+          "pointer": "/trace/1/result/sensors/0/current_c",
+          "excerpt": "读数 218 ℃ 与正常区间 [140, 190] ℃ 比对：确实超出，结论成立"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "近两小时持续上升",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "烟道差压285Pa略高于正常上限280Pa",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:reading"
+      ],
+      "upstream_strength": "reading",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-002",
+          "kind": "range_check",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-005",
+          "run_id": "IND-001-r1",
+          "event_id": "c5",
+          "json_path": "trace[c5].result.differential_pressure_pa",
+          "pointer": "/trace/4/result/differential_pressure_pa",
+          "excerpt": "读数 285 Pa 与正常区间 [150, 280] Pa 比对：确实超出，结论成立"
+        },
+        {
+          "check_id": "CHK-004",
+          "kind": "value_match",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-005",
+          "run_id": "IND-001-r1",
+          "event_id": "c5",
+          "json_path": "trace[c5].result.differential_pressure_pa",
+          "pointer": "/trace/4/result/differential_pressure_pa",
+          "excerpt": "字段值 285 Pa 与结论数值 285.0 Pa 一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "可能有一定积灰",
+      "expression": "HEDGED",
+      "expression_zh": "带限定/推测",
+      "expression_hits": [
+        "HEDGED:可能"
+      ],
+      "upstream_strength": "inference",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": true,
+      "main_basis": [],
+      "missing_or_conflicting": [
+        {
+          "check_id": "CHK-008",
+          "kind": "inference_basis",
+          "verdict": "UNKNOWN",
+          "evidence_id": null,
+          "run_id": "IND-001-r1",
+          "event_id": null,
+          "json_path": null,
+          "pointer": null,
+          "excerpt": "该结论是推测，日志未给出可直接确认的现场/诊断依据，按规则保留未知状态"
+        },
+        {
+          "gap_id": "GAP-001",
+          "gap_type": "MISSING_EVIDENCE",
+          "criticality": "MEDIUM",
+          "description": "推测性结论缺少现场检查或诊断依据，无法确认"
+        }
+      ],
+      "gap_ids": [
+        "GAP-001"
+      ],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [
+        {
+          "action_id": "ACT-001",
+          "action_type": "manual_confirm",
+          "tool": null,
+          "executability": "manual"
+        }
+      ],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "HEDGED×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-006",
+      "text": "但也可能是其他因素",
+      "expression": "HEDGED",
+      "expression_zh": "带限定/推测",
+      "expression_hits": [
+        "HEDGED:可能"
+      ],
+      "upstream_strength": "inference",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": true,
+      "main_basis": [],
+      "missing_or_conflicting": [
+        {
+          "check_id": "CHK-009",
+          "kind": "inference_basis",
+          "verdict": "UNKNOWN",
+          "evidence_id": null,
+          "run_id": "IND-001-r1",
+          "event_id": null,
+          "json_path": null,
+          "pointer": null,
+          "excerpt": "该结论是推测，日志未给出可直接确认的现场/诊断依据，按规则保留未知状态"
+        },
+        {
+          "gap_id": "GAP-002",
+          "gap_type": "MISSING_EVIDENCE",
+          "criticality": "MEDIUM",
+          "description": "推测性结论缺少现场检查或诊断依据，无法确认"
+        }
+      ],
+      "gap_ids": [
+        "GAP-002"
+      ],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [
+        {
+          "action_id": "ACT-001",
+          "action_type": "manual_confirm",
+          "tool": null,
+          "executability": "manual"
+        }
+      ],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "HEDGED×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-007",
+      "text": "运行手册列出的常见原因包括受热面积灰",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-005",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-004",
+          "run_id": "IND-001-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.excerpt",
+          "pointer": "/trace/3/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.59）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "IND-001-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.excerpt",
+          "pointer": "/trace/3/result/excerpt",
+          "excerpt": "排烟温度超过190℃时，常见原因包括：受热面积灰、过剩空气系数偏高、燃烧器喷嘴磨损。建议先检查烟道差压判断积灰程度。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-008",
+      "text": "过剩空气系数偏高和燃烧器喷嘴磨损",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-006",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-004",
+          "run_id": "IND-001-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.excerpt",
+          "pointer": "/trace/3/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.87）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "IND-001-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.excerpt",
+          "pointer": "/trace/3/result/excerpt",
+          "excerpt": "排烟温度超过190℃时，常见原因包括：受热面积灰、过剩空气系数偏高、燃烧器喷嘴磨损。建议先检查烟道差压判断积灰程度。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-009",
+      "text": "目前仅凭远程数据无法确定具体原因",
+      "expression": "DECLARED_UNKNOWN",
+      "expression_zh": "声明无法确定",
+      "expression_hits": [
+        "DECLARED_UNKNOWN:无法确定"
+      ],
+      "upstream_strength": "negative_finding",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "图中确实存在证据缺口，该结论关于“现有证据不足”的表述本身得到支持",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DECLARED_UNKNOWN×SUPPORT(gap_confirmed)"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-011",
+      "text": "优先排查积灰情况",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-012",
+      "text": "同时检查燃烧器喷嘴和过剩空气系数",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-007",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-004",
+          "run_id": "IND-001-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.excerpt",
+          "pointer": "/trace/3/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.67）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "IND-001-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.excerpt",
+          "pointer": "/trace/3/result/excerpt",
+          "excerpt": "排烟温度超过190℃时，常见原因包括：受热面积灰、过剩空气系数偏高、燃烧器喷嘴磨损。建议先检查烟道差压判断积灰程度。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    }
+  ],
+  "goals": [
+    {
+      "goal_id": "GOAL-001",
+      "text": "三号锅炉排烟温度偏高了，看看怎么回事",
+      "question_type": "diagnosis",
+      "coverage_state": "ADDRESSED_SUPPORTED",
+      "coverage_state_zh": "已回应且有支持",
+      "linked_claims": [
+        "CLM-001"
+      ],
+      "linkage_method": "upstream",
+      "upstream_answered": true
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "GAP-001",
+      "gap_type": "MISSING_EVIDENCE",
+      "criticality": "MEDIUM",
+      "description": "推测性结论缺少现场检查或诊断依据，无法确认",
+      "affected_claims": [
+        "CLM-005"
+      ],
+      "affected_claim_texts": [
+        "可能有一定积灰"
+      ],
+      "cited_by_blocker": false
+    },
+    {
+      "gap_id": "GAP-002",
+      "gap_type": "MISSING_EVIDENCE",
+      "criticality": "MEDIUM",
+      "description": "推测性结论缺少现场检查或诊断依据，无法确认",
+      "affected_claims": [
+        "CLM-006"
+      ],
+      "affected_claim_texts": [
+        "但也可能是其他因素"
+      ],
+      "cited_by_blocker": false
+    }
+  ],
+  "build_risks": {
+    "unmapped_sentences": {
+      "count": 0,
+      "items": []
+    },
+    "goals_without_claims": [],
+    "goals_lexical_fallback": [],
+    "lexical_fallback_links": 0,
+    "orphan_evidence": [
+      "MAT-001",
+      "MAT-003"
+    ],
+    "claims_without_checks": [
+      "CLM-003",
+      "CLM-009",
+      "CLM-011"
+    ],
+    "unchecked_default_unknown": [
+      "CLM-003",
+      "CLM-011"
+    ],
+    "review_status": {
+      "proposed_nodes": 13,
+      "unresolved_nodes": 0,
+      "proposed_edges": 0,
+      "unresolved_edges": 0,
+      "proposed_claims": 11
+    },
+    "gap_missing_condition_not_node": [
+      "GAP-001",
+      "GAP-002"
+    ],
+    "dangling_action_gap_refs": [],
+    "recommendations_unscored": [
+      {
+        "id": "OBL-010",
+        "text": "建议安排现场检查"
+      }
+    ],
+    "b_review_unmatched": [],
+    "scope_statement": "本成绩单只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。"
+  },
+  "supplement": {
+    "plan_action_count": 1,
+    "executable": 0,
+    "needs_confirmation": 0,
+    "manual": 1,
+    "actions": [
+      {
+        "action_id": "ACT-001",
+        "action_type": "manual_confirm",
+        "tool": null,
+        "executability": "manual",
+        "priority": 2,
+        "gap_ids": [
+          "GAP-001",
+          "GAP-002"
+        ],
+        "target_claims": [
+          "CLM-005",
+          "CLM-006"
+        ],
+        "known_arguments": {},
+        "pending_arguments": {
+          "确认事项": "推测性结论缺少现场检查或诊断依据，无法确认"
+        },
+        "success_criterion": "获得书面或系统登记结果（含执行人、时间、结论），并能定位到对应记录编号"
+      }
+    ]
+  },
+  "scope_note": "本成绩单只评价上游（01A 建图 / 02B 审核）已建模的结论、证据与缺口；结论状态由上游给出，07A 不重新判断。未被抽取的结论、未被发现的规则与日志外事实不在评价范围内。",
+  "score_semantics": "本成绩单的分数是“基于现有日志的证据审核结果”，不是回答正确的概率；未经独立标注数据校准前不得解读为正确率。等级只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。",
+  "notes": [
+    "1 条推荐类结论（OBL）上游未给出前提关联，未计入评分，只在建链风险中披露。"
+  ],
+  "generated_by": {
+    "package": "confidence_07a",
+    "package_version": "2.1.0",
+    "scorecard_version": "07a-scorecard-v2",
+    "adapter": "egraph_v1",
+    "model_called": false
+  }
+}

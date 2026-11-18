@@ -1,0 +1,1193 @@
+{
+  "graph_version": "IND-024-evidence-graph-v1",
+  "run_id": "IND-024-r1",
+  "case_id": "IND-024",
+  "task": {
+    "task_id": "IND-024",
+    "run_id": "IND-024-r1",
+    "question": "液压机 HP-03 的压力读数是多少？正常吗？",
+    "customer_id": null,
+    "incident_id": "HP-03",
+    "event_time": "2026-11-14T10:20:00+08:00"
+  },
+  "scope_declaration": {
+    "scope": "IND-024：液压机 HP-03 的压力读数是多少；正常",
+    "in_scope": [
+      "液压机 HP-03 的压力读数是多少",
+      "正常吗"
+    ],
+    "out_of_scope": [
+      "未经日志证据支持的具体故障诊断或因果结论",
+      "日志未提供依据的业务规则、参数基准与适用范围"
+    ]
+  },
+  "goals": [
+    {
+      "id": "GOAL-001",
+      "text": "液压机 HP-03 的压力读数是多少",
+      "question_type": "value_query",
+      "subject": "液压机 HP-03 的压力读数是多少",
+      "answered": true,
+      "coverage_note": "由 CLM-001 回应"
+    },
+    {
+      "id": "GOAL-002",
+      "text": "正常吗",
+      "question_type": "status_query",
+      "subject": "正常",
+      "answered": false,
+      "coverage_note": "没有结论直接回应此目标"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "GOAL-001",
+      "type": "goal",
+      "content": "液压机 HP-03 的压力读数是多少",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "question_type": "value_query",
+        "subject": "液压机 HP-03 的压力读数是多少"
+      }
+    },
+    {
+      "id": "GOAL-002",
+      "type": "goal",
+      "content": "正常吗",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "question_type": "status_query",
+        "subject": "正常"
+      }
+    },
+    {
+      "id": "NOTE-001",
+      "type": "note",
+      "content": "已获取 HP-03 压力数据",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "s1",
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "event": "assistant_progress_note"
+      }
+    },
+    {
+      "id": "MAT-001",
+      "type": "evidence",
+      "content": "ops.sensor_reading 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "ops",
+      "record_id": "c1",
+      "locator": "trace[c1].result",
+      "excerpt": null,
+      "tool": "ops.sensor_reading",
+      "arguments": {
+        "asset_id": "HP-03",
+        "sensor": "system_pressure"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "ops_monitoring",
+        "signal_count": 7
+      }
+    },
+    {
+      "id": "MAT-002",
+      "type": "evidence",
+      "content": "knowledge_base.search 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "knowledge_base",
+      "record_id": "c2",
+      "locator": "trace[c2].result",
+      "excerpt": null,
+      "tool": "knowledge_base.search",
+      "arguments": {
+        "query": "HP-03 液压机最大工作压力",
+        "asset_id": "HP-03"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "knowledge_base_search",
+        "signal_count": 3
+      }
+    },
+    {
+      "id": "MAT-003",
+      "type": "evidence",
+      "content": "ops.alarm_history 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "ops",
+      "record_id": "c3",
+      "locator": "trace[c3].result",
+      "excerpt": null,
+      "tool": "ops.alarm_history",
+      "arguments": {
+        "asset_id": "HP-03",
+        "window": "24h"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "ops_monitoring",
+        "signal_count": 0
+      }
+    },
+    {
+      "id": "MAT-004",
+      "type": "evidence",
+      "content": "ops.sensor_trend 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "ops",
+      "record_id": "c4",
+      "locator": "trace[c4].result",
+      "excerpt": null,
+      "tool": "ops.sensor_trend",
+      "arguments": {
+        "asset_id": "HP-03",
+        "sensor": "system_pressure",
+        "window": "2h"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "ops_monitoring",
+        "signal_count": 5
+      }
+    },
+    {
+      "id": "FACT-001",
+      "type": "fact",
+      "content": "system_pressure_kpa 读数 21500 kPa，正常区间 18000–25000 kPa，当前在正常区间内",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "MAT-001",
+      "record_id": "c1",
+      "locator": "trace[c1].result.system_pressure_kpa",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 21500.0,
+      "unit": "kPa",
+      "meta": {
+        "range": [
+          18000.0,
+          25000.0
+        ],
+        "within_range": true,
+        "tool": "ops.sensor_reading"
+      }
+    },
+    {
+      "id": "RULE-001",
+      "type": "rule",
+      "content": "HP-03 型液压机，最大工作压力 25 MPa，额定工作压力 20 MPa，系统安全阀设定压力 27.5 MPa。",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "MAT-002",
+      "record_id": "c2",
+      "locator": "trace[c2].result.results[0].content",
+      "excerpt": "HP-03 型液压机，最大工作压力 25 MPa，额定工作压力 20 MPa，系统安全阀设定压力 27.5 MPa。",
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "kind": "procedure_rule",
+        "doc_id": "KB-HP-007",
+        "title": "HP-03 液压机技术规格",
+        "applicable_to": null,
+        "threshold": null,
+        "expression": null
+      }
+    },
+    {
+      "id": "COND-001",
+      "type": "condition",
+      "content": "结论中的数值单位应与工具返回字段的单位一致",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-001",
+      "locator": "trace[c1].result.system_pressure_kpa",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "REFUTE",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-001",
+        "status": "violated",
+        "kind": "unit_consistency"
+      }
+    },
+    {
+      "id": "COND-002",
+      "type": "condition",
+      "content": "结论中的正常/异常判断应与工具返回的正常区间复算结果一致",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-001",
+      "locator": "trace[c1].result.system_pressure_kpa",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "REFUTE",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-002",
+        "status": "violated",
+        "kind": "range_check"
+      }
+    },
+    {
+      "id": "COND-003",
+      "type": "condition",
+      "content": "判定“正常/异常”需要日志给出的正常区间或基准",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-003",
+        "status": "unknown",
+        "kind": "range_basis_missing"
+      }
+    },
+    {
+      "id": "COND-004",
+      "type": "condition",
+      "content": "结论复述的字段值应能在工具返回字段中逐字定位",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-001",
+      "locator": "trace[c1].result.asset_id",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-004",
+        "status": "satisfied",
+        "kind": "field_restatement"
+      }
+    },
+    {
+      "id": "COND-005",
+      "type": "condition",
+      "content": "复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-002",
+      "locator": "trace[c2].result.results[0].content",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-005",
+        "status": "satisfied",
+        "kind": "rule_content_support"
+      }
+    },
+    {
+      "id": "COND-006",
+      "type": "condition",
+      "content": "复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-002",
+      "locator": "trace[c2].result.results[0].content",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-006",
+        "status": "satisfied",
+        "kind": "rule_content_support"
+      }
+    },
+    {
+      "id": "COND-007",
+      "type": "condition",
+      "content": "推测性结论需要现场检查或诊断依据才能确认",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-007",
+        "status": "unknown",
+        "kind": "inference_basis"
+      }
+    },
+    {
+      "id": "CLM-001",
+      "type": "claim",
+      "content": "液压机 HP-03 当前系统压力为 21500 MPa",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "REFUTE",
+      "assertion_strength": "reading",
+      "related_goals": [
+        "GOAL-001"
+      ],
+      "scope_limited": false,
+      "value": 21500.0,
+      "unit": "MPa",
+      "meta": {
+        "order": 0,
+        "numerals": [
+          {
+            "value": 21500.0,
+            "unit": "MPa",
+            "raw": "21500 MPa",
+            "upper": null
+          }
+        ],
+        "entities": [
+          "HP-03"
+        ],
+        "covers_goals": [],
+        "source_span": "液压机 HP-03 当前系统压力为 21500 MPa",
+        "verdict_reason": "存在与结论直接矛盾的可复算检查结果",
+        "checks": [
+          "CHK-001",
+          "CHK-004",
+          "CHK-005"
+        ]
+      }
+    },
+    {
+      "id": "CLM-002",
+      "type": "claim",
+      "content": "已严重超出最大工作压力 25 MPa",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "REFUTE",
+      "assertion_strength": "reading",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 25.0,
+      "unit": "MPa",
+      "meta": {
+        "order": 1,
+        "numerals": [
+          {
+            "value": 25.0,
+            "unit": "MPa",
+            "raw": "25 MPa",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "已严重超出最大工作压力 25 MPa",
+        "verdict_reason": "存在与结论直接矛盾的可复算检查结果",
+        "checks": [
+          "CHK-002",
+          "CHK-006"
+        ]
+      }
+    },
+    {
+      "id": "CLM-003",
+      "type": "claim",
+      "content": "超出约 86000 倍",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "inference",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 86000.0,
+      "unit": "倍",
+      "meta": {
+        "order": 2,
+        "numerals": [
+          {
+            "value": 86000.0,
+            "unit": "倍",
+            "raw": "86000 倍",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "超出约 86000 倍",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": [
+          "CHK-003",
+          "CHK-007"
+        ]
+      }
+    },
+    {
+      "id": "CLM-004",
+      "type": "claim",
+      "content": "属于极度危险状态",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 3,
+        "numerals": [],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "属于极度危险状态",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "CLM-006",
+      "type": "claim",
+      "content": "近2小时压力波动范围 20800～22100",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 2.0,
+      "unit": "小时",
+      "meta": {
+        "order": 5,
+        "numerals": [
+          {
+            "value": 2.0,
+            "unit": "小时",
+            "raw": "2小时",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "近2小时压力波动范围 20800～22100",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "CLM-007",
+      "type": "claim",
+      "content": "趋势稳定",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 6,
+        "numerals": [],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "趋势稳定",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": []
+      }
+    },
+    {
+      "id": "OBL-005",
+      "type": "obligation",
+      "content": "请立即停机检查",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "derived_from_claim": "CLM-005"
+      }
+    },
+    {
+      "id": "OBL-008",
+      "type": "obligation",
+      "content": "建议立即启动紧急停机程序并通知设备管理人员排查传感器或安全阀",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "derived_from_claim": "CLM-008"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "E-0001",
+      "source": "MAT-001",
+      "target": "CLM-001",
+      "type": "refutes",
+      "logic": null,
+      "rationale": "结论中的数值单位应与工具返回字段的单位一致",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0002",
+      "source": "COND-001",
+      "target": "CLM-001",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（violated）：结论中的数值单位应与工具返回字段的单位一致",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0003",
+      "source": "MAT-001",
+      "target": "CLM-002",
+      "type": "refutes",
+      "logic": null,
+      "rationale": "结论中的正常/异常判断应与工具返回的正常区间复算结果一致",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0004",
+      "source": "COND-002",
+      "target": "CLM-002",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（violated）：结论中的正常/异常判断应与工具返回的正常区间复算结果一致",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0005",
+      "source": "COND-003",
+      "target": "CLM-003",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（unknown）：判定“正常/异常”需要日志给出的正常区间或基准",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0006",
+      "source": "MAT-001",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "结论复述的字段值应能在工具返回字段中逐字定位",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0007",
+      "source": "COND-004",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：结论复述的字段值应能在工具返回字段中逐字定位",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0008",
+      "source": "MAT-002",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0009",
+      "source": "RULE-001",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "依据规则：复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0010",
+      "source": "COND-005",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0011",
+      "source": "RULE-001",
+      "target": "COND-005",
+      "type": "requires",
+      "logic": null,
+      "rationale": "",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0012",
+      "source": "MAT-002",
+      "target": "CLM-002",
+      "type": "supports",
+      "logic": null,
+      "rationale": "复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0013",
+      "source": "RULE-001",
+      "target": "CLM-002",
+      "type": "supports",
+      "logic": null,
+      "rationale": "依据规则：复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0014",
+      "source": "COND-006",
+      "target": "CLM-002",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0015",
+      "source": "RULE-001",
+      "target": "COND-006",
+      "type": "requires",
+      "logic": null,
+      "rationale": "",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0016",
+      "source": "COND-007",
+      "target": "CLM-003",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（unknown）：推测性结论需要现场检查或诊断依据才能确认",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0017",
+      "source": "FACT-001",
+      "target": "MAT-001",
+      "type": "derived_from",
+      "logic": null,
+      "rationale": "事实由该证据字段复算得到",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0018",
+      "source": "CLM-001",
+      "target": "GOAL-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "该结论用于回答此目标",
+      "created_by": "rule",
+      "review_status": "verified"
+    }
+  ],
+  "checks": [
+    {
+      "check_id": "CHK-001",
+      "kind": "unit_consistency",
+      "description": "结论中的数值单位应与工具返回字段的单位一致",
+      "status": "violated",
+      "target_node": null,
+      "evidence_ref": "MAT-001",
+      "locator": "trace[c1].result.system_pressure_kpa",
+      "expected": {
+        "value": 21500,
+        "unit": "kPa"
+      },
+      "actual": {
+        "value": 21500.0,
+        "unit": "MPa"
+      },
+      "detail": "原始读数 21500 kPa（换算为 21.5 MPa），回答写作 21500.0 MPa，数字相同但单位不同，属于可直接证实的单位错误",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "REFUTE",
+      "category": "refute"
+    },
+    {
+      "check_id": "CHK-002",
+      "kind": "range_check",
+      "description": "结论中的正常/异常判断应与工具返回的正常区间复算结果一致",
+      "status": "violated",
+      "target_node": null,
+      "evidence_ref": "MAT-001",
+      "locator": "trace[c1].result.system_pressure_kpa",
+      "expected": {
+        "low": 18000.0,
+        "high": 25000.0
+      },
+      "actual": 21500.0,
+      "detail": "读数 21500 kPa 与正常区间 [18000, 25000] kPa 比对：并未超出，结论与证据矛盾",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-002"
+      ],
+      "verdict": "REFUTE",
+      "category": "refute"
+    },
+    {
+      "check_id": "CHK-003",
+      "kind": "range_basis_missing",
+      "description": "判定“正常/异常”需要日志给出的正常区间或基准",
+      "status": "unknown",
+      "target_node": null,
+      "evidence_ref": null,
+      "locator": null,
+      "expected": null,
+      "actual": null,
+      "detail": "日志中未找到该参数对应的正常区间或判定基准，按规则保留未知状态",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-003"
+      ],
+      "verdict": "UNKNOWN",
+      "category": "insufficient"
+    },
+    {
+      "check_id": "CHK-004",
+      "kind": "field_restatement",
+      "description": "结论复述的字段值应能在工具返回字段中逐字定位",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-001",
+      "locator": "trace[c1].result.asset_id",
+      "expected": "HP-03",
+      "actual": "HP-03",
+      "detail": "字段 asset_id=HP-03 与结论复述的 HP-03 逐字一致",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-005",
+      "kind": "rule_content_support",
+      "description": "复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-002",
+      "locator": "trace[c2].result.results[0].content",
+      "expected": "RULE-001",
+      "actual": 0.5,
+      "detail": "结论内容与依据 RULE-001 一致（覆盖度 0.50）",
+      "rule_id": "RULE-001",
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-006",
+      "kind": "rule_content_support",
+      "description": "复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-002",
+      "locator": "trace[c2].result.results[0].content",
+      "expected": "RULE-001",
+      "actual": 0.583,
+      "detail": "结论内容与依据 RULE-001 一致（覆盖度 0.58）",
+      "rule_id": "RULE-001",
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-002"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-007",
+      "kind": "inference_basis",
+      "description": "推测性结论需要现场检查或诊断依据才能确认",
+      "status": "unknown",
+      "target_node": null,
+      "evidence_ref": null,
+      "locator": null,
+      "expected": null,
+      "actual": null,
+      "detail": "该结论是推测，日志未给出可直接确认的现场/诊断依据，按规则保留未知状态",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-003"
+      ],
+      "verdict": "UNKNOWN",
+      "category": "insufficient"
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "PATH-003",
+      "goal_claim": "CLM-001",
+      "conditions": [],
+      "satisfied": true,
+      "satisfied_conditions": [],
+      "missing_conditions": [],
+      "rationale": "该结论存在 2 条可替代路径（OR）；任一路径满足即可成立。",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-001",
+      "goal_claim": "CLM-001",
+      "conditions": [
+        "COND-001",
+        "COND-004"
+      ],
+      "satisfied": false,
+      "satisfied_conditions": [
+        "COND-004"
+      ],
+      "missing_conditions": [
+        "COND-001"
+      ],
+      "rationale": "路径来源 MAT-001，需同时满足 2 个条件：结论中的数值单位应与工具返回字段的单位一致；结论复述的字段值应能在工具返回字段中逐字定位",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-002",
+      "goal_claim": "CLM-001",
+      "conditions": [
+        "COND-005"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-005"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 MAT-002，需同时满足 1 个条件：复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-006",
+      "goal_claim": "CLM-002",
+      "conditions": [],
+      "satisfied": true,
+      "satisfied_conditions": [],
+      "missing_conditions": [],
+      "rationale": "该结论存在 2 条可替代路径（OR）；任一路径满足即可成立。",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-004",
+      "goal_claim": "CLM-002",
+      "conditions": [
+        "COND-002"
+      ],
+      "satisfied": false,
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "COND-002"
+      ],
+      "rationale": "路径来源 MAT-001，需同时满足 1 个条件：结论中的正常/异常判断应与工具返回的正常区间复算结果一致",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-005",
+      "goal_claim": "CLM-002",
+      "conditions": [
+        "COND-006"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-006"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 MAT-002，需同时满足 1 个条件：复述型结论（如列举手册内容）应能在可引用依据中找到来源",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-007",
+      "goal_claim": "CLM-003",
+      "conditions": [
+        "COND-003",
+        "COND-007"
+      ],
+      "satisfied": false,
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "COND-003",
+        "COND-007"
+      ],
+      "rationale": "路径来源 __direct__，需同时满足 2 个条件：判定“正常/异常”需要日志给出的正常区间或基准；推测性结论需要现场检查或诊断依据才能确认",
+      "created_by": "rule"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "GAP-001",
+      "type": "MISSING_DEPENDENCY",
+      "affected_claims": [
+        "CLM-003"
+      ],
+      "description": "缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论",
+      "criticality": "MEDIUM",
+      "mandatory": false,
+      "target_source": "设备运行标准或工艺参数文件",
+      "missing_condition": null
+    },
+    {
+      "id": "GAP-002",
+      "type": "MISSING_EVIDENCE",
+      "affected_claims": [
+        "CLM-003"
+      ],
+      "description": "推测性结论缺少现场检查或诊断依据，无法确认",
+      "criticality": "MEDIUM",
+      "mandatory": false,
+      "target_source": "现场检查记录 / 设备诊断报告",
+      "missing_condition": "CHK-007"
+    }
+  ],
+  "common_necessary_conditions": [
+    {
+      "claim": "CLM-003",
+      "condition": "COND-003",
+      "content": "判定“正常/异常”需要日志给出的正常区间或基准",
+      "status": "unknown",
+      "paths": [
+        "PATH-007"
+      ],
+      "necessary_for_all_paths": true
+    },
+    {
+      "claim": "CLM-003",
+      "condition": "COND-007",
+      "content": "推测性结论需要现场检查或诊断依据才能确认",
+      "status": "unknown",
+      "paths": [
+        "PATH-007"
+      ],
+      "necessary_for_all_paths": true
+    }
+  ],
+  "changes": [],
+  "limitations": [
+    "本图仅覆盖单份监控日志可核查的范围；数据源的现实真实性、业务规则完备性不在验证范围内。"
+  ],
+  "proposal_status": "proposed"
+}

@@ -1,0 +1,381 @@
+{
+  "case_id": "IND-031",
+  "run_id": "IND-031-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1660,
+    "completion_tokens": 17386,
+    "total_tokens": 19046
+  },
+  "latency_seconds": 210.172,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-031-r1",
+      "case_id": "IND-031",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "焊接车间这个月电费大概多少？"
+          },
+          {
+            "id": "G2",
+            "text": "本月全月电费预计大概多少？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "本月（11月1日至14日）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.period"
+              }
+            ],
+            "reason": "c1返回period为2026-11-01至2026-11-14。"
+          },
+          {
+            "id": "C2",
+            "text": "总用电量 45200 kWh",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_kwh"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.unit"
+              }
+            ],
+            "reason": "c1返回total_kwh=45200，unit=kWh。"
+          },
+          {
+            "id": "C3",
+            "text": "按综合电价 0.70 元/kWh 计算",
+            "status": "CONFLICT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.unit_price_yuan"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.note"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.peak_kwh"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.off_peak_kwh"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.peak_price_yuan"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.off_peak_price_yuan"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].total_kwh"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].cost_yuan"
+              }
+            ],
+            "reason": "c2给出unit_price_yuan=0.7且note为综合平均电价，c3历史费用/电量也等于0.7；但c1峰谷电量与c2峰谷电价推算当前期间平均电价为(12500*0.85+32700*0.45)/45200≈0.5606元/kWh，日志中没有可引用的优先规则。"
+          },
+          {
+            "id": "C4",
+            "text": "本月电费约 31640 万元",
+            "status": "REFUTE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_kwh"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.unit_price_yuan"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].cost_yuan"
+              }
+            ],
+            "reason": "45200*0.7=31640元，不是31640万元；c3历史92100 kWh费用为64470元，量级也支持单位为元。"
+          },
+          {
+            "id": "C5",
+            "text": "焊接工位1-10用电 28500 kWh",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.sub_meters[0].kwh"
+              }
+            ],
+            "reason": "c4返回EM-WELD-001-A焊接工位1-10 kwh=28500。"
+          },
+          {
+            "id": "C6",
+            "text": "工位11-20用电 12200 kWh",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.sub_meters[1].kwh"
+              }
+            ],
+            "reason": "c4返回EM-WELD-001-B焊接工位11-20 kwh=12200。"
+          },
+          {
+            "id": "C7",
+            "text": "辅助设备用电 4500 kWh",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.sub_meters[2].kwh"
+              }
+            ],
+            "reason": "c4返回EM-WELD-001-C辅助设备 kwh=4500。"
+          },
+          {
+            "id": "C8",
+            "text": "对比上月全月电费 64470 元",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].month"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].cost_yuan"
+              }
+            ],
+            "reason": "c3返回2026-10 cost_yuan=64470，相对2026-11为上月。"
+          },
+          {
+            "id": "C9",
+            "text": "按当前用电趋势，本月全月电费预计在 65000 万元左右",
+            "status": "UNKNOWN",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.period"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_kwh"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].total_kwh"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].cost_yuan"
+              }
+            ],
+            "reason": "仅有11-01至11-14电量和上月全月费用，缺少11月全月数据及趋势外推规则，无法核验65000元左右。"
+          },
+          {
+            "id": "C10",
+            "text": "如需分时段费用明细可进一步查询",
+            "status": "UNKNOWN",
+            "expression": "HEDGED",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志未返回分时段费用明细或明确支持该查询的工具结果。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "CONFLICT",
+            "affects": [
+              "C3"
+            ],
+            "criticality": "HIGH",
+            "description": "综合电价0.70元/kWh与峰谷电量/峰谷电价推算的当前期间平均电价不一致，日志中没有可引用的优先规则。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少2026-11全月实际或预测用电量/费用，当前只有2026-11-01至2026-11-14数据。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少“当前用电趋势”外推规则、11月全月天数/生产日历以及电价适用规则。"
+          },
+          {
+            "id": "GAP4",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C10"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少分时段费用明细查询结果或工具能力证据。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C3"
+            ],
+            "tool": "energy.tariff_lookup",
+            "arguments": {
+              "workshop": "焊接车间",
+              "period": "2026-11"
+            },
+            "pending_arguments": {
+              "include_peak_off_peak": "true",
+              "billing_priority": "true"
+            },
+            "success_criterion": "返回明确说明综合电价0.70与峰谷电价的适用优先级，或给出当前期间唯一适用电价。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": "energy.consumption_query",
+            "arguments": {
+              "workshop": "焊接车间",
+              "period": "2026-11",
+              "metric": "electricity",
+              "granularity": "day"
+            },
+            "pending_arguments": {
+              "end_date": "2026-11-30",
+              "forecast": "true"
+            },
+            "success_criterion": "返回2026-11全月或逐日电量/费用，可复算全月电费。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": null,
+            "arguments": {},
+            "pending_arguments": {
+              "forecast_method": "当前用电趋势外推规则",
+              "production_calendar": "11月生产日历/天数"
+            },
+            "success_criterion": "获得可复算的全月电费预测规则或预测模型输出。"
+          },
+          {
+            "id": "A4",
+            "gap_ids": [
+              "GAP4"
+            ],
+            "target_claims": [
+              "C10"
+            ],
+            "tool": "energy.consumption_query",
+            "arguments": {
+              "workshop": "焊接车间",
+              "period": "2026-11",
+              "metric": "electricity",
+              "breakdown": "peak/off_peak"
+            },
+            "pending_arguments": {
+              "cost_detail": "true"
+            },
+            "success_criterion": "返回峰/谷电量及对应费用或分时段费用明细。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 210.172
+}

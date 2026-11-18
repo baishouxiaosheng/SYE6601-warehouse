@@ -1,0 +1,268 @@
+{
+  "case_id": "IND-012",
+  "run_id": "IND-012-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1332,
+    "completion_tokens": 8572,
+    "total_tokens": 9904
+  },
+  "latency_seconds": 102.016,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-012-r1",
+      "case_id": "IND-012",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "这批零件的热处理报告拿到了吗？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "这批齿轮轴（HT-261114-005）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.batch_id"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.product"
+              }
+            ],
+            "reason": "c1 返回 batch_id=HT-261114-005、product=齿轮轴 GS-200，可支持该批次为齿轮轴 HT-261114-005。"
+          },
+          {
+            "id": "C2",
+            "text": "上午11:30完成了渗碳淬火工艺",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.process"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.process_end"
+              }
+            ],
+            "reason": "c1 返回 process=渗碳淬火、process_end=2026-11-14T11:30:00+08:00，可支持上午11:30完成渗碳淬火工艺。"
+          },
+          {
+            "id": "C3",
+            "text": "还没提交检测申请",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.message"
+              }
+            ],
+            "reason": "c2 返回 status=NOT_STARTED、message=该批次尚未提交检测申请，直接支持该结论。"
+          },
+          {
+            "id": "C4",
+            "text": "实验室那边也没有这批的送样记录",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.note"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.pending_samples"
+              }
+            ],
+            "reason": "c3 仅显示 HT-261114-005 未在送检队列中，且 pending_samples 无该批次；未返回完整实验室送样/接收记录，不能直接证明“没有送样记录”。"
+          },
+          {
+            "id": "C5",
+            "text": "热处理报告目前还没有",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.message"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.note"
+              }
+            ],
+            "reason": "日志未返回该批次热处理报告状态或文件记录；c2 仅说明检测未开始，c3 仅说明未在送检队列，不能直接证明报告尚未拿到。"
+          },
+          {
+            "id": "C6",
+            "text": "需要先安排送检",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.message"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.note"
+              }
+            ],
+            "reason": "日志显示未提交检测申请且未在送检队列，但没有规则说明获取热处理报告前必须先送检或提交检测申请，因此该操作建议缺少判断依据。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "LIMITED_SCOPE",
+            "affects": [
+              "C4",
+              "C5"
+            ],
+            "criticality": "MEDIUM",
+            "description": "c3 只查询了 2026-11-14 热处理车间的送检队列，未查询实验室完整送样/接收记录，无法确认是否存在该批次送样记录。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少该批次热处理报告的状态、文件链接或报告编号等直接证据，无法确认报告是否已拿到。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C5",
+              "C6"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少热处理报告生成/获取与检测申请、送检之间的前置条件规则，无法从“未提交检测申请/未在送检队列”直接推出“报告还没有”或“需要先安排送检”。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C4",
+              "C5"
+            ],
+            "tool": "quality_inspection.get_sample_records",
+            "arguments": {
+              "batch_id": "HT-261114-005",
+              "site": "华南二厂",
+              "workshop": "热处理车间",
+              "date": "2026-11-14"
+            },
+            "pending_arguments": {
+              "record_type": "送样/接收记录",
+              "date_range": "2026-11-14至2026-11-14"
+            },
+            "success_criterion": "返回该批次送样/接收记录列表，能明确是否存在送样记录。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": "quality_inspection.get_report",
+            "arguments": {
+              "batch_id": "HT-261114-005",
+              "report_type": "热处理报告"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回该批次热处理报告状态、文件链接或报告编号，或明确返回报告不存在。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C5",
+              "C6"
+            ],
+            "tool": "quality_process.get_rule",
+            "arguments": {
+              "site": "华南二厂",
+              "workshop": "热处理车间",
+              "process": "渗碳淬火",
+              "report_type": "热处理报告"
+            },
+            "pending_arguments": {
+              "rule_scope": "检测申请/送检前置条件"
+            },
+            "success_criterion": "返回明确规则，说明热处理报告生成/获取前是否必须提交检测申请或安排送检。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 102.016
+}

@@ -1,0 +1,260 @@
+{
+  "scorecard_version": "IND-002-scorecard-v1",
+  "run_id": "IND-002-r1",
+  "case_id": "IND-002",
+  "rule_version": "1.0.0",
+  "dimensions": {
+    "evidence_support": {
+      "name": "证据支持度",
+      "score": 0.7428571428571429,
+      "weight": 0.5,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 4,
+      "total": 7,
+      "details": [
+        {
+          "claim": "CLM-001",
+          "status": "SUPPORT",
+          "value": 1.0
+        },
+        {
+          "claim": "CLM-002",
+          "status": "SUPPORT",
+          "value": 1.0
+        },
+        {
+          "claim": "CLM-003",
+          "status": "SUPPORT",
+          "value": 1.0
+        },
+        {
+          "claim": "CLM-004",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-005",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-006",
+          "status": "SUPPORT",
+          "value": 1.0
+        },
+        {
+          "claim": "CLM-007",
+          "status": "MISSING_RULE",
+          "value": 0.2
+        }
+      ]
+    },
+    "question_coverage": {
+      "name": "问题回应覆盖度",
+      "score": 1.0,
+      "weight": 0.3,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 1,
+      "total": 1,
+      "details": [
+        {
+          "goal": "GOAL-001",
+          "text": "二号冷水机组做完保养了，能开机吗",
+          "answered": true,
+          "claims": [
+            "CLM-001"
+          ]
+        }
+      ]
+    },
+    "uncertainty_accuracy": {
+      "name": "不确定性表达准确性",
+      "score": 0.5714285714285714,
+      "weight": 0.2,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 4,
+      "total": 7,
+      "details": [
+        {
+          "claim": "CLM-001",
+          "status": "SUPPORT",
+          "hedged": false,
+          "value": 1.0,
+          "reason": "证据充分且表述肯定"
+        },
+        {
+          "claim": "CLM-002",
+          "status": "SUPPORT",
+          "hedged": false,
+          "value": 1.0,
+          "reason": "证据充分且表述肯定"
+        },
+        {
+          "claim": "CLM-003",
+          "status": "SUPPORT",
+          "hedged": false,
+          "value": 1.0,
+          "reason": "证据充分且表述肯定"
+        },
+        {
+          "claim": "CLM-004",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-005",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-006",
+          "status": "SUPPORT",
+          "hedged": false,
+          "value": 1.0,
+          "reason": "证据充分且表述肯定"
+        },
+        {
+          "claim": "CLM-007",
+          "status": "MISSING_RULE",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        }
+      ]
+    }
+  },
+  "overall": 0.7857142857142857,
+  "grade": "B",
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "二号冷水机组保养工单WO-28501已于13:45完成",
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "assertion",
+      "main_basis": [
+        "field_restatement@ trace[c2].result.work_order_id：字段 work_order_id=WO-28501 与结论复述的 WO-28501 逐字一致",
+        "status_assertion@ trace[c2].result.status：字段 status=COMPLETED 支持该状态断言"
+      ],
+      "missing_or_conflicting": [],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "技术员和主管均已签字确认",
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "assertion",
+      "main_basis": [
+        "signoff_assertion@ trace[c3].result.technician_signoff：字段 technician_signoff=true 支持该确认类断言"
+      ],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "设备锁定已解除",
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "assertion",
+      "main_basis": [
+        "status_assertion@ trace[c4].result.lockout_tagout：字段 lockout_tagout=CLEARED 支持该状态断言"
+      ],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "油温42℃正常",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "main_basis": [
+        "value_match@ trace[c4].result.oil_temp_c：字段值 42 ℃ 与结论数值 42.0 ℃ 一致"
+      ],
+      "missing_or_conflicting": [
+        "UNKNOWN（range_basis_missing）：日志中未找到该参数对应的正常区间或判定基准，按规则保留未知状态",
+        "GAP-001（MISSING_DEPENDENCY）：缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论"
+      ],
+      "affected_goals": [],
+      "next_action": "补证动作：ACT-001",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "冷媒压力680kPa在正常范围",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "main_basis": [
+        "value_match@ trace[c4].result.refrigerant_pressure_kpa：字段值 680 kPa 与结论数值 680.0 kPa 一致"
+      ],
+      "missing_or_conflicting": [
+        "UNKNOWN（range_basis_missing）：日志中未找到该参数对应的正常区间或判定基准，按规则保留未知状态",
+        "GAP-002（MISSING_DEPENDENCY）：缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论"
+      ],
+      "affected_goals": [],
+      "next_action": "补证动作：ACT-001",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-006",
+      "text": "系统显示可以启动",
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "approval",
+      "main_basis": [
+        "display_status@ trace[c4].result.ready_to_start：字段 ready_to_start=true 支持该展示类断言"
+      ],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-007",
+      "text": "可以开机",
+      "evidence_status": "MISSING_RULE",
+      "assertion_strength": "approval",
+      "main_basis": [],
+      "missing_or_conflicting": [
+        "MISSING_RULE（release_precondition）：日志中未找到适用的放行规则或权威授权记录；仅有维保完成/签字确认不足以支撑完整的业务放行结论",
+        "GAP-003（MISSING_RULE）：缺少适用的放行规则或权威授权记录，无法判定完整业务放行条件是否满足"
+      ],
+      "affected_goals": [],
+      "next_action": "补证动作：ACT-001",
+      "severity": "HIGH"
+    }
+  ],
+  "severity_flags": [
+    {
+      "claim": "CLM-007",
+      "status": "MISSING_RULE",
+      "assertion_strength": "approval",
+      "severity": "HIGH",
+      "high_risk_keywords": [],
+      "reason": "结论状态为 MISSING_RULE，与证据/规则冲突或缺少判定依据",
+      "content": "可以开机"
+    }
+  ],
+  "notes": [
+    "三个维度均由可复算检查结果推导，不使用模型主观打分。",
+    "负向状态 ['CONFLICT', 'MISSING_RULE', 'REFUTE'] 会直接拉低证据支持度并触发高风险标记。",
+    "评级仅供参考，不能替代人工复核；grade 为 N/A 表示未配置评级阈值。"
+  ]
+}

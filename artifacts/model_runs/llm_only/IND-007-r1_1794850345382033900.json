@@ -1,0 +1,239 @@
+{
+  "case_id": "IND-007",
+  "run_id": "IND-007-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1318,
+    "completion_tokens": 7248,
+    "total_tokens": 8566
+  },
+  "latency_seconds": 67.813,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-007-r1",
+      "case_id": "IND-007",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "){": "goals",
+        "goals": [
+          {
+            "id": "G1",
+            "text": "反应釜配方切换到R3版本了没有？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "还没有切换。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.active_recipe_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.version"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.change_log[0].status"
+              }
+            ],
+            "reason": "active_recipe_id为REC-204-R2且version为R2，R3状态为PENDING_APPROVAL，说明当前未切换到R3。"
+          },
+          {
+            "id": "C2",
+            "text": "一号反应釜当前使用的是REC-204的R2版本",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].arguments.display_name"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.active_recipe_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.version"
+              }
+            ],
+            "reason": "c1将一号反应釜映射为RXT-01，c2显示RXT-01的active_recipe_id为REC-204-R2、version为R2。"
+          },
+          {
+            "id": "C3",
+            "text": "11月10日启用的。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.activated_at"
+              }
+            ],
+            "reason": "activated_at为2026-11-10T08:00:00+08:00。"
+          },
+          {
+            "id": "C4",
+            "text": "R3版本是陈亮",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.change_log[0].submitted_by"
+              }
+            ],
+            "reason": "change_log中R3的submitted_by为工艺工程师 陈亮。"
+          },
+          {
+            "id": "C5",
+            "text": "昨天",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "trace未提供当前时间，无法核验2026-11-13是否为昨天。"
+          },
+          {
+            "id": "C6",
+            "text": "（11月13日）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.change_log[0].submitted_at"
+              }
+            ],
+            "reason": "submitted_at为2026-11-13T16:00:00+08:00。"
+          },
+          {
+            "id": "C7",
+            "text": "提交的",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.change_log[0].submitted_at"
+              }
+            ],
+            "reason": "R3存在submitted_at字段，表明该版本有提交记录。"
+          },
+          {
+            "id": "C8",
+            "text": "目前状态是待审批",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.change_log[0].status"
+              }
+            ],
+            "reason": "R3的status为PENDING_APPROVAL。"
+          },
+          {
+            "id": "C9",
+            "text": "还没指定审批人",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.change_log[0].approver"
+              }
+            ],
+            "reason": "R3的approver为未指定。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "LOW",
+            "description": "缺少当前时间或接收时间证据，无法核验“昨天”这一相对日期。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": null,
+            "arguments": {},
+            "pending_arguments": {
+              "current_time": "需要当前系统时间（含时区）"
+            },
+            "success_criterion": "获得当前时间后，可判断2026-11-13是否为昨天。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 67.813
+}

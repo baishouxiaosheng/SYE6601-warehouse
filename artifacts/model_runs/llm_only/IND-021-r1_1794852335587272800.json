@@ -1,0 +1,386 @@
+{
+  "case_id": "IND-021",
+  "run_id": "IND-021-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1970,
+    "completion_tokens": 10919,
+    "total_tokens": 12889
+  },
+  "latency_seconds": 84.625,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-021-r1",
+      "case_id": "IND-021",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "查一下压缩机 CMP-01A 的振动情况"
+          },
+          {
+            "id": "G2",
+            "text": "刚才现场感觉声音不太对"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "压缩机 CMP-01A 近30分钟振动数据正常",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.asset_id"
+              }
+            ],
+            "reason": "现有振动监测结果 asset_id 为 CMP-01B，未提供 CMP-01A 的30分钟振动数据或状态。"
+          },
+          {
+            "id": "C2",
+            "text": "振动值在 2.0～2.4 mm/s 之间",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.asset_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.readings"
+              }
+            ],
+            "reason": "2.0～2.4 mm/s 来自 CMP-01B 的 readings，不能用于 CMP-01A。"
+          },
+          {
+            "id": "C3",
+            "text": "远低于报警阈值 7.1 mm/s",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.alarm_threshold"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.results[0].content"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.asset_id"
+              }
+            ],
+            "reason": "报警阈值 7.1 mm/s 有证据，但缺少 CMP-01A 振动值，无法判断是否远低于阈值。"
+          },
+          {
+            "id": "C4",
+            "text": "设备运行状态良好",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.asset_id"
+              }
+            ],
+            "reason": "status=NORMAL 属于 CMP-01B，且缺少 CMP-01A 综合状态判定证据。"
+          },
+          {
+            "id": "C5",
+            "text": "近2小时无振动报警记录",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.asset_id"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.alarms"
+              }
+            ],
+            "reason": "报警历史查询对象为 CMP-01B，未提供 CMP-01A 近2小时振动报警记录。"
+          },
+          {
+            "id": "C6",
+            "text": "近期也无相关维修工单",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].arguments.asset_id"
+              },
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.work_orders"
+              }
+            ],
+            "reason": "工单查询对象为 CMP-01B，未提供 CMP-01A 近期维修工单。"
+          },
+          {
+            "id": "C7",
+            "text": "现场声音可能由其他原因引起",
+            "status": "UNKNOWN",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志未提供 CMP-01A 声音、振动或其他原因证据，无法支持该推断。"
+          },
+          {
+            "id": "C8",
+            "text": "建议继续观察",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [],
+            "reason": "在 CMP-01A 振动证据缺失的情况下，日志未提供继续观察的处置规则或触发条件。"
+          },
+          {
+            "id": "C9",
+            "text": "如振动持续异常请再次反馈",
+            "status": "UNKNOWN",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志未提供 CMP-01A 振动持续异常的判定条件或再次反馈规则。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C1",
+              "C2",
+              "C3",
+              "C4"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少 CMP-01A 近30分钟振动读数、状态和阈值比较证据；现有振动数据属于 CMP-01B。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少 CMP-01A 近2小时振动报警历史。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C6"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少 CMP-01A 近期维修工单记录。"
+          },
+          {
+            "id": "GAP4",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C7"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少 CMP-01A 现场声音异常或其他原因的证据。"
+          },
+          {
+            "id": "GAP5",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C4"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少将 CMP-01A 振动、报警、工单等综合判定为运行状态良好的规则。"
+          },
+          {
+            "id": "GAP6",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C8",
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少继续观察和再次反馈的触发条件/处置规则。"
+          },
+          {
+            "id": "GAP7",
+            "type": "LIMITED_SCOPE",
+            "affects": [
+              "C1",
+              "C2",
+              "C3",
+              "C4",
+              "C5",
+              "C6"
+            ],
+            "criticality": "HIGH",
+            "description": "工具查询范围覆盖 CMP-01B，未覆盖用户指定的 CMP-01A，存在资产混淆风险。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1",
+              "GAP7"
+            ],
+            "target_claims": [
+              "C1",
+              "C2",
+              "C3",
+              "C4"
+            ],
+            "tool": "ops.vibration_monitor",
+            "arguments": {
+              "asset_id": "CMP-01A",
+              "metric": "vibration_mm_s",
+              "window": "30min"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回 asset_id=CMP-01A 的 vibration_mm_s 读数、alarm_threshold 和 status。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": "ops.alarm_history",
+            "arguments": {
+              "asset_id": "CMP-01A",
+              "window": "2h",
+              "alarm_type": "vibration"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回 asset_id=CMP-01A 的近2小时振动报警列表。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C6"
+            ],
+            "tool": "maintenance.recent_work_order",
+            "arguments": {
+              "asset_id": "CMP-01A",
+              "days": 30
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回 asset_id=CMP-01A 的近期维修工单列表。"
+          },
+          {
+            "id": "A4",
+            "gap_ids": [
+              "GAP4"
+            ],
+            "target_claims": [
+              "C7"
+            ],
+            "tool": null,
+            "arguments": {},
+            "pending_arguments": {
+              "evidence_type": "现场音频、巡检记录、其他传感器或人工确认"
+            },
+            "success_criterion": "获得与 CMP-01A 声音异常相关且可时间关联的证据。"
+          },
+          {
+            "id": "A5",
+            "gap_ids": [
+              "GAP5"
+            ],
+            "target_claims": [
+              "C4"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "query": "离心压缩机运行状态良好判定规则",
+              "asset_type": "compressor"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回 CMP-01A/ZR-250 运行状态良好的判定条件。"
+          },
+          {
+            "id": "A6",
+            "gap_ids": [
+              "GAP6"
+            ],
+            "target_claims": [
+              "C8",
+              "C9"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "query": "压缩机振动异常继续观察和再次反馈条件",
+              "asset_type": "compressor"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回明确的继续观察/再次反馈触发条件。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 84.625
+}

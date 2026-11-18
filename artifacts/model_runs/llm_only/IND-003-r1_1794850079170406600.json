@@ -1,0 +1,445 @@
+{
+  "case_id": "IND-003",
+  "run_id": "IND-003-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1605,
+    "completion_tokens": 12871,
+    "total_tokens": 14476
+  },
+  "latency_seconds": 58.422,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-003-r1",
+      "case_id": "IND-003",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "B线贴片机当前班次抛料率读数及是否超过控制标准"
+          },
+          {
+            "id": "G2",
+            "text": "高抛料吸嘴定位与异常指标"
+          },
+          {
+            "id": "G3",
+            "text": "原因判断与后续检查/观察建议"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "B线贴片机当前班次抛料率1.4%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.reject_rate_percent"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.shift_start"
+              }
+            ],
+            "reason": "c1将B线贴片机映射为PNP-02；c2当前班次shift_start为2026-11-14T08:00:00+08:00，reject_rate_percent=1.4。"
+          },
+          {
+            "id": "C2",
+            "text": "超过0.5%的控制标准",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.reject_rate_percent"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.threshold_percent"
+              }
+            ],
+            "reason": "c2中reject_rate_percent=1.4，threshold_percent=0.5，1.4>0.5。"
+          },
+          {
+            "id": "C3",
+            "text": "主要集中在3号吸嘴",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[0].rejects"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.rejects"
+              }
+            ],
+            "reason": "c3显示N3 rejects=387，c2当前班次总rejects=632，若两者同班次则N3占61.2%；但c3未返回shift或时间范围，无法确认该读数属于当前班次。"
+          },
+          {
+            "id": "C4",
+            "text": "抛料率5.1%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[0].reject_rate_percent"
+              }
+            ],
+            "reason": "c3中N3的reject_rate_percent=5.1。"
+          },
+          {
+            "id": "C5",
+            "text": "真空度-45kPa",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[0].vacuum_level_kpa"
+              }
+            ],
+            "reason": "c3中N3的vacuum_level_kpa=-45。"
+          },
+          {
+            "id": "C6",
+            "text": "偏离规格-60kPa约25%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[0].vacuum_level_kpa"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[0].vacuum_spec_kpa"
+              }
+            ],
+            "reason": "N3 vacuum_level_kpa=-45，vacuum_spec_kpa=-60，偏差绝对值15kPa，15/60=25%。"
+          },
+          {
+            "id": "C7",
+            "text": "7号吸嘴也有轻微偏离",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[1].vacuum_level_kpa"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[1].vacuum_spec_kpa"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[1].reject_rate_percent"
+              }
+            ],
+            "reason": "N7 vacuum_level_kpa=-58，vacuum_spec_kpa=-60，reject_rate_percent=1.8，存在偏差；但日志未给出“轻微偏离”的判定阈值或规则。"
+          },
+          {
+            "id": "C8",
+            "text": "真空度异常说明3号吸嘴可能有问题",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[0].vacuum_level_kpa"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[0].vacuum_spec_kpa"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              }
+            ],
+            "reason": "N3真空度偏离规格且抛料率5.1%超过c4中2%的排查提示，但日志未提供“真空度异常可说明吸嘴有问题”的直接判定规则。"
+          },
+          {
+            "id": "C9",
+            "text": "具体是吸嘴堵塞、磨损还是其他原因",
+            "status": "UNKNOWN",
+            "expression": "DECLARED_UNKNOWN",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志未返回吸嘴堵塞、磨损或其他具体原因的检测证据。"
+          },
+          {
+            "id": "C10",
+            "text": "需要现场停机检查后才能确认",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              }
+            ],
+            "reason": "c4仅说明“具体原因需现场确认”，未提供必须“停机检查”的规程或判定依据。"
+          },
+          {
+            "id": "C11",
+            "text": "7号吸嘴可继续观察",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[1].reject_rate_percent"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[1].vacuum_level_kpa"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.nozzles[1].vacuum_spec_kpa"
+              }
+            ],
+            "reason": "N7指标存在偏差但未超c4中2%的单吸嘴抛料率排查阈值；日志未给出“可继续观察”的放行或观察标准。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C3"
+            ],
+            "criticality": "HIGH",
+            "description": "c3未返回shift或时间范围，无法确认N3/N7的rejects和reject_rate_percent是否属于c2当前班次，因此无法确认“主要集中在3号吸嘴”的当前班次范围。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C7"
+            ],
+            "criticality": "LOW",
+            "description": "缺少“轻微偏离”的判定规则或阈值，无法确认N7的真空度/抛料率偏差是否属于轻微。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C8"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少真空度异常与吸嘴故障/排查之间的判定规则；c4仅给出抛料率超过2%时建议排查吸嘴状态等因素。"
+          },
+          {
+            "id": "GAP4",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少N3具体原因（堵塞、磨损或其他）的现场检测或诊断证据。"
+          },
+          {
+            "id": "GAP5",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C10"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少“需要现场停机检查”的维护规程或触发条件；c4只说明具体原因需现场确认。"
+          },
+          {
+            "id": "GAP6",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C11"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少N7“可继续观察”的放行、观察或继续生产判定标准。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C3"
+            ],
+            "tool": "plant_monitor.get_nozzle_detail",
+            "arguments": {
+              "asset_id": "PNP-02",
+              "shift": "current"
+            },
+            "pending_arguments": {
+              "filter": "all_nozzles",
+              "time_range": "2026-11-14T08:00:00+08:00 to 2026-11-14T11:30:00+08:00"
+            },
+            "success_criterion": "返回当前班次全部吸嘴的rejects/reject_rate_percent，且时间范围与c2 shift_start一致。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C7"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "collection": "SMT设备维护手册",
+              "query": {
+                "equipment_model": "FUJI-NXT-III",
+                "symptom": "吸嘴真空度偏离 轻微偏离判定"
+              }
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回吸嘴真空度或抛料率“轻微偏离”的阈值/判定规则。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C8"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "collection": "SMT设备维护手册",
+              "query": {
+                "equipment_model": "FUJI-NXT-III",
+                "symptom": "真空度异常 吸嘴故障 排查"
+              }
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回真空度低于规格与吸嘴问题/排查条件之间的判定规则。"
+          },
+          {
+            "id": "A4",
+            "gap_ids": [
+              "GAP4"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": null,
+            "arguments": {},
+            "pending_arguments": {
+              "现场检测对象": "N3吸嘴",
+              "检测项目": "堵塞/磨损/真空/贴装参数"
+            },
+            "success_criterion": "现场确认N3具体原因并记录检测结果。"
+          },
+          {
+            "id": "A5",
+            "gap_ids": [
+              "GAP5"
+            ],
+            "target_claims": [
+              "C10"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "collection": "SMT设备维护手册",
+              "query": {
+                "equipment_model": "FUJI-NXT-III",
+                "symptom": "抛料异常 现场停机检查 规程"
+              }
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回需要现场停机检查的触发条件或维护规程。"
+          },
+          {
+            "id": "A6",
+            "gap_ids": [
+              "GAP6"
+            ],
+            "target_claims": [
+              "C11"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "collection": "SMT设备维护手册",
+              "query": {
+                "equipment_model": "FUJI-NXT-III",
+                "symptom": "吸嘴抛料率 观察 放行标准"
+              }
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回吸嘴可继续观察/放行/停机的判定标准。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 58.438
+}

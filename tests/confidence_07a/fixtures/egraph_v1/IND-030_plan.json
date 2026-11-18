@@ -1,0 +1,64 @@
+{
+  "plan_version": "IND-030-supplementary-plan-v1",
+  "run_id": "IND-030-r1",
+  "case_id": "IND-030",
+  "actions": [
+    {
+      "id": "ACT-001",
+      "action_type": "refetch_page",
+      "gap_ids": [
+        "GAP-001",
+        "GAP-002"
+      ],
+      "target_claims": [
+        "CLM-001"
+      ],
+      "tool": "inventory.search",
+      "known_arguments": {
+        "keyword": "M8 螺栓",
+        "page_size": 20,
+        "page": 2
+      },
+      "pending_arguments": {},
+      "expected_outcome": "翻取剩余分页（当前第 1/8 页），使“全库检索”结论覆盖完整结果集",
+      "success_criterion": "工具返回的 page 递增至 total_pages，或 total_matches 全部返回，且每页结果均可定位到 trace[<事件ID>].result",
+      "rationale": "检索结果不完整：仅第 1/8 页，全库结论缺证",
+      "executability": "executable",
+      "priority": 1,
+      "replaces_actions": [],
+      "executed_at": null,
+      "evidence_time": null,
+      "acquired_at": null
+    },
+    {
+      "id": "ACT-002",
+      "action_type": "requery",
+      "gap_ids": [
+        "GAP-003"
+      ],
+      "target_claims": [
+        "CLM-001"
+      ],
+      "tool": "inventory.search",
+      "known_arguments": {
+        "keyword": "M8 螺栓",
+        "page_size": 20
+      },
+      "pending_arguments": {},
+      "expected_outcome": "补齐缺失范围的数据：筛选参数未生效，返回范围与问题口径不一致，需使用精确条件重查",
+      "success_criterion": "新返回字段能覆盖缺口所涉的对象/时段，且可定位到具体字段路径后复算出结论",
+      "rationale": "筛选参数未生效，返回范围与问题口径不一致，需使用精确条件重查",
+      "executability": "executable",
+      "priority": 2,
+      "replaces_actions": [],
+      "executed_at": null,
+      "evidence_time": null,
+      "acquired_at": null
+    }
+  ],
+  "notes": [
+    "动作按「同一来源 + 同一动作类型」合并，避免对同一接口重复往返。",
+    "executable 表示参数齐备可直接执行；needs_confirmation 表示需先确认参数或适用范围；manual 表示必须现场或走审批流程。",
+    "执行后用 register_execution() 回填 executed_at（发起时间）、evidence_time（业务时点）、acquired_at（取证时间），三者不可互相代替。"
+  ]
+}

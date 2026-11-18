@@ -1,0 +1,218 @@
+{
+  "case_id": "IND-009",
+  "run_id": "IND-009-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1304,
+    "completion_tokens": 5031,
+    "total_tokens": 6335
+  },
+  "latency_seconds": 27.125,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-009-r1",
+      "case_id": "IND-009",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "排放口废水COD在线数据正常吗？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "排放口COD在线数据正常",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.monitoring_point"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[0].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[1].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[2].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[0].data_quality"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[1].data_quality"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[2].data_quality"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              }
+            ],
+            "reason": "WW-OUT-01 最近三次 COD 读数 status 均为 NORMAL，data_quality 均为 VALID，且校准状态为 VALID。"
+          },
+          {
+            "id": "C2",
+            "text": "最近三次读数分别是42、38、45 mg/L",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[0].timestamp"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[0].value_mg_l"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[1].timestamp"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[1].value_mg_l"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[2].timestamp"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[2].value_mg_l"
+              }
+            ],
+            "reason": "按时间倒序，2026-11-14T10:30 为 42 mg/L，10:00 为 38 mg/L，09:30 为 45 mg/L。"
+          },
+          {
+            "id": "C3",
+            "text": "均远低于100 mg/L的限值",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[0].value_mg_l"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[0].limit_mg_l"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[1].value_mg_l"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[1].limit_mg_l"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[2].value_mg_l"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.readings[2].limit_mg_l"
+              }
+            ],
+            "reason": "三次读数 42、38、45 mg/L 均小于对应 limit_mg_l=100 mg/L。"
+          },
+          {
+            "id": "C4",
+            "text": "仪器11月1日校准过",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.last_calibration"
+              }
+            ],
+            "reason": "last_calibration 为 2026-11-01。"
+          },
+          {
+            "id": "C5",
+            "text": "有效期到12月1日",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.next_calibration"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              }
+            ],
+            "reason": "next_calibration 为 2026-12-01，且校准状态为 VALID。"
+          },
+          {
+            "id": "C6",
+            "text": "今早6点自动标定也通过了",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.auto_calibration_log"
+              }
+            ],
+            "reason": "auto_calibration_log 记录 2026-11-14T06:00:00+08:00 自动标定通过。"
+          }
+        ],
+        "gaps": [],
+        "actions": []
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 27.125
+}

@@ -1,0 +1,309 @@
+{
+  "case_id": "IND-002",
+  "run_id": "IND-002-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1398,
+    "completion_tokens": 10542,
+    "total_tokens": 11940
+  },
+  "latency_seconds": 56.047,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-002-r1",
+      "case_id": "IND-002",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "二号冷水机组是否已完成保养"
+          },
+          {
+            "id": "G2",
+            "text": "二号冷水机组能否开机"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "二号冷水机组保养工单WO-28501已于13:45完成",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.work_order_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.completed_at"
+              }
+            ],
+            "reason": "c1将二号冷水机组映射为CH-02；c2显示WO-28501状态为COMPLETED，completed_at为2026-11-14T13:45:00+08:00。"
+          },
+          {
+            "id": "C2",
+            "text": "技术员和主管均已签字确认",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.technician_signoff"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.supervisor_signoff"
+              }
+            ],
+            "reason": "c3显示technician_signoff=true且supervisor_signoff=true。"
+          },
+          {
+            "id": "C3",
+            "text": "设备锁定已解除",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.lockout_tagout"
+              }
+            ],
+            "reason": "c4显示CH-02的lockout_tagout为CLEARED。"
+          },
+          {
+            "id": "C4",
+            "text": "油温42℃",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.oil_temp_c"
+              }
+            ],
+            "reason": "c4显示CH-02的oil_temp_c为42。"
+          },
+          {
+            "id": "C5",
+            "text": "正常",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.oil_temp_c"
+              }
+            ],
+            "reason": "c4提供油温读数42℃，但日志未提供油温正常区间或阈值，无法核验该“正常”判断。"
+          },
+          {
+            "id": "C6",
+            "text": "冷媒压力680kPa",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.refrigerant_pressure_kpa"
+              }
+            ],
+            "reason": "c4显示CH-02的refrigerant_pressure_kpa为680。"
+          },
+          {
+            "id": "C7",
+            "text": "在正常范围",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.refrigerant_pressure_kpa"
+              }
+            ],
+            "reason": "c4提供冷媒压力读数680kPa，但日志未提供冷媒压力正常范围或阈值，无法核验“在正常范围”。"
+          },
+          {
+            "id": "C8",
+            "text": "系统显示可以启动",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.ready_to_start"
+              }
+            ],
+            "reason": "c4显示CH-02的ready_to_start为true。"
+          },
+          {
+            "id": "C9",
+            "text": "可以开机",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.ready_to_start"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.lockout_tagout"
+              }
+            ],
+            "reason": "c4显示ready_to_start=true且lockout_tagout=CLEARED，直接给出可启动且锁定已解除的状态。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "MEDIUM",
+            "description": "日志未提供CH-02油温正常区间或阈值，无法核验油温42℃是否“正常”。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C7"
+            ],
+            "criticality": "MEDIUM",
+            "description": "日志未提供CH-02冷媒压力正常范围或阈值，无法核验680kPa是否“在正常范围”。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": null,
+            "arguments": {
+              "site": "华东一厂",
+              "workshop": "制冷站",
+              "asset_id": "CH-02",
+              "parameter": "oil_temp_c"
+            },
+            "pending_arguments": {
+              "rule_type": "normal_range"
+            },
+            "success_criterion": "获得CH-02油温正常区间或阈值，可判断42℃是否处于正常范围。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C7"
+            ],
+            "tool": null,
+            "arguments": {
+              "site": "华东一厂",
+              "workshop": "制冷站",
+              "asset_id": "CH-02",
+              "parameter": "refrigerant_pressure_kpa"
+            },
+            "pending_arguments": {
+              "rule_type": "normal_range"
+            },
+            "success_criterion": "获得CH-02冷媒压力正常范围或阈值，可判断680kPa是否处于正常范围。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 56.047
+}

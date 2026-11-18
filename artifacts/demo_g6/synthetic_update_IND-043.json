@@ -1,0 +1,46 @@
+{
+  "IND-043": [
+    {
+      "id": "u1",
+      "event": "tool_call",
+      "type": "database_query",
+      "tool": "production.daily_output",
+      "arguments": {
+        "line_id": "Line-D",
+        "date_from": "2026-11-12T22:00:00+08:00",
+        "date_to": "2026-11-13T06:00:00+08:00"
+      },
+      "result": {
+        "line_id": "Line-D",
+        "query_period": "2026-11-12T22:00:00+08:00 ~ 2026-11-13T06:00:00+08:00",
+        "total_units": 1650,
+        "shifts": [
+          {
+            "shift": "夜班",
+            "start_at": "2026-11-12T22:00:00+08:00",
+            "end_at": "2026-11-13T06:00:00+08:00",
+            "business_date": "2026-11-13",
+            "units": 1650
+          }
+        ],
+        "attribution_rule": "本厂日报按业务日期统计：白班、中班归属开始当天；22:00至次日06:00的夜班归属结束当天。",
+        "note": "SYNTHETIC：来自 LoopB 种子记录 SIM-D-20261113-NIGHT，非真实系统返回。"
+      },
+      "synthetic": true,
+      "synthetic_note": "采用Loop A首轮示例允许的1650件假设值；补原日志未返回的目标夜班。",
+      "provenance": {
+        "source": "LoopB approved_seed",
+        "file": "shift_outputs.json",
+        "database_id": "SIM-INDUSTRIAL-DB",
+        "dataset_version": "dual-data-alignment-1.0",
+        "record_id": "SIM-D-20261113-NIGHT",
+        "file_sha256": "764b6c246bc6d68af010ccfa34570a5f7a50aa23ea6a557800c8ac25db58ec17",
+        "kind": "SYNTHETIC",
+        "author": "Zhang Jimuqing",
+        "group_id": "IND-D",
+        "note": "采用Loop A首轮示例允许的1650件假设值；补原日志未返回的目标夜班。",
+        "limitation": "新增演练背景，不是原日志事实；不可据此替换原始基准记录。"
+      }
+    }
+  ]
+}

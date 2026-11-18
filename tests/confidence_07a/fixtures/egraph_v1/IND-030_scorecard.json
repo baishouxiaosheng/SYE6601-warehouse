@@ -1,0 +1,214 @@
+{
+  "scorecard_version": "IND-030-scorecard-v1",
+  "run_id": "IND-030-r1",
+  "case_id": "IND-030",
+  "rule_version": "1.0.0",
+  "dimensions": {
+    "evidence_support": {
+      "name": "证据支持度",
+      "score": 0.5,
+      "weight": 0.5,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 0,
+      "total": 6,
+      "details": [
+        {
+          "claim": "CLM-001",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-002",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-003",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-004",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-005",
+          "status": "UNKNOWN",
+          "value": 0.5
+        },
+        {
+          "claim": "CLM-006",
+          "status": "UNKNOWN",
+          "value": 0.5
+        }
+      ]
+    },
+    "question_coverage": {
+      "name": "问题回应覆盖度",
+      "score": 1.0,
+      "weight": 0.3,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 1,
+      "total": 1,
+      "details": [
+        {
+          "goal": "GOAL-001",
+          "text": "库房里有没有 M8 的钛合金螺栓",
+          "answered": true,
+          "claims": [
+            "CLM-001",
+            "CLM-002"
+          ]
+        }
+      ]
+    },
+    "uncertainty_accuracy": {
+      "name": "不确定性表达准确性",
+      "score": 0.0,
+      "weight": 0.2,
+      "thresholds": {
+        "good": 0.85,
+        "fair": 0.6
+      },
+      "covered": 0,
+      "total": 6,
+      "details": [
+        {
+          "claim": "CLM-001",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-002",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-003",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-004",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-005",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        },
+        {
+          "claim": "CLM-006",
+          "status": "UNKNOWN",
+          "hedged": false,
+          "value": 0.0,
+          "reason": "证据不足却给出了确定表述"
+        }
+      ]
+    }
+  },
+  "overall": 0.55,
+  "grade": "D",
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "库房中未找到 M8 钛合金螺栓",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "negative_finding",
+      "main_basis": [],
+      "missing_or_conflicting": [
+        "UNKNOWN（pagination_completeness）：仅返回第 1/8 页，共 156 条匹配，其余页未检索",
+        "UNKNOWN（filter_effectiveness）：工具返回显式说明筛选参数未生效，返回的是全量结果",
+        "GAP-001（INCOMPLETE_RESULT）：检索结果不完整：仅第 1/8 页，全库结论缺证",
+        "GAP-002（INCOMPLETE_RESULT）：检索结果不完整：仅第 1/8 页，全库结论缺证",
+        "GAP-003（LIMITED_SCOPE）：筛选参数未生效，返回范围与问题口径不一致，需使用精确条件重查"
+      ],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "next_action": "补证动作：ACT-001、ACT-002",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "当前 M8 螺栓库存以不锈钢（304/316）",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "碳钢和铝合金材质为主",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "合计 156 个品规",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "钛合金紧固件存放于特种材料库B2区",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    },
+    {
+      "claim_id": "CLM-006",
+      "text": "也可联系库管员周芳确认",
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "assertion",
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "affected_goals": [],
+      "next_action": "无需补证",
+      "severity": null
+    }
+  ],
+  "severity_flags": [],
+  "notes": [
+    "三个维度均由可复算检查结果推导，不使用模型主观打分。",
+    "负向状态 ['CONFLICT', 'MISSING_RULE', 'REFUTE'] 会直接拉低证据支持度并触发高风险标记。",
+    "评级仅供参考，不能替代人工复核；grade 为 N/A 表示未配置评级阈值。"
+  ]
+}

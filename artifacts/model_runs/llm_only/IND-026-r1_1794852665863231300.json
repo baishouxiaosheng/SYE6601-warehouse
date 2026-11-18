@@ -1,0 +1,348 @@
+{
+  "case_id": "IND-026",
+  "run_id": "IND-026-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1615,
+    "completion_tokens": 12175,
+    "total_tokens": 13790
+  },
+  "latency_seconds": 82.344,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-026-r1",
+      "case_id": "IND-026",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "F-02 炉子的冷却系统都正常吗？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "F-02 退火炉冷却系统运行正常。",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuits_queried"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_circuits"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.note"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.alarms"
+              }
+            ],
+            "reason": "仅查询2/6路冷却回路，缺少3-6路状态，不能支持整体运行正常。"
+          },
+          {
+            "id": "C2",
+            "text": "各冷却回路温度和流量均在正常范围内",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuits_queried"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_circuits"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuit_data[0].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuit_data[1].status"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "日志未提供温度/流量正常范围阈值，且仅2/6路有数据，不能支持各回路均在正常范围内。"
+          },
+          {
+            "id": "C3",
+            "text": "炉顶冷却进水 22.3℃ / 出水 35.1℃",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuit_data[0].temp_in"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuit_data[0].temp_out"
+              }
+            ],
+            "reason": "c1 回路1 temp_in=22.3、temp_out=35.1。"
+          },
+          {
+            "id": "C4",
+            "text": "炉壁冷却A进水 22.5℃ / 出水 36.8℃",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuit_data[1].temp_in"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuit_data[1].temp_out"
+              }
+            ],
+            "reason": "c1 回路2 temp_in=22.5、temp_out=36.8。"
+          },
+          {
+            "id": "C5",
+            "text": "流量分别约 120 和 115 L/min",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuit_data[0].flow_lpm"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuit_data[1].flow_lpm"
+              }
+            ],
+            "reason": "c1 回路1 flow_lpm=120、回路2 flow_lpm=115。"
+          },
+          {
+            "id": "C6",
+            "text": "近2小时无冷却系统报警。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.alarms"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].arguments.window"
+              }
+            ],
+            "reason": "c2 查询 system=cooling、window=2h，alarms 为空。"
+          },
+          {
+            "id": "C7",
+            "text": "当前炉温 820℃",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.current_temp_c"
+              }
+            ],
+            "reason": "c4 current_temp_c=820。"
+          },
+          {
+            "id": "C8",
+            "text": "处于保温阶段",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.program_stage"
+              }
+            ],
+            "reason": "c4 program_stage=保温阶段。"
+          },
+          {
+            "id": "C9",
+            "text": "系统状态良好",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.alarms"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuits_queried"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_circuits"
+              }
+            ],
+            "reason": "仅有炉体 RUNNING、2h无报警和部分冷却回路数据，且无“良好”判定规则，不能支持。"
+          },
+          {
+            "id": "C10",
+            "text": "可继续运行",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.alarms"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.circuits_queried"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_circuits"
+              }
+            ],
+            "reason": "日志未提供继续运行/放行条件，且冷却回路未全查，不能支持操作许可。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "INCOMPLETE_RESULT",
+            "affects": [
+              "C1",
+              "C2",
+              "C9",
+              "C10"
+            ],
+            "criticality": "HIGH",
+            "description": "冷却系统共6路，仅查询前2路，缺少3-6路温度、流量、状态。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C2",
+              "C9",
+              "C10"
+            ],
+            "criticality": "HIGH",
+            "description": "日志未提供冷却回路温度/流量正常范围阈值，也未提供“系统状态良好”或“可继续运行”的判定/审批条件。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C1",
+              "C2",
+              "C9",
+              "C10"
+            ],
+            "tool": "ops.cooling_system_monitor",
+            "arguments": {
+              "asset_id": "F-02",
+              "circuit_range": "all"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回 circuits_queried=6 且 circuit_data 包含 circuit_id 1-6 的 temp_in、temp_out、flow_lpm、status。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C2",
+              "C9",
+              "C10"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "query": "F-02 退火炉冷却系统温度流量正常范围 阈值 可继续运行条件",
+              "asset_id": "F-02"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回明确正常区间/阈值或继续运行审批条件。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 82.344
+}

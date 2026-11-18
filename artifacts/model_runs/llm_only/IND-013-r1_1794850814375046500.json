@@ -1,0 +1,251 @@
+{
+  "case_id": "IND-013",
+  "run_id": "IND-013-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1754,
+    "completion_tokens": 12068,
+    "total_tokens": 13822
+  },
+  "latency_seconds": 74.531,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-013-r1",
+      "case_id": "IND-013",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "确认上次送检的三批铝合金件范围"
+          },
+          {
+            "id": "G2",
+            "text": "说明三批铝合金件的检测结果或处置状态"
+          },
+          {
+            "id": "G3",
+            "text": "说明未决项及后续确认要求"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "最近三批铝合金件的检测情况：",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections"
+              }
+            ],
+            "reason": "c1 按华东一厂、机加工车间、铝合金、recent_days=7 查询，返回 3 条 inspection，对应 BT-261110-M12、BT-261112-M15、BT-261113-M18。"
+          },
+          {
+            "id": "C2",
+            "text": "BT-261110-M12（6061）和BT-261113-M18（6061）都已合格放行。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections[0].batch_id"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections[0].material"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections[0].disposition"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections[2].batch_id"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections[2].material"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections[2].disposition"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.disposition"
+              }
+            ],
+            "reason": "c1 中 BT-261110-M12 与 BT-261113-M18 的 disposition 均为 PASS；c3 进一步显示 BT-261113-M18 各项合格且 disposition 为 PASS。"
+          },
+          {
+            "id": "C3",
+            "text": "BT-261112-M15（7075）硬度和拉伸合格",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections[1].material"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[0].actual"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[0].standard"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[0].result"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[1].actual"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[1].standard"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[1].result"
+              }
+            ],
+            "reason": "c2 中 BT-261112-M15 硬度 actual 156 HV，standard ≥150 HV，result 合格；拉伸强度 actual 585 MPa，standard ≥572 MPa，result 合格。"
+          },
+          {
+            "id": "C4",
+            "text": "但盐雾试验只做了48小时，没到规定的72小时",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2",
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[2].standard"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[2].actual"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[2].result"
+              }
+            ],
+            "reason": "c2 中盐雾试验 standard 为 72h无腐蚀，actual 为 48h数据，尚未到72h，result 为待确认。"
+          },
+          {
+            "id": "C5",
+            "text": "目前是有条件放行",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.inspections[1].disposition"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.disposition"
+              }
+            ],
+            "reason": "c1 与 c2 中 BT-261112-M15 的 disposition 均为 CONDITIONAL_PASS。"
+          },
+          {
+            "id": "C6",
+            "text": "需要等盐雾试验补做结果确认后才能最终判定",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.notes"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[2].result"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.disposition"
+              }
+            ],
+            "reason": "c2.notes 明确盐雾试验未到规定时间、需补做确认；但日志未给出 CONDITIONAL_PASS 转最终判定或最终放行的明确规则，也未返回盐雾72h补做结果，因此“才能最终判定”缺少判断依据。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C6"
+            ],
+            "criticality": "HIGH",
+            "description": "对 BT-261112-M15 的 CONDITIONAL_PASS，日志仅有 notes 要求补做确认，未明确最终判定/放行条件，也未提供盐雾72h补做结果，无法完全核验“需要等盐雾试验补做结果确认后才能最终判定”。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C6"
+            ],
+            "tool": null,
+            "arguments": {
+              "inspection_id": "QC-261112-038"
+            },
+            "pending_arguments": {
+              "need": "CONDITIONAL_PASS 最终判定/放行规则或盐雾72h补做结果"
+            },
+            "success_criterion": "获得明确最终判定条件，或返回盐雾72h补做结果及最终 disposition（PASS/FAIL）。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 74.531
+}

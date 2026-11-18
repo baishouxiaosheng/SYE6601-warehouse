@@ -1,0 +1,5383 @@
+{
+  "schema": "07a-evals.v1",
+  "run_ids": [
+    "IND-002-r1",
+    "IND-024-r1",
+    "IND-030-r1",
+    "IND-005-r1",
+    "IND-010-r1",
+    "IND-015-r1",
+    "IND-019-r1",
+    "IND-027-r1"
+  ],
+  "usage": {
+    "prompt_tokens": 14402,
+    "completion_tokens": 89939,
+    "latency_seconds": 556.717,
+    "n": 8
+  },
+  "evals": [
+    {
+      "eval_version": "07a-eval-v1",
+      "method": "rule+v2",
+      "seed": 0,
+      "config": {
+        "config_version": "07a-eval-config-v1",
+        "status": "PROVISIONAL",
+        "alignment": {
+          "threshold": 0.5,
+          "contain_floor": 0.8,
+          "min_contain_len": 6,
+          "numeric_must_overlap": true
+        },
+        "gaps": {
+          "claim_match": "overlap",
+          "compatible_groups": [
+            [
+              "MISSING_EVIDENCE",
+              "MISSING_DEPENDENCY"
+            ],
+            [
+              "INCOMPLETE_RESULT",
+              "LIMITED_SCOPE"
+            ]
+          ]
+        },
+        "params": {
+          "match_value_anywhere": true
+        },
+        "calibration": {
+          "n_bins": 5
+        },
+        "bootstrap": {
+          "n_resamples": 1000,
+          "ci": 0.95
+        }
+      },
+      "score_semantics": "分数与指标基于现有日志的证据审核结果，不是正确概率；校准表仅为描述性统计。",
+      "caveats": [
+        "试点 gold 由 AI 起草、尚未经人工复核（review_status=DRAFT 时），只能用于检验流水线，不能作为结论。",
+        "样本量小（n 见各指标分母），置信区间很宽，不支持方法间显著性结论。",
+        "所有分数不是正确概率；校准表与 ECE 仅描述性。"
+      ],
+      "n": {
+        "gold_runs": 8,
+        "gold_runs_reviewed": 0,
+        "gold_runs_draft": 8,
+        "pred_runs_matched": 8,
+        "pred_runs_missing": 0,
+        "pred_runs_unannotated": 0,
+        "gold_claims": 63,
+        "pred_claims": 64,
+        "aligned_claims": 56,
+        "gold_gaps": 10,
+        "pred_gaps": 13,
+        "scorecards_provided": true
+      },
+      "metrics": {
+        "false_support_strict": {
+          "numerator": 0,
+          "denominator": 7,
+          "value": 0.0,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "definition": "FSR（严格）= #(gold=REFUTE ∧ pred=SUPPORT) / #(gold=REFUTE)，仅已对齐结论",
+          "excluded_unaligned": 2,
+          "ci_valid_resamples": 900
+        },
+        "false_support_broad": {
+          "numerator": 0,
+          "denominator": 16,
+          "value": 0.0,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "definition": "FSR（广义）= #(gold∈{REFUTE,UNKNOWN,MISSING_RULE,CONFLICT} ∧ pred=SUPPORT) / #(gold∈该集合)，仅已对齐结论",
+          "excluded_unaligned": 3,
+          "ci_valid_resamples": 1000
+        },
+        "insufficient_as_err": {
+          "numerator": 0,
+          "denominator": 8,
+          "value": 0.0,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "definition": "IAE = #(gold∈{UNKNOWN,MISSING_RULE} ∧ pred=REFUTE) / #(gold∈{UNKNOWN,MISSING_RULE})，仅已对齐结论",
+          "excluded_unaligned": 1,
+          "ci_valid_resamples": 998
+        },
+        "gap_precision": {
+          "numerator": 2,
+          "denominator": 13,
+          "value": 0.153846,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.294118
+          ],
+          "definition": "缺口定位精确率 = 命中缺口数 / 预测缺口数",
+          "ci_valid_resamples": 1000
+        },
+        "gap_recall": {
+          "numerator": 2,
+          "denominator": 10,
+          "value": 0.2,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.400417
+          ],
+          "definition": "缺口定位召回率 = 命中缺口数 / gold 缺口数",
+          "ci_valid_resamples": 1000
+        },
+        "gap_f1": {
+          "numerator": 4,
+          "denominator": 23,
+          "value": 0.173913,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.307692
+          ],
+          "definition": "缺口定位 F1 = 2×命中 / (预测缺口数 + gold 缺口数)",
+          "ci_valid_resamples": 1000
+        },
+        "requery_param_value_hit": {
+          "numerator": 6,
+          "denominator": 46,
+          "value": 0.130435,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.274562
+          ],
+          "definition": "补查参数定位（键+值）= 在相关动作中键存在且值一致的关键参数数 / gold 关键参数总数",
+          "ci_valid_resamples": 1000
+        },
+        "requery_param_key_hit": {
+          "numerator": 9,
+          "denominator": 46,
+          "value": 0.195652,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.416715
+          ],
+          "definition": "补查参数定位（仅键）= 在相关动作中出现的关键参数键数 / gold 关键参数总数",
+          "ci_valid_resamples": 1000
+        },
+        "requery_action_exists": {
+          "numerator": 5,
+          "denominator": 10,
+          "value": 0.5,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.857143
+          ],
+          "definition": "动作存在率 = 有至少一个相关补查动作的 gold 缺口数 / 带 required_params 的 gold 缺口数",
+          "ci_valid_resamples": 1000
+        },
+        "status_accuracy": {
+          "numerator": 18,
+          "denominator": 56,
+          "value": 0.321429,
+          "reason": null,
+          "ci95": [
+            0.18032,
+            0.48
+          ],
+          "definition": "五态准确率 = 混淆矩阵对角线 / 已对齐结论数",
+          "ci_valid_resamples": 1000
+        },
+        "status_macro_f1": {
+          "numerator": 1.44973,
+          "denominator": 5,
+          "value": 0.289946,
+          "reason": null,
+          "ci95": [
+            0.097838,
+            0.463097
+          ],
+          "definition": "五态 macro-F1 = Σ各类F1 / 出现过的类别数（gold 或 pred 中出现）",
+          "ci_valid_resamples": 1000
+        },
+        "status_kappa": {
+          "numerator": 0.121811,
+          "denominator": 0.800383,
+          "value": 0.152191,
+          "reason": null,
+          "ci95": [
+            0.042103,
+            0.290678
+          ],
+          "definition": "Cohen's κ = (p_o − p_e) / (1 − p_e)",
+          "ci_valid_resamples": 1000
+        },
+        "extraction_coverage": {
+          "numerator": 56,
+          "denominator": 63,
+          "value": 0.888889,
+          "reason": null,
+          "ci95": [
+            0.790323,
+            0.96668
+          ],
+          "definition": "结论抽取覆盖率 = 已对齐 gold 结论数 / gold 结论数",
+          "ci_valid_resamples": 1000
+        },
+        "extraction_extra_rate": {
+          "numerator": 8,
+          "denominator": 64,
+          "value": 0.125,
+          "reason": null,
+          "ci95": [
+            0.068936,
+            0.166667
+          ],
+          "definition": "多抽率 = 未对齐的预测结论数 / 预测结论数",
+          "ci_valid_resamples": 1000
+        },
+        "severe_recall": {
+          "numerator": 1,
+          "denominator": 2,
+          "value": 0.5,
+          "reason": null,
+          "ci95": [
+            0.0,
+            1.0
+          ],
+          "definition": "严重问题召回 = #(gold 有 severe 结论 ∧ high_risk_alert) / #(gold 有 severe 结论的运行)",
+          "ci_valid_resamples": 900
+        },
+        "severe_false_alarm": {
+          "numerator": 1,
+          "denominator": 6,
+          "value": 0.166667,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.5
+          ],
+          "definition": "严重问题误报率 = #(gold 无 severe ∧ high_risk_alert) / #(gold 无 severe 的运行)",
+          "ci_valid_resamples": 1000
+        },
+        "calibration_ece": {
+          "numerator": 31.7274,
+          "denominator": 62,
+          "value": 0.511732,
+          "reason": null,
+          "ci95": [
+            0.323937,
+            0.678272
+          ],
+          "definition": "ECE = Σ_b |Σconf_b − Σcorrect_b| / N；样本=gold 断言类结论，conf=所在运行 support_score，correct=gold_status==SUPPORT",
+          "ci_valid_resamples": 1000
+        }
+      },
+      "bootstrap": {
+        "method": "按运行聚类的百分位 bootstrap",
+        "n_resamples": 1000,
+        "seed": 0,
+        "clusters": 8
+      },
+      "confusion": {
+        "labels": [
+          "SUPPORT",
+          "REFUTE",
+          "UNKNOWN",
+          "CONFLICT",
+          "MISSING_RULE"
+        ],
+        "rows": "gold",
+        "cols": "pred",
+        "matrix": [
+          [
+            11,
+            0,
+            29,
+            0,
+            0
+          ],
+          [
+            0,
+            2,
+            5,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            3,
+            0,
+            1
+          ]
+        ]
+      },
+      "calibration": {
+        "table": [
+          {
+            "bin": 0,
+            "range": [
+              0.0,
+              0.2
+            ],
+            "n_claims": 34,
+            "mean_support_score": 0.054635,
+            "gold_support_rate": 0.558824
+          },
+          {
+            "bin": 1,
+            "range": [
+              0.2,
+              0.4
+            ],
+            "n_claims": 19,
+            "mean_support_score": 0.277495,
+            "gold_support_rate": 1.0
+          },
+          {
+            "bin": 2,
+            "range": [
+              0.4,
+              0.6
+            ],
+            "n_claims": 9,
+            "mean_support_score": 0.5714,
+            "gold_support_rate": 0.666667
+          },
+          {
+            "bin": 3,
+            "range": [
+              0.6,
+              0.8
+            ],
+            "n_claims": 0,
+            "mean_support_score": null,
+            "gold_support_rate": null
+          },
+          {
+            "bin": 4,
+            "range": [
+              0.8,
+              1.0
+            ],
+            "n_claims": 0,
+            "mean_support_score": null,
+            "gold_support_rate": null
+          }
+        ],
+        "ece": {
+          "numerator": 31.7274,
+          "denominator": 62,
+          "value": 0.511732,
+          "reason": null,
+          "ci95": [
+            0.323937,
+            0.678272
+          ],
+          "definition": "ECE = Σ_b |Σconf_b − Σcorrect_b| / N；样本=gold 断言类结论，conf=所在运行 support_score，correct=gold_status==SUPPORT",
+          "ci_valid_resamples": 1000
+        },
+        "note": "样本小，仅描述性；support_score 不是正确概率。"
+      },
+      "run_level": {
+        "grade_vs_answer_has_error": {
+          "INSUFFICIENT": {
+            "true": 1,
+            "false": 3,
+            "na": 0
+          },
+          "QUALIFIED": {
+            "true": 1,
+            "false": 3,
+            "na": 0
+          }
+        },
+        "grade_vs_answer_honest_about_limits": {
+          "INSUFFICIENT": {
+            "true": 1,
+            "false": 3,
+            "na": 0
+          },
+          "QUALIFIED": {
+            "true": 3,
+            "false": 1,
+            "na": 0
+          }
+        }
+      },
+      "cost": {
+        "elapsed_seconds": {
+          "n": 8,
+          "total": 0.036078,
+          "mean": 0.00451,
+          "median": 0.003012,
+          "reason": null
+        },
+        "model_calls": {
+          "n": 8,
+          "total": 0.0,
+          "reason": null
+        }
+      },
+      "strata": {},
+      "strata_note": "run.source 中没有变体信息，未分层（全部视为自然运行）",
+      "per_claim": [
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "CLM-001",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "保养工单WO-28501已于13:45完成",
+          "pred_text": "二号冷水机组保养工单WO-28501已于13:45完成",
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "CLM-002",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "技术员和主管均已签字确认",
+          "pred_text": "技术员和主管均已签字确认",
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "CLM-003",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "设备锁定已解除",
+          "pred_text": "设备锁定已解除",
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.0,
+          "gold_status": "SUPPORT",
+          "pred_status": null,
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "油温42℃",
+          "pred_text": null,
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "CLM-004",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "MISSING_RULE",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "油温42℃正常",
+          "pred_text": "油温42℃正常",
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.0,
+          "gold_status": "SUPPORT",
+          "pred_status": null,
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "冷媒压力680kPa",
+          "pred_text": null,
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "CLM-005",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "MISSING_RULE",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "冷媒压力680kPa在正常范围",
+          "pred_text": "冷媒压力680kPa在正常范围",
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "CLM-006",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "系统显示可以启动",
+          "pred_text": "系统显示可以启动",
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g9",
+          "pred_claim_id": "CLM-007",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "MISSING_RULE",
+          "pred_status": "MISSING_RULE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "可以开机",
+          "pred_text": "可以开机",
+          "run_support_score": 0.5714
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "CLM-001",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "当前系统压力为 21500 MPa",
+          "pred_text": "液压机 HP-03 当前系统压力为 21500 MPa",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "CLM-002",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "已严重超出最大工作压力 25 MPa",
+          "pred_text": "已严重超出最大工作压力 25 MPa",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.0,
+          "gold_status": "SUPPORT",
+          "pred_status": null,
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "最大工作压力 25 MPa",
+          "pred_text": null,
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "CLM-003",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "超出约 86000 倍",
+          "pred_text": "超出约 86000 倍",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "CLM-004",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "属于极度危险状态",
+          "pred_text": "属于极度危险状态",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.0,
+          "gold_status": "REFUTE",
+          "pred_status": null,
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "请立即停机检查！",
+          "pred_text": null,
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "CLM-006",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "近2小时压力波动范围 20800～22100，趋势稳定",
+          "pred_text": "近2小时压力波动范围 20800～22100",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.0,
+          "gold_status": "REFUTE",
+          "pred_status": null,
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "建议立即启动紧急停机程序并通知设备管理人员排查传感器或安全阀",
+          "pred_text": null,
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "CLM-007",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": null,
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "趋势稳定",
+          "run_support_score": null
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "CLM-001",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "UNKNOWN",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "经查询，库房中未找到 M8 钛合金螺栓",
+          "pred_text": "库房中未找到 M8 钛合金螺栓",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "CLM-002",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "UNKNOWN",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "当前 M8 螺栓库存以不锈钢（304/316）、碳钢和铝合金材质为主",
+          "pred_text": "当前 M8 螺栓库存以不锈钢（304/316）",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "CLM-004",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "合计 156 个品规",
+          "pred_text": "合计 156 个品规",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.0952,
+          "gold_status": "UNKNOWN",
+          "pred_status": null,
+          "gold_expression": "HEDGED",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "如需采购 M8 钛合金螺栓，请告知具体规格和数量，我可以协助发起采购申请",
+          "pred_text": null,
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "CLM-005",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "钛合金紧固件存放于特种材料库B2区",
+          "pred_text": "钛合金紧固件存放于特种材料库B2区",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "CLM-006",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "HEDGED",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "也可联系库管员周芳确认",
+          "pred_text": "也可联系库管员周芳确认",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "CLM-003",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": null,
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "碳钢和铝合金材质为主",
+          "run_support_score": null
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "CLM-001",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "M12×50不锈钢螺栓库存2400只",
+          "pred_text": "M12×50不锈钢螺栓库存2400只",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "CLM-002",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "SCOPED_PARTIAL",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "已录入系统的预留800只（给WO-28508）",
+          "pred_text": "已录入系统的预留800只（给WO-28508）",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "CLM-003",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "SCOPED_PARTIAL",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "按此计算可用1600只",
+          "pred_text": "按此计算可用1600只",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "CLM-004",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "明天WO-28510和WO-28511共需M12×50共(60×15+32×8)=1156只",
+          "pred_text": "明天WO-28510和WO-28511共需M12×50共(60×15+32×8)=1156只",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "CLM-005",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "M12×80库存1800只",
+          "pred_text": "M12×80库存1800只",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "CLM-006",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "SCOPED_PARTIAL",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "已录入预留500只",
+          "pred_text": "已录入预留500只",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "CLM-007",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "SCOPED_PARTIAL",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "可用1300只",
+          "pred_text": "可用1300只",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "CLM-008",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "明天共需(45×15+24×8)=867只",
+          "pred_text": "明天共需(45×15+24×8)=867只",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g9",
+          "pred_claim_id": "CLM-009",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "HEDGED",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "系统提示部分工单的领料预留尚未录入，实际可用量可能比计算值低",
+          "pred_text": "不过系统提示部分工单的领料预留尚未录入",
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g10",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.2963,
+          "gold_status": "SUPPORT",
+          "pred_status": null,
+          "gold_expression": "HEDGED",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "建议领料前与仓库确认实际可用数",
+          "pred_text": null,
+          "run_support_score": 0.2
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "CLM-010",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": null,
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "实际可用量可能比计算值低",
+          "run_support_score": null
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "CLM-001",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "A线在15:13:00因供料中断触发停机保护（ALM-301）",
+          "pred_text": "A线在15:13:00因供料中断触发停机保护（ALM-301）",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "CLM-002",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "上游FAB-01在15:11:50因冲压机液压压力不足停机",
+          "pred_text": "上游FAB-01在15:11:50因冲压机液压压力不足停机",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "CLM-003",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "比A线早70秒",
+          "pred_text": "比A线早70秒",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "CLM-004",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "物料流监测将供料中断原因标记为上游线停机",
+          "pred_text": "物料流监测将供料中断原因标记为上游线停机：FAB-01停机后约10秒",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "CLM-005",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "FAB-01停机后约10秒，供料线于15:12:00确认无料",
+          "pred_text": "供料线于15:12:00确认无料",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "CLM-007",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "连续无料30秒后，A线于15:12:30触发ALM-301",
+          "pred_text": "A线于15:12:30触发ALM-301",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "CLM-009",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "报警持续30秒后，于15:13:00停机",
+          "pred_text": "于15:13:00停机",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "CLM-010",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "HEDGED",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "现有事件关联与物料流记录支持A线此次停机由上游断料引起",
+          "pred_text": "现有事件关联与物料流记录支持A线此次停机由上游断料引起",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g9",
+          "pred_claim_id": "CLM-011",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "上游停机由液压低压报警触发",
+          "pred_text": "上游停机由液压低压报警触发",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g10",
+          "pred_claim_id": "CLM-012",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "UNKNOWN",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DECLARED_UNKNOWN",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "液压压力不足的具体原因仍需进一步排查",
+          "pred_text": "液压压力不足的具体原因仍需进一步排查",
+          "run_support_score": 0.3636
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "CLM-006",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": null,
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "连续无料30秒后",
+          "run_support_score": null
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "CLM-008",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": null,
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "报警持续30秒后",
+          "run_support_score": null
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "CLM-001",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "二号燃气表上次校准是5月15日，合格",
+          "pred_text": "二号燃气表上次校准是5月15日",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "CLM-002",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "下次校准到期日是明天（11月15日）",
+          "pred_text": "下次校准到期日是明天（11月15日）",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "CLM-003",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "目前还在校准有效期内",
+          "pred_text": "目前还在校准有效期内",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "CLM-004",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "CONFLICT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "本月读数日均47.6立方米",
+          "pred_text": "本月读数日均47.6立方米",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "CLM-005",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "波动与生产排班吻合",
+          "pred_text": "波动与生产排班吻合",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "CLM-006",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "UNKNOWN",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "HEDGED",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "从数据趋势看没有明显异常",
+          "pred_text": "从数据趋势看没有明显异常",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "CLM-008",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "备用表正在拆检，没法做交叉比对",
+          "pred_text": "没法做交叉比对",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "CLM-010",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "HEDGED",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "如果对读数有疑虑，明天校准到期时可以做一次全面校验",
+          "pred_text": "明天校准到期时可以做一次全面校验",
+          "run_support_score": 0.0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "CLM-007",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": null,
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "不过备用表正在拆检",
+          "run_support_score": null
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "CLM-009",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": null,
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "如果对读数有疑虑",
+          "run_support_score": null
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "CLM-001",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "这批304不锈钢板（RCV-261114-008）的来料检验（IQC-261114-015）还在进行中",
+          "pred_text": "这批304不锈钢板（RCV-261114-008）的来料检验（IQC-261114-015）还在进行中",
+          "run_support_score": 0.1667
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "CLM-002",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "材质证明已经核验通过",
+          "pred_text": "材质证明已经核验通过",
+          "run_support_score": 0.1667
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "CLM-003",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "厚度和表面质量还在测试",
+          "pred_text": "厚度和表面质量还在测试",
+          "run_support_score": 0.1667
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "CLM-004",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "HEDGED",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "预计17:00前完成",
+          "pred_text": "预计17:00前完成",
+          "run_support_score": 0.1667
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "CLM-005",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "完整的质检报告暂时出不了",
+          "pred_text": "完整的质检报告暂时出不了",
+          "run_support_score": 0.1667
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "CLM-006",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "MISSING_RULE",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "等检测完成后可以发给你",
+          "pred_text": "等检测完成后可以发给你",
+          "run_support_score": 0.1667
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "CLM-002",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "14:05:12 变频器 VFD-102 发生重启事件",
+          "pred_text": "14:05:12 变频器 VFD-102 发生重启事件",
+          "run_support_score": 0.1429
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "CLM-003",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "导致压缩机转速波动，进而于 14:05:08 触发喘振报警 ALM-445",
+          "pred_text": "导致压缩机转速波动",
+          "run_support_score": 0.1429
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "CLM-004",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "14:05:08 触发喘振报警 ALM-445",
+          "pred_text": "进而于 14:05:08 触发喘振报警 ALM-445",
+          "run_support_score": 0.1429
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "CLM-005",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "喘振保护动作后于 14:05:18 联锁跳车",
+          "pred_text": "喘振保护动作后于 14:05:18 联锁跳车",
+          "run_support_score": 0.1429
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "CLM-006",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "根本原因为变频器异常重启引起喘振",
+          "pred_text": "根本原因为变频器异常重启引起喘振",
+          "run_support_score": 0.1429
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "CLM-008",
+          "align_method": "explicit",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "建议检查 VFD-102 重启原因，确认变频器控制回路稳定性后恢复运行",
+          "pred_text": "确认变频器控制回路稳定性后恢复运行",
+          "run_support_score": 0.1429
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "CLM-001",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "SUPPORT",
+          "gold_expression": null,
+          "pred_expression": null,
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "K-102 压缩机跳车原因分析：根据事件日志",
+          "run_support_score": null
+        }
+      ],
+      "per_run": [
+        {
+          "method": "rule+v2",
+          "run_id": "IND-002-r1",
+          "case_id": "IND-002",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 9,
+          "n_pred_claims": 7,
+          "n_aligned": 7,
+          "n_missed_gold": 2,
+          "n_extra_pred": 0,
+          "n_gold_gaps": 2,
+          "n_pred_gaps": 3,
+          "gap_tp": 1,
+          "param_total": 9,
+          "param_value_hit": 1,
+          "param_key_hit": 2,
+          "gold_severe": false,
+          "high_risk_alert": true,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.5714,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": false,
+          "elapsed_seconds": 0.01577,
+          "model_calls": 0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-024-r1",
+          "case_id": "IND-024",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 8,
+          "n_pred_claims": 6,
+          "n_aligned": 5,
+          "n_missed_gold": 3,
+          "n_extra_pred": 1,
+          "n_gold_gaps": 0,
+          "n_pred_gaps": 2,
+          "gap_tp": 0,
+          "param_total": 0,
+          "param_value_hit": 0,
+          "param_key_hit": 0,
+          "gold_severe": true,
+          "high_risk_alert": true,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.0,
+          "support_score_source": "support_score",
+          "answer_has_error": true,
+          "answer_honest_about_limits": false,
+          "elapsed_seconds": 0.003801,
+          "model_calls": 0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-030-r1",
+          "case_id": "IND-030",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 6,
+          "n_pred_claims": 6,
+          "n_aligned": 5,
+          "n_missed_gold": 1,
+          "n_extra_pred": 1,
+          "n_gold_gaps": 2,
+          "n_pred_gaps": 3,
+          "gap_tp": 1,
+          "param_total": 9,
+          "param_value_hit": 4,
+          "param_key_hit": 6,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.0,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": false,
+          "elapsed_seconds": 0.002973,
+          "model_calls": 0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-005-r1",
+          "case_id": "IND-005",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 10,
+          "n_pred_claims": 10,
+          "n_aligned": 9,
+          "n_missed_gold": 1,
+          "n_extra_pred": 1,
+          "n_gold_gaps": 1,
+          "n_pred_gaps": 1,
+          "gap_tp": 0,
+          "param_total": 4,
+          "param_value_hit": 0,
+          "param_key_hit": 0,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "QUALIFIED",
+          "support_score": 0.2,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": true,
+          "elapsed_seconds": 0.003736,
+          "model_calls": 0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-010-r1",
+          "case_id": "IND-010",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 10,
+          "n_pred_claims": 12,
+          "n_aligned": 10,
+          "n_missed_gold": 0,
+          "n_extra_pred": 2,
+          "n_gold_gaps": 1,
+          "n_pred_gaps": 0,
+          "gap_tp": 0,
+          "param_total": 6,
+          "param_value_hit": 0,
+          "param_key_hit": 0,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "QUALIFIED",
+          "support_score": 0.3636,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": true,
+          "elapsed_seconds": 0.002907,
+          "model_calls": 0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-015-r1",
+          "case_id": "IND-015",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 8,
+          "n_pred_claims": 10,
+          "n_aligned": 8,
+          "n_missed_gold": 0,
+          "n_extra_pred": 2,
+          "n_gold_gaps": 2,
+          "n_pred_gaps": 1,
+          "gap_tp": 0,
+          "param_total": 10,
+          "param_value_hit": 1,
+          "param_key_hit": 1,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.0,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": true,
+          "elapsed_seconds": 0.002001,
+          "model_calls": 0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-019-r1",
+          "case_id": "IND-019",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 6,
+          "n_pred_claims": 6,
+          "n_aligned": 6,
+          "n_missed_gold": 0,
+          "n_extra_pred": 0,
+          "n_gold_gaps": 2,
+          "n_pred_gaps": 0,
+          "gap_tp": 0,
+          "param_total": 8,
+          "param_value_hit": 0,
+          "param_key_hit": 0,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "QUALIFIED",
+          "support_score": 0.1667,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": true,
+          "elapsed_seconds": 0.001839,
+          "model_calls": 0
+        },
+        {
+          "method": "rule+v2",
+          "run_id": "IND-027-r1",
+          "case_id": "IND-027",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 6,
+          "n_pred_claims": 7,
+          "n_aligned": 6,
+          "n_missed_gold": 0,
+          "n_extra_pred": 1,
+          "n_gold_gaps": 0,
+          "n_pred_gaps": 3,
+          "gap_tp": 0,
+          "param_total": 0,
+          "param_value_hit": 0,
+          "param_key_hit": 0,
+          "gold_severe": true,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "QUALIFIED",
+          "support_score": 0.1429,
+          "support_score_source": "support_score",
+          "answer_has_error": true,
+          "answer_honest_about_limits": false,
+          "elapsed_seconds": 0.003051,
+          "model_calls": 0
+        }
+      ],
+      "alignment": {
+        "IND-002-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "CLM-001",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "CLM-002",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "CLM-003",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "CLM-004",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "CLM-005",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "CLM-006",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g9",
+              "pred_claim_id": "CLM-007",
+              "score": 1.0,
+              "method": "explicit"
+            }
+          ],
+          "missed_gold": [
+            "g4",
+            "g6"
+          ],
+          "extra_pred": [],
+          "warnings": [],
+          "best_rejected": {
+            "g4": {
+              "score": 0.0,
+              "pred_claim_id": null,
+              "reason": "no_candidate"
+            },
+            "g6": {
+              "score": 0.0,
+              "pred_claim_id": null,
+              "reason": "no_candidate"
+            }
+          },
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": "GAP-003"
+            },
+            {
+              "gold_gap_id": "gap2",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-024-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "CLM-001",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "CLM-002",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "CLM-003",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "CLM-004",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "CLM-006",
+              "score": 1.0,
+              "method": "explicit"
+            }
+          ],
+          "missed_gold": [
+            "g3",
+            "g6",
+            "g8"
+          ],
+          "extra_pred": [
+            "CLM-007"
+          ],
+          "warnings": [],
+          "best_rejected": {
+            "g3": {
+              "score": 0.0,
+              "pred_claim_id": "CLM-007",
+              "reason": "similarity"
+            },
+            "g6": {
+              "score": 0.0,
+              "pred_claim_id": "CLM-007",
+              "reason": "similarity"
+            },
+            "g8": {
+              "score": 0.0,
+              "pred_claim_id": "CLM-007",
+              "reason": "similarity"
+            }
+          },
+          "gap_pairs": []
+        },
+        "IND-030-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "CLM-001",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "CLM-002",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "CLM-004",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "CLM-005",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "CLM-006",
+              "score": 1.0,
+              "method": "explicit"
+            }
+          ],
+          "missed_gold": [
+            "g4"
+          ],
+          "extra_pred": [
+            "CLM-003"
+          ],
+          "warnings": [],
+          "best_rejected": {
+            "g4": {
+              "score": 0.0952,
+              "pred_claim_id": "CLM-003",
+              "reason": "similarity"
+            }
+          },
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": "GAP-001"
+            },
+            {
+              "gold_gap_id": "gap2",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-005-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "CLM-001",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "CLM-002",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "CLM-003",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "CLM-004",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "CLM-005",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "CLM-006",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "CLM-007",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "CLM-008",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g9",
+              "pred_claim_id": "CLM-009",
+              "score": 1.0,
+              "method": "explicit"
+            }
+          ],
+          "missed_gold": [
+            "g10"
+          ],
+          "extra_pred": [
+            "CLM-010"
+          ],
+          "warnings": [],
+          "best_rejected": {
+            "g10": {
+              "score": 0.2963,
+              "pred_claim_id": "CLM-010",
+              "reason": "similarity"
+            }
+          },
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-010-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "CLM-001",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "CLM-002",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "CLM-003",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "CLM-004",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "CLM-005",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "CLM-007",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "CLM-009",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "CLM-010",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g9",
+              "pred_claim_id": "CLM-011",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g10",
+              "pred_claim_id": "CLM-012",
+              "score": 1.0,
+              "method": "explicit"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [
+            "CLM-006",
+            "CLM-008"
+          ],
+          "warnings": [],
+          "best_rejected": {},
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-015-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "CLM-001",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "CLM-002",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "CLM-003",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "CLM-004",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "CLM-005",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "CLM-006",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "CLM-008",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "CLM-010",
+              "score": 1.0,
+              "method": "explicit"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [
+            "CLM-007",
+            "CLM-009"
+          ],
+          "warnings": [],
+          "best_rejected": {},
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": null
+            },
+            {
+              "gold_gap_id": "gap2",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-019-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "CLM-001",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "CLM-002",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "CLM-003",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "CLM-004",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "CLM-005",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "CLM-006",
+              "score": 1.0,
+              "method": "explicit"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [],
+          "warnings": [],
+          "best_rejected": {},
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": null
+            },
+            {
+              "gold_gap_id": "gap2",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-027-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "CLM-002",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "CLM-003",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "CLM-004",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "CLM-005",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "CLM-006",
+              "score": 1.0,
+              "method": "explicit"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "CLM-008",
+              "score": 1.0,
+              "method": "explicit"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [
+            "CLM-001"
+          ],
+          "warnings": [],
+          "best_rejected": {},
+          "gap_pairs": []
+        }
+      },
+      "warnings": []
+    },
+    {
+      "eval_version": "07a-eval-v1",
+      "method": "llm_only+v2",
+      "seed": 0,
+      "config": {
+        "config_version": "07a-eval-config-v1",
+        "status": "PROVISIONAL",
+        "alignment": {
+          "threshold": 0.5,
+          "contain_floor": 0.8,
+          "min_contain_len": 6,
+          "numeric_must_overlap": true
+        },
+        "gaps": {
+          "claim_match": "overlap",
+          "compatible_groups": [
+            [
+              "MISSING_EVIDENCE",
+              "MISSING_DEPENDENCY"
+            ],
+            [
+              "INCOMPLETE_RESULT",
+              "LIMITED_SCOPE"
+            ]
+          ]
+        },
+        "params": {
+          "match_value_anywhere": true
+        },
+        "calibration": {
+          "n_bins": 5
+        },
+        "bootstrap": {
+          "n_resamples": 1000,
+          "ci": 0.95
+        }
+      },
+      "score_semantics": "分数与指标基于现有日志的证据审核结果，不是正确概率；校准表仅为描述性统计。",
+      "caveats": [
+        "试点 gold 由 AI 起草、尚未经人工复核（review_status=DRAFT 时），只能用于检验流水线，不能作为结论。",
+        "样本量小（n 见各指标分母），置信区间很宽，不支持方法间显著性结论。",
+        "所有分数不是正确概率；校准表与 ECE 仅描述性。"
+      ],
+      "n": {
+        "gold_runs": 8,
+        "gold_runs_reviewed": 0,
+        "gold_runs_draft": 8,
+        "pred_runs_matched": 8,
+        "pred_runs_missing": 0,
+        "pred_runs_unannotated": 0,
+        "gold_claims": 63,
+        "pred_claims": 69,
+        "aligned_claims": 61,
+        "gold_gaps": 10,
+        "pred_gaps": 17,
+        "scorecards_provided": true
+      },
+      "metrics": {
+        "false_support_strict": {
+          "numerator": 1,
+          "denominator": 9,
+          "value": 0.111111,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.333333
+          ],
+          "definition": "FSR（严格）= #(gold=REFUTE ∧ pred=SUPPORT) / #(gold=REFUTE)，仅已对齐结论",
+          "excluded_unaligned": 0,
+          "ci_valid_resamples": 900
+        },
+        "false_support_broad": {
+          "numerator": 2,
+          "denominator": 18,
+          "value": 0.111111,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.285714
+          ],
+          "definition": "FSR（广义）= #(gold∈{REFUTE,UNKNOWN,MISSING_RULE,CONFLICT} ∧ pred=SUPPORT) / #(gold∈该集合)，仅已对齐结论",
+          "excluded_unaligned": 1,
+          "ci_valid_resamples": 1000
+        },
+        "insufficient_as_err": {
+          "numerator": 0,
+          "denominator": 8,
+          "value": 0.0,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "definition": "IAE = #(gold∈{UNKNOWN,MISSING_RULE} ∧ pred=REFUTE) / #(gold∈{UNKNOWN,MISSING_RULE})，仅已对齐结论",
+          "excluded_unaligned": 1,
+          "ci_valid_resamples": 998
+        },
+        "gap_precision": {
+          "numerator": 6,
+          "denominator": 17,
+          "value": 0.352941,
+          "reason": null,
+          "ci95": [
+            0.157895,
+            0.562723
+          ],
+          "definition": "缺口定位精确率 = 命中缺口数 / 预测缺口数",
+          "ci_valid_resamples": 1000
+        },
+        "gap_recall": {
+          "numerator": 6,
+          "denominator": 10,
+          "value": 0.6,
+          "reason": null,
+          "ci95": [
+            0.375,
+            0.818182
+          ],
+          "definition": "缺口定位召回率 = 命中缺口数 / gold 缺口数",
+          "ci_valid_resamples": 1000
+        },
+        "gap_f1": {
+          "numerator": 12,
+          "denominator": 27,
+          "value": 0.444444,
+          "reason": null,
+          "ci95": [
+            0.230769,
+            0.645161
+          ],
+          "definition": "缺口定位 F1 = 2×命中 / (预测缺口数 + gold 缺口数)",
+          "ci_valid_resamples": 1000
+        },
+        "requery_param_value_hit": {
+          "numerator": 21,
+          "denominator": 46,
+          "value": 0.456522,
+          "reason": null,
+          "ci95": [
+            0.283568,
+            0.625073
+          ],
+          "definition": "补查参数定位（键+值）= 在相关动作中键存在且值一致的关键参数数 / gold 关键参数总数",
+          "ci_valid_resamples": 1000
+        },
+        "requery_param_key_hit": {
+          "numerator": 22,
+          "denominator": 46,
+          "value": 0.478261,
+          "reason": null,
+          "ci95": [
+            0.298211,
+            0.659595
+          ],
+          "definition": "补查参数定位（仅键）= 在相关动作中出现的关键参数键数 / gold 关键参数总数",
+          "ci_valid_resamples": 1000
+        },
+        "requery_action_exists": {
+          "numerator": 9,
+          "denominator": 10,
+          "value": 0.9,
+          "reason": null,
+          "ci95": [
+            0.713929,
+            1.0
+          ],
+          "definition": "动作存在率 = 有至少一个相关补查动作的 gold 缺口数 / 带 required_params 的 gold 缺口数",
+          "ci_valid_resamples": 1000
+        },
+        "status_accuracy": {
+          "numerator": 54,
+          "denominator": 61,
+          "value": 0.885246,
+          "reason": null,
+          "ci95": [
+            0.827586,
+            0.940299
+          ],
+          "definition": "五态准确率 = 混淆矩阵对角线 / 已对齐结论数",
+          "ci_valid_resamples": 1000
+        },
+        "status_macro_f1": {
+          "numerator": 3.993464,
+          "denominator": 5,
+          "value": 0.798693,
+          "reason": null,
+          "ci95": [
+            0.624608,
+            0.859722
+          ],
+          "definition": "五态 macro-F1 = Σ各类F1 / 出现过的类别数（gold 或 pred 中出现）",
+          "ci_valid_resamples": 1000
+        },
+        "status_kappa": {
+          "numerator": 0.370062,
+          "denominator": 0.484816,
+          "value": 0.763304,
+          "reason": null,
+          "ci95": [
+            0.56892,
+            0.878427
+          ],
+          "definition": "Cohen's κ = (p_o − p_e) / (1 − p_e)",
+          "ci_valid_resamples": 1000
+        },
+        "extraction_coverage": {
+          "numerator": 61,
+          "denominator": 63,
+          "value": 0.968254,
+          "reason": null,
+          "ci95": [
+            0.925373,
+            1.0
+          ],
+          "definition": "结论抽取覆盖率 = 已对齐 gold 结论数 / gold 结论数",
+          "ci_valid_resamples": 1000
+        },
+        "extraction_extra_rate": {
+          "numerator": 8,
+          "denominator": 69,
+          "value": 0.115942,
+          "reason": null,
+          "ci95": [
+            0.044776,
+            0.19356
+          ],
+          "definition": "多抽率 = 未对齐的预测结论数 / 预测结论数",
+          "ci_valid_resamples": 1000
+        },
+        "severe_recall": {
+          "numerator": 2,
+          "denominator": 2,
+          "value": 1.0,
+          "reason": null,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "definition": "严重问题召回 = #(gold 有 severe 结论 ∧ high_risk_alert) / #(gold 有 severe 结论的运行)",
+          "ci_valid_resamples": 900
+        },
+        "severe_false_alarm": {
+          "numerator": 1,
+          "denominator": 6,
+          "value": 0.166667,
+          "reason": null,
+          "ci95": [
+            0.0,
+            0.5
+          ],
+          "definition": "严重问题误报率 = #(gold 无 severe ∧ high_risk_alert) / #(gold 无 severe 的运行)",
+          "ci_valid_resamples": 1000
+        },
+        "calibration_ece": {
+          "numerator": 1.9364,
+          "denominator": 62,
+          "value": 0.031232,
+          "reason": null,
+          "ci95": [
+            0.011209,
+            0.081006
+          ],
+          "definition": "ECE = Σ_b |Σconf_b − Σcorrect_b| / N；样本=gold 断言类结论，conf=所在运行 support_score，correct=gold_status==SUPPORT",
+          "ci_valid_resamples": 1000
+        }
+      },
+      "bootstrap": {
+        "method": "按运行聚类的百分位 bootstrap",
+        "n_resamples": 1000,
+        "seed": 0,
+        "clusters": 8
+      },
+      "confusion": {
+        "labels": [
+          "SUPPORT",
+          "REFUTE",
+          "UNKNOWN",
+          "CONFLICT",
+          "MISSING_RULE"
+        ],
+        "rows": "gold",
+        "cols": "pred",
+        "matrix": [
+          [
+            40,
+            0,
+            1,
+            0,
+            2
+          ],
+          [
+            1,
+            8,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            3,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            2
+          ]
+        ]
+      },
+      "calibration": {
+        "table": [
+          {
+            "bin": 0,
+            "range": [
+              0.0,
+              0.2
+            ],
+            "n_claims": 0,
+            "mean_support_score": null,
+            "gold_support_rate": null
+          },
+          {
+            "bin": 1,
+            "range": [
+              0.2,
+              0.4
+            ],
+            "n_claims": 8,
+            "mean_support_score": 0.2222,
+            "gold_support_rate": 0.25
+          },
+          {
+            "bin": 2,
+            "range": [
+              0.4,
+              0.6
+            ],
+            "n_claims": 12,
+            "mean_support_score": 0.5278,
+            "gold_support_rate": 0.5
+          },
+          {
+            "bin": 3,
+            "range": [
+              0.6,
+              0.8
+            ],
+            "n_claims": 23,
+            "mean_support_score": 0.722591,
+            "gold_support_rate": 0.73913
+          },
+          {
+            "bin": 4,
+            "range": [
+              0.8,
+              1.0
+            ],
+            "n_claims": 19,
+            "mean_support_score": 0.947368,
+            "gold_support_rate": 1.0
+          }
+        ],
+        "ece": {
+          "numerator": 1.9364,
+          "denominator": 62,
+          "value": 0.031232,
+          "reason": null,
+          "ci95": [
+            0.011209,
+            0.081006
+          ],
+          "definition": "ECE = Σ_b |Σconf_b − Σcorrect_b| / N；样本=gold 断言类结论，conf=所在运行 support_score，correct=gold_status==SUPPORT",
+          "ci_valid_resamples": 1000
+        },
+        "note": "样本小，仅描述性；support_score 不是正确概率。"
+      },
+      "run_level": {
+        "grade_vs_answer_has_error": {
+          "INSUFFICIENT": {
+            "true": 2,
+            "false": 5,
+            "na": 0
+          },
+          "QUALIFIED": {
+            "true": 0,
+            "false": 1,
+            "na": 0
+          }
+        },
+        "grade_vs_answer_honest_about_limits": {
+          "INSUFFICIENT": {
+            "true": 3,
+            "false": 4,
+            "na": 0
+          },
+          "QUALIFIED": {
+            "true": 1,
+            "false": 0,
+            "na": 0
+          }
+        }
+      },
+      "cost": {
+        "elapsed_seconds": {
+          "n": 8,
+          "total": 556.748,
+          "mean": 69.5935,
+          "median": 70.117,
+          "reason": null
+        },
+        "model_calls": {
+          "n": 8,
+          "total": 8.0,
+          "reason": null
+        }
+      },
+      "strata": {},
+      "strata_note": "run.source 中没有变体信息，未分层（全部视为自然运行）",
+      "per_claim": [
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "C1",
+          "align_method": "similarity",
+          "align_score": 0.8636,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "保养工单WO-28501已于13:45完成",
+          "pred_text": "二号冷水机组保养工单WO-28501已于13:45完成",
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "C2",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "技术员和主管均已签字确认",
+          "pred_text": "技术员和主管均已签字确认",
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "C3",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "设备锁定已解除",
+          "pred_text": "设备锁定已解除",
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "C4",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "油温42℃",
+          "pred_text": "油温42℃",
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.8571,
+          "gold_status": "MISSING_RULE",
+          "pred_status": null,
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "油温42℃正常",
+          "pred_text": null,
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "C6",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "冷媒压力680kPa",
+          "pred_text": "冷媒压力680kPa",
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "C7",
+          "align_method": "similarity",
+          "align_score": 0.5,
+          "gold_status": "MISSING_RULE",
+          "pred_status": "MISSING_RULE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "冷媒压力680kPa在正常范围",
+          "pred_text": "在正常范围",
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "C8",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "系统显示可以启动",
+          "pred_text": "系统显示可以启动",
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": "g9",
+          "pred_claim_id": "C9",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "MISSING_RULE",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": true,
+          "insufficient_as_err": false,
+          "answer_span": "可以开机",
+          "pred_text": "可以开机",
+          "run_support_score": 0.7778
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "C5",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "MISSING_RULE",
+          "gold_expression": null,
+          "pred_expression": "DEFINITE",
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "正常",
+          "run_support_score": null
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "C1",
+          "align_method": "similarity",
+          "align_score": 0.6081,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "当前系统压力为 21500 MPa",
+          "pred_text": "液压机 HP-03 当前系统压力为 21500 MPa",
+          "run_support_score": 0.2222
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "C2",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "已严重超出最大工作压力 25 MPa",
+          "pred_text": "已严重超出最大工作压力 25 MPa",
+          "run_support_score": 0.2222
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": null,
+          "align_method": null,
+          "align_score": 0.8148,
+          "gold_status": "SUPPORT",
+          "pred_status": null,
+          "gold_expression": "DEFINITE",
+          "pred_expression": null,
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": "最大工作压力 25 MPa",
+          "pred_text": null,
+          "run_support_score": 0.2222
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "C3",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "HEDGED",
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "超出约 86000 倍",
+          "pred_text": "超出约 86000 倍",
+          "run_support_score": 0.2222
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "C4",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "属于极度危险状态",
+          "pred_text": "属于极度危险状态！",
+          "run_support_score": 0.2222
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "C5",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "请立即停机检查！",
+          "pred_text": "请立即停机检查！",
+          "run_support_score": 0.2222
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "C6",
+          "align_method": "similarity",
+          "align_score": 0.9091,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "近2小时压力波动范围 20800～22100，趋势稳定",
+          "pred_text": "近2小时压力波动范围 20800～22100",
+          "run_support_score": 0.2222
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "C8",
+          "align_method": "similarity",
+          "align_score": 0.8,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "建议立即启动紧急停机程序并通知设备管理人员排查传感器或安全阀",
+          "pred_text": "建议立即启动紧急停机程序",
+          "run_support_score": 0.2222
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "C7",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "SUPPORT",
+          "gold_expression": null,
+          "pred_expression": "DEFINITE",
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "趋势稳定",
+          "run_support_score": null
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "C9",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": "DEFINITE",
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "并通知设备管理人员排查传感器或安全阀",
+          "run_support_score": null
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "C1",
+          "align_method": "similarity",
+          "align_score": 0.8966,
+          "gold_status": "UNKNOWN",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "经查询，库房中未找到 M8 钛合金螺栓",
+          "pred_text": "库房中未找到 M8 钛合金螺栓",
+          "run_support_score": 0.5
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "C2",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "UNKNOWN",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "当前 M8 螺栓库存以不锈钢（304/316）、碳钢和铝合金材质为主",
+          "pred_text": "当前 M8 螺栓库存以不锈钢（304/316）、碳钢和铝合金材质为主",
+          "run_support_score": 0.5
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "C3",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "合计 156 个品规",
+          "pred_text": "合计 156 个品规",
+          "run_support_score": 0.5
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "C4",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "UNKNOWN",
+          "pred_status": "MISSING_RULE",
+          "gold_expression": "HEDGED",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "如需采购 M8 钛合金螺栓，请告知具体规格和数量，我可以协助发起采购申请",
+          "pred_text": "如需采购 M8 钛合金螺栓，请告知具体规格和数量，我可以协助发起采购申请",
+          "run_support_score": 0.5
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "C5",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "钛合金紧固件存放于特种材料库B2区",
+          "pred_text": "钛合金紧固件存放于特种材料库B2区",
+          "run_support_score": 0.5
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-030-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "C6",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "HEDGED",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "也可联系库管员周芳确认",
+          "pred_text": "也可联系库管员周芳确认",
+          "run_support_score": 0.5
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "C1",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "M12×50不锈钢螺栓库存2400只",
+          "pred_text": "M12×50不锈钢螺栓库存2400只",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "C2",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "SCOPED_PARTIAL",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "已录入系统的预留800只（给WO-28508）",
+          "pred_text": "已录入系统的预留800只（给WO-28508）",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "C3",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "SCOPED_PARTIAL",
+          "pred_expression": "SCOPED_PARTIAL",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "按此计算可用1600只",
+          "pred_text": "按此计算可用1600只",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "C4",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "SCOPED_PARTIAL",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "明天WO-28510和WO-28511共需M12×50共(60×15+32×8)=1156只",
+          "pred_text": "明天WO-28510和WO-28511共需M12×50共(60×15+32×8)=1156只",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "C5",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "M12×80库存1800只",
+          "pred_text": "M12×80库存1800只",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "C6",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "SCOPED_PARTIAL",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "已录入预留500只",
+          "pred_text": "已录入预留500只",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "C7",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "SCOPED_PARTIAL",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "可用1300只",
+          "pred_text": "可用1300只",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "C8",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "SCOPED_PARTIAL",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "明天共需(45×15+24×8)=867只",
+          "pred_text": "明天共需(45×15+24×8)=867只",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g9",
+          "pred_claim_id": "C9",
+          "align_method": "similarity",
+          "align_score": 0.9667,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "HEDGED",
+          "pred_expression": "HEDGED",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "系统提示部分工单的领料预留尚未录入，实际可用量可能比计算值低",
+          "pred_text": "不过系统提示部分工单的领料预留尚未录入，实际可用量可能比计算值低",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "variant_id": null,
+          "gold_claim_id": "g10",
+          "pred_claim_id": "C10",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "HEDGED",
+          "pred_expression": "HEDGED",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "建议领料前与仓库确认实际可用数",
+          "pred_text": "建议领料前与仓库确认实际可用数",
+          "run_support_score": 0.9
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "C1",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "A线在15:13:00因供料中断触发停机保护（ALM-301）",
+          "pred_text": "A线在15:13:00因供料中断触发停机保护（ALM-301）。",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "C2",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "上游FAB-01在15:11:50因冲压机液压压力不足停机",
+          "pred_text": "上游FAB-01在15:11:50因冲压机液压压力不足停机",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "C3",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "比A线早70秒",
+          "pred_text": "比A线早70秒",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "C4",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "物料流监测将供料中断原因标记为上游线停机",
+          "pred_text": "物料流监测将供料中断原因标记为上游线停机",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "C5",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "FAB-01停机后约10秒，供料线于15:12:00确认无料",
+          "pred_text": "FAB-01停机后约10秒，供料线于15:12:00确认无料",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "C6",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "连续无料30秒后，A线于15:12:30触发ALM-301",
+          "pred_text": "连续无料30秒后，A线于15:12:30触发ALM-301",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "C7",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "报警持续30秒后，于15:13:00停机",
+          "pred_text": "报警持续30秒后，于15:13:00停机",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "C8",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "HEDGED",
+          "pred_expression": "HEDGED",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "现有事件关联与物料流记录支持A线此次停机由上游断料引起",
+          "pred_text": "现有事件关联与物料流记录支持A线此次停机由上游断料引起",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g9",
+          "pred_claim_id": "C9",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "上游停机由液压低压报警触发",
+          "pred_text": "上游停机由液压低压报警触发",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "variant_id": null,
+          "gold_claim_id": "g10",
+          "pred_claim_id": "C10",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "UNKNOWN",
+          "pred_status": "UNKNOWN",
+          "gold_expression": "DECLARED_UNKNOWN",
+          "pred_expression": "DECLARED_UNKNOWN",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "液压压力不足的具体原因仍需进一步排查",
+          "pred_text": "液压压力不足的具体原因仍需进一步排查",
+          "run_support_score": 1.0
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "C1",
+          "align_method": "similarity",
+          "align_score": 0.8,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "二号燃气表上次校准是5月15日，合格",
+          "pred_text": "上次校准是5月15日",
+          "run_support_score": 0.6667
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "C3",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "下次校准到期日是明天（11月15日）",
+          "pred_text": "下次校准到期日是明天（11月15日）",
+          "run_support_score": 0.6667
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "C4",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "目前还在校准有效期内",
+          "pred_text": "目前还在校准有效期内",
+          "run_support_score": 0.6667
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "C5",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "CONFLICT",
+          "pred_status": "CONFLICT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "本月读数日均47.6立方米",
+          "pred_text": "本月读数日均47.6立方米",
+          "run_support_score": 0.6667
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "C6",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "波动与生产排班吻合",
+          "pred_text": "波动与生产排班吻合",
+          "run_support_score": 0.6667
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "C7",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "UNKNOWN",
+          "pred_status": "MISSING_RULE",
+          "gold_expression": "HEDGED",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "从数据趋势看没有明显异常",
+          "pred_text": "从数据趋势看没有明显异常",
+          "run_support_score": 0.6667
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g7",
+          "pred_claim_id": "C8",
+          "align_method": "similarity",
+          "align_score": 0.9333,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "备用表正在拆检，没法做交叉比对",
+          "pred_text": "不过备用表正在拆检，没法做交叉比对",
+          "run_support_score": 0.6667
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": "g8",
+          "pred_claim_id": "C9",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "MISSING_RULE",
+          "gold_expression": "HEDGED",
+          "pred_expression": "HEDGED",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "如果对读数有疑虑，明天校准到期时可以做一次全面校验",
+          "pred_text": "如果对读数有疑虑，明天校准到期时可以做一次全面校验",
+          "run_support_score": 0.6667
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "C2",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "SUPPORT",
+          "gold_expression": null,
+          "pred_expression": "DEFINITE",
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "合格",
+          "run_support_score": null
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "C1",
+          "align_method": "similarity",
+          "align_score": 0.7,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "这批304不锈钢板（RCV-261114-008）的来料检验（IQC-261114-015）还在进行中",
+          "pred_text": "这批304不锈钢板（RCV-261114-008）",
+          "run_support_score": 0.7143
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "C3",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "材质证明已经核验通过",
+          "pred_text": "材质证明已经核验通过",
+          "run_support_score": 0.7143
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "C4",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "厚度和表面质量还在测试",
+          "pred_text": "厚度和表面质量还在测试",
+          "run_support_score": 0.7143
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "C5",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "HEDGED",
+          "pred_expression": "HEDGED",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "预计17:00前完成",
+          "pred_text": "预计17:00前完成",
+          "run_support_score": 0.7143
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "C6",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "MISSING_RULE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "完整的质检报告暂时出不了",
+          "pred_text": "完整的质检报告暂时出不了",
+          "run_support_score": 0.7143
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "C7",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "MISSING_RULE",
+          "pred_status": "MISSING_RULE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "等检测完成后可以发给你",
+          "pred_text": "等检测完成后可以发给你",
+          "run_support_score": 0.7143
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-019-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "C2",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "SUPPORT",
+          "gold_expression": null,
+          "pred_expression": "DEFINITE",
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "来料检验（IQC-261114-015）还在进行中",
+          "run_support_score": null
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g1",
+          "pred_claim_id": "C1",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "14:05:12 变频器 VFD-102 发生重启事件",
+          "pred_text": "14:05:12 变频器 VFD-102 发生重启事件",
+          "run_support_score": 0.5556
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g2",
+          "pred_claim_id": "C3",
+          "align_method": "similarity",
+          "align_score": 0.8235,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "导致压缩机转速波动，进而于 14:05:08 触发喘振报警 ALM-445",
+          "pred_text": "进而于 14:05:08 触发喘振报警 ALM-445",
+          "run_support_score": 0.5556
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g3",
+          "pred_claim_id": "C4",
+          "align_method": "similarity",
+          "align_score": 0.973,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "14:05:08 触发喘振报警 ALM-445",
+          "pred_text": "于 14:05:08 触发喘振报警 ALM-445",
+          "run_support_score": 0.5556
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g4",
+          "pred_claim_id": "C5",
+          "align_method": "similarity",
+          "align_score": 0.8,
+          "gold_status": "SUPPORT",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": false,
+          "severe": false,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "喘振保护动作后于 14:05:18 联锁跳车",
+          "pred_text": "喘振保护动作",
+          "run_support_score": 0.5556
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g5",
+          "pred_claim_id": "C7",
+          "align_method": "similarity",
+          "align_score": 1.0,
+          "gold_status": "REFUTE",
+          "pred_status": "REFUTE",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": false,
+          "insufficient_as_err": false,
+          "answer_span": "根本原因为变频器异常重启引起喘振",
+          "pred_text": "根本原因为变频器异常重启引起喘振",
+          "run_support_score": 0.5556
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": "g6",
+          "pred_claim_id": "C8",
+          "align_method": "similarity",
+          "align_score": 0.8,
+          "gold_status": "REFUTE",
+          "pred_status": "SUPPORT",
+          "gold_expression": "DEFINITE",
+          "pred_expression": "DEFINITE",
+          "is_high_risk": true,
+          "severe": true,
+          "false_support": true,
+          "insufficient_as_err": false,
+          "answer_span": "建议检查 VFD-102 重启原因，确认变频器控制回路稳定性后恢复运行",
+          "pred_text": "建议检查 VFD-102 重启原因",
+          "run_support_score": 0.5556
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "C2",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "UNKNOWN",
+          "gold_expression": null,
+          "pred_expression": "DEFINITE",
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "导致压缩机转速波动",
+          "run_support_score": null
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "C6",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "SUPPORT",
+          "gold_expression": null,
+          "pred_expression": "DEFINITE",
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "于 14:05:18 联锁跳车",
+          "run_support_score": null
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "variant_id": null,
+          "gold_claim_id": null,
+          "pred_claim_id": "C9",
+          "align_method": "extra_pred",
+          "align_score": null,
+          "gold_status": null,
+          "pred_status": "MISSING_RULE",
+          "gold_expression": null,
+          "pred_expression": "DEFINITE",
+          "is_high_risk": null,
+          "severe": null,
+          "false_support": null,
+          "insufficient_as_err": null,
+          "answer_span": null,
+          "pred_text": "确认变频器控制回路稳定性后恢复运行",
+          "run_support_score": null
+        }
+      ],
+      "per_run": [
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-002-r1",
+          "case_id": "IND-002",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 9,
+          "n_pred_claims": 9,
+          "n_aligned": 8,
+          "n_missed_gold": 1,
+          "n_extra_pred": 1,
+          "n_gold_gaps": 2,
+          "n_pred_gaps": 2,
+          "gap_tp": 1,
+          "param_total": 9,
+          "param_value_hit": 1,
+          "param_key_hit": 1,
+          "gold_severe": false,
+          "high_risk_alert": true,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.7778,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": false,
+          "elapsed_seconds": 56.047,
+          "model_calls": 1
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-024-r1",
+          "case_id": "IND-024",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 8,
+          "n_pred_claims": 9,
+          "n_aligned": 7,
+          "n_missed_gold": 1,
+          "n_extra_pred": 2,
+          "n_gold_gaps": 0,
+          "n_pred_gaps": 1,
+          "gap_tp": 0,
+          "param_total": 0,
+          "param_value_hit": 0,
+          "param_key_hit": 0,
+          "gold_severe": true,
+          "high_risk_alert": true,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.2222,
+          "support_score_source": "support_score",
+          "answer_has_error": true,
+          "answer_honest_about_limits": false,
+          "elapsed_seconds": 70.781,
+          "model_calls": 1
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-030-r1",
+          "case_id": "IND-030",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 6,
+          "n_pred_claims": 6,
+          "n_aligned": 6,
+          "n_missed_gold": 0,
+          "n_extra_pred": 0,
+          "n_gold_gaps": 2,
+          "n_pred_gaps": 3,
+          "gap_tp": 2,
+          "param_total": 9,
+          "param_value_hit": 5,
+          "param_key_hit": 6,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.5,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": false,
+          "elapsed_seconds": 29.156,
+          "model_calls": 1
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-005-r1",
+          "case_id": "IND-005",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 10,
+          "n_pred_claims": 10,
+          "n_aligned": 10,
+          "n_missed_gold": 0,
+          "n_extra_pred": 0,
+          "n_gold_gaps": 1,
+          "n_pred_gaps": 3,
+          "gap_tp": 0,
+          "param_total": 4,
+          "param_value_hit": 2,
+          "param_key_hit": 2,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.9,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": true,
+          "elapsed_seconds": 69.453,
+          "model_calls": 1
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-010-r1",
+          "case_id": "IND-010",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 10,
+          "n_pred_claims": 10,
+          "n_aligned": 10,
+          "n_missed_gold": 0,
+          "n_extra_pred": 0,
+          "n_gold_gaps": 1,
+          "n_pred_gaps": 1,
+          "gap_tp": 1,
+          "param_total": 6,
+          "param_value_hit": 5,
+          "param_key_hit": 5,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "QUALIFIED",
+          "support_score": 1.0,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": true,
+          "elapsed_seconds": 72.484,
+          "model_calls": 1
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-015-r1",
+          "case_id": "IND-015",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 8,
+          "n_pred_claims": 9,
+          "n_aligned": 8,
+          "n_missed_gold": 0,
+          "n_extra_pred": 1,
+          "n_gold_gaps": 2,
+          "n_pred_gaps": 3,
+          "gap_tp": 1,
+          "param_total": 10,
+          "param_value_hit": 5,
+          "param_key_hit": 5,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.6667,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": true,
+          "elapsed_seconds": 130.156,
+          "model_calls": 1
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-019-r1",
+          "case_id": "IND-019",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 6,
+          "n_pred_claims": 7,
+          "n_aligned": 6,
+          "n_missed_gold": 0,
+          "n_extra_pred": 1,
+          "n_gold_gaps": 2,
+          "n_pred_gaps": 2,
+          "gap_tp": 1,
+          "param_total": 8,
+          "param_value_hit": 3,
+          "param_key_hit": 3,
+          "gold_severe": false,
+          "high_risk_alert": false,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.7143,
+          "support_score_source": "support_score",
+          "answer_has_error": false,
+          "answer_honest_about_limits": true,
+          "elapsed_seconds": 53.593,
+          "model_calls": 1
+        },
+        {
+          "method": "llm_only+v2",
+          "run_id": "IND-027-r1",
+          "case_id": "IND-027",
+          "variant_id": null,
+          "variant_kind": null,
+          "stratum": "natural",
+          "pred_available": true,
+          "gold_review_status": "DRAFT",
+          "n_gold_claims": 6,
+          "n_pred_claims": 9,
+          "n_aligned": 6,
+          "n_missed_gold": 0,
+          "n_extra_pred": 3,
+          "n_gold_gaps": 0,
+          "n_pred_gaps": 2,
+          "gap_tp": 0,
+          "param_total": 0,
+          "param_value_hit": 0,
+          "param_key_hit": 0,
+          "gold_severe": true,
+          "high_risk_alert": true,
+          "alert_source": "high_risk_alert",
+          "grade": "INSUFFICIENT",
+          "support_score": 0.5556,
+          "support_score_source": "support_score",
+          "answer_has_error": true,
+          "answer_honest_about_limits": false,
+          "elapsed_seconds": 75.078,
+          "model_calls": 1
+        }
+      ],
+      "alignment": {
+        "IND-002-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "C1",
+              "score": 0.8636,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "C2",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "C3",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "C4",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "C6",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "C7",
+              "score": 0.5,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "C8",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g9",
+              "pred_claim_id": "C9",
+              "score": 1.0,
+              "method": "similarity"
+            }
+          ],
+          "missed_gold": [
+            "g5"
+          ],
+          "extra_pred": [
+            "C5"
+          ],
+          "warnings": [
+            "g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+            "g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+            "g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+            "g5: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+            "g7: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+            "g8: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+            "g9: pred_claim_id=CLM-007 不在预测结论中，回落到相似度对齐"
+          ],
+          "best_rejected": {
+            "g5": {
+              "score": 0.8571,
+              "pred_claim_id": "C4",
+              "reason": "similarity"
+            }
+          },
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": null
+            },
+            {
+              "gold_gap_id": "gap2",
+              "pred_gap_id": "GAP2"
+            }
+          ]
+        },
+        "IND-024-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "C1",
+              "score": 0.6081,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "C2",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "C3",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "C4",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "C5",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "C6",
+              "score": 0.9091,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "C8",
+              "score": 0.8,
+              "method": "similarity"
+            }
+          ],
+          "missed_gold": [
+            "g3"
+          ],
+          "extra_pred": [
+            "C7",
+            "C9"
+          ],
+          "warnings": [
+            "g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+            "g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+            "g4: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+            "g5: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+            "g7: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐"
+          ],
+          "best_rejected": {
+            "g3": {
+              "score": 0.8148,
+              "pred_claim_id": "C2",
+              "reason": "similarity"
+            }
+          },
+          "gap_pairs": []
+        },
+        "IND-030-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "C1",
+              "score": 0.8966,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "C2",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "C3",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "C4",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "C5",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "C6",
+              "score": 1.0,
+              "method": "similarity"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [],
+          "warnings": [
+            "g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+            "g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+            "g3: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+            "g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+            "g6: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐"
+          ],
+          "best_rejected": {},
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": "GAP1"
+            },
+            {
+              "gold_gap_id": "gap2",
+              "pred_gap_id": "GAP2"
+            }
+          ]
+        },
+        "IND-005-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "C1",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "C2",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "C3",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "C4",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "C5",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "C6",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "C7",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "C8",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g9",
+              "pred_claim_id": "C9",
+              "score": 0.9667,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g10",
+              "pred_claim_id": "C10",
+              "score": 1.0,
+              "method": "similarity"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [],
+          "warnings": [
+            "g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+            "g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+            "g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+            "g4: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+            "g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+            "g6: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+            "g7: pred_claim_id=CLM-007 不在预测结论中，回落到相似度对齐",
+            "g8: pred_claim_id=CLM-008 不在预测结论中，回落到相似度对齐",
+            "g9: pred_claim_id=CLM-009 不在预测结论中，回落到相似度对齐"
+          ],
+          "best_rejected": {},
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-010-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "C1",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "C2",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "C3",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "C4",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "C5",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "C6",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "C7",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "C8",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g9",
+              "pred_claim_id": "C9",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g10",
+              "pred_claim_id": "C10",
+              "score": 1.0,
+              "method": "similarity"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [],
+          "warnings": [
+            "g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+            "g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+            "g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+            "g4: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+            "g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+            "g6: pred_claim_id=CLM-007 不在预测结论中，回落到相似度对齐",
+            "g7: pred_claim_id=CLM-009 不在预测结论中，回落到相似度对齐",
+            "g8: pred_claim_id=CLM-010 不在预测结论中，回落到相似度对齐",
+            "g9: pred_claim_id=CLM-011 不在预测结论中，回落到相似度对齐",
+            "g10: pred_claim_id=CLM-012 不在预测结论中，回落到相似度对齐"
+          ],
+          "best_rejected": {},
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": "GAP1"
+            }
+          ]
+        },
+        "IND-015-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "C1",
+              "score": 0.8,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "C3",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "C4",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "C5",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "C6",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "C7",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g7",
+              "pred_claim_id": "C8",
+              "score": 0.9333,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g8",
+              "pred_claim_id": "C9",
+              "score": 1.0,
+              "method": "similarity"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [
+            "C2"
+          ],
+          "warnings": [
+            "g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+            "g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+            "g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+            "g4: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+            "g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+            "g6: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+            "g7: pred_claim_id=CLM-008 不在预测结论中，回落到相似度对齐",
+            "g8: pred_claim_id=CLM-010 不在预测结论中，回落到相似度对齐"
+          ],
+          "best_rejected": {},
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": "GAP1"
+            },
+            {
+              "gold_gap_id": "gap2",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-019-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "C1",
+              "score": 0.7,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "C3",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "C4",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "C5",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "C6",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "C7",
+              "score": 1.0,
+              "method": "similarity"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [
+            "C2"
+          ],
+          "warnings": [
+            "g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+            "g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+            "g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+            "g4: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+            "g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+            "g6: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐"
+          ],
+          "best_rejected": {},
+          "gap_pairs": [
+            {
+              "gold_gap_id": "gap1",
+              "pred_gap_id": "GAP2"
+            },
+            {
+              "gold_gap_id": "gap2",
+              "pred_gap_id": null
+            }
+          ]
+        },
+        "IND-027-r1": {
+          "pairs": [
+            {
+              "gold_claim_id": "g1",
+              "pred_claim_id": "C1",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g2",
+              "pred_claim_id": "C3",
+              "score": 0.8235,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g3",
+              "pred_claim_id": "C4",
+              "score": 0.973,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g4",
+              "pred_claim_id": "C5",
+              "score": 0.8,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g5",
+              "pred_claim_id": "C7",
+              "score": 1.0,
+              "method": "similarity"
+            },
+            {
+              "gold_claim_id": "g6",
+              "pred_claim_id": "C8",
+              "score": 0.8,
+              "method": "similarity"
+            }
+          ],
+          "missed_gold": [],
+          "extra_pred": [
+            "C2",
+            "C6",
+            "C9"
+          ],
+          "warnings": [
+            "g1: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+            "g2: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+            "g3: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+            "g4: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+            "g5: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+            "g6: pred_claim_id=CLM-008 不在预测结论中，回落到相似度对齐"
+          ],
+          "best_rejected": {},
+          "gap_pairs": []
+        }
+      },
+      "warnings": [
+        "IND-002-r1: g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+        "IND-002-r1: g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+        "IND-002-r1: g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+        "IND-002-r1: g5: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+        "IND-002-r1: g7: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+        "IND-002-r1: g8: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+        "IND-002-r1: g9: pred_claim_id=CLM-007 不在预测结论中，回落到相似度对齐",
+        "IND-024-r1: g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+        "IND-024-r1: g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+        "IND-024-r1: g4: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+        "IND-024-r1: g5: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+        "IND-024-r1: g7: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+        "IND-030-r1: g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+        "IND-030-r1: g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+        "IND-030-r1: g3: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+        "IND-030-r1: g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+        "IND-030-r1: g6: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g4: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g6: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g7: pred_claim_id=CLM-007 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g8: pred_claim_id=CLM-008 不在预测结论中，回落到相似度对齐",
+        "IND-005-r1: g9: pred_claim_id=CLM-009 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g4: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g6: pred_claim_id=CLM-007 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g7: pred_claim_id=CLM-009 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g8: pred_claim_id=CLM-010 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g9: pred_claim_id=CLM-011 不在预测结论中，回落到相似度对齐",
+        "IND-010-r1: g10: pred_claim_id=CLM-012 不在预测结论中，回落到相似度对齐",
+        "IND-015-r1: g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+        "IND-015-r1: g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+        "IND-015-r1: g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+        "IND-015-r1: g4: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+        "IND-015-r1: g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+        "IND-015-r1: g6: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+        "IND-015-r1: g7: pred_claim_id=CLM-008 不在预测结论中，回落到相似度对齐",
+        "IND-015-r1: g8: pred_claim_id=CLM-010 不在预测结论中，回落到相似度对齐",
+        "IND-019-r1: g1: pred_claim_id=CLM-001 不在预测结论中，回落到相似度对齐",
+        "IND-019-r1: g2: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+        "IND-019-r1: g3: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+        "IND-019-r1: g4: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+        "IND-019-r1: g5: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+        "IND-019-r1: g6: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+        "IND-027-r1: g1: pred_claim_id=CLM-002 不在预测结论中，回落到相似度对齐",
+        "IND-027-r1: g2: pred_claim_id=CLM-003 不在预测结论中，回落到相似度对齐",
+        "IND-027-r1: g3: pred_claim_id=CLM-004 不在预测结论中，回落到相似度对齐",
+        "IND-027-r1: g4: pred_claim_id=CLM-005 不在预测结论中，回落到相似度对齐",
+        "IND-027-r1: g5: pred_claim_id=CLM-006 不在预测结论中，回落到相似度对齐",
+        "IND-027-r1: g6: pred_claim_id=CLM-008 不在预测结论中，回落到相似度对齐"
+      ]
+    }
+  ]
+}

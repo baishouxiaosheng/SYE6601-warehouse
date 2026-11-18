@@ -1,0 +1,221 @@
+{
+  "case_id": "IND-023",
+  "run_id": "IND-023-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1445,
+    "completion_tokens": 9222,
+    "total_tokens": 10667
+  },
+  "latency_seconds": 50.797,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-023-r1",
+      "case_id": "IND-023",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "GD-05 是否已标定/当前标定是否有效"
+          },
+          {
+            "id": "G2",
+            "text": "今天有限空间作业能否使用 GD-05"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "GD-05 气体检测仪最近一次标定日期为 2026年5月10日",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.last_calibration.date"
+              }
+            ],
+            "reason": "last_calibration.date 为 2026-05-10。"
+          },
+          {
+            "id": "C2",
+            "text": "标定结果合格",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.last_calibration.result"
+              }
+            ],
+            "reason": "last_calibration.result 为 合格。"
+          },
+          {
+            "id": "C3",
+            "text": "标定周期6个月",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.calibration_interval_months"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "calibration_interval_months=6，知识库亦载明标定周期为6个月。"
+          },
+          {
+            "id": "C4",
+            "text": "目前标定有效",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "visible_context",
+                "json_path": "visible_context.received_at"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.next_due"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "当前接收时间为 2026-11-14，next_due 为 2026-11-10，已超期；知识库规定超期未标定视为不合格。"
+          },
+          {
+            "id": "C5",
+            "text": "可以用于今天的有限空间作业",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "visible_context",
+                "json_path": "visible_context.received_at"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.next_due"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "当前日期 2026-11-14 已晚于 next_due 2026-11-10，且知识库规定超期未标定严禁用于受限空间作业气体检测。"
+          },
+          {
+            "id": "C6",
+            "text": "该仪器型号为 MultiRAE Lite",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.model"
+              }
+            ],
+            "reason": "asset.registry.lookup 返回 model=MultiRAE Lite。"
+          },
+          {
+            "id": "C7",
+            "text": "支持 O2/LEL/H2S/CO 四合一检测",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.gases"
+              }
+            ],
+            "reason": "gases 列表包含 O2、LEL、H2S、CO 四项，可复算为四合一检测。"
+          },
+          {
+            "id": "C8",
+            "text": "建议关注下次标定到期时间",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.next_due"
+              }
+            ],
+            "reason": "存在 next_due 字段，可作为关注标定到期时间的依据。"
+          },
+          {
+            "id": "C9",
+            "text": "提前安排送检",
+            "status": "REFUTE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "visible_context",
+                "json_path": "visible_context.received_at"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.next_due"
+              }
+            ],
+            "reason": "next_due 为 2026-11-10，当前接收时间为 2026-11-14，已过期，不存在“提前”到期安排，应已超期处理。"
+          }
+        ],
+        "gaps": [],
+        "actions": []
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 50.797
+}
