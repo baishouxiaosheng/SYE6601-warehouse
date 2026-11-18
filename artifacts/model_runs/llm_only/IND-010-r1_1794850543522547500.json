@@ -1,0 +1,356 @@
+{
+  "case_id": "IND-010",
+  "run_id": "IND-010-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 2327,
+    "completion_tokens": 8769,
+    "total_tokens": 11096
+  },
+  "latency_seconds": 72.484,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-010-r1",
+      "case_id": "IND-010",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "判断A线停机是否由上游供料中断导致"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "A线在15:13:00因供料中断触发停机保护（ALM-301）。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[0].code"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[0].message"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[1].event"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[1].trigger_alarm_code"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.line_state_at_end"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[5].event"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[5].detail"
+              }
+            ],
+            "reason": "c2显示15:12:30发生ALM-301“供料传感器30秒未检测到物料”，15:13:00发生LINE_STOP且trigger_alarm_code为ALM-301，line_state_at_end为STOPPED；c4的DOWNSTREAM_STOP也记录15:13:00 ASM-A停机。"
+          },
+          {
+            "id": "C2",
+            "text": "上游FAB-01在15:11:50因冲压机液压压力不足停机",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events[0].code"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events[0].message"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events[1].event"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events[1].trigger_alarm_code"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.line_state_at_end"
+              }
+            ],
+            "reason": "c3显示FAB-01在15:11:45发生ALM-108“冲压机液压压力不足”，15:11:50发生LINE_STOP且trigger_alarm_code为ALM-108，line_state_at_end为STOPPED。"
+          },
+          {
+            "id": "C3",
+            "text": "比A线早70秒",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[1].at"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events[1].at"
+              }
+            ],
+            "reason": "A线停机时间为15:13:00，FAB-01停机时间为15:11:50，时间差为70秒。"
+          },
+          {
+            "id": "C4",
+            "text": "物料流监测将供料中断原因标记为上游线停机",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.interruption_cause"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.upstream_line"
+              }
+            ],
+            "reason": "c4中interruption_cause为upstream_line_stopped，upstream_line为FAB-01。"
+          },
+          {
+            "id": "C5",
+            "text": "FAB-01停机后约10秒，供料线于15:12:00确认无料",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[2].event"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[2].at"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.supply_interruption_detected_at"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.estimated_transport_delay_seconds"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[3].event"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[3].at"
+              }
+            ],
+            "reason": "c4显示FAB-01在15:11:50停机，estimated_transport_delay_seconds为10，supply_interruption_detected_at为15:12:00，且15:12:00发生SUPPLY_INTERRUPT_CONFIRMED。"
+          },
+          {
+            "id": "C6",
+            "text": "连续无料30秒后，A线于15:12:30触发ALM-301",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[3].at"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[4].event"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[4].detail"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[0].at"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[0].code"
+              }
+            ],
+            "reason": "c4显示15:12:00确认无料，15:12:30发生DOWNSTREAM_ALARM且detail为“ASM-A供料传感器连续30秒未检测到物料，触发ALM-301”；c2也记录15:12:30 ALM-301。"
+          },
+          {
+            "id": "C7",
+            "text": "报警持续30秒后，于15:13:00停机",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[0].at"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events[1].at"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events[5].detail"
+              }
+            ],
+            "reason": "c2显示ALM-301发生于15:12:30，LINE_STOP发生于15:13:00；c4的DOWNSTREAM_STOP detail也说明“ASM-A供料报警持续30秒后停机”。"
+          },
+          {
+            "id": "C8",
+            "text": "现有事件关联与物料流记录支持A线此次停机由上游断料引起",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.flow_status"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.interruption_cause"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.key_events"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.events"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events"
+              }
+            ],
+            "reason": "c4显示FAB-01到ASM-A的flow_status为INTERRUPTED，interruption_cause为upstream_line_stopped，且key_events按时间顺序连接FAB-01停机、供料中断、ASM-A报警和停机；c2/c3提供对应线事件。"
+          },
+          {
+            "id": "C9",
+            "text": "上游停机由液压低压报警触发",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events[0].code"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events[0].message"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.events[1].trigger_alarm_code"
+              }
+            ],
+            "reason": "c3显示FAB-01的LINE_STOP trigger_alarm_code为ALM-108，ALM-108消息为“冲压机液压压力不足”。"
+          },
+          {
+            "id": "C10",
+            "text": "液压压力不足的具体原因仍需进一步排查",
+            "status": "UNKNOWN",
+            "expression": "DECLARED_UNKNOWN",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志仅给出FAB-01的ALM-108“冲压机液压压力不足”报警和停机触发关系，没有提供液压压力数值、液压系统故障码或其他可解释具体根因的字段。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C10"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少FAB-01液压压力不足的具体原因证据，例如液压压力读数、液压系统故障码、泵/阀状态或诊断事件。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C10"
+            ],
+            "tool": "plant_monitor.get_line_events",
+            "arguments": {
+              "controller_id": "PLC-FAB-01",
+              "from": "2026-11-14T15:00:00+08:00",
+              "to": "2026-11-14T15:25:00+08:00"
+            },
+            "pending_arguments": {
+              "alarm_code": "ALM-108",
+              "include_hydraulic_diagnostics": true
+            },
+            "success_criterion": "返回ALM-108关联的液压压力数值、液压系统故障码或根因说明，足以解释液压压力不足的具体原因。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 72.484
+}

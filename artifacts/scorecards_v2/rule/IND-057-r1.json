@@ -1,0 +1,422 @@
+{
+  "scorecard_version": "07a-scorecard-v2",
+  "rule_version": "2.1.0",
+  "policy_version": "2.1.0",
+  "policy_status": "PROVISIONAL",
+  "policy_sha256": "f6a12bb2d19e5a3951f4048022ac07f146bd5aef15074754e8b283b2f65db86f",
+  "run_id": "IND-057-r1",
+  "case_id": "IND-057",
+  "upstream_versions": {
+    "graph_version": "IND-057-evidence-graph-v1",
+    "plan_version": "IND-057-supplementary-plan-v1",
+    "answer_version": null,
+    "answer_sha256": "812ef69a174169ce",
+    "proposal_status": "proposed"
+  },
+  "source": {
+    "method": "rule",
+    "engine": "01A-egraph",
+    "adapter": "egraph_v1",
+    "adapter_version": "1.0.0",
+    "log_record_available": true,
+    "files": {
+      "graph": "IND-057_graph.json",
+      "plan": "IND-057_plan.json"
+    }
+  },
+  "question": "ROB-03机器人手臂的维护历史是什么？需要做关节检查吗？",
+  "grade": "QUALIFIED",
+  "grade_label_zh": "附保留说明",
+  "high_risk_alert": false,
+  "high_risk_alert_text": "",
+  "support_score": 0.75,
+  "coverage_score": 0.5,
+  "uncertainty_score": 0.75,
+  "overall": 0.6875,
+  "overall_display": true,
+  "blockers": [],
+  "qualifications": [
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-003",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q1_UNADDRESSED_GOAL",
+      "claim_id": null,
+      "goal_id": "GOAL-002",
+      "reason_zh": "用户目标未被任何结论回应，也未声明无法确定",
+      "detail": "需要做关节检查吗"
+    },
+    {
+      "code": "Q3_OPEN_GAP",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在未被阻断项覆盖的开放缺口",
+      "detail": "GAP-001 MISSING_EVIDENCE MEDIUM：数据源状态为 NO_DATA，依赖该源的结论缺证",
+      "gap_id": "GAP-001"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "claims_without_checks=1"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "goals_without_claims=1"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "orphan_evidence=2"
+    }
+  ],
+  "severe_issues": [],
+  "dimensions": {
+    "support": {
+      "numerator": 3,
+      "denominator": 4,
+      "value": 0.75,
+      "breakdown": {
+        "SUPPORT": 3,
+        "REFUTE": 0,
+        "UNKNOWN": 1,
+        "CONFLICT": 0,
+        "MISSING_RULE": 0,
+        "excluded_declared_unknown": 0
+      },
+      "rule": "分母=措辞为 DEFINITE/HEDGED/SCOPED_PARTIAL 的结论数；分子=其中上游状态为 SUPPORT 的条数。UNKNOWN 不给半分。DECLARED_UNKNOWN 不计入。",
+      "weight": 0.5
+    },
+    "coverage": {
+      "numerator": 1,
+      "denominator": 2,
+      "value": 0.5,
+      "breakdown": {
+        "ADDRESSED_SUPPORTED": 1,
+        "ADDRESSED_DECLARED_UNKNOWN": 0,
+        "ADDRESSED_UNSUPPORTED": 0,
+        "NOT_ADDRESSED": 1,
+        "lexical_fallback_goals": 0
+      },
+      "rule": "分母=用户目标数；分子=有关联结论（DEFINITE/HEDGED/SCOPED_PARTIAL）或明确声明无法确定（DECLARED_UNKNOWN）的目标数。关联优先用上游 related_goals/covers_goals/边，退化为词面匹配时标 lexical_fallback。",
+      "weight": 0.25
+    },
+    "uncertainty": {
+      "numerator": 3.0,
+      "denominator": 4,
+      "value": 0.75,
+      "breakdown": {
+        "judgements": {
+          "APPROPRIATE": 3,
+          "OVERCLAIM": 1
+        },
+        "cells": {
+          "DEFINITE×SUPPORT": 3,
+          "DEFINITE×UNKNOWN": 1
+        },
+        "unchecked_default_unknown": 1,
+        "checked_only": {
+          "numerator": 3.0,
+          "denominator": 3,
+          "value": 1.0
+        }
+      },
+      "rule": "对每条结论按 policy.expression_matrix 的 (措辞×状态) 查表得分，分母=全部结论。如实声明无法确定（DECLARED_UNKNOWN×UNKNOWN/MISSING_RULE/CONFLICT）得满分。breakdown.checked_only 仅供参考：排除了“未被任何 check 命中而默认 UNKNOWN”的结论。",
+      "weight": 0.25
+    }
+  },
+  "review_sequence": [
+    "CLM-003"
+  ],
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "ROB-03虽然没有直接维护记录",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-001",
+          "kind": "field_restatement",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-003",
+          "run_id": "IND-057-r1",
+          "event_id": "c3",
+          "json_path": "trace[c3].result.asset_id",
+          "pointer": "/trace/4/result/asset_id",
+          "excerpt": "字段 asset_id=ROB-03 与结论复述的 ROB-03 逐字一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "linkage_method": "upstream",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": true,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "但参考同型号的ROB-01",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-002",
+          "kind": "field_restatement",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-004",
+          "run_id": "IND-057-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.asset_id",
+          "pointer": "/trace/5/result/asset_id",
+          "excerpt": "字段 asset_id=ROB-01 与结论复述的 ROB-01 逐字一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "该型号机器人在15000运行小时时进行了关节轴承更换",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "参照ROB-01的维护周期执行",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-003",
+          "kind": "field_restatement",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-004",
+          "run_id": "IND-057-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.asset_id",
+          "pointer": "/trace/5/result/asset_id",
+          "excerpt": "字段 asset_id=ROB-01 与结论复述的 ROB-01 逐字一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    }
+  ],
+  "goals": [
+    {
+      "goal_id": "GOAL-001",
+      "text": "ROB-03机器人手臂的维护历史是什么",
+      "question_type": "unknown",
+      "coverage_state": "ADDRESSED_SUPPORTED",
+      "coverage_state_zh": "已回应且有支持",
+      "linked_claims": [
+        "CLM-001"
+      ],
+      "linkage_method": "upstream",
+      "upstream_answered": true
+    },
+    {
+      "goal_id": "GOAL-002",
+      "text": "需要做关节检查吗",
+      "question_type": "status_query",
+      "coverage_state": "NOT_ADDRESSED",
+      "coverage_state_zh": "未回应",
+      "linked_claims": [],
+      "linkage_method": "none",
+      "upstream_answered": false
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "GAP-001",
+      "gap_type": "MISSING_EVIDENCE",
+      "criticality": "MEDIUM",
+      "description": "数据源状态为 NO_DATA，依赖该源的结论缺证",
+      "affected_claims": [],
+      "affected_claim_texts": [],
+      "cited_by_blocker": false
+    }
+  ],
+  "build_risks": {
+    "unmapped_sentences": {
+      "count": 0,
+      "items": []
+    },
+    "goals_without_claims": [
+      "GOAL-002"
+    ],
+    "goals_lexical_fallback": [],
+    "lexical_fallback_links": 0,
+    "orphan_evidence": [
+      "MAT-001",
+      "MAT-002"
+    ],
+    "claims_without_checks": [
+      "CLM-003"
+    ],
+    "unchecked_default_unknown": [
+      "CLM-003"
+    ],
+    "review_status": {
+      "proposed_nodes": 7,
+      "unresolved_nodes": 0,
+      "proposed_edges": 0,
+      "unresolved_edges": 0,
+      "proposed_claims": 4
+    },
+    "gap_missing_condition_not_node": [],
+    "dangling_action_gap_refs": [],
+    "recommendations_unscored": [
+      {
+        "id": "OBL-004",
+        "text": "建议ROB-03也尽快安排关节检查"
+      }
+    ],
+    "b_review_unmatched": [],
+    "scope_statement": "本成绩单只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。"
+  },
+  "supplement": {
+    "plan_action_count": 1,
+    "executable": 0,
+    "needs_confirmation": 1,
+    "manual": 0,
+    "actions": [
+      {
+        "action_id": "ACT-001",
+        "action_type": "requery",
+        "tool": null,
+        "executability": "needs_confirmation",
+        "priority": 2,
+        "gap_ids": [
+          "GAP-001"
+        ],
+        "target_claims": [],
+        "known_arguments": {},
+        "pending_arguments": {
+          "查询条件": "数据源状态为 NO_DATA，依赖该源的结论缺证"
+        },
+        "success_criterion": "新返回字段能覆盖缺口所涉的对象/时段，且可定位到具体字段路径后复算出结论"
+      }
+    ]
+  },
+  "scope_note": "本成绩单只评价上游（01A 建图 / 02B 审核）已建模的结论、证据与缺口；结论状态由上游给出，07A 不重新判断。未被抽取的结论、未被发现的规则与日志外事实不在评价范围内。",
+  "score_semantics": "本成绩单的分数是“基于现有日志的证据审核结果”，不是回答正确的概率；未经独立标注数据校准前不得解读为正确率。等级只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。",
+  "notes": [
+    "1 条推荐类结论（OBL）上游未给出前提关联，未计入评分，只在建链风险中披露。"
+  ],
+  "generated_by": {
+    "package": "confidence_07a",
+    "package_version": "2.1.0",
+    "scorecard_version": "07a-scorecard-v2",
+    "adapter": "egraph_v1",
+    "model_called": false
+  }
+}

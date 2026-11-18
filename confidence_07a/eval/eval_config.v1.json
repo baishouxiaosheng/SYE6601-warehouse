@@ -1,0 +1,33 @@
+{
+  "config_version": "07a-eval-config-v1",
+  "status": "PROVISIONAL",
+  "alignment": {
+    "threshold": 0.5,
+    "contain_floor": 0.8,
+    "min_contain_len": 6,
+    "numeric_must_overlap": true
+  },
+  "gaps": {
+    "claim_match": "overlap",
+    "compatible_groups": [
+      [
+        "MISSING_EVIDENCE",
+        "MISSING_DEPENDENCY"
+      ],
+      [
+        "INCOMPLETE_RESULT",
+        "LIMITED_SCOPE"
+      ]
+    ]
+  },
+  "params": {
+    "match_value_anywhere": true
+  },
+  "calibration": {
+    "n_bins": 5
+  },
+  "bootstrap": {
+    "n_resamples": 1000,
+    "ci": 0.95
+  }
+}

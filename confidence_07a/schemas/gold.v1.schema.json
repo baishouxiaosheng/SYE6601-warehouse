@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "confidence_07a/gold.v1.schema.json",
+  "title": "07A gold 标注 v1（仅依据日志 JSON 独立标注，spec §5.1）",
+  "description": "顶层为文档对象 {schema, gold_version, runs[]}；runs 每项为一个运行的标注。允许额外字段（以 _ 开头的辅助字段如 _answer_text 不参与评测）。",
+  "type": "object",
+  "required": ["runs"],
+  "properties": {
+    "schema": {"const": "gold.v1"},
+    "gold_version": {"type": "string"},
+    "created_at": {"type": ["string", "null"]},
+    "notes": {"type": ["string", "array", "null"]},
+    "runs": {"type": "array", "items": {"$ref": "#/definitions/run"}}
+  },
+  "definitions": {
+    "status": {"enum": ["SUPPORT", "REFUTE", "UNKNOWN", "CONFLICT", "MISSING_RULE"]},
+    "expression": {"enum": ["DEFINITE", "HEDGED", "DECLARED_UNKNOWN", "SCOPED_PARTIAL"]},
+    "gap_type": {"enum": ["MISSING_EVIDENCE", "MISSING_RULE", "MISSING_DEPENDENCY", "INCOMPLETE_RESULT", "CONFLICT", "LIMITED_SCOPE"]},
+    "locator": {
+      "type": "object",
+      "required": ["event_id"],
+      "properties": {
+        "event_id": {"type": "string"},
+        "json_path": {"type": ["string", "null"]}
+      }
+    },
+    "goal": {
+      "type": "object",
+      "required": ["gold_goal_id", "text"],
+      "properties": {
+        "gold_goal_id": {"type": "string"},
+        "text": {"type": "string"}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "required": ["gold_claim_id", "answer_span", "expression", "gold_status", "is_high_risk", "severe"],
+      "properties": {
+        "gold_claim_id": {"type": "string"},
+        "pred_claim_id": {"type": ["string", "null"], "description": "可选：显式映射到上游 claim_id"},
+        "answer_span": {"type": "string"},
+        "expression": {"$ref": "#/definitions/expression"},
+        "gold_status": {"$ref": "#/definitions/status"},
+        "is_high_risk": {"type": "boolean"},
+        "severe": {"type": "boolean"},
+        "goal_ids": {"type": "array", "items": {"type": "string"}},
+        "evidence_locators": {"type": "array", "items": {"$ref": "#/definitions/locator"}},
+        "rationale": {"type": ["string", "null"]}
+      }
+    },
+    "required_params": {
+      "type": "object",
+      "properties": {
+        "tool": {"type": ["string", "null"]},
+        "args": {"type": "object"},
+        "success_field": {"type": ["string", "object", "null"]}
+      }
+    },
+    "gap": {
+      "type": "object",
+      "required": ["gold_gap_id", "affects_claims", "gap_type"],
+      "properties": {
+        "gold_gap_id": {"type": "string"},
+        "affects_claims": {"type": "array", "items": {"type": "string"}},
+        "gap_type": {"$ref": "#/definitions/gap_type"},
+        "missing_info": {"type": ["string", "null"]},
+        "required_params": {"anyOf": [{"$ref": "#/definitions/required_params"}, {"type": "null"}]}
+      }
+    },
+    "run": {
+      "type": "object",
+      "required": ["run_id", "case_id", "annotator", "source", "review_status", "goals", "claims", "gaps", "run_level"],
+      "properties": {
+        "run_id": {"type": "string"},
+        "case_id": {"type": "string"},
+        "variant_id": {"type": ["string", "null"], "description": "扩展：受控变体的标注，与预测 run.source.variant_id 对应"},
+        "annotator": {"type": "string"},
+        "annotated_at": {"type": ["string", "null"]},
+        "source": {"const": "json_only"},
+        "review_status": {"enum": ["DRAFT", "REVIEWED"]},
+        "goals": {"type": "array", "items": {"$ref": "#/definitions/goal"}},
+        "claims": {"type": "array", "items": {"$ref": "#/definitions/claim"}},
+        "gaps": {"type": "array", "items": {"$ref": "#/definitions/gap"}},
+        "run_level": {
+          "type": "object",
+          "required": ["answer_has_error", "answer_honest_about_limits"],
+          "properties": {
+            "answer_has_error": {"type": "boolean"},
+            "answer_honest_about_limits": {"type": "boolean"}
+          }
+        }
+      }
+    }
+  }
+}

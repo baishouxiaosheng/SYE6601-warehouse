@@ -1,0 +1,490 @@
+[
+  {
+    "method": "rule+v2",
+    "false_support": 0.0,
+    "gap_locate": 0.173913,
+    "insufficient_as_err": 0.0,
+    "note": "n_runs=8；gold结论=63；已对齐=56；FSR分母=7；IAE分母=8；gap_locate=缺口定位F1；gold 有 8 个 DRAFT 运行（AI 起草未复核）；样本小；不是概率",
+    "n_runs": 8,
+    "n_gold_claims": 63,
+    "n_aligned_claims": 56,
+    "gold_runs_draft": 8,
+    "metric_mapping": {
+      "false_support": "false_support_strict",
+      "gap_locate": "gap_f1",
+      "insufficient_as_err": "insufficient_as_err"
+    },
+    "metrics": {
+      "false_support_strict": {
+        "numerator": 0,
+        "denominator": 7,
+        "value": 0.0,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "definition": "FSR（严格）= #(gold=REFUTE ∧ pred=SUPPORT) / #(gold=REFUTE)，仅已对齐结论",
+        "excluded_unaligned": 2,
+        "ci_valid_resamples": 900
+      },
+      "false_support_broad": {
+        "numerator": 0,
+        "denominator": 16,
+        "value": 0.0,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "definition": "FSR（广义）= #(gold∈{REFUTE,UNKNOWN,MISSING_RULE,CONFLICT} ∧ pred=SUPPORT) / #(gold∈该集合)，仅已对齐结论",
+        "excluded_unaligned": 3,
+        "ci_valid_resamples": 1000
+      },
+      "insufficient_as_err": {
+        "numerator": 0,
+        "denominator": 8,
+        "value": 0.0,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "definition": "IAE = #(gold∈{UNKNOWN,MISSING_RULE} ∧ pred=REFUTE) / #(gold∈{UNKNOWN,MISSING_RULE})，仅已对齐结论",
+        "excluded_unaligned": 1,
+        "ci_valid_resamples": 998
+      },
+      "gap_precision": {
+        "numerator": 2,
+        "denominator": 13,
+        "value": 0.153846,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.294118
+        ],
+        "definition": "缺口定位精确率 = 命中缺口数 / 预测缺口数",
+        "ci_valid_resamples": 1000
+      },
+      "gap_recall": {
+        "numerator": 2,
+        "denominator": 10,
+        "value": 0.2,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.400417
+        ],
+        "definition": "缺口定位召回率 = 命中缺口数 / gold 缺口数",
+        "ci_valid_resamples": 1000
+      },
+      "gap_f1": {
+        "numerator": 4,
+        "denominator": 23,
+        "value": 0.173913,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.307692
+        ],
+        "definition": "缺口定位 F1 = 2×命中 / (预测缺口数 + gold 缺口数)",
+        "ci_valid_resamples": 1000
+      },
+      "requery_param_value_hit": {
+        "numerator": 6,
+        "denominator": 46,
+        "value": 0.130435,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.274562
+        ],
+        "definition": "补查参数定位（键+值）= 在相关动作中键存在且值一致的关键参数数 / gold 关键参数总数",
+        "ci_valid_resamples": 1000
+      },
+      "requery_param_key_hit": {
+        "numerator": 9,
+        "denominator": 46,
+        "value": 0.195652,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.416715
+        ],
+        "definition": "补查参数定位（仅键）= 在相关动作中出现的关键参数键数 / gold 关键参数总数",
+        "ci_valid_resamples": 1000
+      },
+      "requery_action_exists": {
+        "numerator": 5,
+        "denominator": 10,
+        "value": 0.5,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.857143
+        ],
+        "definition": "动作存在率 = 有至少一个相关补查动作的 gold 缺口数 / 带 required_params 的 gold 缺口数",
+        "ci_valid_resamples": 1000
+      },
+      "status_accuracy": {
+        "numerator": 18,
+        "denominator": 56,
+        "value": 0.321429,
+        "reason": null,
+        "ci95": [
+          0.18032,
+          0.48
+        ],
+        "definition": "五态准确率 = 混淆矩阵对角线 / 已对齐结论数",
+        "ci_valid_resamples": 1000
+      },
+      "status_macro_f1": {
+        "numerator": 1.44973,
+        "denominator": 5,
+        "value": 0.289946,
+        "reason": null,
+        "ci95": [
+          0.097838,
+          0.463097
+        ],
+        "definition": "五态 macro-F1 = Σ各类F1 / 出现过的类别数（gold 或 pred 中出现）",
+        "ci_valid_resamples": 1000
+      },
+      "status_kappa": {
+        "numerator": 0.121811,
+        "denominator": 0.800383,
+        "value": 0.152191,
+        "reason": null,
+        "ci95": [
+          0.042103,
+          0.290678
+        ],
+        "definition": "Cohen's κ = (p_o − p_e) / (1 − p_e)",
+        "ci_valid_resamples": 1000
+      },
+      "extraction_coverage": {
+        "numerator": 56,
+        "denominator": 63,
+        "value": 0.888889,
+        "reason": null,
+        "ci95": [
+          0.790323,
+          0.96668
+        ],
+        "definition": "结论抽取覆盖率 = 已对齐 gold 结论数 / gold 结论数",
+        "ci_valid_resamples": 1000
+      },
+      "extraction_extra_rate": {
+        "numerator": 8,
+        "denominator": 64,
+        "value": 0.125,
+        "reason": null,
+        "ci95": [
+          0.068936,
+          0.166667
+        ],
+        "definition": "多抽率 = 未对齐的预测结论数 / 预测结论数",
+        "ci_valid_resamples": 1000
+      },
+      "severe_recall": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5,
+        "reason": null,
+        "ci95": [
+          0.0,
+          1.0
+        ],
+        "definition": "严重问题召回 = #(gold 有 severe 结论 ∧ high_risk_alert) / #(gold 有 severe 结论的运行)",
+        "ci_valid_resamples": 900
+      },
+      "severe_false_alarm": {
+        "numerator": 1,
+        "denominator": 6,
+        "value": 0.166667,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.5
+        ],
+        "definition": "严重问题误报率 = #(gold 无 severe ∧ high_risk_alert) / #(gold 无 severe 的运行)",
+        "ci_valid_resamples": 1000
+      },
+      "calibration_ece": {
+        "numerator": 31.7274,
+        "denominator": 62,
+        "value": 0.511732,
+        "reason": null,
+        "ci95": [
+          0.323937,
+          0.678272
+        ],
+        "definition": "ECE = Σ_b |Σconf_b − Σcorrect_b| / N；样本=gold 断言类结论，conf=所在运行 support_score，correct=gold_status==SUPPORT",
+        "ci_valid_resamples": 1000
+      }
+    },
+    "strata": {},
+    "cost": {
+      "elapsed_seconds": {
+        "n": 8,
+        "total": 0.036078,
+        "mean": 0.00451,
+        "median": 0.003012,
+        "reason": null
+      },
+      "model_calls": {
+        "n": 8,
+        "total": 0.0,
+        "reason": null
+      }
+    }
+  },
+  {
+    "method": "llm_only+v2",
+    "false_support": 0.111111,
+    "gap_locate": 0.444444,
+    "insufficient_as_err": 0.0,
+    "note": "n_runs=8；gold结论=63；已对齐=61；FSR分母=9；IAE分母=8；gap_locate=缺口定位F1；gold 有 8 个 DRAFT 运行（AI 起草未复核）；样本小；不是概率",
+    "n_runs": 8,
+    "n_gold_claims": 63,
+    "n_aligned_claims": 61,
+    "gold_runs_draft": 8,
+    "metric_mapping": {
+      "false_support": "false_support_strict",
+      "gap_locate": "gap_f1",
+      "insufficient_as_err": "insufficient_as_err"
+    },
+    "metrics": {
+      "false_support_strict": {
+        "numerator": 1,
+        "denominator": 9,
+        "value": 0.111111,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.333333
+        ],
+        "definition": "FSR（严格）= #(gold=REFUTE ∧ pred=SUPPORT) / #(gold=REFUTE)，仅已对齐结论",
+        "excluded_unaligned": 0,
+        "ci_valid_resamples": 900
+      },
+      "false_support_broad": {
+        "numerator": 2,
+        "denominator": 18,
+        "value": 0.111111,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.285714
+        ],
+        "definition": "FSR（广义）= #(gold∈{REFUTE,UNKNOWN,MISSING_RULE,CONFLICT} ∧ pred=SUPPORT) / #(gold∈该集合)，仅已对齐结论",
+        "excluded_unaligned": 1,
+        "ci_valid_resamples": 1000
+      },
+      "insufficient_as_err": {
+        "numerator": 0,
+        "denominator": 8,
+        "value": 0.0,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "definition": "IAE = #(gold∈{UNKNOWN,MISSING_RULE} ∧ pred=REFUTE) / #(gold∈{UNKNOWN,MISSING_RULE})，仅已对齐结论",
+        "excluded_unaligned": 1,
+        "ci_valid_resamples": 998
+      },
+      "gap_precision": {
+        "numerator": 6,
+        "denominator": 17,
+        "value": 0.352941,
+        "reason": null,
+        "ci95": [
+          0.157895,
+          0.562723
+        ],
+        "definition": "缺口定位精确率 = 命中缺口数 / 预测缺口数",
+        "ci_valid_resamples": 1000
+      },
+      "gap_recall": {
+        "numerator": 6,
+        "denominator": 10,
+        "value": 0.6,
+        "reason": null,
+        "ci95": [
+          0.375,
+          0.818182
+        ],
+        "definition": "缺口定位召回率 = 命中缺口数 / gold 缺口数",
+        "ci_valid_resamples": 1000
+      },
+      "gap_f1": {
+        "numerator": 12,
+        "denominator": 27,
+        "value": 0.444444,
+        "reason": null,
+        "ci95": [
+          0.230769,
+          0.645161
+        ],
+        "definition": "缺口定位 F1 = 2×命中 / (预测缺口数 + gold 缺口数)",
+        "ci_valid_resamples": 1000
+      },
+      "requery_param_value_hit": {
+        "numerator": 21,
+        "denominator": 46,
+        "value": 0.456522,
+        "reason": null,
+        "ci95": [
+          0.283568,
+          0.625073
+        ],
+        "definition": "补查参数定位（键+值）= 在相关动作中键存在且值一致的关键参数数 / gold 关键参数总数",
+        "ci_valid_resamples": 1000
+      },
+      "requery_param_key_hit": {
+        "numerator": 22,
+        "denominator": 46,
+        "value": 0.478261,
+        "reason": null,
+        "ci95": [
+          0.298211,
+          0.659595
+        ],
+        "definition": "补查参数定位（仅键）= 在相关动作中出现的关键参数键数 / gold 关键参数总数",
+        "ci_valid_resamples": 1000
+      },
+      "requery_action_exists": {
+        "numerator": 9,
+        "denominator": 10,
+        "value": 0.9,
+        "reason": null,
+        "ci95": [
+          0.713929,
+          1.0
+        ],
+        "definition": "动作存在率 = 有至少一个相关补查动作的 gold 缺口数 / 带 required_params 的 gold 缺口数",
+        "ci_valid_resamples": 1000
+      },
+      "status_accuracy": {
+        "numerator": 54,
+        "denominator": 61,
+        "value": 0.885246,
+        "reason": null,
+        "ci95": [
+          0.827586,
+          0.940299
+        ],
+        "definition": "五态准确率 = 混淆矩阵对角线 / 已对齐结论数",
+        "ci_valid_resamples": 1000
+      },
+      "status_macro_f1": {
+        "numerator": 3.993464,
+        "denominator": 5,
+        "value": 0.798693,
+        "reason": null,
+        "ci95": [
+          0.624608,
+          0.859722
+        ],
+        "definition": "五态 macro-F1 = Σ各类F1 / 出现过的类别数（gold 或 pred 中出现）",
+        "ci_valid_resamples": 1000
+      },
+      "status_kappa": {
+        "numerator": 0.370062,
+        "denominator": 0.484816,
+        "value": 0.763304,
+        "reason": null,
+        "ci95": [
+          0.56892,
+          0.878427
+        ],
+        "definition": "Cohen's κ = (p_o − p_e) / (1 − p_e)",
+        "ci_valid_resamples": 1000
+      },
+      "extraction_coverage": {
+        "numerator": 61,
+        "denominator": 63,
+        "value": 0.968254,
+        "reason": null,
+        "ci95": [
+          0.925373,
+          1.0
+        ],
+        "definition": "结论抽取覆盖率 = 已对齐 gold 结论数 / gold 结论数",
+        "ci_valid_resamples": 1000
+      },
+      "extraction_extra_rate": {
+        "numerator": 8,
+        "denominator": 69,
+        "value": 0.115942,
+        "reason": null,
+        "ci95": [
+          0.044776,
+          0.19356
+        ],
+        "definition": "多抽率 = 未对齐的预测结论数 / 预测结论数",
+        "ci_valid_resamples": 1000
+      },
+      "severe_recall": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1.0,
+        "reason": null,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "definition": "严重问题召回 = #(gold 有 severe 结论 ∧ high_risk_alert) / #(gold 有 severe 结论的运行)",
+        "ci_valid_resamples": 900
+      },
+      "severe_false_alarm": {
+        "numerator": 1,
+        "denominator": 6,
+        "value": 0.166667,
+        "reason": null,
+        "ci95": [
+          0.0,
+          0.5
+        ],
+        "definition": "严重问题误报率 = #(gold 无 severe ∧ high_risk_alert) / #(gold 无 severe 的运行)",
+        "ci_valid_resamples": 1000
+      },
+      "calibration_ece": {
+        "numerator": 1.9364,
+        "denominator": 62,
+        "value": 0.031232,
+        "reason": null,
+        "ci95": [
+          0.011209,
+          0.081006
+        ],
+        "definition": "ECE = Σ_b |Σconf_b − Σcorrect_b| / N；样本=gold 断言类结论，conf=所在运行 support_score，correct=gold_status==SUPPORT",
+        "ci_valid_resamples": 1000
+      }
+    },
+    "strata": {},
+    "cost": {
+      "elapsed_seconds": {
+        "n": 8,
+        "total": 556.748,
+        "mean": 69.5935,
+        "median": 70.117,
+        "reason": null
+      },
+      "model_calls": {
+        "n": 8,
+        "total": 8.0,
+        "reason": null
+      }
+    }
+  },
+  {
+    "method": "hybrid",
+    "false_support": null,
+    "gap_locate": null,
+    "insufficient_as_err": null,
+    "note": "未运行：用户决定不跑完；01A hybrid 需要密钥",
+    "status": "not_run"
+  }
+]

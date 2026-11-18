@@ -1,0 +1,258 @@
+{
+  "case_id": "IND-019",
+  "run_id": "IND-019-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1311,
+    "completion_tokens": 10353,
+    "total_tokens": 11664
+  },
+  "latency_seconds": 53.593,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-019-r1",
+      "case_id": "IND-019",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "这批原材料的质检报告能不能发给我？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "这批304不锈钢板（RCV-261114-008）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.incoming[0].receipt_id"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.incoming[0].material"
+              }
+            ],
+            "reason": "c1 返回 receipt_id RCV-261114-008 的 material 为 304不锈钢板 2mm。"
+          },
+          {
+            "id": "C2",
+            "text": "来料检验（IQC-261114-015）还在进行中",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].arguments.receipt_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.iqc_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              }
+            ],
+            "reason": "对 RCV-261114-008 查询 IQC 返回 iqc_id IQC-261114-015，status 为 IN_PROGRESS。"
+          },
+          {
+            "id": "C3",
+            "text": "材质证明已经核验通过",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[1].item"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[1].status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[1].result"
+              }
+            ],
+            "reason": "items 中材质证明 status 为 VERIFIED，result 为合格证已核验。"
+          },
+          {
+            "id": "C4",
+            "text": "厚度和表面质量还在测试",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[0].item"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[0].status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[2].item"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[2].status"
+              }
+            ],
+            "reason": "items 中厚度和表面质量 status 均为 TESTING。"
+          },
+          {
+            "id": "C5",
+            "text": "预计17:00前完成",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.estimated_completion"
+              }
+            ],
+            "reason": "estimated_completion 为 2026-11-14T17:00:00+08:00，回答以预计完成时间表达。"
+          },
+          {
+            "id": "C6",
+            "text": "完整的质检报告暂时出不了",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[0].result"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.items[2].result"
+              }
+            ],
+            "reason": "日志显示 IQC 仍 IN_PROGRESS 且厚度/表面质量 result 为 null，但未提供完整质检报告可出具/发送的判断规则。"
+          },
+          {
+            "id": "C7",
+            "text": "等检测完成后可以发给你",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [],
+            "reason": "日志未提供检测完成后质检报告可发送给用户或放行的审批/许可规则。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C6"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少完整质检报告可出具/发送的规则，例如是否要求 IQC status 为 COMPLETED 且所有检测项 result 非空。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C7"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少检测完成后质检报告可发送给用户/放行的审批或许可规则。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C6"
+            ],
+            "tool": null,
+            "arguments": {
+              "receipt_id": "RCV-261114-008",
+              "iqc_id": "IQC-261114-015",
+              "site": "华南二厂"
+            },
+            "pending_arguments": {
+              "report_type": "IQC完整质检报告",
+              "rule_scope": "report_release"
+            },
+            "success_criterion": "返回明确规则，说明完整质检报告可出具/发送所需状态、检测项完成条件或审批条件。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C7"
+            ],
+            "tool": null,
+            "arguments": {
+              "receipt_id": "RCV-261114-008",
+              "iqc_id": "IQC-261114-015",
+              "site": "华南二厂"
+            },
+            "pending_arguments": {
+              "user_role": "收货区用户",
+              "action": "send_report"
+            },
+            "success_criterion": "返回检测完成后是否允许发送报告的许可/审批条件。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 53.593
+}

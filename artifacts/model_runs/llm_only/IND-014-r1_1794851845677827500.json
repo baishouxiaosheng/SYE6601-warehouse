@@ -1,0 +1,287 @@
+{
+  "case_id": "IND-014",
+  "run_id": "IND-014-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1239,
+    "completion_tokens": 10706,
+    "total_tokens": 11945
+  },
+  "latency_seconds": 68.532,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-014-r1",
+      "case_id": "IND-014",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "识别车间急用的那个备件对应的采购订单、物料和数量"
+          },
+          {
+            "id": "G2",
+            "text": "确认该备件是否已经到货"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "PO-261108-037",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.orders[0].po_id"
+              }
+            ],
+            "reason": "c1 返回的采购订单 po_id 为 PO-261108-037。"
+          },
+          {
+            "id": "C2",
+            "text": "4个",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.orders[0].qty"
+              }
+            ],
+            "reason": "c1 返回的 qty 为 4。"
+          },
+          {
+            "id": "C3",
+            "text": "SKF 6308轴承",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.orders[0].item"
+              }
+            ],
+            "reason": "c1 返回的 item 为 SKF 6308轴承。"
+          },
+          {
+            "id": "C4",
+            "text": "预计今天到货",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.orders[0].expected_delivery"
+              }
+            ],
+            "reason": "c1 返回 expected_delivery 为 2026-11-14；visible_context.received_at 为 2026-11-14T11:00:00+08:00，因此“今天”对应 2026-11-14。"
+          },
+          {
+            "id": "C5",
+            "text": "物流查询超时了",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.request_status"
+              }
+            ],
+            "reason": "c2 返回 request_status 为 TIMEOUT。"
+          },
+          {
+            "id": "C6",
+            "text": "暂时查不到实时物流状态",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.request_status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.tracking_detail"
+              }
+            ],
+            "reason": "c2 返回 request_status 为 TIMEOUT，且 tracking_detail 为 null，说明本次未取到实时物流详情。"
+          },
+          {
+            "id": "C7",
+            "text": "仓库今天也没有这批货的入库记录",
+            "status": "SUPPORT",
+            "expression": "SCOPED_PARTIAL",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.received_records"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.note"
+              }
+            ],
+            "reason": "c3 查询 2026-11-14 且 po_id 为 PO-261108-037 的入库记录，received_records 为空，note 为“该采购订单今日无入库记录”。"
+          },
+          {
+            "id": "C8",
+            "text": "目前无法确认是否已经到货",
+            "status": "UNKNOWN",
+            "expression": "DECLARED_UNKNOWN",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.orders[0].status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.tracking_detail"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.received_records"
+              }
+            ],
+            "reason": "c1 显示订单状态仍为 IN_TRANSIT；c2 物流详情为 null；c3 今日无入库记录。日志中没有签收、到货确认或仓库收货完成记录，因此是否已到货无法确认。"
+          },
+          {
+            "id": "C9",
+            "text": "建议直接联系供应商或物流公司确认",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志中只有供应商名称和运单号，但没有提供急用备件到货异常时应联系供应商或物流公司的规则、升级流程或审批条件。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C8"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少 PO-261108-037 的实时物流详情、签收状态或仓库到货确认，无法判断该急用备件是否已经到货。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "日志未提供急用备件到货异常时联系供应商或物流公司的规则、升级流程或审批条件。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C8"
+            ],
+            "tool": "logistics.get_tracking",
+            "arguments": {
+              "tracking_number": "SF1234567890"
+            },
+            "pending_arguments": {
+              "retry_delay_seconds": null
+            },
+            "success_criterion": "返回 request_status 非 TIMEOUT，且 tracking_detail 包含在途、已签收、异常或预计送达时间等可判断到货状态的字段。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C8"
+            ],
+            "tool": "warehouse.get_receiving_log",
+            "arguments": {
+              "site": "华南二厂",
+              "date": "2026-11-14",
+              "po_id": "PO-261108-037"
+            },
+            "pending_arguments": {
+              "end_time": "2026-11-14T23:59:59+08:00"
+            },
+            "success_criterion": "返回 received_records 非空，或明确覆盖至当前/当日结束且无入库记录，从而可判断是否已入库到货。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": "policy.get_urgent_spare_part_confirmation",
+            "arguments": {
+              "site": "华南二厂",
+              "workshop": "维修车间",
+              "po_id": "PO-261108-037"
+            },
+            "pending_arguments": {
+              "escalation_channel": null
+            },
+            "success_criterion": "返回急用备件到货异常时的联系对象、升级流程、审批条件或允许联系供应商/物流公司的规则。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 68.532
+}

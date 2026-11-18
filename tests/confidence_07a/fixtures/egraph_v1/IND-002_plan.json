@@ -1,0 +1,42 @@
+{
+  "plan_version": "IND-002-supplementary-plan-v1",
+  "run_id": "IND-002-r1",
+  "case_id": "IND-002",
+  "actions": [
+    {
+      "id": "ACT-001",
+      "action_type": "rule_lookup",
+      "gap_ids": [
+        "GAP-001",
+        "GAP-002",
+        "GAP-003"
+      ],
+      "target_claims": [
+        "CLM-004",
+        "CLM-005",
+        "CLM-007"
+      ],
+      "tool": "knowledge_base.search",
+      "known_arguments": {
+        "query": "缺少适用的放行规则或权威授权记录，无法判定完整业务放行条件是否满足 设备放行审批记录 / 主管授权"
+      },
+      "pending_arguments": {
+        "applicable_to": "YORK-YT-350"
+      },
+      "expected_outcome": "取得可引用依据：设备运行标准或工艺参数文件",
+      "success_criterion": "检索到 excerpt 可逐字引用、且 applicable_to 覆盖当前设备型号的条款；若仅有通用条款则视为未满足",
+      "rationale": "缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论；缺少适用的放行规则或权威授权记录，无法判定完整业务放行条件是否满足",
+      "executability": "needs_confirmation",
+      "priority": 1,
+      "replaces_actions": [],
+      "executed_at": null,
+      "evidence_time": null,
+      "acquired_at": null
+    }
+  ],
+  "notes": [
+    "动作按「同一来源 + 同一动作类型」合并，避免对同一接口重复往返。",
+    "executable 表示参数齐备可直接执行；needs_confirmation 表示需先确认参数或适用范围；manual 表示必须现场或走审批流程。",
+    "执行后用 register_execution() 回填 executed_at（发起时间）、evidence_time（业务时点）、acquired_at（取证时间），三者不可互相代替。"
+  ]
+}

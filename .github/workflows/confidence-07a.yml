@@ -1,0 +1,51 @@
+# 07A 置信度模块（confidence_07a）离线测试。
+# 只在 07A 自己的代码/测试/文档改动时触发；不使用任何 secrets，不联网调用模型，不读取 .env。
+name: confidence-07a
+
+on:
+  push:
+    paths:
+      - "confidence_07a/**"
+      - "tests/confidence_07a/**"
+      - "gold/**"
+      - ".github/workflows/confidence-07a.yml"
+  pull_request:
+    paths:
+      - "confidence_07a/**"
+      - "tests/confidence_07a/**"
+      - "gold/**"
+      - ".github/workflows/confidence-07a.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unittest:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.10", "3.12"]
+        include:
+          # Windows 下用非 UTF-8 默认编码再跑一次，防止遗漏显式 encoding="utf-8"
+          - os: windows-latest
+            python-version: "3.12"
+            pythonutf8: "0"
+    env:
+      PYTHONUTF8: ${{ matrix.pythonutf8 || '0' }}
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run 07A tests (stdlib only, offline)
+        run: python -m unittest discover -s tests/confidence_07a -t . -v
+      - name: CLI smoke (help only)
+        run: |
+          python -m confidence_07a --help
+          python -m confidence_07a eval --help
+          python -m confidence_07a variants --help

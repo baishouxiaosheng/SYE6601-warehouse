@@ -1,0 +1,411 @@
+{
+  "case_id": "IND-001",
+  "run_id": "IND-001-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1642,
+    "completion_tokens": 14972,
+    "total_tokens": 16614
+  },
+  "latency_seconds": 82.766,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-001-r1",
+      "case_id": "IND-001",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "判断三号锅炉当前排烟温度是否偏高"
+          },
+          {
+            "id": "G2",
+            "text": "分析三号锅炉排烟温度偏高的可能原因"
+          },
+          {
+            "id": "G3",
+            "text": "给出后续排查/处理建议"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "三号锅炉排烟温度目前218℃",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].arguments.display_name"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.as_of"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.sensors[0].current_c"
+              }
+            ],
+            "reason": "c1 将 display_name=三号锅炉 映射到 asset_id=BLR-03；c2 在 as_of=2026-11-14T10:15:00+08:00 给出排烟口 current_c=218。"
+          },
+          {
+            "id": "C2",
+            "text": "超出正常范围（140-190℃）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.sensors[0].current_c"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.sensors[0].normal_range_c"
+              }
+            ],
+            "reason": "current_c=218 高于 normal_range_c=[140,190] 的上限 190。"
+          },
+          {
+            "id": "C3",
+            "text": "近两小时持续上升",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.sensors[0].trend_2h"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.sensors[0].data_quality"
+              }
+            ],
+            "reason": "c2 的 trend_2h=RISING，且 data_quality=GOOD，支持近两小时上升判断。"
+          },
+          {
+            "id": "C4",
+            "text": "烟道差压285Pa略高于正常上限280Pa",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.differential_pressure_pa"
+              },
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.normal_range_pa"
+              },
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.interpretation"
+              }
+            ],
+            "reason": "differential_pressure_pa=285，normal_range_pa=[150,280]，且 interpretation 明确为差压略高于正常上限。"
+          },
+          {
+            "id": "C5",
+            "text": "可能有一定积灰",
+            "status": "UNKNOWN",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.differential_pressure_pa"
+              },
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.normal_range_pa"
+              },
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.interpretation"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              }
+            ],
+            "reason": "差压 285Pa 略高于上限 280Pa，手册也建议用烟道差压判断积灰，但 c5 仅说明积灰程度需现场确认，日志未直接确认积灰。"
+          },
+          {
+            "id": "C6",
+            "text": "但也可能是其他因素",
+            "status": "UNKNOWN",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.excess_air_ratio"
+              }
+            ],
+            "reason": "手册列出过剩空气系数偏高、燃烧器喷嘴磨损等其他常见原因，但日志未给出过剩空气系数正常范围或喷嘴磨损状态，无法确认当前是否存在其他因素。"
+          },
+          {
+            "id": "C7",
+            "text": "运行手册列出的常见原因包括受热面积灰、过剩空气系数偏高和燃烧器喷嘴磨损",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              }
+            ],
+            "reason": "c4 excerpt 直接列出常见原因包括受热面积灰、过剩空气系数偏高、燃烧器喷嘴磨损。"
+          },
+          {
+            "id": "C8",
+            "text": "目前仅凭远程数据无法确定具体原因",
+            "status": "SUPPORT",
+            "expression": "DECLARED_UNKNOWN",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.interpretation"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              }
+            ],
+            "reason": "c5 指出积灰程度需现场确认，c4 仅给出常见原因和先查差压的建议，日志未确认任一具体原因，支持远程数据无法确定具体原因。"
+          },
+          {
+            "id": "C9",
+            "text": "建议安排现场检查",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.interpretation"
+              }
+            ],
+            "reason": "c5 interpretation 明确积灰程度需现场确认，支持安排现场检查的建议。"
+          },
+          {
+            "id": "C10",
+            "text": "优先排查积灰情况",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              },
+              {
+                "event_id": "c5",
+                "json_path": "trace[c5].result.interpretation"
+              }
+            ],
+            "reason": "c4 建议先检查烟道差压判断积灰程度，c5 差压略高且需现场确认，支持优先排查积灰。"
+          },
+          {
+            "id": "C11",
+            "text": "同时检查燃烧器喷嘴和过剩空气系数",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.excess_air_ratio"
+              }
+            ],
+            "reason": "手册列出燃烧器喷嘴磨损和过剩空气系数偏高为常见原因，c3 也提供 excess_air_ratio=1.35，但日志未给出是否应“同时”检查的排查优先级或并行检查规则。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少现场积灰检查、受热面检查或更细差压趋势证据，无法确认是否积灰及积灰程度。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C6"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少燃烧器喷嘴磨损状态及过剩空气系数是否偏高的当前检测证据。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C6"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少 O2、CO、过剩空气系数正常范围或喷嘴磨损判定标准，无法判断当前燃烧参数是否异常。"
+          },
+          {
+            "id": "GAP4",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C11"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少排查优先级或并行检查规则，无法验证“同时检查燃烧器喷嘴和过剩空气系数”的操作建议。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "BLR-03"
+            },
+            "pending_arguments": {
+              "inspection_scope": "受热面/烟道积灰",
+              "confirm_ash_degree": true
+            },
+            "success_criterion": "获得现场积灰程度结论或可量化的差压趋势/受热面检查数据。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C6"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "BLR-03"
+            },
+            "pending_arguments": {
+              "inspection_scope": "燃烧器喷嘴磨损",
+              "measure_excess_air_ratio": true
+            },
+            "success_criterion": "获得喷嘴磨损状态及过剩空气系数当前检测结论。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C6"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "collection": "动力车间设备运行手册",
+              "query": {
+                "equipment_model": "SZL-20",
+                "symptom": "排烟温度偏高"
+              }
+            },
+            "pending_arguments": {
+              "section": "燃烧参数正常范围/喷嘴磨损检查标准"
+            },
+            "success_criterion": "获得 O2、CO、过剩空气系数正常范围及喷嘴磨损检查标准，并能判断当前燃烧参数是否异常。"
+          },
+          {
+            "id": "A4",
+            "gap_ids": [
+              "GAP4"
+            ],
+            "target_claims": [
+              "C11"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "collection": "动力车间设备运行手册",
+              "query": {
+                "equipment_model": "SZL-20",
+                "symptom": "排烟温度偏高"
+              }
+            },
+            "pending_arguments": {
+              "section": "排查流程/检查顺序"
+            },
+            "success_criterion": "获得明确检查顺序或并行检查要求，验证是否应同时检查燃烧器喷嘴和过剩空气系数。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 82.766
+}

@@ -1,0 +1,428 @@
+{
+  "case_id": "IND-032",
+  "run_id": "IND-032-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1905,
+    "completion_tokens": 16458,
+    "total_tokens": 18363
+  },
+  "latency_seconds": 212.657,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-032-r1",
+      "case_id": "IND-032",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "10kV母线的电能质量怎么样？"
+          },
+          {
+            "id": "G2",
+            "text": "谐波合格吗？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "10kV母线（BUS-10KV-01）电能质量检测结果：",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.bus_id"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.voltage_level"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.measurement_time"
+              }
+            ],
+            "reason": "c1 返回 BUS-10KV-01 的 10kV 电能质量监测结果。"
+          },
+          {
+            "id": "C2",
+            "text": "电压总谐波畸变率 THD 为 3.8%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.THD_pct"
+              }
+            ],
+            "reason": "c1 的 THD_pct 为 3.8。"
+          },
+          {
+            "id": "C3",
+            "text": "3次 1.2%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.harmonics_detail[0].pct"
+              }
+            ],
+            "reason": "c1 harmonics_detail 第0项 order 为 3，pct 为 1.2。"
+          },
+          {
+            "id": "C4",
+            "text": "5次 2.1%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.harmonics_detail[1].pct"
+              }
+            ],
+            "reason": "c1 harmonics_detail 第1项 order 为 5，pct 为 2.1。"
+          },
+          {
+            "id": "C5",
+            "text": "7次 1.5%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.harmonics_detail[2].pct"
+              }
+            ],
+            "reason": "c1 harmonics_detail 第2项 order 为 7，pct 为 1.5。"
+          },
+          {
+            "id": "C6",
+            "text": "11次 0.8%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.harmonics_detail[3].pct"
+              }
+            ],
+            "reason": "c1 harmonics_detail 第3项 order 为 11，pct 为 0.8。"
+          },
+          {
+            "id": "C7",
+            "text": "13次 0.6%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.harmonics_detail[4].pct"
+              }
+            ],
+            "reason": "c1 harmonics_detail 第4项 order 为 13，pct 为 0.6。"
+          },
+          {
+            "id": "C8",
+            "text": "根据电能质量标准，380V及以下低压系统 THD 限值为 5%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.results[0].content"
+              }
+            ],
+            "reason": "c2 返回 380V 及以下低压系统 THD 不超过 5%。"
+          },
+          {
+            "id": "C9",
+            "text": "当前 THD 3.8% 低于 5% 限值",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.THD_pct"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.results[0].content"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.measurement_time"
+              }
+            ],
+            "reason": "c1 当前 THD 为 3.8，c2 给出 5% 限值，3.8 小于 5。"
+          },
+          {
+            "id": "C10",
+            "text": "谐波指标合格",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.THD_pct"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.harmonics_detail"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.24h_max_THD"
+              }
+            ],
+            "reason": "10kV 适用限值为 THD 4%、奇次 3.2%、偶次 1.6%；当前 THD 和已列奇次谐波低于限值，但偶次谐波未返回，且 24h 最大 THD 4.2% 超过 10kV THD 限值，结论未限定当前或 24h 范围。"
+          },
+          {
+            "id": "C11",
+            "text": "系统频率 50.01 Hz",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.frequency_hz"
+              }
+            ],
+            "reason": "c1 的 frequency_hz 为 50.01。"
+          },
+          {
+            "id": "C12",
+            "text": "运行稳定",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.frequency_hz"
+              }
+            ],
+            "reason": "仅有频率读数 50.01 Hz，日志未提供频率正常区间或运行稳定判据。"
+          },
+          {
+            "id": "C13",
+            "text": "近24小时 THD 最高 4.2%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.24h_max_THD"
+              }
+            ],
+            "reason": "c4 的 24h_max_THD 为 4.2。"
+          },
+          {
+            "id": "C14",
+            "text": "平均 3.3%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.24h_avg_THD"
+              }
+            ],
+            "reason": "c4 的 24h_avg_THD 为 3.3。"
+          },
+          {
+            "id": "C15",
+            "text": "上午呈上升趋势",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.trend_data"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.note"
+              }
+            ],
+            "reason": "c4 trend_data 从 08:00 到 11:00 的 THD 为 2.9、3.2、3.5、3.8，note 也说明上午 THD 呈上升趋势。"
+          },
+          {
+            "id": "C16",
+            "text": "建议持续关注",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.note"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.24h_max_THD"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.results[0].content"
+              }
+            ],
+            "reason": "c4 显示上午 THD 上升且 24h 最大 THD 4.2% 超过 c3 的 10kV THD 限值 4%，支持持续关注。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "INCOMPLETE_RESULT",
+            "affects": [
+              "C10"
+            ],
+            "criticality": "HIGH",
+            "description": "谐波合格判断缺少偶次谐波或完整谐波明细，且未明确当前值与 24h 值范围；24h 最大 THD 4.2% 超过 10kV THD 限值 4%。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C12"
+            ],
+            "criticality": "MEDIUM",
+            "description": "运行稳定判断缺少频率正常区间或电能质量稳定判据。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C10"
+            ],
+            "tool": "ops.power_quality_monitor",
+            "arguments": {
+              "bus_id": "BUS-10KV-01",
+              "metrics": [
+                "THD",
+                "harmonics"
+              ],
+              "time": "2026-11-14T11:28:00+08:00"
+            },
+            "pending_arguments": {
+              "include_even_harmonics": true,
+              "harmonic_range": "2-25",
+              "full_spectrum": true
+            },
+            "success_criterion": "返回偶次谐波含量或完整谐波明细，可对照 10kV 限值判断当前谐波是否合格。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C12"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "query": "10kV母线频率正常范围 运行稳定判据",
+              "voltage": "10kV"
+            },
+            "pending_arguments": {
+              "standard_id": null
+            },
+            "success_criterion": "返回频率允许偏差或运行稳定判据。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 212.672
+}

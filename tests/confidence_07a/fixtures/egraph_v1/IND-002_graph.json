@@ -1,0 +1,1288 @@
+{
+  "graph_version": "IND-002-evidence-graph-v1",
+  "run_id": "IND-002-r1",
+  "case_id": "IND-002",
+  "task": {
+    "task_id": "IND-002",
+    "run_id": "IND-002-r1",
+    "question": "二号冷水机组做完保养了，能开机吗？",
+    "customer_id": null,
+    "incident_id": "CH-02",
+    "event_time": "2026-11-14T14:20:00+08:00"
+  },
+  "scope_declaration": {
+    "scope": "IND-002：二号冷水机组做完保养了，能开机",
+    "in_scope": [
+      "二号冷水机组做完保养了，能开机吗"
+    ],
+    "out_of_scope": [
+      "未经日志证据支持的具体故障诊断或因果结论",
+      "日志未提供依据的业务规则、参数基准与适用范围"
+    ]
+  },
+  "goals": [
+    {
+      "id": "GOAL-001",
+      "text": "二号冷水机组做完保养了，能开机吗",
+      "question_type": "status_query",
+      "subject": "二号冷水机组做完保养了，能开机",
+      "answered": true,
+      "coverage_note": "由 CLM-001 回应"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "GOAL-001",
+      "type": "goal",
+      "content": "二号冷水机组做完保养了，能开机吗",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "question_type": "status_query",
+        "subject": "二号冷水机组做完保养了，能开机"
+      }
+    },
+    {
+      "id": "MAT-001",
+      "type": "evidence",
+      "content": "asset_registry.find 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "asset_registry",
+      "record_id": "c1",
+      "locator": "trace[c1].result",
+      "excerpt": null,
+      "tool": "asset_registry.find",
+      "arguments": {
+        "site": "华东一厂",
+        "workshop": "制冷站",
+        "display_name": "二号冷水机组"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "basic_lookup",
+        "signal_count": 3
+      }
+    },
+    {
+      "id": "MAT-002",
+      "type": "evidence",
+      "content": "maintenance_workorders.get 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "maintenance_workorders",
+      "record_id": "c2",
+      "locator": "trace[c2].result",
+      "excerpt": null,
+      "tool": "maintenance_workorders.get",
+      "arguments": {
+        "asset_id": "CH-02",
+        "type": "preventive_maintenance"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "basic_lookup",
+        "signal_count": 5
+      }
+    },
+    {
+      "id": "MAT-003",
+      "type": "evidence",
+      "content": "maintenance_workorders.get_signoff 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "maintenance_workorders",
+      "record_id": "c3",
+      "locator": "trace[c3].result",
+      "excerpt": null,
+      "tool": "maintenance_workorders.get_signoff",
+      "arguments": {
+        "work_order_id": "WO-28501"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "basic_lookup",
+        "signal_count": 4
+      }
+    },
+    {
+      "id": "MAT-004",
+      "type": "evidence",
+      "content": "plant_monitor.get_chiller_status 返回结果",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": "plant_monitor",
+      "record_id": "c4",
+      "locator": "trace[c4].result",
+      "excerpt": null,
+      "tool": "plant_monitor.get_chiller_status",
+      "arguments": {
+        "asset_id": "CH-02"
+      },
+      "doc_version": null,
+      "evidence_status": null,
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "call_type": "ops_monitoring",
+        "signal_count": 5
+      }
+    },
+    {
+      "id": "COND-001",
+      "type": "condition",
+      "content": "判定“正常/异常”需要日志给出的正常区间或基准",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-001",
+        "status": "unknown",
+        "kind": "range_basis_missing"
+      }
+    },
+    {
+      "id": "COND-002",
+      "type": "condition",
+      "content": "判定“正常/异常”需要日志给出的正常区间或基准",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-002",
+        "status": "unknown",
+        "kind": "range_basis_missing"
+      }
+    },
+    {
+      "id": "COND-003",
+      "type": "condition",
+      "content": "结论中的数值应能在工具返回字段中找到一致读数",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-004",
+      "locator": "trace[c4].result.oil_temp_c",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-003",
+        "status": "satisfied",
+        "kind": "value_match"
+      }
+    },
+    {
+      "id": "COND-004",
+      "type": "condition",
+      "content": "结论中的数值应能在工具返回字段中找到一致读数",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-004",
+      "locator": "trace[c4].result.refrigerant_pressure_kpa",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-004",
+        "status": "satisfied",
+        "kind": "value_match"
+      }
+    },
+    {
+      "id": "COND-005",
+      "type": "condition",
+      "content": "结论复述的字段值应能在工具返回字段中逐字定位",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-002",
+      "locator": "trace[c2].result.work_order_id",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-005",
+        "status": "satisfied",
+        "kind": "field_restatement"
+      }
+    },
+    {
+      "id": "COND-006",
+      "type": "condition",
+      "content": "状态类结论应与工具返回的状态字段一致",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-002",
+      "locator": "trace[c2].result.status",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-006",
+        "status": "satisfied",
+        "kind": "status_assertion"
+      }
+    },
+    {
+      "id": "COND-007",
+      "type": "condition",
+      "content": "状态类结论应与工具返回的状态字段一致",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-004",
+      "locator": "trace[c4].result.lockout_tagout",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-007",
+        "status": "satisfied",
+        "kind": "status_assertion"
+      }
+    },
+    {
+      "id": "COND-008",
+      "type": "condition",
+      "content": "签字确认类结论应能在工具返回中找到对应字段",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-003",
+      "locator": "trace[c3].result.technician_signoff",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-008",
+        "status": "satisfied",
+        "kind": "signoff_assertion"
+      }
+    },
+    {
+      "id": "COND-009",
+      "type": "condition",
+      "content": "“系统显示…”类结论应能在监控返回中找到对应字段",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": "MAT-004",
+      "locator": "trace[c4].result.ready_to_start",
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-009",
+        "status": "satisfied",
+        "kind": "display_status"
+      }
+    },
+    {
+      "id": "COND-010",
+      "type": "condition",
+      "content": "断言“可作业/可放行/可开机”需要日志中存在已生效的放行或审批依据",
+      "created_by": "rule",
+      "review_status": "verified",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "MISSING_RULE",
+      "assertion_strength": null,
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "check_id": "CHK-010",
+        "status": "unknown",
+        "kind": "release_precondition"
+      }
+    },
+    {
+      "id": "CLM-001",
+      "type": "claim",
+      "content": "二号冷水机组保养工单WO-28501已于13:45完成",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "assertion",
+      "related_goals": [
+        "GOAL-001"
+      ],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 0,
+        "numerals": [],
+        "entities": [
+          "WO-28501",
+          "二号冷水机组"
+        ],
+        "covers_goals": [
+          0
+        ],
+        "source_span": "二号冷水机组保养工单WO-28501已于13:45完成",
+        "verdict_reason": "现有证据条件全部满足",
+        "checks": [
+          "CHK-005",
+          "CHK-006"
+        ]
+      }
+    },
+    {
+      "id": "CLM-002",
+      "type": "claim",
+      "content": "技术员和主管均已签字确认",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "assertion",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 1,
+        "numerals": [],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "技术员和主管均已签字确认",
+        "verdict_reason": "现有证据条件全部满足",
+        "checks": [
+          "CHK-008"
+        ]
+      }
+    },
+    {
+      "id": "CLM-003",
+      "type": "claim",
+      "content": "设备锁定已解除",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "assertion",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 2,
+        "numerals": [],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "设备锁定已解除",
+        "verdict_reason": "现有证据条件全部满足",
+        "checks": [
+          "CHK-007"
+        ]
+      }
+    },
+    {
+      "id": "CLM-004",
+      "type": "claim",
+      "content": "油温42℃正常",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 42.0,
+      "unit": "℃",
+      "meta": {
+        "order": 3,
+        "numerals": [
+          {
+            "value": 42.0,
+            "unit": "℃",
+            "raw": "42℃",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "油温42℃正常",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": [
+          "CHK-001",
+          "CHK-003"
+        ]
+      }
+    },
+    {
+      "id": "CLM-005",
+      "type": "claim",
+      "content": "冷媒压力680kPa在正常范围",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "UNKNOWN",
+      "assertion_strength": "reading",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": 680.0,
+      "unit": "kPa",
+      "meta": {
+        "order": 4,
+        "numerals": [
+          {
+            "value": 680.0,
+            "unit": "kPa",
+            "raw": "680kPa",
+            "upper": null
+          }
+        ],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "冷媒压力680kPa在正常范围",
+        "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+        "checks": [
+          "CHK-002",
+          "CHK-004"
+        ]
+      }
+    },
+    {
+      "id": "CLM-006",
+      "type": "claim",
+      "content": "系统显示可以启动",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "SUPPORT",
+      "assertion_strength": "approval",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 5,
+        "numerals": [],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "系统显示可以启动",
+        "verdict_reason": "现有证据条件全部满足",
+        "checks": [
+          "CHK-009"
+        ]
+      }
+    },
+    {
+      "id": "CLM-007",
+      "type": "claim",
+      "content": "可以开机",
+      "created_by": "rule",
+      "review_status": "proposed",
+      "source_id": null,
+      "record_id": null,
+      "locator": null,
+      "excerpt": null,
+      "tool": null,
+      "arguments": null,
+      "doc_version": null,
+      "evidence_status": "MISSING_RULE",
+      "assertion_strength": "approval",
+      "related_goals": [],
+      "scope_limited": false,
+      "value": null,
+      "unit": null,
+      "meta": {
+        "order": 6,
+        "numerals": [],
+        "entities": [],
+        "covers_goals": [],
+        "source_span": "可以开机",
+        "verdict_reason": "缺少判定所必需的适用规则或授权依据",
+        "checks": [
+          "CHK-010"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "E-0001",
+      "source": "COND-001",
+      "target": "CLM-004",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（unknown）：判定“正常/异常”需要日志给出的正常区间或基准",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0002",
+      "source": "COND-002",
+      "target": "CLM-005",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（unknown）：判定“正常/异常”需要日志给出的正常区间或基准",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0003",
+      "source": "MAT-004",
+      "target": "CLM-004",
+      "type": "supports",
+      "logic": null,
+      "rationale": "结论中的数值应能在工具返回字段中找到一致读数",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0004",
+      "source": "COND-003",
+      "target": "CLM-004",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：结论中的数值应能在工具返回字段中找到一致读数",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0005",
+      "source": "MAT-004",
+      "target": "CLM-005",
+      "type": "supports",
+      "logic": null,
+      "rationale": "结论中的数值应能在工具返回字段中找到一致读数",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0006",
+      "source": "COND-004",
+      "target": "CLM-005",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：结论中的数值应能在工具返回字段中找到一致读数",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0007",
+      "source": "MAT-002",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "结论复述的字段值应能在工具返回字段中逐字定位",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0008",
+      "source": "COND-005",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：结论复述的字段值应能在工具返回字段中逐字定位",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0009",
+      "source": "COND-006",
+      "target": "CLM-001",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：状态类结论应与工具返回的状态字段一致",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0010",
+      "source": "MAT-004",
+      "target": "CLM-003",
+      "type": "supports",
+      "logic": null,
+      "rationale": "状态类结论应与工具返回的状态字段一致",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0011",
+      "source": "COND-007",
+      "target": "CLM-003",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：状态类结论应与工具返回的状态字段一致",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0012",
+      "source": "MAT-003",
+      "target": "CLM-002",
+      "type": "supports",
+      "logic": null,
+      "rationale": "签字确认类结论应能在工具返回中找到对应字段",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0013",
+      "source": "COND-008",
+      "target": "CLM-002",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：签字确认类结论应能在工具返回中找到对应字段",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0014",
+      "source": "MAT-004",
+      "target": "CLM-006",
+      "type": "supports",
+      "logic": null,
+      "rationale": "“系统显示…”类结论应能在监控返回中找到对应字段",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0015",
+      "source": "COND-009",
+      "target": "CLM-006",
+      "type": "supports",
+      "logic": "AND",
+      "rationale": "证据条件（satisfied）：“系统显示…”类结论应能在监控返回中找到对应字段",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0016",
+      "source": "COND-010",
+      "target": "CLM-007",
+      "type": "checks",
+      "logic": "AND",
+      "rationale": "证据条件（unknown）：断言“可作业/可放行/可开机”需要日志中存在已生效的放行或审批依据",
+      "created_by": "rule",
+      "review_status": "verified"
+    },
+    {
+      "id": "E-0017",
+      "source": "CLM-001",
+      "target": "GOAL-001",
+      "type": "supports",
+      "logic": null,
+      "rationale": "该结论用于回答此目标",
+      "created_by": "rule",
+      "review_status": "verified"
+    }
+  ],
+  "checks": [
+    {
+      "check_id": "CHK-001",
+      "kind": "range_basis_missing",
+      "description": "判定“正常/异常”需要日志给出的正常区间或基准",
+      "status": "unknown",
+      "target_node": null,
+      "evidence_ref": null,
+      "locator": null,
+      "expected": null,
+      "actual": null,
+      "detail": "日志中未找到该参数对应的正常区间或判定基准，按规则保留未知状态",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-004"
+      ],
+      "verdict": "UNKNOWN",
+      "category": "insufficient"
+    },
+    {
+      "check_id": "CHK-002",
+      "kind": "range_basis_missing",
+      "description": "判定“正常/异常”需要日志给出的正常区间或基准",
+      "status": "unknown",
+      "target_node": null,
+      "evidence_ref": null,
+      "locator": null,
+      "expected": null,
+      "actual": null,
+      "detail": "日志中未找到该参数对应的正常区间或判定基准，按规则保留未知状态",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-005"
+      ],
+      "verdict": "UNKNOWN",
+      "category": "insufficient"
+    },
+    {
+      "check_id": "CHK-003",
+      "kind": "value_match",
+      "description": "结论中的数值应能在工具返回字段中找到一致读数",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-004",
+      "locator": "trace[c4].result.oil_temp_c",
+      "expected": 42.0,
+      "actual": 42,
+      "detail": "字段值 42 ℃ 与结论数值 42.0 ℃ 一致",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-004"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-004",
+      "kind": "value_match",
+      "description": "结论中的数值应能在工具返回字段中找到一致读数",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-004",
+      "locator": "trace[c4].result.refrigerant_pressure_kpa",
+      "expected": 680.0,
+      "actual": 680,
+      "detail": "字段值 680 kPa 与结论数值 680.0 kPa 一致",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-005"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-005",
+      "kind": "field_restatement",
+      "description": "结论复述的字段值应能在工具返回字段中逐字定位",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-002",
+      "locator": "trace[c2].result.work_order_id",
+      "expected": "WO-28501",
+      "actual": "WO-28501",
+      "detail": "字段 work_order_id=WO-28501 与结论复述的 WO-28501 逐字一致",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-006",
+      "kind": "status_assertion",
+      "description": "状态类结论应与工具返回的状态字段一致",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-002",
+      "locator": "trace[c2].result.status",
+      "expected": [
+        "completed",
+        "done",
+        "closed",
+        "已完成",
+        "完成"
+      ],
+      "actual": "COMPLETED",
+      "detail": "字段 status=COMPLETED 支持该状态断言",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-001"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-007",
+      "kind": "status_assertion",
+      "description": "状态类结论应与工具返回的状态字段一致",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-004",
+      "locator": "trace[c4].result.lockout_tagout",
+      "expected": [
+        "cleared",
+        "已解除",
+        "released",
+        "解除"
+      ],
+      "actual": "CLEARED",
+      "detail": "字段 lockout_tagout=CLEARED 支持该状态断言",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-003"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-008",
+      "kind": "signoff_assertion",
+      "description": "签字确认类结论应能在工具返回中找到对应字段",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-003",
+      "locator": "trace[c3].result.technician_signoff",
+      "expected": null,
+      "actual": true,
+      "detail": "字段 technician_signoff=true 支持该确认类断言",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-002"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-009",
+      "kind": "display_status",
+      "description": "“系统显示…”类结论应能在监控返回中找到对应字段",
+      "status": "satisfied",
+      "target_node": null,
+      "evidence_ref": "MAT-004",
+      "locator": "trace[c4].result.ready_to_start",
+      "expected": null,
+      "actual": true,
+      "detail": "字段 ready_to_start=true 支持该展示类断言",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-006"
+      ],
+      "verdict": "SUPPORT",
+      "category": "support"
+    },
+    {
+      "check_id": "CHK-010",
+      "kind": "release_precondition",
+      "description": "断言“可作业/可放行/可开机”需要日志中存在已生效的放行或审批依据",
+      "status": "unknown",
+      "target_node": null,
+      "evidence_ref": null,
+      "locator": null,
+      "expected": null,
+      "actual": null,
+      "detail": "日志中未找到适用的放行规则或权威授权记录；仅有维保完成/签字确认不足以支撑完整的业务放行结论",
+      "rule_id": null,
+      "created_by": "rule",
+      "affected_claims": [
+        "CLM-007"
+      ],
+      "verdict": "MISSING_RULE",
+      "category": "rule"
+    }
+  ],
+  "paths": [
+    {
+      "path_id": "PATH-001",
+      "goal_claim": "CLM-001",
+      "conditions": [
+        "COND-005",
+        "COND-006"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-005",
+        "COND-006"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 MAT-002，需同时满足 2 个条件：结论复述的字段值应能在工具返回字段中逐字定位；状态类结论应与工具返回的状态字段一致",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-002",
+      "goal_claim": "CLM-002",
+      "conditions": [
+        "COND-008"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-008"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 MAT-003，需同时满足 1 个条件：签字确认类结论应能在工具返回中找到对应字段",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-003",
+      "goal_claim": "CLM-003",
+      "conditions": [
+        "COND-007"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-007"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 MAT-004，需同时满足 1 个条件：状态类结论应与工具返回的状态字段一致",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-006",
+      "goal_claim": "CLM-004",
+      "conditions": [],
+      "satisfied": true,
+      "satisfied_conditions": [],
+      "missing_conditions": [],
+      "rationale": "该结论存在 2 条可替代路径（OR）；任一路径满足即可成立。",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-004",
+      "goal_claim": "CLM-004",
+      "conditions": [
+        "COND-001"
+      ],
+      "satisfied": false,
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "COND-001"
+      ],
+      "rationale": "路径来源 __direct__，需同时满足 1 个条件：判定“正常/异常”需要日志给出的正常区间或基准",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-005",
+      "goal_claim": "CLM-004",
+      "conditions": [
+        "COND-003"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-003"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 MAT-004，需同时满足 1 个条件：结论中的数值应能在工具返回字段中找到一致读数",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-009",
+      "goal_claim": "CLM-005",
+      "conditions": [],
+      "satisfied": true,
+      "satisfied_conditions": [],
+      "missing_conditions": [],
+      "rationale": "该结论存在 2 条可替代路径（OR）；任一路径满足即可成立。",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-007",
+      "goal_claim": "CLM-005",
+      "conditions": [
+        "COND-002"
+      ],
+      "satisfied": false,
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "COND-002"
+      ],
+      "rationale": "路径来源 __direct__，需同时满足 1 个条件：判定“正常/异常”需要日志给出的正常区间或基准",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-008",
+      "goal_claim": "CLM-005",
+      "conditions": [
+        "COND-004"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-004"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 MAT-004，需同时满足 1 个条件：结论中的数值应能在工具返回字段中找到一致读数",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-010",
+      "goal_claim": "CLM-006",
+      "conditions": [
+        "COND-009"
+      ],
+      "satisfied": true,
+      "satisfied_conditions": [
+        "COND-009"
+      ],
+      "missing_conditions": [],
+      "rationale": "路径来源 MAT-004，需同时满足 1 个条件：“系统显示…”类结论应能在监控返回中找到对应字段",
+      "created_by": "rule"
+    },
+    {
+      "path_id": "PATH-011",
+      "goal_claim": "CLM-007",
+      "conditions": [
+        "COND-010"
+      ],
+      "satisfied": false,
+      "satisfied_conditions": [],
+      "missing_conditions": [
+        "COND-010"
+      ],
+      "rationale": "路径来源 __direct__，需同时满足 1 个条件：断言“可作业/可放行/可开机”需要日志中存在已生效的放行或审批依据",
+      "created_by": "rule"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "GAP-001",
+      "type": "MISSING_DEPENDENCY",
+      "affected_claims": [
+        "CLM-004"
+      ],
+      "description": "缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论",
+      "criticality": "MEDIUM",
+      "mandatory": false,
+      "target_source": "设备运行标准或工艺参数文件",
+      "missing_condition": null
+    },
+    {
+      "id": "GAP-002",
+      "type": "MISSING_DEPENDENCY",
+      "affected_claims": [
+        "CLM-005"
+      ],
+      "description": "缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论",
+      "criticality": "MEDIUM",
+      "mandatory": false,
+      "target_source": "设备运行标准或工艺参数文件",
+      "missing_condition": null
+    },
+    {
+      "id": "GAP-003",
+      "type": "MISSING_RULE",
+      "affected_claims": [
+        "CLM-007"
+      ],
+      "description": "缺少适用的放行规则或权威授权记录，无法判定完整业务放行条件是否满足",
+      "criticality": "HIGH",
+      "mandatory": false,
+      "target_source": "设备放行审批记录 / 主管授权",
+      "missing_condition": null
+    }
+  ],
+  "common_necessary_conditions": [
+    {
+      "claim": "CLM-001",
+      "condition": "COND-005",
+      "content": "结论复述的字段值应能在工具返回字段中逐字定位",
+      "status": "satisfied",
+      "paths": [
+        "PATH-001"
+      ],
+      "necessary_for_all_paths": true
+    },
+    {
+      "claim": "CLM-001",
+      "condition": "COND-006",
+      "content": "状态类结论应与工具返回的状态字段一致",
+      "status": "satisfied",
+      "paths": [
+        "PATH-001"
+      ],
+      "necessary_for_all_paths": true
+    },
+    {
+      "claim": "CLM-002",
+      "condition": "COND-008",
+      "content": "签字确认类结论应能在工具返回中找到对应字段",
+      "status": "satisfied",
+      "paths": [
+        "PATH-002"
+      ],
+      "necessary_for_all_paths": true
+    },
+    {
+      "claim": "CLM-003",
+      "condition": "COND-007",
+      "content": "状态类结论应与工具返回的状态字段一致",
+      "status": "satisfied",
+      "paths": [
+        "PATH-003"
+      ],
+      "necessary_for_all_paths": true
+    },
+    {
+      "claim": "CLM-006",
+      "condition": "COND-009",
+      "content": "“系统显示…”类结论应能在监控返回中找到对应字段",
+      "status": "satisfied",
+      "paths": [
+        "PATH-010"
+      ],
+      "necessary_for_all_paths": true
+    },
+    {
+      "claim": "CLM-007",
+      "condition": "COND-010",
+      "content": "断言“可作业/可放行/可开机”需要日志中存在已生效的放行或审批依据",
+      "status": "unknown",
+      "paths": [
+        "PATH-011"
+      ],
+      "necessary_for_all_paths": true
+    }
+  ],
+  "changes": [],
+  "limitations": [
+    "日志中未找到适用的放行规则或权威授权记录；仅有维保完成/签字确认不足以支撑完整的业务放行结论",
+    "本图仅覆盖单份监控日志可核查的范围；数据源的现实真实性、业务规则完备性不在验证范围内。"
+  ],
+  "proposal_status": "proposed"
+}

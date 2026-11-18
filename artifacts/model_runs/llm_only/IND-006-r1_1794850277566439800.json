@@ -1,0 +1,430 @@
+{
+  "case_id": "IND-006",
+  "run_id": "IND-006-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1635,
+    "completion_tokens": 15815,
+    "total_tokens": 17450
+  },
+  "latency_seconds": 87.609,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-006-r1",
+      "case_id": "IND-006",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "获取上月（2026-10）注塑车间电费/用电量"
+          },
+          {
+            "id": "G2",
+            "text": "获取之前月份（2026-09、2026-08）电费/用电量"
+          },
+          {
+            "id": "G3",
+            "text": "判断上月电费/用电量是否比之前高很多"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "上月（10月）注塑车间用电285,600度",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.period"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_kwh"
+              }
+            ],
+            "reason": "c1 period=2026-10，total_kwh=285600，与10月用电285,600度一致。"
+          },
+          {
+            "id": "C2",
+            "text": "电费199,920元",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.cost_yuan"
+              }
+            ],
+            "reason": "c1 cost_yuan=199920，与电费199,920元一致。"
+          },
+          {
+            "id": "C3",
+            "text": "9月用电248,300度",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.period"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.total_kwh"
+              }
+            ],
+            "reason": "c2 period=2026-09，total_kwh=248300，与9月用电248,300度一致。"
+          },
+          {
+            "id": "C4",
+            "text": "约173,810元",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.cost_yuan"
+              }
+            ],
+            "reason": "c2 cost_yuan=173810，与约173,810元一致。"
+          },
+          {
+            "id": "C5",
+            "text": "8月252,100度",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.period"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.total_kwh"
+              }
+            ],
+            "reason": "c3 period=2026-08，total_kwh=252100，与8月252,100度一致。"
+          },
+          {
+            "id": "C6",
+            "text": "约176,470元",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.cost_yuan"
+              }
+            ],
+            "reason": "c3 cost_yuan=176470，与约176,470元一致。"
+          },
+          {
+            "id": "C7",
+            "text": "10月用电量比9月增加约15%",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_kwh"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.total_kwh"
+              }
+            ],
+            "reason": "(285600-248300)/248300≈15.02%，与约15%一致。"
+          },
+          {
+            "id": "C8",
+            "text": "同时产量也从16,200件增到18,500件",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.periods[1].total_output_units"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.periods[0].total_output_units"
+              }
+            ],
+            "reason": "c4 中2026-09 total_output_units=16200，2026-10 total_output_units=18500。"
+          },
+          {
+            "id": "C9",
+            "text": "（+14.2%）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.periods[1].total_output_units"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.periods[0].total_output_units"
+              }
+            ],
+            "reason": "(18500-16200)/16200≈14.20%，与+14.2%一致。"
+          },
+          {
+            "id": "C10",
+            "text": "增幅接近",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_kwh"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.total_kwh"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.periods[0].total_output_units"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.periods[1].total_output_units"
+              }
+            ],
+            "reason": "用电量增幅约15.02%，产量增幅约14.20%，相差约0.82个百分点，可支持“接近”。"
+          },
+          {
+            "id": "C11",
+            "text": "从已有数据看，电费增长与产量增长基本匹配",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.cost_yuan"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.cost_yuan"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.periods[0].total_output_units"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.periods[1].total_output_units"
+              }
+            ],
+            "reason": "可复算10月单位电费≈10.81元/件、9月≈10.73元/件，变化约0.72%；但“基本匹配”缺少判定阈值或正常区间规则。"
+          },
+          {
+            "id": "C12",
+            "text": "未见明显异常耗电",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": true,
+            "evidence": [],
+            "reason": "日志未提供异常耗电阈值、正常区间或基线规则，无法判定是否“未见明显异常”。"
+          },
+          {
+            "id": "C13",
+            "text": "不过仅凭月度总量和单位能耗对比，不能排除设备效率下降或功率因数变化等细节层面的异常",
+            "status": "UNKNOWN",
+            "expression": "DECLARED_UNKNOWN",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "trace仅包含月度总量和产量，未提供逐设备用电、设备效率、功率因数等细节证据。"
+          },
+          {
+            "id": "C14",
+            "text": "如需更深入分析建议查看逐设备用电明细",
+            "status": "UNKNOWN",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志未提供逐设备用电明细数据，也未提供必须查看逐设备明细的规则或依据。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C11",
+              "C12"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少判定“高很多/异常耗电/基本匹配”的阈值、正常区间或基线规则。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C13",
+              "C14"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少逐设备用电明细、设备效率、功率因数等细节数据。"
+          },
+          {
+            "id": "GAP3",
+            "type": "INCOMPLETE_RESULT",
+            "affects": [
+              "C12"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少2026-08产量，无法计算8月单位能耗作为异常判断基线。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C11",
+              "C12"
+            ],
+            "tool": "rule.get_energy_threshold",
+            "arguments": {
+              "site": "华东一厂",
+              "workshop": "注塑车间",
+              "periods": [
+                "2026-08",
+                "2026-09",
+                "2026-10"
+              ],
+              "metrics": [
+                "electricity_kwh",
+                "cost_yuan"
+              ]
+            },
+            "pending_arguments": {
+              "threshold_type": "high_much/anomaly/match",
+              "baseline_period": "2026-08或2026-09"
+            },
+            "success_criterion": "返回可判定上月是否高很多、是否异常耗电、是否与产量基本匹配的阈值或正常区间。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C13",
+              "C14"
+            ],
+            "tool": "energy_meter.get_device_monthly",
+            "arguments": {
+              "site": "华东一厂",
+              "workshop": "注塑车间",
+              "periods": [
+                "2026-09",
+                "2026-10"
+              ],
+              "metrics": [
+                "electricity_kwh",
+                "cost_yuan",
+                "power_factor",
+                "device_efficiency"
+              ]
+            },
+            "pending_arguments": {
+              "device_ids": "all",
+              "granularity": "monthly"
+            },
+            "success_criterion": "返回逐设备月度用电、成本、功率因数/效率指标，可核验细节层面异常。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C12"
+            ],
+            "tool": "production_summary.get_monthly",
+            "arguments": {
+              "site": "华东一厂",
+              "workshop": "注塑车间",
+              "period": "2026-08"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回2026-08 total_output_units，可计算8月单位能耗。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 87.609
+}

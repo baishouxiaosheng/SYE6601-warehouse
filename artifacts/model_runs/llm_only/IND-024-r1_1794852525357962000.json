@@ -1,0 +1,301 @@
+{
+  "case_id": "IND-024",
+  "run_id": "IND-024-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1490,
+    "completion_tokens": 13407,
+    "total_tokens": 14897
+  },
+  "latency_seconds": 70.766,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-024-r1",
+      "case_id": "IND-024",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "液压机 HP-03 的压力读数是多少？"
+          },
+          {
+            "id": "G2",
+            "text": "正常吗？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "液压机 HP-03 当前系统压力为 21500 MPa",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.system_pressure_kpa"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.unit"
+              }
+            ],
+            "reason": "c1 给出 system_pressure_kpa=21500 且 unit=kPa，回答将单位写成 MPa，与字段单位矛盾。"
+          },
+          {
+            "id": "C2",
+            "text": "已严重超出最大工作压力 25 MPa",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.system_pressure_kpa"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.unit"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.normal_range_kpa"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.results[0].content"
+              }
+            ],
+            "reason": "21500 kPa=21.5 MPa，低于 c2 给出的最大工作压力 25 MPa；c1 normal_range_kpa=[18000,25000] 也包含 21500。"
+          },
+          {
+            "id": "C3",
+            "text": "超出约 86000 倍",
+            "status": "REFUTE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.system_pressure_kpa"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.results[0].content"
+              }
+            ],
+            "reason": "按证据 21.5 MPa/25 MPa=0.86；即使按回答错误单位 21500 MPa/25 MPa=860，也不等于约 86000 倍。"
+          },
+          {
+            "id": "C4",
+            "text": "属于极度危险状态！",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.normal_range_kpa"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.alarms"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.trend"
+              }
+            ],
+            "reason": "c1.status=NORMAL，读数在 normal_range_kpa 内，c3 24h 无报警，c4 趋势 STABLE，不支持极度危险。"
+          },
+          {
+            "id": "C5",
+            "text": "请立即停机检查！",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.status"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.alarms"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.trend"
+              }
+            ],
+            "reason": "当前状态 NORMAL、24h 无报警且趋势稳定，日志不支持立即停机检查。"
+          },
+          {
+            "id": "C6",
+            "text": "近2小时压力波动范围 20800～22100",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.min_kpa"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.max_kpa"
+              }
+            ],
+            "reason": "c4 窗口 2h，min_kpa=20800，max_kpa=22100，与回答数值范围一致；字段单位为 kPa。"
+          },
+          {
+            "id": "C7",
+            "text": "趋势稳定",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.trend"
+              }
+            ],
+            "reason": "c4.trend=STABLE。"
+          },
+          {
+            "id": "C8",
+            "text": "建议立即启动紧急停机程序",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.status"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.alarms"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.trend"
+              }
+            ],
+            "reason": "当前状态 NORMAL、无报警且趋势稳定，日志不支持立即启动紧急停机程序。"
+          },
+          {
+            "id": "C9",
+            "text": "并通知设备管理人员排查传感器或安全阀",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.results[0].content"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.alarms"
+              }
+            ],
+            "reason": "日志仅给出安全阀设定压力和空报警列表，未提供传感器诊断、安全阀状态/动作/故障码，无法判断是否需要排查。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少传感器健康状态、安全阀状态/最近动作或故障码等证据，无法核验是否需要排查传感器或安全阀。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": "ops.sensor_diagnostic",
+            "arguments": {
+              "asset_id": "HP-03",
+              "sensor_id": "PS-HP03-01",
+              "window": "24h"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回传感器健康状态/故障码；若状态 NORMAL 且无故障码，则不支持排查传感器；若存在异常或故障码，则可支持排查。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": "ops.safety_valve_status",
+            "arguments": {
+              "asset_id": "HP-03",
+              "window": "24h"
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回安全阀状态/最近动作/故障码；若状态 NORMAL 且无动作/故障，则不支持排查安全阀；若存在异常、动作或故障码，则可支持排查。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 70.781
+}

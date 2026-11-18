@@ -1,0 +1,1090 @@
+[
+  {
+    "case_id": "IND-002",
+    "run_id": "IND-002-r1",
+    "rule_version": "industrial-b-0.1",
+    "analysis_status": "partial",
+    "nodes": [
+      {
+        "id": "question",
+        "type": "goal_text",
+        "text": "二号冷水机组做完保养了，能开机吗？",
+        "pointer": "/user_question",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "answer",
+        "type": "answer_text",
+        "text": "二号冷水机组保养工单WO-28501已于13:45完成，技术员和主管均已签字确认。设备锁定已解除，油温42℃正常，冷媒压力680kPa在正常范围，系统显示可以启动。可以开机。",
+        "pointer": "/ai_answer",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "c1",
+        "type": "tool_call",
+        "tool": "asset_registry.find",
+        "arguments_pointer": "/trace/0/arguments"
+      },
+      {
+        "id": "c2",
+        "type": "tool_call",
+        "tool": "maintenance_workorders.get",
+        "arguments_pointer": "/trace/1/arguments"
+      },
+      {
+        "id": "c3",
+        "type": "tool_call",
+        "tool": "maintenance_workorders.get_signoff",
+        "arguments_pointer": "/trace/2/arguments"
+      },
+      {
+        "id": "c4",
+        "type": "tool_call",
+        "tool": "plant_monitor.get_chiller_status",
+        "arguments_pointer": "/trace/3/arguments"
+      },
+      {
+        "id": "e:6f4e3091da22051a",
+        "type": "evidence",
+        "pointer": "/trace/1/result/work_order_id",
+        "value": "WO-28501",
+        "event_id": "c2",
+        "run_id": "IND-002-r1",
+        "log_sha256": "699942ed96c0b7c0a7d5473b3147debd30c833971be443a912d2e7d492535383"
+      },
+      {
+        "id": "e:97885eececc6a939",
+        "type": "evidence",
+        "pointer": "/trace/1/result/status",
+        "value": "COMPLETED",
+        "event_id": "c2",
+        "run_id": "IND-002-r1",
+        "log_sha256": "699942ed96c0b7c0a7d5473b3147debd30c833971be443a912d2e7d492535383"
+      },
+      {
+        "id": "claim:maintenance:c2",
+        "type": "claim",
+        "text": "WO-28501已于13:45完成",
+        "state": "SUPPORT",
+        "review_status": "accepted",
+        "answer_excerpt": "WO-28501已于13:45完成"
+      },
+      {
+        "id": "check:claim:maintenance:c2",
+        "type": "check",
+        "reason": "只判断当前工单的已记录状态",
+        "computation": null
+      },
+      {
+        "id": "e:b3cae6326b55aa0d",
+        "type": "evidence",
+        "pointer": "/trace/3/result/ready_to_start",
+        "value": true,
+        "event_id": "c4",
+        "run_id": "IND-002-r1",
+        "log_sha256": "699942ed96c0b7c0a7d5473b3147debd30c833971be443a912d2e7d492535383"
+      },
+      {
+        "id": "e:027ecbd44953738d",
+        "type": "evidence",
+        "pointer": "/trace/3/arguments",
+        "value": {
+          "asset_id": "CH-02"
+        },
+        "event_id": "c4",
+        "run_id": "IND-002-r1",
+        "log_sha256": "699942ed96c0b7c0a7d5473b3147debd30c833971be443a912d2e7d492535383"
+      },
+      {
+        "id": "claim:ready",
+        "type": "claim",
+        "text": "系统显示可以启动",
+        "state": "SUPPORT",
+        "review_status": "accepted",
+        "answer_excerpt": "系统显示可以启动"
+      },
+      {
+        "id": "check:claim:ready",
+        "type": "check",
+        "reason": "系统标记与完整业务授权不同",
+        "computation": null
+      },
+      {
+        "id": "claim:release",
+        "type": "claim",
+        "text": "可以开机",
+        "state": "UNKNOWN",
+        "review_status": "unresolved",
+        "answer_excerpt": "可以开机"
+      },
+      {
+        "id": "check:claim:release",
+        "type": "check",
+        "reason": "未对齐完整业务放行规则，系统标记不能证明全部前提",
+        "computation": null
+      }
+    ],
+    "checks": [
+      {
+        "id": "check:claim:maintenance:c2",
+        "target": "claim:maintenance:c2",
+        "state": "SUPPORT",
+        "reason": "只判断当前工单的已记录状态",
+        "references": [
+          "e:6f4e3091da22051a",
+          "e:97885eececc6a939"
+        ],
+        "computation": null
+      },
+      {
+        "id": "check:claim:ready",
+        "target": "claim:ready",
+        "state": "SUPPORT",
+        "reason": "系统标记与完整业务授权不同",
+        "references": [
+          "e:b3cae6326b55aa0d",
+          "e:027ecbd44953738d"
+        ],
+        "computation": null
+      },
+      {
+        "id": "check:claim:release",
+        "target": "claim:release",
+        "state": "UNKNOWN",
+        "reason": "未对齐完整业务放行规则，系统标记不能证明全部前提",
+        "references": [
+          "e:b3cae6326b55aa0d"
+        ],
+        "computation": null
+      }
+    ],
+    "gaps": [
+      {
+        "affected_claim_ids": [
+          "claim:release"
+        ],
+        "gap_type": "MISSING_RULE",
+        "reason": "需要适用放行规则或明确授权，不能从 ready_to_start 推出完整放行",
+        "execution_status": "not_executed"
+      }
+    ]
+  },
+  {
+    "case_id": "IND-024",
+    "run_id": "IND-024-r1",
+    "rule_version": "industrial-b-0.1",
+    "analysis_status": "partial",
+    "nodes": [
+      {
+        "id": "question",
+        "type": "goal_text",
+        "text": "液压机 HP-03 的压力读数是多少？正常吗？",
+        "pointer": "/user_question",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "answer",
+        "type": "answer_text",
+        "text": "液压机 HP-03 当前系统压力为 21500 MPa，已严重超出最大工作压力 25 MPa，超出约 86000 倍，属于极度危险状态！请立即停机检查！近2小时压力波动范围 20800～22100，趋势稳定。建议立即启动紧急停机程序并通知设备管理人员排查传感器或安全阀。",
+        "pointer": "/ai_answer",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "c1",
+        "type": "tool_call",
+        "tool": "ops.sensor_reading",
+        "arguments_pointer": "/trace/0/arguments"
+      },
+      {
+        "id": "c2",
+        "type": "tool_call",
+        "tool": "knowledge_base.search",
+        "arguments_pointer": "/trace/2/arguments"
+      },
+      {
+        "id": "c3",
+        "type": "tool_call",
+        "tool": "ops.alarm_history",
+        "arguments_pointer": "/trace/3/arguments"
+      },
+      {
+        "id": "c4",
+        "type": "tool_call",
+        "tool": "ops.sensor_trend",
+        "arguments_pointer": "/trace/4/arguments"
+      },
+      {
+        "id": "e:daa8fc852883c0ac",
+        "type": "evidence",
+        "pointer": "/trace/0/result/asset_id",
+        "value": "HP-03",
+        "event_id": "c1",
+        "run_id": "IND-024-r1",
+        "log_sha256": "287ef1004321d5268c553b39ffe9a6fcc448638fdbd173b6edc3d5ce3d033148"
+      },
+      {
+        "id": "e:ce4ba548fb45ffac",
+        "type": "evidence",
+        "pointer": "/trace/0/arguments/asset_id",
+        "value": "HP-03",
+        "event_id": "c1",
+        "run_id": "IND-024-r1",
+        "log_sha256": "287ef1004321d5268c553b39ffe9a6fcc448638fdbd173b6edc3d5ce3d033148"
+      },
+      {
+        "id": "e:b2f047b2bbb47f9a",
+        "type": "evidence",
+        "pointer": "/trace/0/result/unit",
+        "value": "kPa",
+        "event_id": "c1",
+        "run_id": "IND-024-r1",
+        "log_sha256": "287ef1004321d5268c553b39ffe9a6fcc448638fdbd173b6edc3d5ce3d033148"
+      },
+      {
+        "id": "e:67219b4339fe9b05",
+        "type": "evidence",
+        "pointer": "/trace/0/result/system_pressure_kpa",
+        "value": 21500,
+        "event_id": "c1",
+        "run_id": "IND-024-r1",
+        "log_sha256": "287ef1004321d5268c553b39ffe9a6fcc448638fdbd173b6edc3d5ce3d033148"
+      },
+      {
+        "id": "claim:pressure",
+        "type": "claim",
+        "text": "系统压力为 21500 MPa",
+        "state": "REFUTE",
+        "review_status": "accepted",
+        "answer_excerpt": "系统压力为 21500 MPa"
+      },
+      {
+        "id": "check:claim:pressure",
+        "type": "check",
+        "reason": "同设备压力按 kPa/MPa 精确换算比较",
+        "computation": {
+          "measured_kpa": "21500",
+          "measured_mpa": "21.5",
+          "answer_kpa": "21500000"
+        }
+      },
+      {
+        "id": "e:332f8fbf60e5f939",
+        "type": "evidence",
+        "pointer": "/trace/0/result/normal_range_kpa",
+        "value": [
+          18000,
+          25000
+        ],
+        "event_id": "c1",
+        "run_id": "IND-024-r1",
+        "log_sha256": "287ef1004321d5268c553b39ffe9a6fcc448638fdbd173b6edc3d5ce3d033148"
+      },
+      {
+        "id": "fact:pressure-range",
+        "type": "fact",
+        "text": "读数是否在日志标注的正常区间",
+        "state": "SUPPORT",
+        "review_status": "accepted",
+        "answer_excerpt": null
+      },
+      {
+        "id": "check:fact:pressure-range",
+        "type": "check",
+        "reason": "仅比较日志范围，不推断真实设备安全性",
+        "computation": {
+          "in_range": true
+        }
+      }
+    ],
+    "checks": [
+      {
+        "id": "check:claim:pressure",
+        "target": "claim:pressure",
+        "state": "REFUTE",
+        "reason": "同设备压力按 kPa/MPa 精确换算比较",
+        "references": [
+          "e:daa8fc852883c0ac",
+          "e:ce4ba548fb45ffac",
+          "e:b2f047b2bbb47f9a",
+          "e:67219b4339fe9b05"
+        ],
+        "computation": {
+          "measured_kpa": "21500",
+          "measured_mpa": "21.5",
+          "answer_kpa": "21500000"
+        }
+      },
+      {
+        "id": "check:fact:pressure-range",
+        "target": "fact:pressure-range",
+        "state": "SUPPORT",
+        "reason": "仅比较日志范围，不推断真实设备安全性",
+        "references": [
+          "e:67219b4339fe9b05",
+          "e:332f8fbf60e5f939"
+        ],
+        "computation": {
+          "in_range": true
+        }
+      }
+    ],
+    "gaps": []
+  },
+  {
+    "case_id": "IND-030",
+    "run_id": "IND-030-r1",
+    "rule_version": "industrial-b-0.1",
+    "analysis_status": "partial",
+    "nodes": [
+      {
+        "id": "question",
+        "type": "goal_text",
+        "text": "库房里有没有 M8 的钛合金螺栓？",
+        "pointer": "/user_question",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "answer",
+        "type": "answer_text",
+        "text": "经查询，库房中未找到 M8 钛合金螺栓。当前 M8 螺栓库存以不锈钢（304/316）、碳钢和铝合金材质为主，合计 156 个品规。如需采购 M8 钛合金螺栓，请告知具体规格和数量，我可以协助发起采购申请。钛合金紧固件存放于特种材料库B2区，也可联系库管员周芳确认。",
+        "pointer": "/ai_answer",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "c1",
+        "type": "tool_call",
+        "tool": "inventory.search",
+        "arguments_pointer": "/trace/0/arguments"
+      },
+      {
+        "id": "c2",
+        "type": "tool_call",
+        "tool": "inventory.material_category_lookup",
+        "arguments_pointer": "/trace/2/arguments"
+      },
+      {
+        "id": "c3",
+        "type": "tool_call",
+        "tool": "warehouse.location_check",
+        "arguments_pointer": "/trace/3/arguments"
+      },
+      {
+        "id": "c4",
+        "type": "tool_call",
+        "tool": "inventory.search",
+        "arguments_pointer": "/trace/4/arguments"
+      },
+      {
+        "id": "e:6d9189cc7d29c8f7",
+        "type": "evidence",
+        "pointer": "/trace/0/arguments",
+        "value": {
+          "keyword": "M8 螺栓",
+          "page_size": 20
+        },
+        "event_id": "c1",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "e:991902700c77ccd6",
+        "type": "evidence",
+        "pointer": "/trace/0/result/page",
+        "value": 1,
+        "event_id": "c1",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "e:7fdf2a5362bc3c21",
+        "type": "evidence",
+        "pointer": "/trace/0/result/total_pages",
+        "value": 8,
+        "event_id": "c1",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "e:520758a4dfa82ff4",
+        "type": "evidence",
+        "pointer": "/trace/0/result/results",
+        "value": [
+          {
+            "code": "BOLT-M8-SS304-16",
+            "name": "M8×16 不锈钢304螺栓",
+            "on_hand": 2400,
+            "material": "304SS"
+          },
+          {
+            "code": "BOLT-M8-SS304-20",
+            "name": "M8×20 不锈钢304螺栓",
+            "on_hand": 1800,
+            "material": "304SS"
+          },
+          {
+            "code": "BOLT-M8-SS304-25",
+            "name": "M8×25 不锈钢304螺栓",
+            "on_hand": 1500,
+            "material": "304SS"
+          },
+          {
+            "code": "BOLT-M8-SS304-30",
+            "name": "M8×30 不锈钢304螺栓",
+            "on_hand": 1200,
+            "material": "304SS"
+          },
+          {
+            "code": "BOLT-M8-SS304-35",
+            "name": "M8×35 不锈钢304螺栓",
+            "on_hand": 900,
+            "material": "304SS"
+          },
+          {
+            "code": "BOLT-M8-SS304-40",
+            "name": "M8×40 不锈钢304螺栓",
+            "on_hand": 750,
+            "material": "304SS"
+          },
+          {
+            "code": "BOLT-M8-SS316-16",
+            "name": "M8×16 不锈钢316螺栓",
+            "on_hand": 600,
+            "material": "316SS"
+          },
+          {
+            "code": "BOLT-M8-SS316-20",
+            "name": "M8×20 不锈钢316螺栓",
+            "on_hand": 550,
+            "material": "316SS"
+          },
+          {
+            "code": "BOLT-M8-SS316-25",
+            "name": "M8×25 不锈钢316螺栓",
+            "on_hand": 480,
+            "material": "316SS"
+          },
+          {
+            "code": "BOLT-M8-SS316-30",
+            "name": "M8×30 不锈钢316螺栓",
+            "on_hand": 420,
+            "material": "316SS"
+          },
+          {
+            "code": "BOLT-M8-CS-16",
+            "name": "M8×16 碳钢8.8级螺栓",
+            "on_hand": 3200,
+            "material": "碳钢"
+          },
+          {
+            "code": "BOLT-M8-CS-20",
+            "name": "M8×20 碳钢8.8级螺栓",
+            "on_hand": 2800,
+            "material": "碳钢"
+          },
+          {
+            "code": "BOLT-M8-CS-25",
+            "name": "M8×25 碳钢8.8级螺栓",
+            "on_hand": 2100,
+            "material": "碳钢"
+          },
+          {
+            "code": "BOLT-M8-CS-30",
+            "name": "M8×30 碳钢8.8级螺栓",
+            "on_hand": 1900,
+            "material": "碳钢"
+          },
+          {
+            "code": "BOLT-M8-CS-35",
+            "name": "M8×35 碳钢8.8级螺栓",
+            "on_hand": 1500,
+            "material": "碳钢"
+          },
+          {
+            "code": "BOLT-M8-CS-40",
+            "name": "M8×40 碳钢8.8级螺栓",
+            "on_hand": 1200,
+            "material": "碳钢"
+          },
+          {
+            "code": "BOLT-M8-CS-45",
+            "name": "M8×45 碳钢8.8级螺栓",
+            "on_hand": 800,
+            "material": "碳钢"
+          },
+          {
+            "code": "BOLT-M8-CS-50",
+            "name": "M8×50 碳钢8.8级螺栓",
+            "on_hand": 650,
+            "material": "碳钢"
+          },
+          {
+            "code": "BOLT-M8-AL-16",
+            "name": "M8×16 铝合金螺栓",
+            "on_hand": 400,
+            "material": "铝合金"
+          },
+          {
+            "code": "BOLT-M8-AL-20",
+            "name": "M8×20 铝合金螺栓",
+            "on_hand": 350,
+            "material": "铝合金"
+          }
+        ],
+        "event_id": "c1",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "claim:inventory:c1",
+        "type": "claim",
+        "text": "库房中未找到 M8 钛合金螺栓",
+        "state": "UNKNOWN",
+        "review_status": "unresolved",
+        "answer_excerpt": "库房中未找到 M8 钛合金螺栓"
+      },
+      {
+        "id": "check:claim:inventory:c1",
+        "type": "check",
+        "reason": "该响应不覆盖全库，不能证明全库不存在",
+        "computation": null
+      },
+      {
+        "id": "e:6d2a3bded17a4de8",
+        "type": "evidence",
+        "pointer": "/trace/4/arguments",
+        "value": {
+          "keyword": "M8 螺栓",
+          "page_size": 20,
+          "page": 1,
+          "material_filter": "钛合金"
+        },
+        "event_id": "c4",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "e:e3952bc60e81a2f5",
+        "type": "evidence",
+        "pointer": "/trace/4/result/page",
+        "value": 1,
+        "event_id": "c4",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "e:5021deaeb7f033f1",
+        "type": "evidence",
+        "pointer": "/trace/4/result/total_pages",
+        "value": 8,
+        "event_id": "c4",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "e:7632170ddff292f2",
+        "type": "evidence",
+        "pointer": "/trace/4/result/results",
+        "value": [
+          {
+            "code": "BOLT-M8-SS304-16",
+            "name": "M8×16 不锈钢304螺栓",
+            "on_hand": 2400,
+            "material": "304SS"
+          }
+        ],
+        "event_id": "c4",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "claim:inventory:c4",
+        "type": "claim",
+        "text": "库房中未找到 M8 钛合金螺栓",
+        "state": "UNKNOWN",
+        "review_status": "unresolved",
+        "answer_excerpt": "库房中未找到 M8 钛合金螺栓"
+      },
+      {
+        "id": "check:claim:inventory:c4",
+        "type": "check",
+        "reason": "该响应不覆盖全库，不能证明全库不存在",
+        "computation": null
+      },
+      {
+        "id": "e:0f681dddd7a44dda",
+        "type": "evidence",
+        "pointer": "/trace/4/result/note",
+        "value": "material_filter 参数未生效，返回全量结果第1页。请使用精确搜索或翻页查看完整结果。",
+        "event_id": "c4",
+        "run_id": "IND-030-r1",
+        "log_sha256": "cff9332b08d849f0807368e2c0c79c9dd4da1af3fcc486854f5124556979d4a4"
+      },
+      {
+        "id": "fact:filter:c4",
+        "type": "fact",
+        "text": "本次材质筛选未生效",
+        "state": "SUPPORT",
+        "review_status": "accepted",
+        "answer_excerpt": null
+      },
+      {
+        "id": "check:fact:filter:c4",
+        "type": "check",
+        "reason": "工具原文明确报告筛选未生效",
+        "computation": null
+      }
+    ],
+    "checks": [
+      {
+        "id": "check:claim:inventory:c1",
+        "target": "claim:inventory:c1",
+        "state": "UNKNOWN",
+        "reason": "该响应不覆盖全库，不能证明全库不存在",
+        "references": [
+          "e:6d9189cc7d29c8f7",
+          "e:991902700c77ccd6",
+          "e:7fdf2a5362bc3c21",
+          "e:520758a4dfa82ff4"
+        ],
+        "computation": null
+      },
+      {
+        "id": "check:claim:inventory:c4",
+        "target": "claim:inventory:c4",
+        "state": "UNKNOWN",
+        "reason": "该响应不覆盖全库，不能证明全库不存在",
+        "references": [
+          "e:6d2a3bded17a4de8",
+          "e:e3952bc60e81a2f5",
+          "e:5021deaeb7f033f1",
+          "e:7632170ddff292f2"
+        ],
+        "computation": null
+      },
+      {
+        "id": "check:fact:filter:c4",
+        "target": "fact:filter:c4",
+        "state": "SUPPORT",
+        "reason": "工具原文明确报告筛选未生效",
+        "references": [
+          "e:0f681dddd7a44dda",
+          "e:6d2a3bded17a4de8"
+        ],
+        "computation": null
+      }
+    ],
+    "gaps": [
+      {
+        "affected_claim_ids": [
+          "claim:inventory:c1"
+        ],
+        "gap_type": "INCOMPLETE_QUERY",
+        "reason": "需核对同查询剩余页和筛选语义",
+        "execution_status": "not_executed",
+        "tool": "inventory.search",
+        "known_arguments": {
+          "keyword": "M8 螺栓",
+          "page_size": 20
+        },
+        "candidate_arguments": {
+          "keyword": "M8 螺栓",
+          "page_size": 20,
+          "page": 2
+        },
+        "parameters_need_confirmation": [
+          "分页与材质筛选契约"
+        ]
+      },
+      {
+        "affected_claim_ids": [
+          "claim:inventory:c4"
+        ],
+        "gap_type": "INCOMPLETE_QUERY",
+        "reason": "需核对同查询剩余页和筛选语义",
+        "execution_status": "not_executed",
+        "tool": "inventory.search",
+        "known_arguments": {
+          "keyword": "M8 螺栓",
+          "page_size": 20,
+          "page": 1,
+          "material_filter": "钛合金"
+        },
+        "candidate_arguments": {
+          "keyword": "M8 螺栓",
+          "page_size": 20,
+          "page": 2,
+          "material_filter": "钛合金"
+        },
+        "parameters_need_confirmation": [
+          "分页与材质筛选契约"
+        ]
+      },
+      {
+        "affected_claim_ids": [
+          "fact:filter:c4"
+        ],
+        "gap_type": "QUERY_FILTER_FAILED",
+        "reason": "需确认有效的材质筛选参数",
+        "execution_status": "not_executed",
+        "tool": "inventory.search",
+        "known_arguments": {
+          "keyword": "M8 螺栓",
+          "page_size": 20,
+          "page": 1,
+          "material_filter": "钛合金"
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "IND-043",
+    "run_id": "IND-043-r1",
+    "rule_version": "industrial-b-0.1",
+    "analysis_status": "partial",
+    "nodes": [
+      {
+        "id": "question",
+        "type": "goal_text",
+        "text": "D线昨天的产量是多少？",
+        "pointer": "/user_question",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "answer",
+        "type": "answer_text",
+        "text": "D线昨天（11月13日）的产量为4200件，其中白班1800件、中班2400件，生产运行正常。",
+        "pointer": "/ai_answer",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "c1",
+        "type": "tool_call",
+        "tool": "production.daily_output",
+        "arguments_pointer": "/trace/1/arguments"
+      },
+      {
+        "id": "c2",
+        "type": "tool_call",
+        "tool": "production.daily_output",
+        "arguments_pointer": "/trace/2/arguments"
+      },
+      {
+        "id": "e:85a54e8732b410e6",
+        "type": "evidence",
+        "pointer": "/trace/1/result/shifts",
+        "value": [
+          {
+            "shift": "白班",
+            "start_at": "2026-11-13T06:00:00+08:00",
+            "end_at": "2026-11-13T14:00:00+08:00",
+            "business_date": "2026-11-13",
+            "units": 1800
+          },
+          {
+            "shift": "中班",
+            "start_at": "2026-11-13T14:00:00+08:00",
+            "end_at": "2026-11-13T22:00:00+08:00",
+            "business_date": "2026-11-13",
+            "units": 2400
+          }
+        ],
+        "event_id": "c1",
+        "run_id": "IND-043-r1",
+        "log_sha256": "6ae8dc4abd8074da6831fe44e1e07883f48b2cb33c4bfd379d80a07f08ea61ca"
+      },
+      {
+        "id": "fact:subtotal",
+        "type": "fact",
+        "text": "已返回的白班中班小计",
+        "state": "SUPPORT",
+        "review_status": "accepted",
+        "answer_excerpt": null
+      },
+      {
+        "id": "check:fact:subtotal",
+        "type": "check",
+        "reason": "只对本次返回班次求和",
+        "computation": {
+          "units": "4200"
+        }
+      },
+      {
+        "id": "e:556e624a8e88e539",
+        "type": "evidence",
+        "pointer": "/trace/1/arguments",
+        "value": {
+          "line_id": "Line-D",
+          "date_from": "2026-11-13T06:00:00+08:00",
+          "date_to": "2026-11-13T22:00:00+08:00"
+        },
+        "event_id": "c1",
+        "run_id": "IND-043-r1",
+        "log_sha256": "6ae8dc4abd8074da6831fe44e1e07883f48b2cb33c4bfd379d80a07f08ea61ca"
+      },
+      {
+        "id": "e:309fe696dfa95cda",
+        "type": "evidence",
+        "pointer": "/trace/1/result/attribution_rule",
+        "value": "本厂日报按业务日期统计：白班、中班归属开始当天；22:00至次日06:00的夜班归属结束当天。",
+        "event_id": "c1",
+        "run_id": "IND-043-r1",
+        "log_sha256": "6ae8dc4abd8074da6831fe44e1e07883f48b2cb33c4bfd379d80a07f08ea61ca"
+      },
+      {
+        "id": "e:a303128ddf409d19",
+        "type": "evidence",
+        "pointer": "/trace/1/result/query_filter",
+        "value": "接口按班次开始时间筛选，区间左闭右开：date_from <= start_at < date_to。",
+        "event_id": "c1",
+        "run_id": "IND-043-r1",
+        "log_sha256": "6ae8dc4abd8074da6831fe44e1e07883f48b2cb33c4bfd379d80a07f08ea61ca"
+      },
+      {
+        "id": "claim:daily-total",
+        "type": "claim",
+        "text": "产量为4200件",
+        "state": "UNKNOWN",
+        "review_status": "unresolved",
+        "answer_excerpt": "产量为4200件"
+      },
+      {
+        "id": "check:claim:daily-total",
+        "type": "check",
+        "reason": "按日志业务日期匹配夜班；缺失或多份夜班不能确定全天总量",
+        "computation": {
+          "target_business_date": "2026-11-13",
+          "subtotal": "4200",
+          "total": null
+        }
+      }
+    ],
+    "checks": [
+      {
+        "id": "check:fact:subtotal",
+        "target": "fact:subtotal",
+        "state": "SUPPORT",
+        "reason": "只对本次返回班次求和",
+        "references": [
+          "e:85a54e8732b410e6"
+        ],
+        "computation": {
+          "units": "4200"
+        }
+      },
+      {
+        "id": "check:claim:daily-total",
+        "target": "claim:daily-total",
+        "state": "UNKNOWN",
+        "reason": "按日志业务日期匹配夜班；缺失或多份夜班不能确定全天总量",
+        "references": [
+          "e:556e624a8e88e539",
+          "e:85a54e8732b410e6",
+          "e:309fe696dfa95cda",
+          "e:a303128ddf409d19"
+        ],
+        "computation": {
+          "target_business_date": "2026-11-13",
+          "subtotal": "4200",
+          "total": null
+        }
+      }
+    ],
+    "gaps": [
+      {
+        "affected_claim_ids": [
+          "claim:daily-total"
+        ],
+        "gap_type": "MISSING_EVIDENCE",
+        "reason": "缺少唯一适用的目标日夜班",
+        "execution_status": "not_executed",
+        "tool": "production.daily_output",
+        "candidate_arguments": {
+          "line_id": "Line-D",
+          "date_from": "2026-11-12T22:00:00+08:00",
+          "date_to": "2026-11-13T06:00:00+08:00"
+        },
+        "parameters_need_confirmation": [
+          "工具可调用入口"
+        ],
+        "required_return": {
+          "line_id": "Line-D",
+          "business_date": "2026-11-13"
+        }
+      }
+    ]
+  },
+  {
+    "case_id": "IND-053",
+    "run_id": "IND-053-r1",
+    "rule_version": "industrial-b-0.1",
+    "analysis_status": "partial",
+    "nodes": [
+      {
+        "id": "question",
+        "type": "goal_text",
+        "text": "今天要吊装一个18吨的设备，行车检验过了吗？可以吊吗？",
+        "pointer": "/user_question",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "answer",
+        "type": "answer_text",
+        "text": "CRANE-02桥式起重机已于2026年11月1日通过市特检院的定期检验，检验结果为合格，证书有效期至2027年5月。今天吊装18吨设备没有问题，可以正常作业。请注意吊装前做好安全交底。",
+        "pointer": "/ai_answer",
+        "review_status": "unresolved"
+      },
+      {
+        "id": "c1",
+        "type": "tool_call",
+        "tool": "safety.equipment_inspection",
+        "arguments_pointer": "/trace/1/arguments"
+      },
+      {
+        "id": "c2",
+        "type": "tool_call",
+        "tool": "ops.lift_plan",
+        "arguments_pointer": "/trace/2/arguments"
+      },
+      {
+        "id": "c3",
+        "type": "tool_call",
+        "tool": "safety.permit_check",
+        "arguments_pointer": "/trace/3/arguments"
+      },
+      {
+        "id": "e:fd2cae844c8875bd",
+        "type": "evidence",
+        "pointer": "/trace/1/result/equipment_id",
+        "value": "CRANE-02",
+        "event_id": "c1",
+        "run_id": "IND-053-r1",
+        "log_sha256": "1e5f599f42b05d75a99bcea3c0a545cd5005681af9d0334350de25894277aa8b"
+      },
+      {
+        "id": "e:9d3cc7f231be654d",
+        "type": "evidence",
+        "pointer": "/trace/1/result/restriction",
+        "value": "起重量不超过15吨",
+        "event_id": "c1",
+        "run_id": "IND-053-r1",
+        "log_sha256": "1e5f599f42b05d75a99bcea3c0a545cd5005681af9d0334350de25894277aa8b"
+      },
+      {
+        "id": "e:217753c081f14784",
+        "type": "evidence",
+        "pointer": "/trace/2/result/equipment",
+        "value": "CRANE-02",
+        "event_id": "c2",
+        "run_id": "IND-053-r1",
+        "log_sha256": "1e5f599f42b05d75a99bcea3c0a545cd5005681af9d0334350de25894277aa8b"
+      },
+      {
+        "id": "e:1050f07830e39ca8",
+        "type": "evidence",
+        "pointer": "/trace/2/result/load_weight_tons",
+        "value": 18,
+        "event_id": "c2",
+        "run_id": "IND-053-r1",
+        "log_sha256": "1e5f599f42b05d75a99bcea3c0a545cd5005681af9d0334350de25894277aa8b"
+      },
+      {
+        "id": "claim:lift",
+        "type": "claim",
+        "text": "可以正常作业",
+        "state": "REFUTE",
+        "review_status": "accepted",
+        "answer_excerpt": "可以正常作业"
+      },
+      {
+        "id": "check:claim:lift",
+        "type": "check",
+        "reason": "超过日志中的降级限重可反驳；未超过也不自动证明全部放行条件",
+        "computation": {
+          "load_tons": "18",
+          "limit_tons": "15"
+        }
+      },
+      {
+        "id": "e:2d67f8ec6a73d7e3",
+        "type": "evidence",
+        "pointer": "/trace/3/result/plan_id",
+        "value": "LP-2026-1114-01",
+        "event_id": "c3",
+        "run_id": "IND-053-r1",
+        "log_sha256": "1e5f599f42b05d75a99bcea3c0a545cd5005681af9d0334350de25894277aa8b"
+      },
+      {
+        "id": "e:e33ee56789b4080b",
+        "type": "evidence",
+        "pointer": "/trace/3/result/permit_required",
+        "value": true,
+        "event_id": "c3",
+        "run_id": "IND-053-r1",
+        "log_sha256": "1e5f599f42b05d75a99bcea3c0a545cd5005681af9d0334350de25894277aa8b"
+      },
+      {
+        "id": "e:b27b15aab1661d9c",
+        "type": "evidence",
+        "pointer": "/trace/3/result/permit_status",
+        "value": "待审批",
+        "event_id": "c3",
+        "run_id": "IND-053-r1",
+        "log_sha256": "1e5f599f42b05d75a99bcea3c0a545cd5005681af9d0334350de25894277aa8b"
+      },
+      {
+        "id": "fact:permit",
+        "type": "fact",
+        "text": "本方案许可已批准",
+        "state": "REFUTE",
+        "review_status": "accepted",
+        "answer_excerpt": null
+      },
+      {
+        "id": "check:fact:permit",
+        "type": "check",
+        "reason": "依据日志明确的许可要求和状态",
+        "computation": null
+      }
+    ],
+    "checks": [
+      {
+        "id": "check:claim:lift",
+        "target": "claim:lift",
+        "state": "REFUTE",
+        "reason": "超过日志中的降级限重可反驳；未超过也不自动证明全部放行条件",
+        "references": [
+          "e:fd2cae844c8875bd",
+          "e:9d3cc7f231be654d",
+          "e:217753c081f14784",
+          "e:1050f07830e39ca8"
+        ],
+        "computation": {
+          "load_tons": "18",
+          "limit_tons": "15"
+        }
+      },
+      {
+        "id": "check:fact:permit",
+        "target": "fact:permit",
+        "state": "REFUTE",
+        "reason": "依据日志明确的许可要求和状态",
+        "references": [
+          "e:2d67f8ec6a73d7e3",
+          "e:e33ee56789b4080b",
+          "e:b27b15aab1661d9c"
+        ],
+        "computation": null
+      }
+    ],
+    "gaps": [
+      {
+        "affected_claim_ids": [
+          "claim:lift"
+        ],
+        "gap_type": "APPROVAL_REVIEW_REQUIRED",
+        "reason": "仍须核对适用许可和其他条件",
+        "execution_status": "not_executed"
+      }
+    ]
+  }
+]

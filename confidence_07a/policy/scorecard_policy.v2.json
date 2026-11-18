@@ -1,0 +1,379 @@
+{
+  "policy_id": "07a-scorecard-policy",
+  "version": "2.1.0",
+  "status": "PROVISIONAL",
+  "status_note": "权重、阈值、等级线、词典均为待团队确认的暂定值（PROVISIONAL），未经独立评估数据校准。；2.1.0 新增保险域高风险词（赔付/理赔/除外/等待期等），仍为 PROVISIONAL",
+  "score_semantics": "本成绩单的分数是“基于现有日志的证据审核结果”，不是回答正确的概率；未经独立标注数据校准前不得解读为正确率。等级只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。",
+  "scope_note": "本成绩单只评价上游（01A 建图 / 02B 审核）已建模的结论、证据与缺口；结论状态由上游给出，07A 不重新判断。未被抽取的结论、未被发现的规则与日志外事实不在评价范围内。",
+  "weights": {
+    "support": 0.5,
+    "coverage": 0.25,
+    "uncertainty": 0.25
+  },
+  "overall": {
+    "hide_when_blockers": true,
+    "renormalize_over_non_null": true
+  },
+  "expression_matrix": {
+    "DEFINITE": {
+      "SUPPORT": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE"
+      },
+      "REFUTE": {
+        "score": 0.0,
+        "judgement": "WRONG"
+      },
+      "UNKNOWN": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM"
+      },
+      "CONFLICT": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM"
+      },
+      "MISSING_RULE": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM"
+      }
+    },
+    "HEDGED": {
+      "SUPPORT": {
+        "score": 0.5,
+        "judgement": "UNDERCLAIM"
+      },
+      "REFUTE": {
+        "score": 0.0,
+        "judgement": "WRONG"
+      },
+      "UNKNOWN": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE"
+      },
+      "CONFLICT": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE"
+      },
+      "MISSING_RULE": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE"
+      }
+    },
+    "DECLARED_UNKNOWN": {
+      "SUPPORT": {
+        "score": 0.5,
+        "judgement": "UNDERCLAIM"
+      },
+      "REFUTE": {
+        "score": 0.5,
+        "judgement": "UNDERCLAIM"
+      },
+      "UNKNOWN": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE"
+      },
+      "CONFLICT": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE"
+      },
+      "MISSING_RULE": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE"
+      }
+    },
+    "SCOPED_PARTIAL": {
+      "SUPPORT": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE"
+      },
+      "REFUTE": {
+        "score": 0.0,
+        "judgement": "WRONG"
+      },
+      "UNKNOWN": {
+        "score": 0.5,
+        "judgement": "OVERCLAIM"
+      },
+      "CONFLICT": {
+        "score": 0.5,
+        "judgement": "OVERCLAIM"
+      },
+      "MISSING_RULE": {
+        "score": 0.5,
+        "judgement": "OVERCLAIM"
+      }
+    }
+  },
+  "expression_matrix_special": {
+    "DECLARED_UNKNOWN_SUPPORT_GAP_CONFIRMED": {
+      "score": 1.0,
+      "judgement": "APPROPRIATE",
+      "note": "01A 把“无法确定/证据不足”类表述在图中确有缺口时判为 SUPPORT（含义：该“不足”表述本身得到支持）。此时如实声明不确定应得满分，而不是按 UNDERCLAIM 扣分。识别依据：upstream verdict_reason 命中 upstream_gap_confirmation_markers。",
+      "upstream_gap_confirmation_markers": [
+        "表述本身得到支持",
+        "证据缺口"
+      ]
+    }
+  },
+  "expression": {
+    "precedence": [
+      "DECLARED_UNKNOWN",
+      "SCOPED_PARTIAL",
+      "HEDGED"
+    ],
+    "declared_unknown_lexicon": [
+      "无法确定",
+      "无法确认",
+      "不能确定",
+      "不确定",
+      "尚不能确定",
+      "尚不确定",
+      "未能确定",
+      "无法判断",
+      "没法判断",
+      "没法远程判断",
+      "无法远程判断",
+      "无法给出",
+      "暂无法",
+      "暂时无法",
+      "暂时查不到",
+      "查不到",
+      "未能查到",
+      "无法查询",
+      "待确认",
+      "待核实",
+      "尚未确认",
+      "需人工确认",
+      "需要人工确认",
+      "需现场确认",
+      "才能确认",
+      "后才能确认",
+      "才能最终判定",
+      "不能排除",
+      "无法排除",
+      "原因不明",
+      "仍需进一步",
+      "需进一步排查",
+      "需要进一步排查",
+      "需进一步确认",
+      "不足以"
+    ],
+    "scoped_partial_lexicon": [
+      "当前页面",
+      "当前页",
+      "本页",
+      "第1页",
+      "第 1 页",
+      "已查询的",
+      "已查的",
+      "已查到的",
+      "已返回的",
+      "本次返回",
+      "本次查询",
+      "查询范围内",
+      "所查范围",
+      "现有记录中",
+      "已有记录中",
+      "小计",
+      "仅就",
+      "仅凭",
+      "就目前已查",
+      "从已有数据看",
+      "从现有数据看",
+      "已查白班",
+      "已查班次"
+    ],
+    "hedge_lexicon": [
+      "可能",
+      "也许",
+      "或许",
+      "大概",
+      "估计",
+      "推测",
+      "预计",
+      "疑似",
+      "似乎",
+      "看起来",
+      "很可能",
+      "初步判断",
+      "初步看",
+      "应该是",
+      "有望",
+      "倾向于",
+      "基本可以",
+      "基本满足",
+      "基本完成",
+      "基本匹配",
+      "未见明显",
+      "大致"
+    ],
+    "upstream_strength_map": {
+      "inference": "DEFINITE",
+      "approval": "DEFINITE",
+      "recommendation": "DEFINITE",
+      "negative_finding": "DEFINITE",
+      "reading": "DEFINITE",
+      "assertion": "DEFINITE"
+    },
+    "approval_blocks_hedge": true,
+    "upstream_strength_map_note": "01A 的 inference 主要由“约/大约/应该”触发（见 01A egraph/extract/text.py INFERENCE_MARKERS），约数不等于认知上的推测；真正的推测词（可能/预计/估计…）已在 hedge_lexicon 中，所以 inference 不再自动映射为 HEDGED。",
+    "default": "DEFINITE"
+  },
+  "high_risk": {
+    "lexicon": [
+      "安全",
+      "放行",
+      "启动",
+      "开机",
+      "吊装",
+      "起重",
+      "行车",
+      "审批",
+      "许可",
+      "超限",
+      "限重",
+      "超压",
+      "压力",
+      "温度",
+      "报警",
+      "停机",
+      "隔离",
+      "动火",
+      "受限空间",
+      "有限空间",
+      "带电",
+      "带压",
+      "危险",
+      "泄漏",
+      "安全阀",
+      "泄压阀",
+      "可以吊",
+      "可以作业",
+      "正常作业",
+      "投料",
+      "恢复生产",
+      "可以进入",
+      "可以操作",
+      "放心操作",
+      "赔付",
+      "赔款",
+      "理赔",
+      "拒赔",
+      "给付",
+      "赔偿",
+      "报销",
+      "除外",
+      "免责",
+      "保障范围",
+      "承保",
+      "等待期",
+      "保额",
+      "保险金",
+      "免赔",
+      "现金价值",
+      "退保",
+      "保单有效",
+      "核保",
+      "年金"
+    ],
+    "criteria": {
+      "lexicon": true,
+      "goal_lexicon": true,
+      "approval_type": true,
+      "gap_high": true,
+      "sole_goal_main_claim": true
+    },
+    "severe_bases": [
+      "lexicon",
+      "goal_lexicon",
+      "approval_type"
+    ],
+    "severe_bases_note": "规范 §4.2 中 B1/B2 为严重问题。v2 只在高风险依据属于 severe_bases 时把 B1/B2 记为 severe（仍然是阻断项）。仅因 gap_high 或“唯一目标主结论”而判为高风险的结论，B1/B2 照样阻断，但不触发 high_risk_alert，避免对产量、库存等非安全类问题告警泛滥。待团队确认。",
+    "main_claim_requires_goal_link_or_approval": true,
+    "lexicon_domains": {
+      "industrial": "原有工业安全/放行词",
+      "insurance_added_2.1.0": [
+        "赔付",
+        "赔款",
+        "理赔",
+        "拒赔",
+        "给付",
+        "赔偿",
+        "报销",
+        "除外",
+        "免责",
+        "保障范围",
+        "承保",
+        "等待期",
+        "保额",
+        "保险金",
+        "免赔",
+        "现金价值",
+        "退保",
+        "保单有效",
+        "核保",
+        "年金"
+      ]
+    }
+  },
+  "gates": {
+    "high_criticality": [
+      "HIGH"
+    ],
+    "incomplete_gap_types": [
+      "INCOMPLETE_RESULT"
+    ],
+    "incomplete_check_kinds": [
+      "pagination_completeness",
+      "availability",
+      "filter_effectiveness"
+    ],
+    "qualifying_build_risks": [
+      "claims_without_checks",
+      "goals_without_claims",
+      "lexical_fallback_links",
+      "unmapped_sentences",
+      "orphan_evidence"
+    ],
+    "non_qualifying_build_risks_note": "review_status=proposed/unresolved 的计数照常披露，但默认不单独构成保留项：01A rule 模式所有 claim 都是 proposed，计入会使全部运行都带保留项而失去区分度。"
+  },
+  "grades": {
+    "order": [
+      "INSUFFICIENT",
+      "QUALIFIED",
+      "SUFFICIENT_IN_SCOPE"
+    ],
+    "labels_zh": {
+      "INSUFFICIENT": "证据不足",
+      "QUALIFIED": "附保留说明",
+      "SUFFICIENT_IN_SCOPE": "已建模范围内证据充分"
+    },
+    "rules": [
+      {
+        "grade": "INSUFFICIENT",
+        "when": "存在任一阻断项（B1–B5）或任一严重问题"
+      },
+      {
+        "grade": "QUALIFIED",
+        "when": "无阻断项，但存在任一保留项"
+      },
+      {
+        "grade": "SUFFICIENT_IN_SCOPE",
+        "when": "无阻断项且无保留项"
+      }
+    ]
+  },
+  "linkage": {
+    "lexical_fallback": true,
+    "min_overlap": 0.5,
+    "strip_chars": "的了吗呢吧啊？?！!，,。.、：:；; ",
+    "note": "只对没有任何上游关联结论的目标做词面兜底（字符二元组重叠系数 |A∩B|/min(|A|,|B|)），结果标记 lexical_fallback 并计入建链风险。"
+  },
+  "b_review": {
+    "min_excerpt_len": 4,
+    "min_containment_ratio": 0.3,
+    "missing_rule_gap_types": [
+      "MISSING_RULE"
+    ]
+  }
+}

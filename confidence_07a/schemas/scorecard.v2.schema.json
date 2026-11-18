@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.invalid/confidence_07a/scorecard.v2.schema.json",
+  "title": "07A confidence scorecard v2",
+  "description": "07A 置信度成绩单 v2。分数是基于现有日志的证据审核结果，不是正确概率。",
+  "type": "object",
+  "required": [
+    "scorecard_version", "rule_version", "policy_version", "policy_status", "policy_sha256",
+    "run_id", "case_id", "upstream_versions", "grade", "grade_label_zh", "high_risk_alert",
+    "support_score", "coverage_score", "uncertainty_score", "overall", "overall_display",
+    "blockers", "qualifications", "severe_issues", "dimensions", "review_sequence",
+    "claims", "goals", "build_risks", "supplement", "scope_note", "score_semantics", "generated_by"
+  ],
+  "definitions": {
+    "score": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "ratio": {
+      "type": "object",
+      "required": ["numerator", "denominator", "value"],
+      "properties": {
+        "numerator": {"type": ["number", "null"]},
+        "denominator": {"type": "integer", "minimum": 0},
+        "value": {"$ref": "#/definitions/score"},
+        "reason": {"type": "string"}
+      }
+    },
+    "dimension": {
+      "allOf": [
+        {"$ref": "#/definitions/ratio"},
+        {
+          "type": "object",
+          "required": ["breakdown", "rule", "weight"],
+          "properties": {
+            "breakdown": {"type": "object"},
+            "rule": {"type": "string"},
+            "weight": {"type": ["number", "null"]}
+          }
+        }
+      ]
+    },
+    "status": {"type": "string", "enum": ["SUPPORT", "REFUTE", "UNKNOWN", "CONFLICT", "MISSING_RULE"]},
+    "expression": {"type": "string", "enum": ["DEFINITE", "HEDGED", "DECLARED_UNKNOWN", "SCOPED_PARTIAL"]},
+    "locator": {
+      "type": "object",
+      "properties": {
+        "check_id": {"type": ["string", "null"]},
+        "evidence_id": {"type": ["string", "null"]},
+        "run_id": {"type": ["string", "null"]},
+        "event_id": {"type": ["string", "null"]},
+        "json_path": {"type": ["string", "null"]},
+        "pointer": {"type": ["string", "null"]},
+        "excerpt": {"type": ["string", "null"]}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "claim_id", "text", "expression", "status", "status_zh", "status_source", "main_basis",
+        "missing_or_conflicting", "affected_goals", "linkage_method", "actions", "uncertainty",
+        "is_high_risk", "high_risk_basis", "severe", "blocker_codes"
+      ],
+      "properties": {
+        "claim_id": {"type": "string"},
+        "text": {"type": "string"},
+        "expression": {"$ref": "#/definitions/expression"},
+        "expression_hits": {"type": "array", "items": {"type": "string"}},
+        "status": {"$ref": "#/definitions/status"},
+        "status_zh": {"type": "string"},
+        "status_source": {"type": "string"},
+        "main_basis": {"type": "array", "items": {"$ref": "#/definitions/locator"}},
+        "missing_or_conflicting": {"type": "array", "items": {"type": "object"}},
+        "affected_goals": {"type": "array", "items": {"type": "string"}},
+        "linkage_method": {"type": "string", "enum": ["upstream", "lexical_fallback", "none"]},
+        "actions": {"type": "array", "items": {"type": "object", "required": ["action_id"]}},
+        "uncertainty": {
+          "type": "object",
+          "required": ["score", "judgement", "cell"],
+          "properties": {
+            "score": {"type": "number", "minimum": 0, "maximum": 1},
+            "judgement": {"type": "string", "enum": ["APPROPRIATE", "OVERCLAIM", "UNDERCLAIM", "WRONG"]},
+            "cell": {"type": "string"}
+          }
+        },
+        "is_high_risk": {"type": "boolean"},
+        "high_risk_basis": {"type": "array", "items": {"type": "string"}},
+        "severe": {"type": "boolean"},
+        "severe_code": {"type": ["string", "null"], "enum": ["SEVERE_CONTRADICTION", "SEVERE_OVERCLAIM", null]},
+        "blocker_codes": {"type": "array", "items": {"type": "string", "enum": ["B1", "B2", "B3", "B4", "B5"]}}
+      }
+    }
+  },
+  "properties": {
+    "scorecard_version": {"type": "string", "enum": ["07a-scorecard-v2"]},
+    "rule_version": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "policy_status": {"type": "string"},
+    "policy_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "run_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string"},
+    "upstream_versions": {"type": "object"},
+    "grade": {"type": "string", "enum": ["INSUFFICIENT", "QUALIFIED", "SUFFICIENT_IN_SCOPE"]},
+    "grade_label_zh": {"type": "string"},
+    "high_risk_alert": {"type": "boolean"},
+    "high_risk_alert_text": {"type": "string"},
+    "support_score": {"$ref": "#/definitions/score"},
+    "coverage_score": {"$ref": "#/definitions/score"},
+    "uncertainty_score": {"$ref": "#/definitions/score"},
+    "overall": {"$ref": "#/definitions/score"},
+    "overall_display": {"type": "boolean"},
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "claim_id", "severe", "reason_zh"],
+        "properties": {
+          "code": {"type": "string", "enum": ["B1", "B2", "B3", "B4", "B5"]},
+          "claim_id": {"type": "string"},
+          "severe": {"type": "boolean"},
+          "reason_zh": {"type": "string"}
+        }
+      }
+    },
+    "qualifications": {
+      "type": "array",
+      "items": {"type": "object", "required": ["code", "reason_zh"], "properties": {"code": {"type": "string"}}}
+    },
+    "severe_issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "claim_id", "status", "expression", "high_risk_basis"],
+        "properties": {
+          "code": {"type": "string", "enum": ["SEVERE_CONTRADICTION", "SEVERE_OVERCLAIM"]},
+          "status": {"$ref": "#/definitions/status"},
+          "expression": {"$ref": "#/definitions/expression"}
+        }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "required": ["support", "coverage", "uncertainty"],
+      "properties": {
+        "support": {"$ref": "#/definitions/dimension"},
+        "coverage": {"$ref": "#/definitions/dimension"},
+        "uncertainty": {"$ref": "#/definitions/dimension"}
+      }
+    },
+    "review_sequence": {"type": "array", "items": {"type": "string"}},
+    "claims": {"type": "array", "items": {"$ref": "#/definitions/claim"}},
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["goal_id", "text", "coverage_state", "linked_claims", "linkage_method"],
+        "properties": {
+          "coverage_state": {
+            "type": "string",
+            "enum": ["ADDRESSED_SUPPORTED", "ADDRESSED_DECLARED_UNKNOWN", "ADDRESSED_UNSUPPORTED", "NOT_ADDRESSED"]
+          },
+          "linked_claims": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "gaps": {"type": "array", "items": {"type": "object", "required": ["gap_id", "gap_type"]}},
+    "build_risks": {
+      "type": "object",
+      "required": ["unmapped_sentences", "goals_without_claims", "orphan_evidence", "claims_without_checks", "review_status", "scope_statement"]
+    },
+    "supplement": {
+      "type": "object",
+      "required": ["plan_action_count", "executable", "needs_confirmation", "manual"],
+      "properties": {
+        "plan_action_count": {"type": "integer", "minimum": 0},
+        "executable": {"type": "integer", "minimum": 0},
+        "needs_confirmation": {"type": "integer", "minimum": 0},
+        "manual": {"type": "integer", "minimum": 0}
+      }
+    },
+    "scope_note": {"type": "string", "minLength": 1},
+    "score_semantics": {"type": "string", "minLength": 1},
+    "generated_by": {"type": "object", "required": ["package", "scorecard_version"]}
+  }
+}

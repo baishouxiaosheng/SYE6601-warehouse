@@ -1,0 +1,301 @@
+{
+  "case_id": "IND-015",
+  "run_id": "IND-015-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1468,
+    "completion_tokens": 10960,
+    "total_tokens": 12428
+  },
+  "latency_seconds": 130.156,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-015-r1",
+      "case_id": "IND-015",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "判断二号燃气表这个月读数是否准确"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "上次校准是5月15日",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.last_calibration"
+              }
+            ],
+            "reason": "c2.last_calibration=2026-05-15，与“5月15日”一致。"
+          },
+          {
+            "id": "C2",
+            "text": "合格",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.calibration_result"
+              }
+            ],
+            "reason": "c2.calibration_result=合格。"
+          },
+          {
+            "id": "C3",
+            "text": "下次校准到期日是明天（11月15日）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.next_due"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.readings[2].date"
+              }
+            ],
+            "reason": "c2.next_due=2026-11-15；c3 最新读数日期为 2026-11-14，可支持“明天”为 11月15日。"
+          },
+          {
+            "id": "C4",
+            "text": "目前还在校准有效期内",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.next_due"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.readings[2].date"
+              }
+            ],
+            "reason": "c2.next_due=2026-11-15，c3 最新数据日期为 2026-11-14，当前未超过下次校准到期日。"
+          },
+          {
+            "id": "C5",
+            "text": "本月读数日均47.6立方米",
+            "status": "CONFLICT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.daily_average_m3"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.readings"
+              }
+            ],
+            "reason": "c3.daily_average_m3=47.6，但 c3.readings 为 2026-11-01:45230、2026-11-07:45890、2026-11-14:46510，总增量 1280 m3，按 11-01 至 11-14 约 13 天复算日均约 98.5 m3/d，与 47.6 不一致；日志未说明日均计算口径或优先字段。"
+          },
+          {
+            "id": "C6",
+            "text": "波动与生产排班吻合",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.note"
+              }
+            ],
+            "reason": "c3.note=“日波动±15%，与生产排班吻合”，直接支持该表述。"
+          },
+          {
+            "id": "C7",
+            "text": "从数据趋势看没有明显异常",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.readings"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.note"
+              }
+            ],
+            "reason": "日志提供读数和“与生产排班吻合”的备注，但未提供异常判定阈值、正常区间或排班匹配规则，无法独立核验“没有明显异常”。"
+          },
+          {
+            "id": "C8",
+            "text": "不过备用表正在拆检，没法做交叉比对",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.cross_check_result"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.reason"
+              }
+            ],
+            "reason": "c4.cross_check_result=UNAVAILABLE，reason=“备用表GM-02B处于拆检中，预计11月20日恢复”，支持无法交叉比对。"
+          },
+          {
+            "id": "C9",
+            "text": "如果对读数有疑虑，明天校准到期时可以做一次全面校验",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.next_due"
+              }
+            ],
+            "reason": "c2.next_due=2026-11-15 支持“明天校准到期”，但“可以做一次全面校验”需要许可/审批条件或操作规则，日志未提供。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "CONFLICT",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "HIGH",
+            "description": "c3.daily_average_m3 与 c3.readings 复算结果不一致，无法确认“本月读数日均47.6立方米”。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C7"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少读数异常判定阈值、正常区间或排班匹配规则，无法核验“从数据趋势看没有明显异常”。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少全面校验的许可/审批条件或操作规则，无法核验“可以做一次全面校验”。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": "plant_monitor.get_meter_readings",
+            "arguments": {
+              "asset_id": "GM-02",
+              "period": "2026-11"
+            },
+            "pending_arguments": {
+              "granularity": "daily",
+              "start_date": "2026-11-01",
+              "end_date": "2026-11-14",
+              "include_calculation_basis": true
+            },
+            "success_criterion": "返回完整逐日读数及日均计算口径，且日均值可由读数复算一致，或明确 daily_average_m3 的优先计算规则。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C7"
+            ],
+            "tool": null,
+            "arguments": {},
+            "pending_arguments": {
+              "asset_id": "GM-02",
+              "period": "2026-11",
+              "rule_type": "meter_reading_anomaly_threshold_or_normal_range"
+            },
+            "success_criterion": "返回明确异常判定阈值、正常区间或排班匹配规则，可据此判断趋势是否异常。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": null,
+            "arguments": {},
+            "pending_arguments": {
+              "asset_id": "GM-02",
+              "action": "full_calibration_check",
+              "date": "2026-11-15"
+            },
+            "success_criterion": "返回是否允许执行全面校验、是否需要审批及执行条件。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 130.156
+}

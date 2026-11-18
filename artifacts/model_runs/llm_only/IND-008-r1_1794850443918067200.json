@@ -1,0 +1,200 @@
+{
+  "case_id": "IND-008",
+  "run_id": "IND-008-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1187,
+    "completion_tokens": 7340,
+    "total_tokens": 8527
+  },
+  "latency_seconds": 98.531,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-008-r1",
+      "case_id": "IND-008",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "今天动火作业许可证批了没有？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "今天系统里有两张动火证。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits"
+              }
+            ],
+            "reason": "trace[c1] 查询 date=2026-11-14、site=华南二厂、permit_type=hot_work，返回 permits 数组包含 2 条记录。"
+          },
+          {
+            "id": "C2",
+            "text": "HW-261114-001（二号厂房三楼管道焊接）已批",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[0].permit_id"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[0].description"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[0].status"
+              }
+            ],
+            "reason": "permits[0].permit_id=HW-261114-001，description=二号厂房三楼管道焊接，status=APPROVED。"
+          },
+          {
+            "id": "C3",
+            "text": "安全主管刘强7:50审批的",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[0].approved_by"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[0].approved_at"
+              }
+            ],
+            "reason": "permits[0].approved_by=安全主管 刘强，approved_at=2026-11-14T07:50:00+08:00。"
+          },
+          {
+            "id": "C4",
+            "text": "有效期到18:00",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[0].valid_until"
+              }
+            ],
+            "reason": "permits[0].valid_until=2026-11-14T18:00:00+08:00。"
+          },
+          {
+            "id": "C5",
+            "text": "HW-261114-002（一号厂房底层设备切割）还在审核中",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[1].permit_id"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[1].description"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[1].status"
+              }
+            ],
+            "reason": "permits[1].permit_id=HW-261114-002，description=一号厂房底层设备切割，status=PENDING_REVIEW。"
+          },
+          {
+            "id": "C6",
+            "text": "7:30提交的",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[1].submitted_at"
+              }
+            ],
+            "reason": "permits[1].submitted_at=2026-11-14T07:30:00+08:00。"
+          },
+          {
+            "id": "C7",
+            "text": "还没批",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[1].status"
+              }
+            ],
+            "reason": "permits[1].status=PENDING_REVIEW，且该记录未返回 approved_at，未显示已批准。"
+          },
+          {
+            "id": "C8",
+            "text": "如果是第二张，目前还没出结果。",
+            "status": "SUPPORT",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[1].status"
+              }
+            ],
+            "reason": "第二张 HW-261114-002 的 status=PENDING_REVIEW，未返回审批结果字段。"
+          }
+        ],
+        "gaps": [],
+        "actions": []
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 98.531
+}

@@ -1,0 +1,300 @@
+{
+  "case_id": "IND-027",
+  "run_id": "IND-027-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1980,
+    "completion_tokens": 13892,
+    "total_tokens": 15872
+  },
+  "latency_seconds": 75.078,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-027-r1",
+      "case_id": "IND-027",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "压缩机 K-102 刚才跳车了，什么原因？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "14:05:12 变频器 VFD-102 发生重启事件",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[2].ts"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[2].source"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[2].event"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[2].detail"
+              }
+            ],
+            "reason": "事件日志在 14:05:12 记录 VFD-102 RESTART，详情为变频器重启完成并恢复输出频率 48Hz。"
+          },
+          {
+            "id": "C2",
+            "text": "导致压缩机转速波动",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志未提供 K-102 转速/频率趋势读数，无法验证是否发生转速波动。"
+          },
+          {
+            "id": "C3",
+            "text": "进而于 14:05:08 触发喘振报警 ALM-445",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[1].ts"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[2].ts"
+              }
+            ],
+            "reason": "喘振报警 ALM-445 发生在 14:05:08，早于 VFD-102 重启完成时间 14:05:12，时序不支持由该重启导致该报警。"
+          },
+          {
+            "id": "C4",
+            "text": "于 14:05:08 触发喘振报警 ALM-445",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[1].ts"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[1].event"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[1].detail"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.readings[3].value"
+              }
+            ],
+            "reason": "事件日志记录 14:05:08 K-102 ALM-445 喘振报警触发，振动值 12.3 mm/s；振动读数同时间也为 12.3 mm/s。"
+          },
+          {
+            "id": "C5",
+            "text": "喘振保护动作",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[3].detail"
+              }
+            ],
+            "reason": "TRIP 事件详情写明原因：喘振保护动作。"
+          },
+          {
+            "id": "C6",
+            "text": "于 14:05:18 联锁跳车",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[3].ts"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[3].event"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[3].detail"
+              }
+            ],
+            "reason": "事件日志记录 14:05:18 K-102 TRIP，压缩机联锁跳车。"
+          },
+          {
+            "id": "C7",
+            "text": "根本原因为变频器异常重启引起喘振",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[0].ts"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[0].event"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[1].ts"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[2].ts"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.results[0].content"
+              }
+            ],
+            "reason": "进气阀故障 14:04:55 早于喘振报警 14:05:08，VFD-102 重启完成 14:05:12 晚于喘振报警；知识库结果指出进气阀故障是首要排查项，日志不支持变频器重启为喘振根本原因。"
+          },
+          {
+            "id": "C8",
+            "text": "建议检查 VFD-102 重启原因",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[2].source"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.events[2].event"
+              }
+            ],
+            "reason": "事件日志存在 VFD-102 RESTART 事件，检查该重启原因具有直接事件对象。"
+          },
+          {
+            "id": "C9",
+            "text": "确认变频器控制回路稳定性后恢复运行",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [],
+            "reason": "日志未提供变频器控制回路稳定性判据，也未提供 K-102 恢复运行/放行条件。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C2"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少 K-102 在 14:04 至 14:06 的转速/频率读数，无法验证“转速波动”。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少 K-102 恢复运行放行条件和变频器控制回路稳定性判据。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C2"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "K-102",
+              "window": "30min"
+            },
+            "pending_arguments": {
+              "signal": "speed_or_frequency"
+            },
+            "success_criterion": "获得 14:04 至 14:06 K-102 转速/频率连续读数，可判断是否存在波动。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "query": "K-102 恢复运行条件 变频器控制回路稳定性",
+              "asset_type": "compressor"
+            },
+            "pending_arguments": {
+              "site": "乙烯裂解装置",
+              "workshop": "压缩工段"
+            },
+            "success_criterion": "返回 K-102 恢复运行放行条件及变频器控制回路稳定性判据。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 75.078
+}

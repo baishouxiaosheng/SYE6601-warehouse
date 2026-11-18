@@ -1,0 +1,431 @@
+{
+  "case_id": "IND-018",
+  "run_id": "IND-018-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1606,
+    "completion_tokens": 10204,
+    "total_tokens": 11810
+  },
+  "latency_seconds": 45.704,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-018-r1",
+      "case_id": "IND-018",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "查看三号储罐液位传感器数据"
+          },
+          {
+            "id": "G2",
+            "text": "判断三号储罐液位传感器是否有问题"
+          },
+          {
+            "id": "G3",
+            "text": "确认当前液位及历史趋势"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "三号储罐有两个液位传感器。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors"
+              }
+            ],
+            "reason": "c1 将三号储罐解析为 TK-03；c2 对 TK-03 返回 level_sensors 数组，包含 LT-TK03-01 与 LT-TK03-02 两个传感器。"
+          },
+          {
+            "id": "C2",
+            "text": "雷达液位计（LT-TK03-01）数据正常",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[0].sensor_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[0].type"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[0].data_quality"
+              }
+            ],
+            "reason": "c2 中 LT-TK03-01 的 type 为雷达液位计，data_quality 为 GOOD。"
+          },
+          {
+            "id": "C3",
+            "text": "当前液位62.3%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.as_of"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[0].level_percent"
+              }
+            ],
+            "reason": "c2 的 as_of 为 2026-11-14T14:00:00+08:00，LT-TK03-01 当前 level_percent 为 62.3。"
+          },
+          {
+            "id": "C4",
+            "text": "趋势平稳上升",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history"
+              }
+            ],
+            "reason": "c3 中 LT-TK03-01 从 08:00 到 14:00 为 55.2、58.1、60.5、62.3，可复算为上升；但“平稳”需要趋势波动或斜率阈值规则，日志未提供。"
+          },
+          {
+            "id": "C5",
+            "text": "差压液位计（LT-TK03-02）从11:30开始离线",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[1].last_valid"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[1].data_quality"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[2].LT-TK03-02"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[3].LT-TK03-02"
+              }
+            ],
+            "reason": "c2 显示 LT-TK03-02 最后有效时间为 11:30，14:00 状态为 SENSOR_OFFLINE；c3 显示 11:30 有值、14:00 为 null。但日志缺少 11:30 至 14:00 的更细粒度状态，无法确认离线是否恰好从 11:30 开始。"
+          },
+          {
+            "id": "C6",
+            "text": "最后一次有效读数是60.1%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[1].last_valid"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[2].LT-TK03-02"
+              }
+            ],
+            "reason": "c2 中 LT-TK03-02 的 last_valid 为 11:30；c3 中 11:30 的 LT-TK03-02 读数为 60.1。"
+          },
+          {
+            "id": "C7",
+            "text": "此前两个传感器的读数基本一致（偏差<0.5%）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1",
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[0].LT-TK03-01"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[0].LT-TK03-02"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].LT-TK03-01"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[1].LT-TK03-02"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[2].LT-TK03-01"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history[2].LT-TK03-02"
+              }
+            ],
+            "reason": "c3 中 08:00 差值为 0.3，10:00 差值为 0.3，11:30 差值为 0.4，均小于 0.5。"
+          },
+          {
+            "id": "C8",
+            "text": "所以雷达液位计的数据可以暂时作为参考",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[0].data_quality"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[1].data_quality"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.history"
+              }
+            ],
+            "reason": "雷达 GOOD、差压 SENSOR_OFFLINE 以及历史一致性有证据，但“可暂时作为参考”属于数据使用/放行判断，日志未提供单传感器参考或数据质量放行规则。"
+          },
+          {
+            "id": "C9",
+            "text": "但差压液位计的离线原因需要排查",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[1].data_quality"
+              }
+            ],
+            "reason": "c2 显示 LT-TK03-02 为 SENSOR_OFFLINE，但日志未提供离线是否必须排查、原因分析要求或响应规则。"
+          },
+          {
+            "id": "C10",
+            "text": "建议通知仪表维修人员检查",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.level_sensors[1].data_quality"
+              }
+            ],
+            "reason": "c2 显示 LT-TK03-02 为 SENSOR_OFFLINE，但日志未提供离线传感器应通知仪表维修或派单检查的厂内规则。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C4"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少用于判断液位趋势是否“平稳”的阈值、斜率或波动规则。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少 2026-11-14T11:30:00+08:00 至 14:00:00+08:00 之间 LT-TK03-02 的更细粒度读数或状态，无法确认离线开始时间。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C8"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少一个传感器 GOOD、另一个传感器 SENSOR_OFFLINE 时，是否允许将 GOOD 传感器数据临时作为参考的数据质量/放行规则。"
+          },
+          {
+            "id": "GAP4",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少差压液位计 SENSOR_OFFLINE 时是否需要排查离线原因、排查范围或响应要求的规则。"
+          },
+          {
+            "id": "GAP5",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C10"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少差压液位计 SENSOR_OFFLINE 时是否应通知仪表维修人员检查的派单/通知规则。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C4"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "TK-03",
+              "sensor_id": "LT-TK03-01",
+              "time_window": "6h"
+            },
+            "pending_arguments": {
+              "rule_type": "trend_stability"
+            },
+            "success_criterion": "返回趋势平稳/异常判定阈值或规则，可据此复算 08:00 至 14:00 的 LT-TK03-01 趋势是否平稳。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": "plant_monitor.get_tank_level",
+            "arguments": {
+              "asset_id": "TK-03",
+              "sensor_id": "LT-TK03-02",
+              "start_time": "2026-11-14T11:30:00+08:00",
+              "end_time": "2026-11-14T14:00:00+08:00"
+            },
+            "pending_arguments": {
+              "interval": "1min"
+            },
+            "success_criterion": "返回 11:30 至 14:00 的逐点 level_percent 或 data_quality，可识别首个 null 或 SENSOR_OFFLINE 时间戳。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C8"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "TK-03",
+              "sensor_id": "LT-TK03-01",
+              "other_sensor_id": "LT-TK03-02"
+            },
+            "pending_arguments": {
+              "policy_type": "single_sensor_reference"
+            },
+            "success_criterion": "返回当 LT-TK03-01 为 GOOD 且 LT-TK03-02 为 SENSOR_OFFLINE 时，是否允许临时参考 LT-TK03-01 数据及所需条件。"
+          },
+          {
+            "id": "A4",
+            "gap_ids": [
+              "GAP4"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "TK-03",
+              "sensor_id": "LT-TK03-02",
+              "data_quality": "SENSOR_OFFLINE"
+            },
+            "pending_arguments": {
+              "rule_type": "offline_troubleshooting"
+            },
+            "success_criterion": "返回差压液位计 SENSOR_OFFLINE 时是否需要排查原因、排查范围或响应要求。"
+          },
+          {
+            "id": "A5",
+            "gap_ids": [
+              "GAP5"
+            ],
+            "target_claims": [
+              "C10"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "TK-03",
+              "sensor_id": "LT-TK03-02",
+              "data_quality": "SENSOR_OFFLINE"
+            },
+            "pending_arguments": {
+              "rule_type": "maintenance_notification"
+            },
+            "success_criterion": "返回差压液位计 SENSOR_OFFLINE 时是否应通知仪表维修人员检查及对应派单/通知条件。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 45.704
+}

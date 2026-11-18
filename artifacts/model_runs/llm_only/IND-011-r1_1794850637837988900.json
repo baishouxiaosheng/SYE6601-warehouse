@@ -1,0 +1,334 @@
+{
+  "case_id": "IND-011",
+  "run_id": "IND-011-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1404,
+    "completion_tokens": 9835,
+    "total_tokens": 11239
+  },
+  "latency_seconds": 94.313,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-011-r1",
+      "case_id": "IND-011",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "查询一号变压器异响相关记录"
+          },
+          {
+            "id": "G2",
+            "text": "判断当前运行数据是否异常"
+          },
+          {
+            "id": "G3",
+            "text": "判断能否远程确定异响具体原因"
+          },
+          {
+            "id": "G4",
+            "text": "给出后续处理建议"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "一号变压器目前负载72%",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.asset_id"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.load_percent"
+              }
+            ],
+            "reason": "c1 将一号变压器映射为 XFMR-01，c2 返回 load_percent=72。"
+          },
+          {
+            "id": "C2",
+            "text": "油温58℃、绕组温度65℃都在正常范围",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.oil_temp_c"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.winding_temp_c"
+              }
+            ],
+            "reason": "c2 返回 oil_temp_c=58、winding_temp_c=65，但日志未提供正常范围或告警阈值，无法验证“正常范围”。"
+          },
+          {
+            "id": "C3",
+            "text": "数据上看没有异常",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.data_quality"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.load_percent"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.oil_temp_c"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.winding_temp_c"
+              }
+            ],
+            "reason": "c2 有当前读数和 data_quality=GOOD，但日志未提供异常判定规则/阈值，也未查询告警事件，不能确认无异常。"
+          },
+          {
+            "id": "C4",
+            "text": "历史记录里6月15日巡检报告过一次轻微嗡嗡声",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.records[0].date"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.records[0].notes"
+              }
+            ],
+            "reason": "c3 返回 2026-06-15 巡检记录，notes 含“巡检人员报告轻微嗡嗡声”。"
+          },
+          {
+            "id": "C5",
+            "text": "当时判断正常",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.records[0].notes"
+              }
+            ],
+            "reason": "c3 notes 明确“判断为正常铁芯振动，无需处理”。"
+          },
+          {
+            "id": "C6",
+            "text": "不过变压器没装振动传感器",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.vibration_sensors"
+              }
+            ],
+            "reason": "c2 返回 vibration_sensors=NOT_INSTALLED。"
+          },
+          {
+            "id": "C7",
+            "text": "没法远程判断异响的具体原因",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.excerpt"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.vibration_sensors"
+              }
+            ],
+            "reason": "c4 说明需结合振动频谱和红外测温综合判断，仅凭声响描述无法确定原因；c2 显示振动传感器未安装，现有远程数据不足。"
+          },
+          {
+            "id": "C8",
+            "text": "如果响声和以前不一样或者变大了，建议安排现场检查。",
+            "status": "MISSING_RULE",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G4"
+            ],
+            "high_risk": true,
+            "evidence": [],
+            "reason": "日志未提供异响变化或变大时触发现场检查的规程、审批条件或处理规则。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C2"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少油温、绕组温度、负载的正常范围或告警阈值，无法判断当前温度/负载是否处于正常范围。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C3"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少异常判定规则或告警阈值，无法由当前读数直接确认“没有异常”。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C3"
+            ],
+            "criticality": "MEDIUM",
+            "description": "未查询当前或近期告警/异常事件记录，缺少“无异常”的事件证据。"
+          },
+          {
+            "id": "GAP4",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C8"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少异响与以往不同或变大时安排现场检查的触发条件、审批要求或处理规程。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C2"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "XFMR-01"
+            },
+            "pending_arguments": {
+              "metrics": [
+                "load_percent",
+                "oil_temp_c",
+                "winding_temp_c"
+              ],
+              "threshold_type": "normal_range/alarm"
+            },
+            "success_criterion": "返回各指标正常区间或告警阈值，可复算当前值是否越限。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C3"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "XFMR-01"
+            },
+            "pending_arguments": {
+              "metrics": [
+                "load_percent",
+                "oil_temp_c",
+                "winding_temp_c"
+              ],
+              "threshold_type": "abnormal/alarm"
+            },
+            "success_criterion": "返回异常判定阈值或规则，可判断当前数据是否异常。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C3"
+            ],
+            "tool": null,
+            "arguments": {
+              "asset_id": "XFMR-01"
+            },
+            "pending_arguments": {
+              "time_range": "current_or_recent"
+            },
+            "success_criterion": "返回当前/近期告警或异常事件记录，或明确无告警记录。"
+          },
+          {
+            "id": "A4",
+            "gap_ids": [
+              "GAP4"
+            ],
+            "target_claims": [
+              "C8"
+            ],
+            "tool": "knowledge_base.search",
+            "arguments": {
+              "collection": "配电设备故障手册",
+              "query": {
+                "equipment_model": "SCB13-800",
+                "symptom": "异响",
+                "action": "现场检查"
+              }
+            },
+            "pending_arguments": {},
+            "success_criterion": "返回异响变化或变大时现场检查的触发条件、审批要求或处理流程。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 94.313
+}

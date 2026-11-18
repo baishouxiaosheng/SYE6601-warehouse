@@ -1,0 +1,510 @@
+{
+  "banner": "外部对照，不参与评分与标注；需团队确认是否允许",
+  "n_runs": 60,
+  "category_counts": {
+    "证据不足时如实说明": 9,
+    "正确且充分": 11,
+    "存在错误": 40
+  },
+  "category_x_v2_grade": {
+    "正确且充分": {
+      "INSUFFICIENT": 6,
+      "QUALIFIED": 5
+    },
+    "证据不足时如实说明": {
+      "QUALIFIED": 8,
+      "INSUFFICIENT": 1
+    },
+    "存在错误": {
+      "INSUFFICIENT": 18,
+      "QUALIFIED": 22
+    }
+  },
+  "category_x_v2_alert": {
+    "正确且充分": {
+      "alert": 2,
+      "no_alert": 9
+    },
+    "证据不足时如实说明": {
+      "no_alert": 9
+    },
+    "存在错误": {
+      "no_alert": 32,
+      "alert": 8
+    }
+  },
+  "category_x_v1_grade": {
+    "正确且充分": {
+      "B": 1,
+      "C": 3,
+      "D": 3,
+      "E": 4
+    },
+    "证据不足时如实说明": {
+      "B": 1,
+      "C": 3,
+      "D": 2,
+      "E": 3
+    },
+    "存在错误": {
+      "C": 17,
+      "B": 10,
+      "E": 4,
+      "D": 9
+    }
+  },
+  "summary": {
+    "error_runs_alert_rate": {
+      "numerator": 8,
+      "denominator": 40,
+      "value": 0.2,
+      "reason": null
+    },
+    "error_runs_insufficient_rate": {
+      "numerator": 18,
+      "denominator": 40,
+      "value": 0.45,
+      "reason": null
+    },
+    "non_error_runs_alert_rate": {
+      "numerator": 2,
+      "denominator": 20,
+      "value": 0.1,
+      "reason": null
+    },
+    "non_error_runs_insufficient_rate": {
+      "numerator": 7,
+      "denominator": 20,
+      "value": 0.35,
+      "reason": null
+    }
+  },
+  "per_run": [
+    {
+      "case_id": "IND-001",
+      "category": "证据不足时如实说明",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-002",
+      "category": "正确且充分",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-003",
+      "category": "证据不足时如实说明",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-004",
+      "category": "正确且充分",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-005",
+      "category": "证据不足时如实说明",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-006",
+      "category": "正确且充分",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-007",
+      "category": "正确且充分",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-008",
+      "category": "正确且充分",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-009",
+      "category": "正确且充分",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-010",
+      "category": "正确且充分",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-011",
+      "category": "证据不足时如实说明",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-012",
+      "category": "正确且充分",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-013",
+      "category": "证据不足时如实说明",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-014",
+      "category": "证据不足时如实说明",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-015",
+      "category": "证据不足时如实说明",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-016",
+      "category": "正确且充分",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-017",
+      "category": "证据不足时如实说明",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-018",
+      "category": "正确且充分",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-019",
+      "category": "正确且充分",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-020",
+      "category": "证据不足时如实说明",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-021",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-022",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-023",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-024",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-025",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-026",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-027",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-028",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-029",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-030",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-031",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-032",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-033",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-034",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-035",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-036",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-037",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-038",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-039",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-040",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-041",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-042",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-043",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-044",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-045",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-046",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-047",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-048",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-049",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-050",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-051",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "D"
+    },
+    {
+      "case_id": "IND-052",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-053",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-054",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-055",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-056",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "B"
+    },
+    {
+      "case_id": "IND-057",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-058",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": true,
+      "v1_grade": "C"
+    },
+    {
+      "case_id": "IND-059",
+      "category": "存在错误",
+      "v2_grade": "QUALIFIED",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    },
+    {
+      "case_id": "IND-060",
+      "category": "存在错误",
+      "v2_grade": "INSUFFICIENT",
+      "v2_high_risk_alert": false,
+      "v1_grade": "E"
+    }
+  ],
+  "parser": {
+    "n_table": 60,
+    "n_listing": 60,
+    "disagreements": []
+  },
+  "generated_at": "2026-11-16T16:49:42+00:00"
+}

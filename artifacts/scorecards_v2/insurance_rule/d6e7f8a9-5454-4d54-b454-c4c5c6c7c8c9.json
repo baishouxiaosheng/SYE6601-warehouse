@@ -1,0 +1,708 @@
+{
+  "scorecard_version": "07a-scorecard-v2",
+  "rule_version": "2.1.0",
+  "policy_version": "2.1.0",
+  "policy_status": "PROVISIONAL",
+  "policy_sha256": "f6a12bb2d19e5a3951f4048022ac07f146bd5aef15074754e8b283b2f65db86f",
+  "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+  "case_id": "INS-A54",
+  "upstream_versions": {
+    "graph_version": "INS-A54-evidence-graph-v1",
+    "plan_version": "INS-A54-supplementary-plan-v1",
+    "answer_version": null,
+    "answer_sha256": "7b734be767603a07",
+    "proposal_status": "proposed"
+  },
+  "source": {
+    "method": "rule",
+    "engine": "01A-egraph",
+    "adapter": "egraph_v1",
+    "adapter_version": "1.0.0",
+    "log_record_available": true,
+    "files": {
+      "graph": "INS-A54_graph.json",
+      "plan": "INS-A54_plan.json"
+    }
+  },
+  "question": "客户的车险去年续保时加了医保外用药扩展条款，这次事故用了进口药，能报吗？",
+  "grade": "QUALIFIED",
+  "grade_label_zh": "附保留说明",
+  "high_risk_alert": false,
+  "high_risk_alert_text": "",
+  "support_score": 0.4545,
+  "coverage_score": 1.0,
+  "uncertainty_score": 0.4545,
+  "overall": 0.5909,
+  "overall_display": true,
+  "blockers": [],
+  "qualifications": [
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-003",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-006",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-007",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-009",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-010",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-011",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "claims_without_checks=6"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "orphan_evidence=3"
+    }
+  ],
+  "severe_issues": [],
+  "dimensions": {
+    "support": {
+      "numerator": 5,
+      "denominator": 11,
+      "value": 0.4545,
+      "breakdown": {
+        "SUPPORT": 5,
+        "REFUTE": 0,
+        "UNKNOWN": 6,
+        "CONFLICT": 0,
+        "MISSING_RULE": 0,
+        "excluded_declared_unknown": 0
+      },
+      "rule": "分母=措辞为 DEFINITE/HEDGED/SCOPED_PARTIAL 的结论数；分子=其中上游状态为 SUPPORT 的条数。UNKNOWN 不给半分。DECLARED_UNKNOWN 不计入。",
+      "weight": 0.5
+    },
+    "coverage": {
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0,
+      "breakdown": {
+        "ADDRESSED_SUPPORTED": 1,
+        "ADDRESSED_DECLARED_UNKNOWN": 0,
+        "ADDRESSED_UNSUPPORTED": 0,
+        "NOT_ADDRESSED": 0,
+        "lexical_fallback_goals": 0
+      },
+      "rule": "分母=用户目标数；分子=有关联结论（DEFINITE/HEDGED/SCOPED_PARTIAL）或明确声明无法确定（DECLARED_UNKNOWN）的目标数。关联优先用上游 related_goals/covers_goals/边，退化为词面匹配时标 lexical_fallback。",
+      "weight": 0.25
+    },
+    "uncertainty": {
+      "numerator": 5.0,
+      "denominator": 11,
+      "value": 0.4545,
+      "breakdown": {
+        "judgements": {
+          "APPROPRIATE": 5,
+          "OVERCLAIM": 6
+        },
+        "cells": {
+          "DEFINITE×SUPPORT": 5,
+          "DEFINITE×UNKNOWN": 6
+        },
+        "unchecked_default_unknown": 6,
+        "checked_only": {
+          "numerator": 5.0,
+          "denominator": 5,
+          "value": 1.0
+        }
+      },
+      "rule": "对每条结论按 policy.expression_matrix 的 (措辞×状态) 查表得分，分母=全部结论。如实声明无法确定（DECLARED_UNKNOWN×UNKNOWN/MISSING_RULE/CONFLICT）得满分。breakdown.checked_only 仅供参考：排除了“未被任何 check 命中而默认 UNKNOWN”的结论。",
+      "weight": 0.25
+    }
+  },
+  "review_sequence": [
+    "CLM-003",
+    "CLM-006",
+    "CLM-007",
+    "CLM-009",
+    "CLM-010",
+    "CLM-011"
+  ],
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "保单 AUTO-260401-8856 主险有效",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-001",
+          "kind": "field_restatement",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-001",
+          "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+          "event_id": "c1",
+          "json_path": "trace[c1].result.policy_id",
+          "pointer": "/trace/0/result/policy_id",
+          "excerpt": "字段 policy_id=AUTO-260401-8856 与结论复述的 AUTO-260401-8856 逐字一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "但医保外用药扩展条款（MED-EXT-01）在当前保单年度（2026-2027）未续保",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-002",
+          "kind": "field_restatement",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-002",
+          "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+          "event_id": "c2",
+          "json_path": "trace[c2].result.endorsement_ids[0]",
+          "pointer": "/trace/1/result/endorsement_ids/0",
+          "excerpt": "字段 endorsement_ids=MED-EXT-01 与结论复述的 MED-EXT-01 逐字一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "linkage_method": "upstream",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": true,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "sole_goal_main_claim"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "已过期（有效期截止 2026-03-31）",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "主险条款明确约定'按国家基本医疗保险的标准核定医疗费用",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:inference"
+      ],
+      "upstream_strength": "inference",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-003",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-006",
+          "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+          "event_id": "c6",
+          "json_path": "trace[c6].result.excerpt",
+          "pointer": "/trace/7/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.75）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+          "event_id": "c6",
+          "json_path": "trace[c6].result.excerpt",
+          "pointer": "/trace/7/result/excerpt",
+          "excerpt": "按国家基本医疗保险的标准核定医疗费用。超出基本医疗保险目录范围的费用不在主险保障范围内，须另行投保医保外用药扩展条款方可承保。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "超出医保目录范围的费用须另行投保扩展条款方可承保'",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-004",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-006",
+          "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+          "event_id": "c6",
+          "json_path": "trace[c6].result.excerpt",
+          "pointer": "/trace/7/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.83）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+          "event_id": "c6",
+          "json_path": "trace[c6].result.excerpt",
+          "pointer": "/trace/7/result/excerpt",
+          "excerpt": "按国家基本医疗保险的标准核定医疗费用。超出基本医疗保险目录范围的费用不在主险保障范围内，须另行投保医保外用药扩展条款方可承保。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:承保"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-006",
+      "text": "因此本次事故中 180 万元医保外用药费用（进口钛合金固定板 120 万 + 进口止痛药 60 万）不在保障范围内",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:保障范围"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-007",
+      "text": "医保范围内的费用：社保结算 520 万元后剩余自费部分 150 万元",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-008",
+      "text": "在主险医疗费用限额 1",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-005",
+          "kind": "rule_content_support",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-006",
+          "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+          "event_id": "c6",
+          "json_path": "trace[c6].result.excerpt",
+          "pointer": "/trace/7/result/excerpt",
+          "excerpt": "结论内容与依据 RULE-001 一致（覆盖度 0.62）"
+        },
+        {
+          "check_id": null,
+          "kind": "rule",
+          "verdict": null,
+          "evidence_id": "RULE-001",
+          "run_id": "d6e7f8a9-5454-4d54-b454-c4c5c6c7c8c9",
+          "event_id": "c6",
+          "json_path": "trace[c6].result.excerpt",
+          "pointer": "/trace/7/result/excerpt",
+          "excerpt": "按国家基本医疗保险的标准核定医疗费用。超出基本医疗保险目录范围的费用不在主险保障范围内，须另行投保医保外用药扩展条款方可承保。"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-009",
+      "text": "000 万元内",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-010",
+      "text": "可赔付 1",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:赔付"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-011",
+      "text": "000 元",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    }
+  ],
+  "goals": [
+    {
+      "goal_id": "GOAL-001",
+      "text": "客户的车险去年续保时加了医保外用药扩展条款，这次事故用了进口药，能报吗",
+      "question_type": "status_query",
+      "coverage_state": "ADDRESSED_SUPPORTED",
+      "coverage_state_zh": "已回应且有支持",
+      "linked_claims": [
+        "CLM-002"
+      ],
+      "linkage_method": "upstream",
+      "upstream_answered": true
+    }
+  ],
+  "gaps": [],
+  "build_risks": {
+    "unmapped_sentences": {
+      "count": 0,
+      "items": []
+    },
+    "goals_without_claims": [],
+    "goals_lexical_fallback": [],
+    "lexical_fallback_links": 0,
+    "orphan_evidence": [
+      "MAT-003",
+      "MAT-004",
+      "MAT-005"
+    ],
+    "claims_without_checks": [
+      "CLM-003",
+      "CLM-006",
+      "CLM-007",
+      "CLM-009",
+      "CLM-010",
+      "CLM-011"
+    ],
+    "unchecked_default_unknown": [
+      "CLM-003",
+      "CLM-006",
+      "CLM-007",
+      "CLM-009",
+      "CLM-010",
+      "CLM-011"
+    ],
+    "review_status": {
+      "proposed_nodes": 13,
+      "unresolved_nodes": 0,
+      "proposed_edges": 0,
+      "unresolved_edges": 0,
+      "proposed_claims": 11
+    },
+    "gap_missing_condition_not_node": [],
+    "dangling_action_gap_refs": [],
+    "recommendations_unscored": [
+      {
+        "id": "OBL-012",
+        "text": "建议提醒客户在下次续保时确认附加条款的续保状态"
+      }
+    ],
+    "b_review_unmatched": [],
+    "scope_statement": "本成绩单只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。"
+  },
+  "supplement": {
+    "plan_action_count": 0,
+    "executable": 0,
+    "needs_confirmation": 0,
+    "manual": 0,
+    "actions": []
+  },
+  "scope_note": "本成绩单只评价上游（01A 建图 / 02B 审核）已建模的结论、证据与缺口；结论状态由上游给出，07A 不重新判断。未被抽取的结论、未被发现的规则与日志外事实不在评价范围内。",
+  "score_semantics": "本成绩单的分数是“基于现有日志的证据审核结果”，不是回答正确的概率；未经独立标注数据校准前不得解读为正确率。等级只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。",
+  "notes": [
+    "1 条推荐类结论（OBL）上游未给出前提关联，未计入评分，只在建链风险中披露。"
+  ],
+  "generated_by": {
+    "package": "confidence_07a",
+    "package_version": "2.1.0",
+    "scorecard_version": "07a-scorecard-v2",
+    "adapter": "egraph_v1",
+    "model_called": false
+  }
+}

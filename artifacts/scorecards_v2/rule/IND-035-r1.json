@@ -1,0 +1,642 @@
+{
+  "scorecard_version": "07a-scorecard-v2",
+  "rule_version": "2.1.0",
+  "policy_version": "2.1.0",
+  "policy_status": "PROVISIONAL",
+  "policy_sha256": "f6a12bb2d19e5a3951f4048022ac07f146bd5aef15074754e8b283b2f65db86f",
+  "run_id": "IND-035-r1",
+  "case_id": "IND-035",
+  "upstream_versions": {
+    "graph_version": "IND-035-evidence-graph-v1",
+    "plan_version": "IND-035-supplementary-plan-v1",
+    "answer_version": null,
+    "answer_sha256": "da0c9a8c07daae5a",
+    "proposal_status": "proposed"
+  },
+  "source": {
+    "method": "rule",
+    "engine": "01A-egraph",
+    "adapter": "egraph_v1",
+    "adapter_version": "1.0.0",
+    "log_record_available": true,
+    "files": {
+      "graph": "IND-035_graph.json",
+      "plan": "IND-035_plan.json"
+    }
+  },
+  "question": "BT-261114-D01 批次的涂膜厚度测了吗？合格吗？",
+  "grade": "QUALIFIED",
+  "grade_label_zh": "附保留说明",
+  "high_risk_alert": false,
+  "high_risk_alert_text": "",
+  "support_score": 0.375,
+  "coverage_score": 1.0,
+  "uncertainty_score": 0.375,
+  "overall": 0.5312,
+  "overall_display": true,
+  "blockers": [],
+  "qualifications": [
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-002",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-004",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-005",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-006",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-008",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q3_OPEN_GAP",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在未被阻断项覆盖的开放缺口",
+      "detail": "GAP-001 MISSING_DEPENDENCY MEDIUM：缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论",
+      "gap_id": "GAP-001"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "claims_without_checks=4"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "orphan_evidence=1"
+    }
+  ],
+  "severe_issues": [],
+  "dimensions": {
+    "support": {
+      "numerator": 3,
+      "denominator": 8,
+      "value": 0.375,
+      "breakdown": {
+        "SUPPORT": 3,
+        "REFUTE": 0,
+        "UNKNOWN": 5,
+        "CONFLICT": 0,
+        "MISSING_RULE": 0,
+        "excluded_declared_unknown": 0
+      },
+      "rule": "分母=措辞为 DEFINITE/HEDGED/SCOPED_PARTIAL 的结论数；分子=其中上游状态为 SUPPORT 的条数。UNKNOWN 不给半分。DECLARED_UNKNOWN 不计入。",
+      "weight": 0.5
+    },
+    "coverage": {
+      "numerator": 2,
+      "denominator": 2,
+      "value": 1.0,
+      "breakdown": {
+        "ADDRESSED_SUPPORTED": 2,
+        "ADDRESSED_DECLARED_UNKNOWN": 0,
+        "ADDRESSED_UNSUPPORTED": 0,
+        "NOT_ADDRESSED": 0,
+        "lexical_fallback_goals": 0
+      },
+      "rule": "分母=用户目标数；分子=有关联结论（DEFINITE/HEDGED/SCOPED_PARTIAL）或明确声明无法确定（DECLARED_UNKNOWN）的目标数。关联优先用上游 related_goals/covers_goals/边，退化为词面匹配时标 lexical_fallback。",
+      "weight": 0.25
+    },
+    "uncertainty": {
+      "numerator": 3.0,
+      "denominator": 8,
+      "value": 0.375,
+      "breakdown": {
+        "judgements": {
+          "APPROPRIATE": 3,
+          "OVERCLAIM": 5
+        },
+        "cells": {
+          "DEFINITE×SUPPORT": 3,
+          "DEFINITE×UNKNOWN": 5
+        },
+        "unchecked_default_unknown": 4,
+        "checked_only": {
+          "numerator": 3.0,
+          "denominator": 4,
+          "value": 0.75
+        }
+      },
+      "rule": "对每条结论按 policy.expression_matrix 的 (措辞×状态) 查表得分，分母=全部结论。如实声明无法确定（DECLARED_UNKNOWN×UNKNOWN/MISSING_RULE/CONFLICT）得满分。breakdown.checked_only 仅供参考：排除了“未被任何 check 命中而默认 UNKNOWN”的结论。",
+      "weight": 0.25
+    }
+  },
+  "review_sequence": [
+    "CLM-002",
+    "CLM-004",
+    "CLM-005",
+    "CLM-006",
+    "CLM-008"
+  ],
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "批次 BT-261114-D01 防腐底漆涂膜厚度检测结果：膜厚 45-55 μm",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-004",
+          "kind": "field_restatement",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-001",
+          "run_id": "IND-035-r1",
+          "event_id": "c1",
+          "json_path": "trace[c1].result.batch_id",
+          "pointer": "/trace/0/result/batch_id",
+          "excerpt": "字段 batch_id=BT-261114-D01 与结论复述的 BT-261114-D01 逐字一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "linkage_method": "upstream",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": true,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "在规格范围 40-60 μm 内",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "判定合格",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-005",
+          "kind": "status_assertion",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-004",
+          "run_id": "IND-035-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.recent_batches[0].status",
+          "pointer": "/trace/4/result/recent_batches/0/status",
+          "excerpt": "字段 status=PASS 支持该状态断言"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [
+        "GOAL-002"
+      ],
+      "linkage_method": "upstream",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": true,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "喷涂参数正常（喷涂压力 0.35 MPa",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:reading"
+      ],
+      "upstream_strength": "reading",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-002",
+          "kind": "value_match",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-003",
+          "run_id": "IND-035-r1",
+          "event_id": "c3",
+          "json_path": "trace[c3].result.spray_pressure_mpa",
+          "pointer": "/trace/3/result/spray_pressure_mpa",
+          "excerpt": "字段值 0.35 MPa 与结论数值 0.35 MPa 一致"
+        }
+      ],
+      "missing_or_conflicting": [
+        {
+          "check_id": "CHK-001",
+          "kind": "range_basis_missing",
+          "verdict": "UNKNOWN",
+          "evidence_id": null,
+          "run_id": "IND-035-r1",
+          "event_id": null,
+          "json_path": null,
+          "pointer": null,
+          "excerpt": "日志中未找到该参数对应的正常区间或判定基准，按规则保留未知状态"
+        },
+        {
+          "gap_id": "GAP-001",
+          "gap_type": "MISSING_DEPENDENCY",
+          "criticality": "MEDIUM",
+          "description": "缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论"
+        }
+      ],
+      "gap_ids": [
+        "GAP-001"
+      ],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [
+        {
+          "action_id": "ACT-001",
+          "action_type": "rule_lookup",
+          "tool": "knowledge_base.search",
+          "executability": "needs_confirmation"
+        }
+      ],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:压力"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "走枪速度 450 mm/s）",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:reading"
+      ],
+      "upstream_strength": "reading",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-006",
+      "text": "该产品近5批次实测膜厚均值 48.4 μm",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-007",
+      "text": "合格率 100%",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:reading"
+      ],
+      "upstream_strength": "reading",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-003",
+          "kind": "value_match",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-004",
+          "run_id": "IND-035-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.pass_rate_pct",
+          "pointer": "/trace/4/result/pass_rate_pct",
+          "excerpt": "字段值 100 % 与结论数值 100.0 % 一致"
+        },
+        {
+          "check_id": "CHK-006",
+          "kind": "status_assertion",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-004",
+          "run_id": "IND-035-r1",
+          "event_id": "c4",
+          "json_path": "trace[c4].result.recent_batches[0].status",
+          "pointer": "/trace/4/result/recent_batches/0/status",
+          "excerpt": "字段 status=PASS 支持该状态断言"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [
+        "GOAL-002"
+      ],
+      "linkage_method": "upstream",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": true,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-008",
+      "text": "该批次目前处于自然固化阶段",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    }
+  ],
+  "goals": [
+    {
+      "goal_id": "GOAL-001",
+      "text": "BT-261114-D01 批次的涂膜厚度测了吗",
+      "question_type": "status_query",
+      "coverage_state": "ADDRESSED_SUPPORTED",
+      "coverage_state_zh": "已回应且有支持",
+      "linked_claims": [
+        "CLM-001"
+      ],
+      "linkage_method": "upstream",
+      "upstream_answered": true
+    },
+    {
+      "goal_id": "GOAL-002",
+      "text": "合格吗",
+      "question_type": "status_query",
+      "coverage_state": "ADDRESSED_SUPPORTED",
+      "coverage_state_zh": "已回应且有支持",
+      "linked_claims": [
+        "CLM-003",
+        "CLM-007"
+      ],
+      "linkage_method": "upstream",
+      "upstream_answered": true
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "GAP-001",
+      "gap_type": "MISSING_DEPENDENCY",
+      "criticality": "MEDIUM",
+      "description": "缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论",
+      "affected_claims": [
+        "CLM-004"
+      ],
+      "affected_claim_texts": [
+        "喷涂参数正常（喷涂压力 0.35 MPa"
+      ],
+      "cited_by_blocker": false
+    }
+  ],
+  "build_risks": {
+    "unmapped_sentences": {
+      "count": 0,
+      "items": []
+    },
+    "goals_without_claims": [],
+    "goals_lexical_fallback": [],
+    "lexical_fallback_links": 0,
+    "orphan_evidence": [
+      "MAT-002"
+    ],
+    "claims_without_checks": [
+      "CLM-002",
+      "CLM-005",
+      "CLM-006",
+      "CLM-008"
+    ],
+    "unchecked_default_unknown": [
+      "CLM-002",
+      "CLM-005",
+      "CLM-006",
+      "CLM-008"
+    ],
+    "review_status": {
+      "proposed_nodes": 11,
+      "unresolved_nodes": 0,
+      "proposed_edges": 0,
+      "unresolved_edges": 0,
+      "proposed_claims": 8
+    },
+    "gap_missing_condition_not_node": [],
+    "dangling_action_gap_refs": [],
+    "recommendations_unscored": [
+      {
+        "id": "OBL-009",
+        "text": "后续请关注附着力等检测项目"
+      }
+    ],
+    "b_review_unmatched": [],
+    "scope_statement": "本成绩单只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。"
+  },
+  "supplement": {
+    "plan_action_count": 1,
+    "executable": 0,
+    "needs_confirmation": 1,
+    "manual": 0,
+    "actions": [
+      {
+        "action_id": "ACT-001",
+        "action_type": "rule_lookup",
+        "tool": "knowledge_base.search",
+        "executability": "needs_confirmation",
+        "priority": 2,
+        "gap_ids": [
+          "GAP-001"
+        ],
+        "target_claims": [
+          "CLM-004"
+        ],
+        "known_arguments": {
+          "query": "缺少该参数的正常区间或判定基准，无法复算“正常/异常”结论 设备运行标准或工艺参数文件"
+        },
+        "pending_arguments": {
+          "applicable_to": "COAT-SIM-V3"
+        },
+        "success_criterion": "检索到 excerpt 可逐字引用、且 applicable_to 覆盖当前设备型号的条款；若仅有通用条款则视为未满足"
+      }
+    ]
+  },
+  "scope_note": "本成绩单只评价上游（01A 建图 / 02B 审核）已建模的结论、证据与缺口；结论状态由上游给出，07A 不重新判断。未被抽取的结论、未被发现的规则与日志外事实不在评价范围内。",
+  "score_semantics": "本成绩单的分数是“基于现有日志的证据审核结果”，不是回答正确的概率；未经独立标注数据校准前不得解读为正确率。等级只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。",
+  "notes": [
+    "1 条推荐类结论（OBL）上游未给出前提关联，未计入评分，只在建链风险中披露。"
+  ],
+  "generated_by": {
+    "package": "confidence_07a",
+    "package_version": "2.1.0",
+    "scorecard_version": "07a-scorecard-v2",
+    "adapter": "egraph_v1",
+    "model_called": false
+  }
+}

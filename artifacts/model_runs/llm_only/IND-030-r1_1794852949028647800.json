@@ -1,0 +1,256 @@
+{
+  "case_id": "IND-030",
+  "run_id": "IND-030-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 2754,
+    "completion_tokens": 6398,
+    "total_tokens": 9152
+  },
+  "latency_seconds": 29.156,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-030-r1",
+      "case_id": "IND-030",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "库房里有没有 M8 的钛合金螺栓？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "库房中未找到 M8 钛合金螺栓",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.page"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_pages"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.results[*].material"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.note"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.total_skus"
+              }
+            ],
+            "reason": "c1 仅返回 M8 螺栓第1页，共8页，第1页20条中无钛合金；c4 的 material_filter 未生效并提示需精确搜索或翻页；c2 仅说明钛合金紧固件有48个SKU，未给出M8螺栓明细，因此无法确认全量库存中是否存在M8钛合金螺栓。"
+          },
+          {
+            "id": "C2",
+            "text": "当前 M8 螺栓库存以不锈钢（304/316）、碳钢和铝合金材质为主",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.results[*].material"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_pages"
+              }
+            ],
+            "reason": "第1页结果包含304SS、316SS、碳钢和铝合金，但只覆盖156条匹配中的20条，不能据此推断全部M8螺栓库存的材质构成。"
+          },
+          {
+            "id": "C3",
+            "text": "合计 156 个品规",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.total_matches"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.total_matches"
+              }
+            ],
+            "reason": "c1 与 c4 的 total_matches 均为156，支持M8螺栓匹配总数为156。"
+          },
+          {
+            "id": "C4",
+            "text": "如需采购 M8 钛合金螺栓，请告知具体规格和数量，我可以协助发起采购申请",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [],
+            "reason": "日志未提供采购申请工具、权限、审批条件或流程规则，无法判断是否可以协助发起采购申请。"
+          },
+          {
+            "id": "C5",
+            "text": "钛合金紧固件存放于特种材料库B2区",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.note"
+              }
+            ],
+            "reason": "c2.note 直接给出“钛合金紧固件存放于特种材料库-B2区”。"
+          },
+          {
+            "id": "C6",
+            "text": "也可联系库管员周芳确认",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.contact"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.warehouse"
+              }
+            ],
+            "reason": "c3.contact 给出“库管员-周芳”，且 warehouse 为“特种材料库-B2”。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "INCOMPLETE_RESULT",
+            "affects": [
+              "C1",
+              "C2"
+            ],
+            "criticality": "HIGH",
+            "description": "M8螺栓库存只查询第1页，共8页，且钛合金 material_filter 未生效，未覆盖全部156条匹配，无法确认是否存在M8钛合金螺栓或全部材质构成。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C1"
+            ],
+            "criticality": "HIGH",
+            "description": "钛合金紧固件类别显示有48个SKU，但未查询其明细，无法确认是否包含M8螺栓。"
+          },
+          {
+            "id": "GAP3",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C4"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少采购申请发起条件、权限或流程规则，无法判断“可以协助发起采购申请”是否成立。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1",
+              "GAP2"
+            ],
+            "target_claims": [
+              "C1",
+              "C2"
+            ],
+            "tool": "inventory.search",
+            "arguments": {
+              "keyword": "M8 螺栓",
+              "page_size": 20
+            },
+            "pending_arguments": {
+              "page": "2-8",
+              "material_filter": "钛合金（需确认有效参数或改用精确搜索）"
+            },
+            "success_criterion": "返回全部8页结果或钛合金过滤的完整结果，能明确是否存在 material=钛合金 的 M8 螺栓及其 on_hand。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP1",
+              "GAP2"
+            ],
+            "target_claims": [
+              "C1"
+            ],
+            "tool": "inventory.search",
+            "arguments": {
+              "keyword": "M8 钛合金螺栓",
+              "page_size": 20
+            },
+            "pending_arguments": {
+              "page": "1-8"
+            },
+            "success_criterion": "total_matches=0 或返回 M8 钛合金螺栓记录及库存数量。"
+          },
+          {
+            "id": "A3",
+            "gap_ids": [
+              "GAP3"
+            ],
+            "target_claims": [
+              "C4"
+            ],
+            "tool": "procurement.request",
+            "arguments": {},
+            "pending_arguments": {
+              "item": "M8 钛合金螺栓",
+              "spec": "待定",
+              "quantity": "待定"
+            },
+            "success_criterion": "返回可发起采购申请的流程、权限或工具结果。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 29.156
+}

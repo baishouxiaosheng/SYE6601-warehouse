@@ -1,0 +1,589 @@
+method,run_id,variant_id,gold_claim_id,pred_claim_id,align_method,align_score,gold_status,pred_status,gold_expression,pred_expression,is_high_risk,severe,false_support,insufficient_as_err,run_support_score,answer_span,pred_text
+rule+v2,IND-001-r1,,g1,CLM-001,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.6,三号锅炉排烟温度目前218℃,三号锅炉排烟温度目前218℃
+rule+v2,IND-001-r1,,g2,CLM-002,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.6,超出正常范围（140-190℃）,超出正常范围（140-190℃）
+rule+v2,IND-001-r1,,g3,CLM-003,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.6,近两小时持续上升,近两小时持续上升
+rule+v2,IND-001-r1,,g4,CLM-004,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.6,烟道差压285Pa略高于正常上限280Pa,烟道差压285Pa略高于正常上限280Pa
+rule+v2,IND-001-r1,,g5,CLM-005,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,,False,False,False,False,0.6,可能有一定积灰,可能有一定积灰
+rule+v2,IND-001-r1,,g6,CLM-007,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.6,运行手册列出的常见原因包括受热面积灰、过剩空气系数偏高和燃烧器喷嘴磨损,运行手册列出的常见原因包括受热面积灰
+rule+v2,IND-001-r1,,g7,CLM-009,similarity,1.0,UNKNOWN,SUPPORT,DECLARED_UNKNOWN,,False,False,True,False,0.6,目前仅凭远程数据无法确定具体原因,目前仅凭远程数据无法确定具体原因
+rule+v2,IND-001-r1,,g8,CLM-011,similarity,0.8,SUPPORT,UNKNOWN,HEDGED,,False,False,False,False,0.6,建议安排现场检查，优先排查积灰情况，同时检查燃烧器喷嘴和过剩空气系数,优先排查积灰情况
+rule+v2,IND-001-r1,,,CLM-006,extra_pred,,,UNKNOWN,,,,,,,,,但也可能是其他因素
+rule+v2,IND-001-r1,,,CLM-008,extra_pred,,,SUPPORT,,,,,,,,,过剩空气系数偏高和燃烧器喷嘴磨损
+rule+v2,IND-001-r1,,,CLM-012,extra_pred,,,SUPPORT,,,,,,,,,同时检查燃烧器喷嘴和过剩空气系数
+rule+v2,IND-002-r1,,g1,CLM-001,similarity,0.8636,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.5714,保养工单WO-28501已于13:45完成,二号冷水机组保养工单WO-28501已于13:45完成
+rule+v2,IND-002-r1,,g2,CLM-002,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.5714,技术员和主管均已签字确认,技术员和主管均已签字确认
+rule+v2,IND-002-r1,,g3,CLM-003,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.5714,设备锁定已解除,设备锁定已解除
+rule+v2,IND-002-r1,,g4,,,0.8571,SUPPORT,,DEFINITE,,False,False,,,0.5714,油温42℃,
+rule+v2,IND-002-r1,,g5,CLM-004,similarity,1.0,MISSING_RULE,UNKNOWN,DEFINITE,,False,False,False,False,0.5714,油温42℃正常,油温42℃正常
+rule+v2,IND-002-r1,,g6,CLM-005,similarity,1.0,MISSING_RULE,UNKNOWN,DEFINITE,,False,False,False,False,0.5714,冷媒压力680kPa在正常范围,冷媒压力680kPa在正常范围
+rule+v2,IND-002-r1,,g7,CLM-006,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.5714,系统显示可以启动,系统显示可以启动
+rule+v2,IND-002-r1,,g8,CLM-007,similarity,1.0,MISSING_RULE,MISSING_RULE,DEFINITE,,True,False,False,False,0.5714,可以开机,可以开机
+rule+v2,IND-003-r1,,g1,CLM-002,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2727,当前班次抛料率1.4%，超过0.5%的控制标准,超过0.5%的控制标准
+rule+v2,IND-003-r1,,g2,CLM-003,similarity,0.6,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2727,主要集中在3号吸嘴，抛料率5.1%,主要集中在3号吸嘴
+rule+v2,IND-003-r1,,g3,CLM-006,similarity,0.6667,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2727,真空度-45kPa，偏离规格-60kPa约25%,偏离规格-60kPa约25%
+rule+v2,IND-003-r1,,g4,CLM-008,similarity,0.8,UNKNOWN,UNKNOWN,HEDGED,,False,False,False,False,0.2727,3号吸嘴可能有问题,真空度异常说明3号吸嘴可能有问题
+rule+v2,IND-003-r1,,g5,,,0.0909,UNKNOWN,,DECLARED_UNKNOWN,,True,False,,,0.2727,需要现场停机检查后才能确认,
+rule+v2,IND-003-r1,,g6,CLM-012,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2727,7号吸嘴可继续观察,7号吸嘴可继续观察
+rule+v2,IND-003-r1,,g7,CLM-007,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2727,7号吸嘴也有轻微偏离,7号吸嘴也有轻微偏离
+rule+v2,IND-003-r1,,,CLM-001,extra_pred,,,SUPPORT,,,,,,,,,B线贴片机当前班次抛料率1.4%
+rule+v2,IND-003-r1,,,CLM-004,extra_pred,,,SUPPORT,,,,,,,,,抛料率5.1%
+rule+v2,IND-003-r1,,,CLM-005,extra_pred,,,UNKNOWN,,,,,,,,,真空度-45kPa
+rule+v2,IND-003-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,但具体是吸嘴堵塞
+rule+v2,IND-003-r1,,,CLM-010,extra_pred,,,UNKNOWN,,,,,,,,,磨损还是其他原因
+rule+v2,IND-004-r1,,g1,CLM-001,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,True,False,False,False,0.5,上午A线两个批次都已检完并放行,上午A线两个批次都已检完并放行
+rule+v2,IND-004-r1,,g2,CLM-002,similarity,0.8308,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.5,BT-261114-A01和BT-261114-A02的微生物、pH值、密封性检测均合格,BT-261114-A01和BT-261114-A02的微生物
+rule+v2,IND-004-r1,,g3,CLM-004,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,True,False,False,False,0.5,质检主管李明已分别于11:00和14:20签字放行,质检主管李明已分别于11:00和14:20签字放行
+rule+v2,IND-004-r1,,,CLM-003,extra_pred,,,SUPPORT,,,,,,,,,密封性检测均合格
+rule+v2,IND-005-r1,,g1,CLM-001,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2,M12×50不锈钢螺栓库存2400只,M12×50不锈钢螺栓库存2400只
+rule+v2,IND-005-r1,,g2,CLM-002,similarity,0.6667,SUPPORT,SUPPORT,SCOPED_PARTIAL,,False,False,False,False,0.2,已录入系统的预留800只（给WO-28508），按此计算可用1600只,已录入系统的预留800只（给WO-28508）
+rule+v2,IND-005-r1,,g3,CLM-004,similarity,0.6222,MISSING_RULE,SUPPORT,DEFINITE,,False,False,True,False,0.2,共(60×15+32×8)=1156只,明天WO-28510和WO-28511共需M12×50共(60×15+32×8)=1156只
+rule+v2,IND-005-r1,,g4,CLM-005,similarity,0.64,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2,M12×80库存1800只，已录入预留500只，可用1300只,M12×80库存1800只
+rule+v2,IND-005-r1,,g5,CLM-008,similarity,1.0,MISSING_RULE,UNKNOWN,DEFINITE,,False,False,False,False,0.2,明天共需(45×15+24×8)=867只,明天共需(45×15+24×8)=867只
+rule+v2,IND-005-r1,,g6,CLM-010,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,,False,False,False,False,0.2,实际可用量可能比计算值低,实际可用量可能比计算值低
+rule+v2,IND-005-r1,,g7,,,0.2963,SUPPORT,,HEDGED,,False,False,,,0.2,建议领料前与仓库确认实际可用数,
+rule+v2,IND-005-r1,,,CLM-003,extra_pred,,,UNKNOWN,,,,,,,,,按此计算可用1600只
+rule+v2,IND-005-r1,,,CLM-006,extra_pred,,,UNKNOWN,,,,,,,,,已录入预留500只
+rule+v2,IND-005-r1,,,CLM-007,extra_pred,,,UNKNOWN,,,,,,,,,可用1300只
+rule+v2,IND-005-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,不过系统提示部分工单的领料预留尚未录入
+rule+v2,IND-006-r1,,g1,,,0.129,SUPPORT,,DEFINITE,,False,False,,,0.0,"用电285,600度，电费199,920元",
+rule+v2,IND-006-r1,,g2,,,0.4571,SUPPORT,,DEFINITE,,False,False,,,0.0,"9月用电248,300度约173,810元，8月252,100度约176,470元",
+rule+v2,IND-006-r1,,g3,CLM-011,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,10月用电量比9月增加约15%,10月用电量比9月增加约15%
+rule+v2,IND-006-r1,,g4,CLM-014,similarity,0.5,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,"产量也从16,200件增到18,500件（+14.2%）",500件（+14.2%）
+rule+v2,IND-006-r1,,g5,CLM-017,similarity,0.8125,SUPPORT,UNKNOWN,SCOPED_PARTIAL,,False,False,False,False,0.0,从已有数据看，电费增长与产量增长基本匹配,电费增长与产量增长基本匹配
+rule+v2,IND-006-r1,,g6,CLM-020,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,,False,False,False,False,0.0,不能排除设备效率下降或功率因数变化等细节层面的异常,不能排除设备效率下降或功率因数变化等细节层面的异常
+rule+v2,IND-006-r1,,g7,CLM-018,similarity,1.0,SUPPORT,UNKNOWN,SCOPED_PARTIAL,,False,False,False,False,0.0,未见明显异常耗电,未见明显异常耗电
+rule+v2,IND-006-r1,,,CLM-001,extra_pred,,,UNKNOWN,,,,,,,,,上月（10月）注塑车间用电285
+rule+v2,IND-006-r1,,,CLM-002,extra_pred,,,UNKNOWN,,,,,,,,,600度
+rule+v2,IND-006-r1,,,CLM-003,extra_pred,,,UNKNOWN,,,,,,,,,电费199
+rule+v2,IND-006-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,920元
+rule+v2,IND-006-r1,,,CLM-005,extra_pred,,,UNKNOWN,,,,,,,,,9月用电248
+rule+v2,IND-006-r1,,,CLM-006,extra_pred,,,UNKNOWN,,,,,,,,,300度约173
+rule+v2,IND-006-r1,,,CLM-007,extra_pred,,,UNKNOWN,,,,,,,,,810元
+rule+v2,IND-006-r1,,,CLM-008,extra_pred,,,UNKNOWN,,,,,,,,,8月252
+rule+v2,IND-006-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,100度约176
+rule+v2,IND-006-r1,,,CLM-010,extra_pred,,,UNKNOWN,,,,,,,,,470元
+rule+v2,IND-006-r1,,,CLM-012,extra_pred,,,UNKNOWN,,,,,,,,,同时产量也从16
+rule+v2,IND-006-r1,,,CLM-013,extra_pred,,,UNKNOWN,,,,,,,,,200件增到18
+rule+v2,IND-006-r1,,,CLM-015,extra_pred,,,UNKNOWN,,,,,,,,,增幅接近
+rule+v2,IND-006-r1,,,CLM-016,extra_pred,,,UNKNOWN,,,,,,,,,从已有数据看
+rule+v2,IND-006-r1,,,CLM-019,extra_pred,,,UNKNOWN,,,,,,,,,不过仅凭月度总量和单位能耗对比
+rule+v2,IND-007-r1,,g1,CLM-001,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.3333,还没有切换,还没有切换
+rule+v2,IND-007-r1,,g2,CLM-003,similarity,0.6,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.3333,当前使用的是REC-204的R2版本，11月10日启用的,11月10日启用的
+rule+v2,IND-007-r1,,g3,CLM-004,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.3333,R3版本是陈亮昨天（11月13日）提交的,R3版本是陈亮昨天（11月13日）提交的
+rule+v2,IND-007-r1,,g4,CLM-005,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.3333,目前状态是待审批，还没指定审批人,目前状态是待审批
+rule+v2,IND-007-r1,,,CLM-002,extra_pred,,,SUPPORT,,,,,,,,,一号反应釜当前使用的是REC-204的R2版本
+rule+v2,IND-007-r1,,,CLM-006,extra_pred,,,UNKNOWN,,,,,,,,,还没指定审批人
+rule+v2,IND-008-r1,,g1,CLM-001,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,True,False,False,False,0.2222,今天系统里有两张动火证,今天系统里有两张动火证
+rule+v2,IND-008-r1,,g2,CLM-002,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2222,HW-261114-001（二号厂房三楼管道焊接）已批,HW-261114-001（二号厂房三楼管道焊接）已批
+rule+v2,IND-008-r1,,g3,CLM-003,similarity,0.6,SUPPORT,UNKNOWN,DEFINITE,,True,False,False,False,0.2222,安全主管刘强7:50审批的，有效期到18:00,安全主管刘强7:50审批的
+rule+v2,IND-008-r1,,g4,CLM-005,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2222,HW-261114-002（一号厂房底层设备切割）还在审核中,HW-261114-002（一号厂房底层设备切割）还在审核中
+rule+v2,IND-008-r1,,g5,CLM-006,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2222,7:30提交的，还没批,7:30提交的
+rule+v2,IND-008-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,有效期到18:00
+rule+v2,IND-008-r1,,,CLM-007,extra_pred,,,UNKNOWN,,,,,,,,,你问的是哪一张
+rule+v2,IND-008-r1,,,CLM-008,extra_pred,,,UNKNOWN,,,,,,,,,如果是第二张
+rule+v2,IND-008-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,目前还没出结果
+rule+v2,IND-009-r1,,g1,CLM-001,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,排放口COD在线数据正常,排放口COD在线数据正常
+rule+v2,IND-009-r1,,g2,CLM-002,similarity,0.5333,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,最近三次读数分别是42、38、45 mg/L,最近三次读数分别是42
+rule+v2,IND-009-r1,,g3,CLM-004,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,均远低于100 mg/L的限值,均远低于100 mg/L的限值
+rule+v2,IND-009-r1,,g4,CLM-005,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,仪器11月1日校准过,仪器11月1日校准过
+rule+v2,IND-009-r1,,g5,CLM-007,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,今早6点自动标定也通过了,今早6点自动标定也通过了
+rule+v2,IND-009-r1,,g6,CLM-006,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.0,有效期到12月1日,有效期到12月1日
+rule+v2,IND-009-r1,,,CLM-003,extra_pred,,,UNKNOWN,,,,,,,,,45 mg/L
+rule+v2,IND-010-r1,,g1,CLM-001,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,True,False,False,False,0.3636,A线在15:13:00因供料中断触发停机保护（ALM-301）,A线在15:13:00因供料中断触发停机保护（ALM-301）
+rule+v2,IND-010-r1,,g2,CLM-002,similarity,0.7932,SUPPORT,SUPPORT,DEFINITE,,True,False,False,False,0.3636,上游FAB-01在15:11:50因冲压机液压压力不足停机，比A线早70秒,上游FAB-01在15:11:50因冲压机液压压力不足停机
+rule+v2,IND-010-r1,,g3,CLM-005,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.3636,供料线于15:12:00确认无料,供料线于15:12:00确认无料
+rule+v2,IND-010-r1,,g4,CLM-007,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.3636,A线于15:12:30触发ALM-301,A线于15:12:30触发ALM-301
+rule+v2,IND-010-r1,,g5,CLM-010,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,True,False,False,False,0.3636,现有事件关联与物料流记录支持A线此次停机由上游断料引起,现有事件关联与物料流记录支持A线此次停机由上游断料引起
+rule+v2,IND-010-r1,,g6,CLM-012,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,,False,False,False,False,0.3636,液压压力不足的具体原因仍需进一步排查,液压压力不足的具体原因仍需进一步排查
+rule+v2,IND-010-r1,,g7,CLM-004,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,,True,False,False,False,0.3636,FAB-01停机后约10秒,物料流监测将供料中断原因标记为上游线停机：FAB-01停机后约10秒
+rule+v2,IND-010-r1,,,CLM-003,extra_pred,,,UNKNOWN,,,,,,,,,比A线早70秒
+rule+v2,IND-010-r1,,,CLM-006,extra_pred,,,UNKNOWN,,,,,,,,,连续无料30秒后
+rule+v2,IND-010-r1,,,CLM-008,extra_pred,,,UNKNOWN,,,,,,,,,报警持续30秒后
+rule+v2,IND-010-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,于15:13:00停机
+rule+v2,IND-010-r1,,,CLM-011,extra_pred,,,UNKNOWN,,,,,,,,,上游停机由液压低压报警触发
+rule+v2,IND-011-r1,,g1,CLM-001,similarity,0.5333,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.25,一号变压器目前负载72%，油温58℃、绕组温度65℃,一号变压器目前负载72%
+rule+v2,IND-011-r1,,g2,CLM-003,similarity,0.8,MISSING_RULE,UNKNOWN,DEFINITE,,False,False,False,False,0.25,都在正常范围,绕组温度65℃都在正常范围
+rule+v2,IND-011-r1,,g3,CLM-004,similarity,1.0,MISSING_RULE,UNKNOWN,DEFINITE,,False,False,False,False,0.25,数据上看没有异常,数据上看没有异常
+rule+v2,IND-011-r1,,g4,CLM-006,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,6月15日巡检报告过一次轻微嗡嗡声，当时判断正常,当时判断正常
+rule+v2,IND-011-r1,,g5,CLM-007,similarity,0.9091,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,变压器没装振动传感器,不过变压器没装振动传感器
+rule+v2,IND-011-r1,,g6,CLM-008,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,,False,False,False,False,0.25,没法远程判断异响的具体原因,没法远程判断异响的具体原因
+rule+v2,IND-011-r1,,,CLM-002,extra_pred,,,SUPPORT,,,,,,,,,油温58℃
+rule+v2,IND-011-r1,,,CLM-005,extra_pred,,,UNKNOWN,,,,,,,,,历史记录里6月15日巡检报告过一次轻微嗡嗡声
+rule+v2,IND-011-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,如果响声和以前不一样或者变大了
+rule+v2,IND-012-r1,,g1,CLM-001,similarity,0.6,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,上午11:30完成了渗碳淬火工艺,这批齿轮轴（HT-261114-005）上午11:30完成了渗碳淬火工艺
+rule+v2,IND-012-r1,,g2,,,0.2222,SUPPORT,,DEFINITE,,False,False,,,0.0,还没提交检测申请,
+rule+v2,IND-012-r1,,g3,CLM-003,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,实验室那边也没有这批的送样记录,实验室那边也没有这批的送样记录
+rule+v2,IND-012-r1,,g4,CLM-004,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,热处理报告目前还没有，需要先安排送检,热处理报告目前还没有
+rule+v2,IND-013-r1,,g1,CLM-001,similarity,0.8235,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.4,BT-261110-M12（6061）和BT-261113-M18（6061）都已合格,最近三批铝合金件的检测情况：BT-261110-M12（6061）和BT-261113-M18（6061）都已合格放行
+rule+v2,IND-013-r1,,g2,,,0.3333,UNKNOWN,,DEFINITE,,True,False,,,0.4,合格放行,
+rule+v2,IND-013-r1,,g3,CLM-002,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.4,BT-261112-M15（7075）硬度和拉伸合格,BT-261112-M15（7075）硬度和拉伸合格
+rule+v2,IND-013-r1,,g4,CLM-004,similarity,0.6,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.4,盐雾试验只做了48小时，没到规定的72小时,没到规定的72小时
+rule+v2,IND-013-r1,,g5,CLM-005,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,True,False,False,False,0.4,目前是有条件放行,目前是有条件放行
+rule+v2,IND-013-r1,,g6,,,0.3125,UNKNOWN,,DECLARED_UNKNOWN,,False,False,,,0.4,需要等盐雾试验补做结果确认后才能最终判定,
+rule+v2,IND-013-r1,,,CLM-003,extra_pred,,,UNKNOWN,,,,,,,,,但盐雾试验只做了48小时
+rule+v2,IND-014-r1,,g1,CLM-002,similarity,0.8,SUPPORT,UNKNOWN,HEDGED,,False,False,False,False,0.25,4个SKF 6308轴承，预计今天到货,预计今天到货
+rule+v2,IND-014-r1,,g2,CLM-003,similarity,0.9333,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,物流查询超时了,但物流查询超时了
+rule+v2,IND-014-r1,,g3,CLM-005,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,仓库今天也没有这批货的入库记录,仓库今天也没有这批货的入库记录
+rule+v2,IND-014-r1,,g4,CLM-006,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,,False,False,False,False,0.25,目前无法确认是否已经到货,目前无法确认是否已经到货
+rule+v2,IND-014-r1,,,CLM-001,extra_pred,,,SUPPORT,,,,,,,,,PO-261108-037采购的4个SKF 6308轴承
+rule+v2,IND-014-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,暂时查不到实时物流状态
+rule+v2,IND-015-r1,,g1,CLM-001,similarity,0.7407,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,上次校准是5月15日，合格,二号燃气表上次校准是5月15日
+rule+v2,IND-015-r1,,g2,CLM-002,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,下次校准到期日是明天（11月15日）,下次校准到期日是明天（11月15日）
+rule+v2,IND-015-r1,,g3,CLM-003,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.0,目前还在校准有效期内,目前还在校准有效期内
+rule+v2,IND-015-r1,,g4,CLM-004,similarity,1.0,CONFLICT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,本月读数日均47.6立方米,本月读数日均47.6立方米
+rule+v2,IND-015-r1,,g5,CLM-006,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.0,从数据趋势看没有明显异常,从数据趋势看没有明显异常
+rule+v2,IND-015-r1,,g6,CLM-008,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,备用表正在拆检，没法做交叉比对,没法做交叉比对
+rule+v2,IND-015-r1,,,CLM-005,extra_pred,,,UNKNOWN,,,,,,,,,波动与生产排班吻合
+rule+v2,IND-015-r1,,,CLM-007,extra_pred,,,UNKNOWN,,,,,,,,,不过备用表正在拆检
+rule+v2,IND-015-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,如果对读数有疑虑
+rule+v2,IND-015-r1,,,CLM-010,extra_pred,,,UNKNOWN,,,,,,,,,明天校准到期时可以做一次全面校验
+rule+v2,IND-016-r1,,g1,CLM-002,similarity,0.5333,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2857,11月10日安装后，12日完成了初始参数导入,12日完成了初始参数导入
+rule+v2,IND-016-r1,,g2,CLM-003,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,13日做了焊接试板测试且外观合格,13日做了焊接试板测试且外观合格
+rule+v2,IND-016-r1,,g3,CLM-005,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,还没有关联正式的焊接工艺规程（WPS），参数没有固化,参数没有固化
+rule+v2,IND-016-r1,,g4,CLM-006,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,设备调试状态标记为进行中,设备调试状态标记为进行中
+rule+v2,IND-016-r1,,g5,,,0.2727,MISSING_RULE,,DEFINITE,,False,False,,,0.2857,需要工艺工程师确认参数并发布WPS后才能投入使用,
+rule+v2,IND-016-r1,,g6,CLM-007,similarity,1.0,MISSING_RULE,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,还不能用于正式生产,还不能用于正式生产
+rule+v2,IND-016-r1,,,CLM-001,extra_pred,,,SUPPORT,,,,,,,,,五号焊机（FRONIUS-TPS500）11月10日安装后
+rule+v2,IND-016-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,但目前还没有关联正式的焊接工艺规程（WPS）
+rule+v2,IND-017-r1,,g1,CLM-001,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2857,目前还发不了,三号储罐清淤的受限空间作业证（CS-261114-001）目前还发不了
+rule+v2,IND-017-r1,,g2,CLM-003,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,气体检测状态为待检测，还没有做气体检测记录,还没有做气体检测记录
+rule+v2,IND-017-r1,,g3,CLM-006,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2857,发证前还需要完成通风确认、监护人到位和应急设备到位等确认,监护人到位和应急设备到位等确认
+rule+v2,IND-017-r1,,g4,CLM-007,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,,False,False,False,False,0.2857,这些条件目前还没有查询到状态记录,这些条件目前还没有查询到状态记录
+rule+v2,IND-017-r1,,,CLM-002,extra_pred,,,UNKNOWN,,,,,,,,,系统显示气体检测状态为待检测
+rule+v2,IND-017-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,按规程要求
+rule+v2,IND-017-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,然后逐项完成其余确认
+rule+v2,IND-018-r1,,g1,CLM-001,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.375,三号储罐有两个液位传感器,三号储罐有两个液位传感器
+rule+v2,IND-018-r1,,g2,CLM-002,similarity,0.6746,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.375,雷达液位计（LT-TK03-01）数据正常，当前液位62.3%,雷达液位计（LT-TK03-01）数据正常
+rule+v2,IND-018-r1,,g3,CLM-004,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.375,趋势平稳上升,趋势平稳上升
+rule+v2,IND-018-r1,,g4,CLM-005,similarity,0.6,UNKNOWN,SUPPORT,DEFINITE,,False,False,True,False,0.375,从11:30开始离线,差压液位计（LT-TK03-02）从11:30开始离线
+rule+v2,IND-018-r1,,g5,CLM-006,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.375,最后一次有效读数是60.1%,最后一次有效读数是60.1%
+rule+v2,IND-018-r1,,g6,CLM-007,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.375,此前两个传感器的读数基本一致（偏差<0.5%）,此前两个传感器的读数基本一致（偏差<0.5%）
+rule+v2,IND-018-r1,,g7,,,0.3889,UNKNOWN,,DECLARED_UNKNOWN,,False,False,,,0.375,差压液位计的离线原因需要排查,
+rule+v2,IND-018-r1,,g8,CLM-008,similarity,0.9412,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.375,雷达液位计的数据可以暂时作为参考,所以雷达液位计的数据可以暂时作为参考
+rule+v2,IND-018-r1,,,CLM-003,extra_pred,,,SUPPORT,,,,,,,,,当前液位62.3%
+rule+v2,IND-019-r1,,g1,CLM-001,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.1667,来料检验（IQC-261114-015）还在进行中,这批304不锈钢板（RCV-261114-008）的来料检验（IQC-261114-015）还在进行中
+rule+v2,IND-019-r1,,g2,CLM-002,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.1667,材质证明已经核验通过,材质证明已经核验通过
+rule+v2,IND-019-r1,,g3,CLM-003,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.1667,厚度和表面质量还在测试,厚度和表面质量还在测试
+rule+v2,IND-019-r1,,g4,CLM-004,similarity,1.0,SUPPORT,UNKNOWN,HEDGED,,False,False,False,False,0.1667,预计17:00前完成,预计17:00前完成
+rule+v2,IND-019-r1,,g5,CLM-005,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,,False,False,False,False,0.1667,完整的质检报告暂时出不了,完整的质检报告暂时出不了
+rule+v2,IND-019-r1,,,CLM-006,extra_pred,,,UNKNOWN,,,,,,,,,等检测完成后可以发给你
+rule+v2,IND-020-r1,,g1,CLM-001,similarity,0.8824,SUPPORT,SUPPORT,SCOPED_PARTIAL,,False,False,False,False,0.25,良率整体在97.5%-98.5%之间,上周C线良率整体在97.5%-98.5%之间
+rule+v2,IND-020-r1,,g2,CLM-002,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,11月10日计划保养停产,11月10日计划保养停产
+rule+v2,IND-020-r1,,g3,CLM-003,similarity,0.8485,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.25,11月11日良率降到96.1%，是整周最低,11月11日良率降到96.1%
+rule+v2,IND-020-r1,,g4,CLM-006,similarity,0.6522,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,78件，占当日不良品60.5%,占当日不良品60.5%）
+rule+v2,IND-020-r1,,g5,CLM-007,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,系统已生成了异常报告AR-261111-003,系统已生成了异常报告AR-261111-003
+rule+v2,IND-020-r1,,g6,CLM-008,similarity,1.0,MISSING_RULE,UNKNOWN,DEFINITE,,False,False,False,False,0.25,其余几天良率正常,其余几天良率正常
+rule+v2,IND-020-r1,,g7,,,0.2105,UNKNOWN,,DECLARED_UNKNOWN,,False,False,,,0.25,具体虚焊原因需要看那份异常报告的分析,
+rule+v2,IND-020-r1,,g8,CLM-005,similarity,0.9189,SUPPORT,UNKNOWN,SCOPED_PARTIAL,,False,False,False,False,0.25,主要原因是当天虚焊不良占比异常偏高,主要原因是当天虚焊不良占比异常偏高（78件
+rule+v2,IND-020-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,是整周最低
+rule+v2,IND-021-r1,,g1,CLM-001,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,压缩机 CMP-01A 近30分钟振动数据正常,压缩机 CMP-01A 近30分钟振动数据正常
+rule+v2,IND-021-r1,,g2,CLM-002,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,,False,False,True,False,0.2857,振动值在 2.0～2.4 mm/s 之间,振动值在 2.0～2.4 mm/s 之间
+rule+v2,IND-021-r1,,g3,CLM-004,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,设备运行状态良好,设备运行状态良好
+rule+v2,IND-021-r1,,g4,CLM-005,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,近2小时无振动报警记录,近2小时无振动报警记录
+rule+v2,IND-021-r1,,g5,CLM-006,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.2857,近期也无相关维修工单,近期也无相关维修工单
+rule+v2,IND-021-r1,,g6,CLM-007,similarity,1.0,UNKNOWN,UNKNOWN,HEDGED,,False,False,False,False,0.2857,现场声音可能由其他原因引起,现场声音可能由其他原因引起
+rule+v2,IND-021-r1,,,CLM-003,extra_pred,,,SUPPORT,,,,,,,,,远低于报警阈值 7.1 mm/s
+rule+v2,IND-022-r1,,g1,CLM-001,similarity,0.5333,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.75,夜班产量为 8500 件,B线11月13日（昨日）夜班产量为 8500 件
+rule+v2,IND-022-r1,,g2,CLM-002,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,,False,False,True,False,0.75,良率 98.2%,良率 98.2%
+rule+v2,IND-022-r1,,g3,CLM-003,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,,False,False,True,False,0.75,产线利用率 97.7%,产线利用率 97.7%
+rule+v2,IND-022-r1,,g4,CLM-004,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,,True,False,True,False,0.75,仅有30分钟换模停机,仅有30分钟换模停机
+rule+v2,IND-023-r1,,g1,CLM-002,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.375,最近一次标定日期为 2026年5月10日，标定结果合格，标定周期6个月,标定结果合格
+rule+v2,IND-023-r1,,g2,CLM-004,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.375,目前标定有效,目前标定有效
+rule+v2,IND-023-r1,,g3,CLM-005,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,True,True,False,False,0.375,可以用于今天的有限空间作业,可以用于今天的有限空间作业
+rule+v2,IND-023-r1,,g4,CLM-007,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.375,型号为 MultiRAE Lite，支持 O2/LEL/H2S/CO 四合一检测,支持 O2/LEL/H2S/CO 四合一检测
+rule+v2,IND-023-r1,,,CLM-001,extra_pred,,,SUPPORT,,,,,,,,,GD-05 气体检测仪最近一次标定日期为 2026年5月10日
+rule+v2,IND-023-r1,,,CLM-003,extra_pred,,,SUPPORT,,,,,,,,,标定周期6个月
+rule+v2,IND-023-r1,,,CLM-006,extra_pred,,,UNKNOWN,,,,,,,,,该仪器型号为 MultiRAE Lite
+rule+v2,IND-023-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,提前安排送检
+rule+v2,IND-024-r1,,g1,CLM-001,similarity,0.6081,REFUTE,REFUTE,DEFINITE,,False,False,False,False,0.0,当前系统压力为 21500 MPa,液压机 HP-03 当前系统压力为 21500 MPa
+rule+v2,IND-024-r1,,g2,CLM-002,similarity,1.0,REFUTE,REFUTE,DEFINITE,,False,False,False,False,0.0,已严重超出最大工作压力 25 MPa,已严重超出最大工作压力 25 MPa
+rule+v2,IND-024-r1,,g3,CLM-003,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.0,超出约 86000 倍,超出约 86000 倍
+rule+v2,IND-024-r1,,g4,CLM-004,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.0,属于极度危险状态,属于极度危险状态
+rule+v2,IND-024-r1,,g5,,,0.069,REFUTE,,DEFINITE,,True,True,,,0.0,请立即停机检查,
+rule+v2,IND-024-r1,,g6,CLM-006,similarity,0.9091,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,近2小时压力波动范围 20800～22100，趋势稳定,近2小时压力波动范围 20800～22100
+rule+v2,IND-024-r1,,g7,,,0.0625,REFUTE,,HEDGED,,True,False,,,0.0,建议立即启动紧急停机程序,
+rule+v2,IND-024-r1,,g8,,,0.0,MISSING_RULE,,DEFINITE,,True,False,,,0.0,排查传感器或安全阀,
+rule+v2,IND-024-r1,,,CLM-007,extra_pred,,,UNKNOWN,,,,,,,,,趋势稳定
+rule+v2,IND-025-r1,,g1,CLM-002,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.5556,硬度 29.5 HRC（合格），抗拉强度 1095 MPa（合格）,抗拉强度 1095 MPa（合格）
+rule+v2,IND-025-r1,,g2,CLM-003,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.5556,冲击试验已完成,冲击试验已完成
+rule+v2,IND-025-r1,,g3,CLM-004,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.5556,各项指标均符合 GB/T 3077-2015 要求,各项指标均符合 GB/T 3077-2015 要求
+rule+v2,IND-025-r1,,g4,CLM-005,similarity,0.8,REFUTE,SUPPORT,DEFINITE,,True,True,True,False,0.5556,该批次判定合格，可以放行,该批次判定合格
+rule+v2,IND-025-r1,,g5,CLM-009,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.5556,炉号 H26111307，电炉 EF-03 冶炼，目前位于质检区,目前位于质检区
+rule+v2,IND-025-r1,,,CLM-001,extra_pred,,,SUPPORT,,,,,,,,,批次 BT-261113-C07（42CrMo）质检结果：硬度 29.5 HRC（合格）
+rule+v2,IND-025-r1,,,CLM-006,extra_pred,,,MISSING_RULE,,,,,,,,,可以放行
+rule+v2,IND-025-r1,,,CLM-007,extra_pred,,,SUPPORT,,,,,,,,,该批次炉号 H26111307
+rule+v2,IND-025-r1,,,CLM-008,extra_pred,,,SUPPORT,,,,,,,,,电炉 EF-03 冶炼
+rule+v2,IND-026-r1,,g1,CLM-001,similarity,0.8,UNKNOWN,SUPPORT,DEFINITE,,False,False,True,False,0.2222,冷却系统运行正常,F-02 退火炉冷却系统运行正常
+rule+v2,IND-026-r1,,g2,CLM-002,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2222,炉顶冷却进水 22.3℃ / 出水 35.1℃,各冷却回路温度和流量均在正常范围内：炉顶冷却进水 22.3℃ / 出水 35.1℃
+rule+v2,IND-026-r1,,g3,CLM-003,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2222,炉壁冷却A进水 22.5℃ / 出水 36.8℃,炉壁冷却A进水 22.5℃ / 出水 36.8℃
+rule+v2,IND-026-r1,,g4,CLM-004,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2222,流量分别约 120 和 115 L/min,流量分别约 120 和 115 L/min
+rule+v2,IND-026-r1,,g5,CLM-005,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2222,近2小时无冷却系统报警,近2小时无冷却系统报警
+rule+v2,IND-026-r1,,g6,CLM-006,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2222,当前炉温 820℃，处于保温阶段,当前炉温 820℃
+rule+v2,IND-026-r1,,g7,CLM-008,similarity,0.8,UNKNOWN,UNKNOWN,DEFINITE,,True,False,False,False,0.2222,系统状态良好，可继续运行,系统状态良好
+rule+v2,IND-026-r1,,g8,,,0.8,UNKNOWN,,DEFINITE,,False,False,,,0.2222,各冷却回路温度和流量均在正常范围内,
+rule+v2,IND-026-r1,,,CLM-007,extra_pred,,,UNKNOWN,,,,,,,,,处于保温阶段
+rule+v2,IND-026-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,可继续运行
+rule+v2,IND-027-r1,,g1,CLM-003,similarity,0.8,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.1429,14:05:12 变频器 VFD-102 发生重启事件，导致压缩机转速波动，进而于 14:05:08 触发喘振报警 ALM-445,导致压缩机转速波动
+rule+v2,IND-027-r1,,g2,CLM-005,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.1429,喘振保护动作后于 14:05:18 联锁跳车,喘振保护动作后于 14:05:18 联锁跳车
+rule+v2,IND-027-r1,,g3,CLM-006,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.1429,根本原因为变频器异常重启引起喘振,根本原因为变频器异常重启引起喘振
+rule+v2,IND-027-r1,,g4,CLM-008,similarity,1.0,MISSING_RULE,UNKNOWN,DEFINITE,,False,False,False,False,0.1429,确认变频器控制回路稳定性后恢复运行,确认变频器控制回路稳定性后恢复运行
+rule+v2,IND-027-r1,,,CLM-001,extra_pred,,,SUPPORT,,,,,,,,,K-102 压缩机跳车原因分析：根据事件日志
+rule+v2,IND-027-r1,,,CLM-002,extra_pred,,,UNKNOWN,,,,,,,,,14:05:12 变频器 VFD-102 发生重启事件
+rule+v2,IND-027-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,进而于 14:05:08 触发喘振报警 ALM-445
+rule+v2,IND-028-r1,,g1,CLM-002,similarity,0.5333,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2,累计入库 500 支，累计领用 380 支，在库 120 支,累计领用 380 支
+rule+v2,IND-028-r1,,g2,CLM-004,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.2,可领用数量为 500 - 380 = 120 支,可领用数量为 500 - 380 = 120 支
+rule+v2,IND-028-r1,,g3,CLM-006,similarity,1.0,SUPPORT,UNKNOWN,HEDGED,,False,False,False,False,0.2,200 支预计 11月18日到货,200 支预计 11月18日到货
+rule+v2,IND-028-r1,,g4,CLM-007,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2,近7天日均消耗约12支,近7天日均消耗约12支
+rule+v2,IND-028-r1,,g5,CLM-008,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.2,当前库存可满足约10天用量,当前库存可满足约10天用量
+rule+v2,IND-028-r1,,g6,CLM-010,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.2,可满足领用需求,可满足领用需求
+rule+v2,IND-028-r1,,,CLM-001,extra_pred,,,SUPPORT,,,,,,,,,滤芯 FC-200 当前库存情况：累计入库 500 支
+rule+v2,IND-028-r1,,,CLM-003,extra_pred,,,UNKNOWN,,,,,,,,,在库 120 支
+rule+v2,IND-028-r1,,,CLM-005,extra_pred,,,SUPPORT,,,,,,,,,另外有一笔在途采购 PO-261110-033
+rule+v2,IND-028-r1,,,CLM-009,extra_pred,,,UNKNOWN,,,,,,,,,当前库存充足
+rule+v2,IND-029-r1,,g1,,,0.25,REFUTE,,DEFINITE,,False,False,,,0.25,已下单采购,
+rule+v2,IND-029-r1,,g2,CLM-003,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.25,下单日期为 11月12日,下单日期为 11月12日
+rule+v2,IND-029-r1,,g3,CLM-005,similarity,1.0,UNKNOWN,UNKNOWN,HEDGED,,False,False,False,False,0.25,预计 11月21日前后可以到货,预计 11月21日前后可以到货
+rule+v2,IND-029-r1,,g4,CLM-006,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,当前库内无该材料库存,当前库内无该材料库存
+rule+v2,IND-029-r1,,g5,CLM-007,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.25,工单计划开工日期 11月25日,工单计划开工日期 11月25日
+rule+v2,IND-029-r1,,g6,CLM-008,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.25,到货后可满足生产排程,到货后可满足生产排程
+rule+v2,IND-029-r1,,g7,CLM-002,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.25,采购订单号 PO-261112-055,采购订单号 PO-261112-055
+rule+v2,IND-029-r1,,,CLM-001,extra_pred,,,SUPPORT,,,,,,,,,工单 WO-28520 所需的 Inconel 625 合金板（δ=12mm）已下单采购
+rule+v2,IND-029-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,根据供应商常规交期（15-20天）
+rule+v2,IND-030-r1,,g1,CLM-001,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.0,库房中未找到 M8 钛合金螺栓,库房中未找到 M8 钛合金螺栓
+rule+v2,IND-030-r1,,g2,CLM-003,similarity,0.8,UNKNOWN,UNKNOWN,DEFINITE,,False,False,False,False,0.0,库存以不锈钢（304/316）、碳钢和铝合金材质为主,碳钢和铝合金材质为主
+rule+v2,IND-030-r1,,g3,CLM-004,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,合计 156 个品规,合计 156 个品规
+rule+v2,IND-030-r1,,g4,CLM-005,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,钛合金紧固件存放于特种材料库B2区,钛合金紧固件存放于特种材料库B2区
+rule+v2,IND-030-r1,,g5,CLM-006,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.0,也可联系库管员周芳确认,也可联系库管员周芳确认
+rule+v2,IND-030-r1,,,CLM-002,extra_pred,,,UNKNOWN,,,,,,,,,当前 M8 螺栓库存以不锈钢（304/316）
+rule+v2,IND-031-r1,,g1,,,0.5,SUPPORT,,DEFINITE,,False,False,,,0.4444,总用电量 45200 kWh,
+rule+v2,IND-031-r1,,g2,CLM-003,similarity,1.0,REFUTE,UNKNOWN,DEFINITE,,False,False,False,False,0.4444,本月电费约 31640 万元,本月电费约 31640 万元
+rule+v2,IND-031-r1,,g3,CLM-005,similarity,0.5714,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.4444,焊接工位1-10用电 28500 kWh，工位11-20用电 12200 kWh，辅助设备用电 4500 kWh,工位11-20用电 12200 kWh
+rule+v2,IND-031-r1,,g4,CLM-007,similarity,0.9231,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.4444,上月全月电费 64470 元,对比上月全月电费 64470 元
+rule+v2,IND-031-r1,,g5,CLM-009,similarity,1.0,REFUTE,UNKNOWN,HEDGED,,False,False,False,False,0.4444,本月全月电费预计在 65000 万元左右,本月全月电费预计在 65000 万元左右
+rule+v2,IND-031-r1,,g6,CLM-002,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.4444,按综合电价 0.70 元/kWh 计算,按综合电价 0.70 元/kWh 计算
+rule+v2,IND-031-r1,,g7,CLM-001,similarity,0.7,SUPPORT,UNKNOWN,SCOPED_PARTIAL,,False,False,False,False,0.4444,本月（11月1日至14日）,焊接车间本月（11月1日至14日）用电情况：总用电量 45200 kWh
+rule+v2,IND-031-r1,,,CLM-004,extra_pred,,,SUPPORT,,,,,,,,,其中焊接工位1-10用电 28500 kWh
+rule+v2,IND-031-r1,,,CLM-006,extra_pred,,,SUPPORT,,,,,,,,,辅助设备用电 4500 kWh
+rule+v2,IND-031-r1,,,CLM-008,extra_pred,,,UNKNOWN,,,,,,,,,按当前用电趋势
+rule+v2,IND-032-r1,,g1,CLM-001,similarity,0.5333,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2667,电压总谐波畸变率 THD 为 3.8%,10kV母线（BUS-10KV-01）电能质量检测结果：电压总谐波畸变率 THD 为 3.8%
+rule+v2,IND-032-r1,,g2,,,0.48,SUPPORT,,DEFINITE,,False,False,,,0.2667,3次 1.2%、5次 2.1%、7次 1.5%、11次 0.8%、13次 0.6%,
+rule+v2,IND-032-r1,,g3,CLM-009,similarity,1.0,REFUTE,SUPPORT,DEFINITE,,False,False,True,False,0.2667,当前 THD 3.8% 低于 5% 限值,当前 THD 3.8% 低于 5% 限值
+rule+v2,IND-032-r1,,g4,CLM-011,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.2667,系统频率 50.01 Hz,系统频率 50.01 Hz
+rule+v2,IND-032-r1,,g5,CLM-015,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,,False,False,False,False,0.2667,近24小时 THD 最高 4.2%，平均 3.3%，上午呈上升趋势,上午呈上升趋势
+rule+v2,IND-032-r1,,g6,CLM-010,similarity,1.0,SUPPORT,UNKNOWN,SCOPED_PARTIAL,,False,False,False,False,0.2667,谐波指标合格,谐波指标合格
+rule+v2,IND-032-r1,,,CLM-002,extra_pred,,,UNKNOWN,,,,,,,,,各次谐波含量分别为 3次 1.2%
+rule+v2,IND-032-r1,,,CLM-003,extra_pred,,,UNKNOWN,,,,,,,,,5次 2.1%
+rule+v2,IND-032-r1,,,CLM-004,extra_pred,,,UNKNOWN,,,,,,,,,7次 1.5%
+rule+v2,IND-032-r1,,,CLM-005,extra_pred,,,UNKNOWN,,,,,,,,,11次 0.8%
+rule+v2,IND-032-r1,,,CLM-006,extra_pred,,,UNKNOWN,,,,,,,,,13次 0.6%
+rule+v2,IND-032-r1,,,CLM-007,extra_pred,,,UNKNOWN,,,,,,,,,根据电能质量标准
+rule+v2,IND-032-r1,,,CLM-008,extra_pred,,,SUPPORT,,,,,,,,,380V及以下低压系统 THD 限值为 5%
+rule+v2,IND-032-r1,,,CLM-012,extra_pred,,,UNKNOWN,,,,,,,,,运行稳定
+rule+v2,IND-032-r1,,,CLM-013,extra_pred,,,UNKNOWN,,,,,,,,,近24小时 THD 最高 4.2%
+rule+v2,IND-032-r1,,,CLM-014,extra_pred,,,UNKNOWN,,,,,,,,,平均 3.3%
+rule+v2,IND-033-r1,,g1,CLM-001,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,,False,False,False,False,0.6,当前温度 102℃,RXT-03 反应釜当前温度 102℃
+rule+v2,IND-033-r1,,g2,,,0.2927,SUPPORT,,HEDGED,,False,False,,,0.6,工艺参数卡（R2版本），该配方反应温度控制范围为 85-95℃（建议值）,
+rule+v2,IND-033-r1,,g3,CLM-005,similarity,1.0,SUPPORT,UNKNOWN,SCOPED_PARTIAL,,False,False,False,False,0.6,偏高约 7℃,偏高约 7℃
+rule+v2,IND-033-r1,,g4,CLM-006,similarity,0.9655,UNKNOWN,SUPPORT,DEFINITE,,False,False,True,False,0.6,超过 98℃ 的降速搅拌警戒线,且超过 98℃ 的降速搅拌警戒线
+rule+v2,IND-033-r1,,g5,CLM-008,similarity,0.8,MISSING_RULE,UNKNOWN,HEDGED,,True,False,False,False,0.6,建议立即将温度回调至 95℃ 以内，并降低搅拌转速至安全范围,并降低搅拌转速至安全范围
+rule+v2,IND-033-r1,,g6,,,0.3243,MISSING_RULE,,DEFINITE,,False,False,,,0.6,当前温度 102℃ 已超过建议上限 95℃,
+rule+v2,IND-033-r1,,,CLM-002,extra_pred,,,SUPPORT,,,,,,,,,根据工艺参数卡（R2版本）
+llm_only+v2,IND-001-r1,,g1,C1,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7,三号锅炉排烟温度目前218℃,三号锅炉排烟温度目前218℃
+llm_only+v2,IND-001-r1,,g2,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7,超出正常范围（140-190℃）,超出正常范围（140-190℃）
+llm_only+v2,IND-001-r1,,g3,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7,近两小时持续上升,近两小时持续上升
+llm_only+v2,IND-001-r1,,g4,C4,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7,烟道差压285Pa略高于正常上限280Pa,烟道差压285Pa略高于正常上限280Pa
+llm_only+v2,IND-001-r1,,g5,C5,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,HEDGED,False,False,False,False,0.7,可能有一定积灰,可能有一定积灰
+llm_only+v2,IND-001-r1,,g6,C7,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7,运行手册列出的常见原因包括受热面积灰、过剩空气系数偏高和燃烧器喷嘴磨损,运行手册列出的常见原因包括受热面积灰、过剩空气系数偏高和燃烧器喷嘴磨损
+llm_only+v2,IND-001-r1,,g7,C8,similarity,1.0,UNKNOWN,SUPPORT,DECLARED_UNKNOWN,DECLARED_UNKNOWN,False,False,True,False,0.7,目前仅凭远程数据无法确定具体原因,目前仅凭远程数据无法确定具体原因
+llm_only+v2,IND-001-r1,,g8,C9,similarity,0.8,SUPPORT,SUPPORT,HEDGED,DEFINITE,False,False,False,False,0.7,建议安排现场检查，优先排查积灰情况，同时检查燃烧器喷嘴和过剩空气系数,建议安排现场检查
+llm_only+v2,IND-001-r1,,,C6,extra_pred,,,UNKNOWN,,HEDGED,,,,,,,但也可能是其他因素
+llm_only+v2,IND-001-r1,,,C10,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,优先排查积灰情况
+llm_only+v2,IND-001-r1,,,C11,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,同时检查燃烧器喷嘴和过剩空气系数
+llm_only+v2,IND-002-r1,,g1,C1,similarity,0.8636,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,保养工单WO-28501已于13:45完成,二号冷水机组保养工单WO-28501已于13:45完成
+llm_only+v2,IND-002-r1,,g2,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,技术员和主管均已签字确认,技术员和主管均已签字确认
+llm_only+v2,IND-002-r1,,g3,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,设备锁定已解除,设备锁定已解除
+llm_only+v2,IND-002-r1,,g4,C4,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,油温42℃,油温42℃
+llm_only+v2,IND-002-r1,,g5,,,0.8571,MISSING_RULE,,DEFINITE,,False,False,,,0.7778,油温42℃正常,
+llm_only+v2,IND-002-r1,,g6,C6,similarity,0.8,MISSING_RULE,SUPPORT,DEFINITE,DEFINITE,False,False,True,False,0.7778,冷媒压力680kPa在正常范围,冷媒压力680kPa
+llm_only+v2,IND-002-r1,,g7,C8,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,系统显示可以启动,系统显示可以启动
+llm_only+v2,IND-002-r1,,g8,C9,similarity,1.0,MISSING_RULE,SUPPORT,DEFINITE,DEFINITE,True,False,True,False,0.7778,可以开机,可以开机
+llm_only+v2,IND-002-r1,,,C5,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,正常
+llm_only+v2,IND-002-r1,,,C7,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,在正常范围
+llm_only+v2,IND-003-r1,,g1,C2,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,当前班次抛料率1.4%，超过0.5%的控制标准,超过0.5%的控制标准
+llm_only+v2,IND-003-r1,,g2,C3,similarity,0.6,SUPPORT,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.5,主要集中在3号吸嘴，抛料率5.1%,主要集中在3号吸嘴
+llm_only+v2,IND-003-r1,,g3,C6,similarity,0.6667,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,真空度-45kPa，偏离规格-60kPa约25%,偏离规格-60kPa约25%
+llm_only+v2,IND-003-r1,,g4,C8,similarity,0.8,UNKNOWN,MISSING_RULE,HEDGED,HEDGED,False,False,False,False,0.5,3号吸嘴可能有问题,真空度异常说明3号吸嘴可能有问题
+llm_only+v2,IND-003-r1,,g5,C10,similarity,1.0,UNKNOWN,MISSING_RULE,DECLARED_UNKNOWN,DEFINITE,True,False,False,False,0.5,需要现场停机检查后才能确认,需要现场停机检查后才能确认
+llm_only+v2,IND-003-r1,,g6,C11,similarity,1.0,SUPPORT,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.5,7号吸嘴可继续观察,7号吸嘴可继续观察
+llm_only+v2,IND-003-r1,,g7,C7,similarity,1.0,SUPPORT,MISSING_RULE,DEFINITE,HEDGED,False,False,False,False,0.5,7号吸嘴也有轻微偏离,7号吸嘴也有轻微偏离
+llm_only+v2,IND-003-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,B线贴片机当前班次抛料率1.4%
+llm_only+v2,IND-003-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,抛料率5.1%
+llm_only+v2,IND-003-r1,,,C5,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,真空度-45kPa
+llm_only+v2,IND-003-r1,,,C9,extra_pred,,,UNKNOWN,,DECLARED_UNKNOWN,,,,,,,具体是吸嘴堵塞、磨损还是其他原因
+llm_only+v2,IND-004-r1,,g1,C1,similarity,0.8889,SUPPORT,SUPPORT,DEFINITE,DEFINITE,True,False,False,False,0.8,上午A线两个批次都已检完并放行,上午A线两个批次都已检完
+llm_only+v2,IND-004-r1,,g2,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.8,BT-261114-A01和BT-261114-A02的微生物、pH值、密封性检测均合格,BT-261114-A01和BT-261114-A02的微生物、pH值、密封性检测均合格
+llm_only+v2,IND-004-r1,,g3,C4,similarity,0.9048,SUPPORT,SUPPORT,DEFINITE,DEFINITE,True,False,False,False,0.8,质检主管李明已分别于11:00和14:20签字放行,质检主管李明已分别于11:00和14:20
+llm_only+v2,IND-004-r1,,,C2,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,并放行
+llm_only+v2,IND-004-r1,,,C5,extra_pred,,,UNKNOWN,,DEFINITE,,,,,,,签字
+llm_only+v2,IND-005-r1,,g1,C1,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.9,M12×50不锈钢螺栓库存2400只,M12×50不锈钢螺栓库存2400只
+llm_only+v2,IND-005-r1,,g2,C2,similarity,0.6667,SUPPORT,SUPPORT,SCOPED_PARTIAL,DEFINITE,False,False,False,False,0.9,已录入系统的预留800只（给WO-28508），按此计算可用1600只,已录入系统的预留800只（给WO-28508）
+llm_only+v2,IND-005-r1,,g3,C4,similarity,0.6222,MISSING_RULE,SUPPORT,DEFINITE,SCOPED_PARTIAL,False,False,True,False,0.9,共(60×15+32×8)=1156只,明天WO-28510和WO-28511共需M12×50共(60×15+32×8)=1156只
+llm_only+v2,IND-005-r1,,g4,C5,similarity,0.64,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.9,M12×80库存1800只，已录入预留500只，可用1300只,M12×80库存1800只
+llm_only+v2,IND-005-r1,,g5,C8,similarity,1.0,MISSING_RULE,SUPPORT,DEFINITE,SCOPED_PARTIAL,False,False,True,False,0.9,明天共需(45×15+24×8)=867只,明天共需(45×15+24×8)=867只
+llm_only+v2,IND-005-r1,,g6,C9,similarity,0.8,UNKNOWN,SUPPORT,DECLARED_UNKNOWN,HEDGED,False,False,True,False,0.9,实际可用量可能比计算值低,不过系统提示部分工单的领料预留尚未录入，实际可用量可能比计算值低
+llm_only+v2,IND-005-r1,,g7,C10,similarity,1.0,SUPPORT,SUPPORT,HEDGED,HEDGED,False,False,False,False,0.9,建议领料前与仓库确认实际可用数,建议领料前与仓库确认实际可用数
+llm_only+v2,IND-005-r1,,,C3,extra_pred,,,SUPPORT,,SCOPED_PARTIAL,,,,,,,按此计算可用1600只
+llm_only+v2,IND-005-r1,,,C6,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,已录入预留500只
+llm_only+v2,IND-005-r1,,,C7,extra_pred,,,UNKNOWN,,DEFINITE,,,,,,,可用1300只
+llm_only+v2,IND-006-r1,,g1,C2,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7692,"用电285,600度，电费199,920元","电费199,920元"
+llm_only+v2,IND-006-r1,,g2,C3,similarity,0.5333,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7692,"9月用电248,300度约173,810元，8月252,100度约176,470元","9月用电248,300度"
+llm_only+v2,IND-006-r1,,g3,C7,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,HEDGED,False,False,False,False,0.7692,10月用电量比9月增加约15%,10月用电量比9月增加约15%
+llm_only+v2,IND-006-r1,,g4,C8,similarity,0.6977,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7692,"产量也从16,200件增到18,500件（+14.2%）","同时产量也从16,200件增到18,500件"
+llm_only+v2,IND-006-r1,,g5,C11,similarity,1.0,SUPPORT,MISSING_RULE,SCOPED_PARTIAL,HEDGED,False,False,False,False,0.7692,从已有数据看，电费增长与产量增长基本匹配,从已有数据看，电费增长与产量增长基本匹配
+llm_only+v2,IND-006-r1,,g6,C13,similarity,0.8,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,DECLARED_UNKNOWN,False,False,False,False,0.7692,不能排除设备效率下降或功率因数变化等细节层面的异常,不过仅凭月度总量和单位能耗对比，不能排除设备效率下降或功率因数变化等细节层面的异常
+llm_only+v2,IND-006-r1,,g7,C12,similarity,1.0,SUPPORT,MISSING_RULE,SCOPED_PARTIAL,HEDGED,False,False,False,False,0.7692,未见明显异常耗电,未见明显异常耗电
+llm_only+v2,IND-006-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,"上月（10月）注塑车间用电285,600度"
+llm_only+v2,IND-006-r1,,,C4,extra_pred,,,SUPPORT,,HEDGED,,,,,,,"约173,810元"
+llm_only+v2,IND-006-r1,,,C5,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,"8月252,100度"
+llm_only+v2,IND-006-r1,,,C6,extra_pred,,,SUPPORT,,HEDGED,,,,,,,"约176,470元"
+llm_only+v2,IND-006-r1,,,C9,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,（+14.2%）
+llm_only+v2,IND-006-r1,,,C10,extra_pred,,,SUPPORT,,HEDGED,,,,,,,增幅接近
+llm_only+v2,IND-006-r1,,,C14,extra_pred,,,UNKNOWN,,HEDGED,,,,,,,如需更深入分析建议查看逐设备用电明细
+llm_only+v2,IND-007-r1,,g1,C1,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.8889,还没有切换,还没有切换。
+llm_only+v2,IND-007-r1,,g2,C3,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.8889,当前使用的是REC-204的R2版本，11月10日启用的,11月10日启用的。
+llm_only+v2,IND-007-r1,,g3,C6,similarity,0.6667,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.8889,R3版本是陈亮昨天（11月13日）提交的,（11月13日）
+llm_only+v2,IND-007-r1,,g4,C8,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.8889,目前状态是待审批，还没指定审批人,目前状态是待审批
+llm_only+v2,IND-007-r1,,,C2,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,一号反应釜当前使用的是REC-204的R2版本
+llm_only+v2,IND-007-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,R3版本是陈亮
+llm_only+v2,IND-007-r1,,,C5,extra_pred,,,UNKNOWN,,DEFINITE,,,,,,,昨天
+llm_only+v2,IND-007-r1,,,C7,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,提交的
+llm_only+v2,IND-007-r1,,,C9,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,还没指定审批人
+llm_only+v2,IND-008-r1,,g1,C1,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,True,False,False,False,1.0,今天系统里有两张动火证,今天系统里有两张动火证。
+llm_only+v2,IND-008-r1,,g2,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,HW-261114-001（二号厂房三楼管道焊接）已批,HW-261114-001（二号厂房三楼管道焊接）已批
+llm_only+v2,IND-008-r1,,g3,C3,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,DEFINITE,True,False,False,False,1.0,安全主管刘强7:50审批的，有效期到18:00,安全主管刘强7:50审批的
+llm_only+v2,IND-008-r1,,g4,C5,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,HW-261114-002（一号厂房底层设备切割）还在审核中,HW-261114-002（一号厂房底层设备切割）还在审核中
+llm_only+v2,IND-008-r1,,g5,C6,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,7:30提交的，还没批,7:30提交的
+llm_only+v2,IND-008-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,有效期到18:00
+llm_only+v2,IND-008-r1,,,C7,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,还没批
+llm_only+v2,IND-008-r1,,,C8,extra_pred,,,SUPPORT,,HEDGED,,,,,,,如果是第二张，目前还没出结果。
+llm_only+v2,IND-009-r1,,g1,C1,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,排放口COD在线数据正常,排放口COD在线数据正常
+llm_only+v2,IND-009-r1,,g2,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,最近三次读数分别是42、38、45 mg/L,最近三次读数分别是42、38、45 mg/L
+llm_only+v2,IND-009-r1,,g3,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,均远低于100 mg/L的限值,均远低于100 mg/L的限值
+llm_only+v2,IND-009-r1,,g4,C4,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,仪器11月1日校准过,仪器11月1日校准过
+llm_only+v2,IND-009-r1,,g5,C6,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,今早6点自动标定也通过了,今早6点自动标定也通过了
+llm_only+v2,IND-009-r1,,g6,C5,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,DEFINITE,False,False,True,False,1.0,有效期到12月1日,有效期到12月1日
+llm_only+v2,IND-010-r1,,g1,C1,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,True,False,False,False,1.0,A线在15:13:00因供料中断触发停机保护（ALM-301）,A线在15:13:00因供料中断触发停机保护（ALM-301）。
+llm_only+v2,IND-010-r1,,g2,C2,similarity,0.7932,SUPPORT,SUPPORT,DEFINITE,DEFINITE,True,False,False,False,1.0,上游FAB-01在15:11:50因冲压机液压压力不足停机，比A线早70秒,上游FAB-01在15:11:50因冲压机液压压力不足停机
+llm_only+v2,IND-010-r1,,g3,C5,similarity,0.64,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,供料线于15:12:00确认无料,FAB-01停机后约10秒，供料线于15:12:00确认无料
+llm_only+v2,IND-010-r1,,g4,C6,similarity,0.8095,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,A线于15:12:30触发ALM-301,连续无料30秒后，A线于15:12:30触发ALM-301
+llm_only+v2,IND-010-r1,,g5,C8,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,HEDGED,True,False,False,False,1.0,现有事件关联与物料流记录支持A线此次停机由上游断料引起,现有事件关联与物料流记录支持A线此次停机由上游断料引起
+llm_only+v2,IND-010-r1,,g6,C10,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,DECLARED_UNKNOWN,False,False,False,False,1.0,液压压力不足的具体原因仍需进一步排查,液压压力不足的具体原因仍需进一步排查
+llm_only+v2,IND-010-r1,,g7,,,0.56,SUPPORT,,DEFINITE,,True,False,,,1.0,FAB-01停机后约10秒,
+llm_only+v2,IND-010-r1,,,C3,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,比A线早70秒
+llm_only+v2,IND-010-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,物料流监测将供料中断原因标记为上游线停机
+llm_only+v2,IND-010-r1,,,C7,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,报警持续30秒后，于15:13:00停机
+llm_only+v2,IND-010-r1,,,C9,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,上游停机由液压低压报警触发
+llm_only+v2,IND-011-r1,,g1,C1,similarity,0.5333,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.625,一号变压器目前负载72%，油温58℃、绕组温度65℃,一号变压器目前负载72%
+llm_only+v2,IND-011-r1,,g2,C2,similarity,0.8,MISSING_RULE,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.625,都在正常范围,油温58℃、绕组温度65℃都在正常范围
+llm_only+v2,IND-011-r1,,g3,C3,similarity,1.0,MISSING_RULE,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.625,数据上看没有异常,数据上看没有异常
+llm_only+v2,IND-011-r1,,g4,C5,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.625,6月15日巡检报告过一次轻微嗡嗡声，当时判断正常,当时判断正常
+llm_only+v2,IND-011-r1,,g5,C6,similarity,0.9091,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.625,变压器没装振动传感器,不过变压器没装振动传感器
+llm_only+v2,IND-011-r1,,g6,C7,similarity,1.0,UNKNOWN,SUPPORT,DECLARED_UNKNOWN,DEFINITE,False,False,True,False,0.625,没法远程判断异响的具体原因,没法远程判断异响的具体原因
+llm_only+v2,IND-011-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,历史记录里6月15日巡检报告过一次轻微嗡嗡声
+llm_only+v2,IND-011-r1,,,C8,extra_pred,,,MISSING_RULE,,HEDGED,,,,,,,如果响声和以前不一样或者变大了，建议安排现场检查。
+llm_only+v2,IND-012-r1,,g1,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,上午11:30完成了渗碳淬火工艺,上午11:30完成了渗碳淬火工艺
+llm_only+v2,IND-012-r1,,g2,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,还没提交检测申请,还没提交检测申请
+llm_only+v2,IND-012-r1,,g3,C4,similarity,1.0,SUPPORT,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.5,实验室那边也没有这批的送样记录,实验室那边也没有这批的送样记录
+llm_only+v2,IND-012-r1,,g4,C5,similarity,0.8,SUPPORT,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.5,热处理报告目前还没有，需要先安排送检,热处理报告目前还没有
+llm_only+v2,IND-012-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,这批齿轮轴（HT-261114-005）
+llm_only+v2,IND-012-r1,,,C6,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,需要先安排送检
+llm_only+v2,IND-013-r1,,g1,C2,similarity,0.9722,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.8333,BT-261110-M12（6061）和BT-261113-M18（6061）都已合格,BT-261110-M12（6061）和BT-261113-M18（6061）都已合格放行。
+llm_only+v2,IND-013-r1,,g2,,,0.3333,UNKNOWN,,DEFINITE,,True,False,,,0.8333,合格放行,
+llm_only+v2,IND-013-r1,,g3,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.8333,BT-261112-M15（7075）硬度和拉伸合格,BT-261112-M15（7075）硬度和拉伸合格
+llm_only+v2,IND-013-r1,,g4,C4,similarity,0.9756,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.8333,盐雾试验只做了48小时，没到规定的72小时,但盐雾试验只做了48小时，没到规定的72小时
+llm_only+v2,IND-013-r1,,g5,C5,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,DEFINITE,True,False,True,False,0.8333,目前是有条件放行,目前是有条件放行
+llm_only+v2,IND-013-r1,,g6,C6,similarity,1.0,UNKNOWN,MISSING_RULE,DECLARED_UNKNOWN,DEFINITE,False,False,False,False,0.8333,需要等盐雾试验补做结果确认后才能最终判定,需要等盐雾试验补做结果确认后才能最终判定
+llm_only+v2,IND-013-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,最近三批铝合金件的检测情况：
+llm_only+v2,IND-014-r1,,g1,C4,similarity,0.8,SUPPORT,SUPPORT,HEDGED,HEDGED,False,False,False,False,0.875,4个SKF 6308轴承，预计今天到货,预计今天到货
+llm_only+v2,IND-014-r1,,g2,C5,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.875,物流查询超时了,物流查询超时了
+llm_only+v2,IND-014-r1,,g3,C7,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,SCOPED_PARTIAL,False,False,False,False,0.875,仓库今天也没有这批货的入库记录,仓库今天也没有这批货的入库记录
+llm_only+v2,IND-014-r1,,g4,C8,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,DECLARED_UNKNOWN,False,False,False,False,0.875,目前无法确认是否已经到货,目前无法确认是否已经到货
+llm_only+v2,IND-014-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,PO-261108-037
+llm_only+v2,IND-014-r1,,,C2,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,4个
+llm_only+v2,IND-014-r1,,,C3,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,SKF 6308轴承
+llm_only+v2,IND-014-r1,,,C6,extra_pred,,,SUPPORT,,HEDGED,,,,,,,暂时查不到实时物流状态
+llm_only+v2,IND-014-r1,,,C9,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,建议直接联系供应商或物流公司确认
+llm_only+v2,IND-015-r1,,g1,C1,similarity,0.9091,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,上次校准是5月15日，合格,上次校准是5月15日
+llm_only+v2,IND-015-r1,,g2,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,下次校准到期日是明天（11月15日）,下次校准到期日是明天（11月15日）
+llm_only+v2,IND-015-r1,,g3,C4,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,DEFINITE,False,False,True,False,0.6667,目前还在校准有效期内,目前还在校准有效期内
+llm_only+v2,IND-015-r1,,g4,C5,similarity,1.0,CONFLICT,CONFLICT,DEFINITE,DEFINITE,False,False,False,False,0.6667,本月读数日均47.6立方米,本月读数日均47.6立方米
+llm_only+v2,IND-015-r1,,g5,C7,similarity,1.0,UNKNOWN,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.6667,从数据趋势看没有明显异常,从数据趋势看没有明显异常
+llm_only+v2,IND-015-r1,,g6,C8,similarity,0.9333,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,备用表正在拆检，没法做交叉比对,不过备用表正在拆检，没法做交叉比对
+llm_only+v2,IND-015-r1,,,C2,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,合格
+llm_only+v2,IND-015-r1,,,C6,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,波动与生产排班吻合
+llm_only+v2,IND-015-r1,,,C9,extra_pred,,,MISSING_RULE,,HEDGED,,,,,,,如果对读数有疑虑，明天校准到期时可以做一次全面校验
+llm_only+v2,IND-016-r1,,g1,C2,similarity,0.6667,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,11月10日安装后，12日完成了初始参数导入,11月10日安装后
+llm_only+v2,IND-016-r1,,g2,C4,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,13日做了焊接试板测试且外观合格,13日做了焊接试板测试且外观合格
+llm_only+v2,IND-016-r1,,g3,C6,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,还没有关联正式的焊接工艺规程（WPS），参数没有固化,参数没有固化
+llm_only+v2,IND-016-r1,,g4,C7,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7778,设备调试状态标记为进行中,设备调试状态标记为进行中
+llm_only+v2,IND-016-r1,,g5,C9,similarity,1.0,MISSING_RULE,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.7778,需要工艺工程师确认参数并发布WPS后才能投入使用,需要工艺工程师确认参数并发布WPS后才能投入使用
+llm_only+v2,IND-016-r1,,g6,C8,similarity,1.0,MISSING_RULE,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.7778,还不能用于正式生产,还不能用于正式生产
+llm_only+v2,IND-016-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,五号焊机（FRONIUS-TPS500）
+llm_only+v2,IND-016-r1,,,C3,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,12日完成了初始参数导入
+llm_only+v2,IND-016-r1,,,C5,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,但目前还没有关联正式的焊接工艺规程（WPS）
+llm_only+v2,IND-017-r1,,g1,C1,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,目前还发不了,三号储罐清淤的受限空间作业证（CS-261114-001）目前还发不了。
+llm_only+v2,IND-017-r1,,g2,C3,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,气体检测状态为待检测，还没有做气体检测记录,还没有做气体检测记录
+llm_only+v2,IND-017-r1,,g3,C4,similarity,0.9153,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,1.0,发证前还需要完成通风确认、监护人到位和应急设备到位等确认,按规程要求，发证前还需要完成通风确认、监护人到位和应急设备到位等确认
+llm_only+v2,IND-017-r1,,g4,C5,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,DECLARED_UNKNOWN,False,False,False,False,1.0,这些条件目前还没有查询到状态记录,这些条件目前还没有查询到状态记录
+llm_only+v2,IND-017-r1,,,C2,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,系统显示气体检测状态为待检测
+llm_only+v2,IND-017-r1,,,C6,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,建议先安排气体检测，然后逐项完成其余确认。
+llm_only+v2,IND-018-r1,,g1,C1,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,三号储罐有两个液位传感器,三号储罐有两个液位传感器。
+llm_only+v2,IND-018-r1,,g2,C2,similarity,0.6746,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,雷达液位计（LT-TK03-01）数据正常，当前液位62.3%,雷达液位计（LT-TK03-01）数据正常
+llm_only+v2,IND-018-r1,,g3,C4,similarity,1.0,SUPPORT,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.5,趋势平稳上升,趋势平稳上升
+llm_only+v2,IND-018-r1,,g4,C5,similarity,0.6,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.5,从11:30开始离线,差压液位计（LT-TK03-02）从11:30开始离线
+llm_only+v2,IND-018-r1,,g5,C6,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,最后一次有效读数是60.1%,最后一次有效读数是60.1%
+llm_only+v2,IND-018-r1,,g6,C7,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,此前两个传感器的读数基本一致（偏差<0.5%）,此前两个传感器的读数基本一致（偏差<0.5%）
+llm_only+v2,IND-018-r1,,g7,C9,similarity,0.9655,UNKNOWN,MISSING_RULE,DECLARED_UNKNOWN,HEDGED,False,False,False,False,0.5,差压液位计的离线原因需要排查,但差压液位计的离线原因需要排查
+llm_only+v2,IND-018-r1,,g8,C8,similarity,0.9412,SUPPORT,MISSING_RULE,DEFINITE,HEDGED,False,False,False,False,0.5,雷达液位计的数据可以暂时作为参考,所以雷达液位计的数据可以暂时作为参考
+llm_only+v2,IND-018-r1,,,C3,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,当前液位62.3%
+llm_only+v2,IND-018-r1,,,C10,extra_pred,,,MISSING_RULE,,HEDGED,,,,,,,建议通知仪表维修人员检查
+llm_only+v2,IND-019-r1,,g1,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7143,来料检验（IQC-261114-015）还在进行中,来料检验（IQC-261114-015）还在进行中
+llm_only+v2,IND-019-r1,,g2,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7143,材质证明已经核验通过,材质证明已经核验通过
+llm_only+v2,IND-019-r1,,g3,C4,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.7143,厚度和表面质量还在测试,厚度和表面质量还在测试
+llm_only+v2,IND-019-r1,,g4,C5,similarity,1.0,SUPPORT,SUPPORT,HEDGED,HEDGED,False,False,False,False,0.7143,预计17:00前完成,预计17:00前完成
+llm_only+v2,IND-019-r1,,g5,C6,similarity,1.0,UNKNOWN,MISSING_RULE,DECLARED_UNKNOWN,DEFINITE,False,False,False,False,0.7143,完整的质检报告暂时出不了,完整的质检报告暂时出不了
+llm_only+v2,IND-019-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,这批304不锈钢板（RCV-261114-008）
+llm_only+v2,IND-019-r1,,,C7,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,等检测完成后可以发给你
+llm_only+v2,IND-020-r1,,g1,C1,similarity,0.8824,SUPPORT,REFUTE,SCOPED_PARTIAL,DEFINITE,False,False,False,False,0.6667,良率整体在97.5%-98.5%之间,上周C线良率整体在97.5%-98.5%之间
+llm_only+v2,IND-020-r1,,g2,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,11月10日计划保养停产,11月10日计划保养停产
+llm_only+v2,IND-020-r1,,g3,C3,similarity,0.8485,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,11月11日良率降到96.1%，是整周最低,11月11日良率降到96.1%
+llm_only+v2,IND-020-r1,,g4,C6,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,78件，占当日不良品60.5%,78件，占当日不良品60.5%
+llm_only+v2,IND-020-r1,,g5,C7,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,系统已生成了异常报告AR-261111-003,系统已生成了异常报告AR-261111-003
+llm_only+v2,IND-020-r1,,g6,C8,similarity,1.0,MISSING_RULE,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.6667,其余几天良率正常,其余几天良率正常
+llm_only+v2,IND-020-r1,,g7,C9,similarity,1.0,UNKNOWN,UNKNOWN,DECLARED_UNKNOWN,DEFINITE,False,False,False,False,0.6667,具体虚焊原因需要看那份异常报告的分析,具体虚焊原因需要看那份异常报告的分析
+llm_only+v2,IND-020-r1,,g8,C5,similarity,1.0,SUPPORT,SUPPORT,SCOPED_PARTIAL,DEFINITE,False,False,False,False,0.6667,主要原因是当天虚焊不良占比异常偏高,主要原因是当天虚焊不良占比异常偏高
+llm_only+v2,IND-020-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,是整周最低
+llm_only+v2,IND-021-r1,,g1,C1,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.0,压缩机 CMP-01A 近30分钟振动数据正常,压缩机 CMP-01A 近30分钟振动数据正常
+llm_only+v2,IND-021-r1,,g2,C2,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.0,振动值在 2.0～2.4 mm/s 之间,振动值在 2.0～2.4 mm/s 之间
+llm_only+v2,IND-021-r1,,g3,C4,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.0,设备运行状态良好,设备运行状态良好
+llm_only+v2,IND-021-r1,,g4,C5,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.0,近2小时无振动报警记录,近2小时无振动报警记录
+llm_only+v2,IND-021-r1,,g5,C6,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.0,近期也无相关维修工单,近期也无相关维修工单
+llm_only+v2,IND-021-r1,,g6,C7,similarity,1.0,UNKNOWN,UNKNOWN,HEDGED,HEDGED,False,False,False,False,0.0,现场声音可能由其他原因引起,现场声音可能由其他原因引起
+llm_only+v2,IND-021-r1,,,C3,extra_pred,,,UNKNOWN,,DEFINITE,,,,,,,远低于报警阈值 7.1 mm/s
+llm_only+v2,IND-021-r1,,,C8,extra_pred,,,UNKNOWN,,DEFINITE,,,,,,,建议继续观察
+llm_only+v2,IND-021-r1,,,C9,extra_pred,,,UNKNOWN,,HEDGED,,,,,,,如振动持续异常请再次反馈
+llm_only+v2,IND-022-r1,,g1,C1,similarity,0.5333,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.8,夜班产量为 8500 件,B线11月13日（昨日）夜班产量为 8500 件
+llm_only+v2,IND-022-r1,,g2,C2,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,DEFINITE,False,False,True,False,0.8,良率 98.2%,良率 98.2%
+llm_only+v2,IND-022-r1,,g3,C3,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,DEFINITE,False,False,True,False,0.8,产线利用率 97.7%,产线利用率 97.7%
+llm_only+v2,IND-022-r1,,g4,C4,similarity,1.0,UNKNOWN,SUPPORT,DEFINITE,DEFINITE,True,False,True,False,0.8,仅有30分钟换模停机,仅有30分钟换模停机
+llm_only+v2,IND-022-r1,,,C5,extra_pred,,,SUPPORT,,HEDGED,,,,,,,如需进一步了解各时段明细或不良品分析请告知。
+llm_only+v2,IND-023-r1,,g1,C2,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,最近一次标定日期为 2026年5月10日，标定结果合格，标定周期6个月,标定结果合格
+llm_only+v2,IND-023-r1,,g2,C4,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.6667,目前标定有效,目前标定有效
+llm_only+v2,IND-023-r1,,g3,C5,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,True,True,False,False,0.6667,可以用于今天的有限空间作业,可以用于今天的有限空间作业
+llm_only+v2,IND-023-r1,,g4,C7,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,型号为 MultiRAE Lite，支持 O2/LEL/H2S/CO 四合一检测,支持 O2/LEL/H2S/CO 四合一检测
+llm_only+v2,IND-023-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,GD-05 气体检测仪最近一次标定日期为 2026年5月10日
+llm_only+v2,IND-023-r1,,,C3,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,标定周期6个月
+llm_only+v2,IND-023-r1,,,C6,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,该仪器型号为 MultiRAE Lite
+llm_only+v2,IND-023-r1,,,C8,extra_pred,,,SUPPORT,,HEDGED,,,,,,,建议关注下次标定到期时间
+llm_only+v2,IND-023-r1,,,C9,extra_pred,,,REFUTE,,HEDGED,,,,,,,提前安排送检
+llm_only+v2,IND-024-r1,,g1,C1,similarity,0.6081,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.2222,当前系统压力为 21500 MPa,液压机 HP-03 当前系统压力为 21500 MPa
+llm_only+v2,IND-024-r1,,g2,C2,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.2222,已严重超出最大工作压力 25 MPa,已严重超出最大工作压力 25 MPa
+llm_only+v2,IND-024-r1,,g3,C3,similarity,1.0,REFUTE,REFUTE,DEFINITE,HEDGED,False,False,False,False,0.2222,超出约 86000 倍,超出约 86000 倍
+llm_only+v2,IND-024-r1,,g4,C4,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.2222,属于极度危险状态,属于极度危险状态！
+llm_only+v2,IND-024-r1,,g5,C5,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,True,True,False,False,0.2222,请立即停机检查,请立即停机检查！
+llm_only+v2,IND-024-r1,,g6,C6,similarity,0.9091,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.2222,近2小时压力波动范围 20800～22100，趋势稳定,近2小时压力波动范围 20800～22100
+llm_only+v2,IND-024-r1,,g7,C8,similarity,1.0,REFUTE,REFUTE,HEDGED,DEFINITE,True,False,False,False,0.2222,建议立即启动紧急停机程序,建议立即启动紧急停机程序
+llm_only+v2,IND-024-r1,,g8,C9,similarity,0.8,MISSING_RULE,UNKNOWN,DEFINITE,DEFINITE,True,False,False,False,0.2222,排查传感器或安全阀,并通知设备管理人员排查传感器或安全阀
+llm_only+v2,IND-024-r1,,,C7,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,趋势稳定
+llm_only+v2,IND-025-r1,,g1,C3,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5833,硬度 29.5 HRC（合格），抗拉强度 1095 MPa（合格）,硬度 29.5 HRC（合格）
+llm_only+v2,IND-025-r1,,g2,C6,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.5833,冲击试验已完成,冲击试验已完成
+llm_only+v2,IND-025-r1,,g3,C7,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.5833,各项指标均符合 GB/T 3077-2015 要求,各项指标均符合 GB/T 3077-2015 要求
+llm_only+v2,IND-025-r1,,g4,C8,similarity,0.8,REFUTE,REFUTE,DEFINITE,DEFINITE,True,True,False,False,0.5833,该批次判定合格，可以放行,该批次判定合格
+llm_only+v2,IND-025-r1,,g5,C12,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5833,炉号 H26111307，电炉 EF-03 冶炼，目前位于质检区,目前位于质检区
+llm_only+v2,IND-025-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,42CrMo
+llm_only+v2,IND-025-r1,,,C2,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,29.5
+llm_only+v2,IND-025-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,1095
+llm_only+v2,IND-025-r1,,,C5,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,抗拉强度 1095 MPa（合格）
+llm_only+v2,IND-025-r1,,,C9,extra_pred,,,REFUTE,,DEFINITE,,,,,,,可以放行
+llm_only+v2,IND-025-r1,,,C10,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,炉号 H26111307
+llm_only+v2,IND-025-r1,,,C11,extra_pred,,,UNKNOWN,,DEFINITE,,,,,,,电炉 EF-03 冶炼
+llm_only+v2,IND-026-r1,,g1,C1,similarity,0.8,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.6,冷却系统运行正常,F-02 退火炉冷却系统运行正常。
+llm_only+v2,IND-026-r1,,g2,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,炉顶冷却进水 22.3℃ / 出水 35.1℃,炉顶冷却进水 22.3℃ / 出水 35.1℃
+llm_only+v2,IND-026-r1,,g3,C4,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,炉壁冷却A进水 22.5℃ / 出水 36.8℃,炉壁冷却A进水 22.5℃ / 出水 36.8℃
+llm_only+v2,IND-026-r1,,g4,C5,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,HEDGED,False,False,False,False,0.6,流量分别约 120 和 115 L/min,流量分别约 120 和 115 L/min
+llm_only+v2,IND-026-r1,,g5,C6,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,近2小时无冷却系统报警,近2小时无冷却系统报警。
+llm_only+v2,IND-026-r1,,g6,C7,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,当前炉温 820℃，处于保温阶段,当前炉温 820℃
+llm_only+v2,IND-026-r1,,g7,C9,similarity,0.8,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,True,False,False,False,0.6,系统状态良好，可继续运行,系统状态良好
+llm_only+v2,IND-026-r1,,g8,C2,similarity,1.0,UNKNOWN,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.6,各冷却回路温度和流量均在正常范围内,各冷却回路温度和流量均在正常范围内
+llm_only+v2,IND-026-r1,,,C8,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,处于保温阶段
+llm_only+v2,IND-026-r1,,,C10,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,可继续运行
+llm_only+v2,IND-027-r1,,g1,C2,similarity,0.8,REFUTE,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.5556,14:05:12 变频器 VFD-102 发生重启事件，导致压缩机转速波动，进而于 14:05:08 触发喘振报警 ALM-445,导致压缩机转速波动
+llm_only+v2,IND-027-r1,,g2,C5,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5556,喘振保护动作后于 14:05:18 联锁跳车,喘振保护动作
+llm_only+v2,IND-027-r1,,g3,C7,similarity,1.0,UNKNOWN,REFUTE,DEFINITE,DEFINITE,False,False,False,True,0.5556,根本原因为变频器异常重启引起喘振,根本原因为变频器异常重启引起喘振
+llm_only+v2,IND-027-r1,,g4,C9,similarity,1.0,MISSING_RULE,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.5556,确认变频器控制回路稳定性后恢复运行,确认变频器控制回路稳定性后恢复运行
+llm_only+v2,IND-027-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,14:05:12 变频器 VFD-102 发生重启事件
+llm_only+v2,IND-027-r1,,,C3,extra_pred,,,REFUTE,,DEFINITE,,,,,,,进而于 14:05:08 触发喘振报警 ALM-445
+llm_only+v2,IND-027-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,于 14:05:08 触发喘振报警 ALM-445
+llm_only+v2,IND-027-r1,,,C6,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,于 14:05:18 联锁跳车
+llm_only+v2,IND-027-r1,,,C8,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,建议检查 VFD-102 重启原因
+llm_only+v2,IND-028-r1,,g1,C4,similarity,0.6061,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5556,累计入库 500 支，累计领用 380 支，在库 120 支,500 - 380 = 120 支
+llm_only+v2,IND-028-r1,,g2,C5,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.5556,可领用数量为 500 - 380 = 120 支,可领用数量为 500 - 380 = 120 支
+llm_only+v2,IND-028-r1,,g3,C6,similarity,0.56,SUPPORT,SUPPORT,HEDGED,DEFINITE,False,False,False,False,0.5556,200 支预计 11月18日到货,另外有一笔在途采购 PO-261110-033，200 支预计 11月18日到货
+llm_only+v2,IND-028-r1,,g4,C7,similarity,1.0,SUPPORT,REFUTE,DEFINITE,HEDGED,False,False,False,False,0.5556,近7天日均消耗约12支,近7天日均消耗约12支
+llm_only+v2,IND-028-r1,,g5,C8,similarity,1.0,REFUTE,REFUTE,DEFINITE,HEDGED,False,False,False,False,0.5556,当前库存可满足约10天用量,当前库存可满足约10天用量
+llm_only+v2,IND-028-r1,,g6,C9,similarity,0.8,UNKNOWN,MISSING_RULE,DEFINITE,DEFINITE,False,False,False,False,0.5556,可满足领用需求,当前库存充足，可满足领用需求
+llm_only+v2,IND-028-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,累计入库 500 支
+llm_only+v2,IND-028-r1,,,C2,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,累计领用 380 支
+llm_only+v2,IND-028-r1,,,C3,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,在库 120 支
+llm_only+v2,IND-029-r1,,g1,C2,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.6,已下单采购,已下单采购
+llm_only+v2,IND-029-r1,,g2,C4,similarity,1.0,REFUTE,REFUTE,DEFINITE,DEFINITE,False,False,False,False,0.6,下单日期为 11月12日,下单日期为 11月12日
+llm_only+v2,IND-029-r1,,g3,C6,similarity,1.0,UNKNOWN,UNKNOWN,HEDGED,HEDGED,False,False,False,False,0.6,预计 11月21日前后可以到货,预计 11月21日前后可以到货。
+llm_only+v2,IND-029-r1,,g4,C7,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,当前库内无该材料库存,当前库内无该材料库存。
+llm_only+v2,IND-029-r1,,g5,C8,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,工单计划开工日期 11月25日,工单计划开工日期 11月25日
+llm_only+v2,IND-029-r1,,g6,C9,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.6,到货后可满足生产排程,到货后可满足生产排程。
+llm_only+v2,IND-029-r1,,g7,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,采购订单号 PO-261112-055,采购订单号 PO-261112-055
+llm_only+v2,IND-029-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,工单 WO-28520 所需的 Inconel 625 合金板（δ=12mm）
+llm_only+v2,IND-029-r1,,,C5,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,根据供应商常规交期（15-20天）
+llm_only+v2,IND-029-r1,,,C10,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,建议与供应商确认具体发货时间。
+llm_only+v2,IND-030-r1,,g1,C1,similarity,1.0,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.5,库房中未找到 M8 钛合金螺栓,库房中未找到 M8 钛合金螺栓
+llm_only+v2,IND-030-r1,,g2,C2,similarity,0.7372,UNKNOWN,UNKNOWN,DEFINITE,DEFINITE,False,False,False,False,0.5,库存以不锈钢（304/316）、碳钢和铝合金材质为主,当前 M8 螺栓库存以不锈钢（304/316）、碳钢和铝合金材质为主
+llm_only+v2,IND-030-r1,,g3,C3,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,合计 156 个品规,合计 156 个品规
+llm_only+v2,IND-030-r1,,g4,C5,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,钛合金紧固件存放于特种材料库B2区,钛合金紧固件存放于特种材料库B2区
+llm_only+v2,IND-030-r1,,g5,C6,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.5,也可联系库管员周芳确认,也可联系库管员周芳确认
+llm_only+v2,IND-030-r1,,,C4,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,如需采购 M8 钛合金螺栓，请告知具体规格和数量，我可以协助发起采购申请
+llm_only+v2,IND-031-r1,,g1,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,总用电量 45200 kWh,总用电量 45200 kWh
+llm_only+v2,IND-031-r1,,g2,C4,similarity,1.0,REFUTE,REFUTE,DEFINITE,HEDGED,False,False,False,False,0.6,本月电费约 31640 万元,本月电费约 31640 万元
+llm_only+v2,IND-031-r1,,g3,C5,similarity,0.5714,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,焊接工位1-10用电 28500 kWh，工位11-20用电 12200 kWh，辅助设备用电 4500 kWh,焊接工位1-10用电 28500 kWh
+llm_only+v2,IND-031-r1,,g4,C8,similarity,0.9231,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6,上月全月电费 64470 元,对比上月全月电费 64470 元
+llm_only+v2,IND-031-r1,,g5,C9,similarity,0.8372,REFUTE,UNKNOWN,HEDGED,HEDGED,False,False,False,False,0.6,本月全月电费预计在 65000 万元左右,按当前用电趋势，本月全月电费预计在 65000 万元左右
+llm_only+v2,IND-031-r1,,g6,C3,similarity,1.0,SUPPORT,CONFLICT,DEFINITE,DEFINITE,False,False,False,False,0.6,按综合电价 0.70 元/kWh 计算,按综合电价 0.70 元/kWh 计算
+llm_only+v2,IND-031-r1,,g7,C1,similarity,1.0,SUPPORT,SUPPORT,SCOPED_PARTIAL,DEFINITE,False,False,False,False,0.6,本月（11月1日至14日）,本月（11月1日至14日）
+llm_only+v2,IND-031-r1,,,C6,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,工位11-20用电 12200 kWh
+llm_only+v2,IND-031-r1,,,C7,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,辅助设备用电 4500 kWh
+llm_only+v2,IND-031-r1,,,C10,extra_pred,,,UNKNOWN,,HEDGED,,,,,,,如需分时段费用明细可进一步查询
+llm_only+v2,IND-032-r1,,g1,C2,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.875,电压总谐波畸变率 THD 为 3.8%,电压总谐波畸变率 THD 为 3.8%
+llm_only+v2,IND-032-r1,,g2,,,0.48,SUPPORT,,DEFINITE,,False,False,,,0.875,3次 1.2%、5次 2.1%、7次 1.5%、11次 0.8%、13次 0.6%,
+llm_only+v2,IND-032-r1,,g3,C9,similarity,1.0,REFUTE,SUPPORT,DEFINITE,DEFINITE,False,False,True,False,0.875,当前 THD 3.8% 低于 5% 限值,当前 THD 3.8% 低于 5% 限值
+llm_only+v2,IND-032-r1,,g4,C11,similarity,1.0,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.875,系统频率 50.01 Hz,系统频率 50.01 Hz
+llm_only+v2,IND-032-r1,,g5,C15,similarity,0.8,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.875,近24小时 THD 最高 4.2%，平均 3.3%，上午呈上升趋势,上午呈上升趋势
+llm_only+v2,IND-032-r1,,g6,C10,similarity,1.0,SUPPORT,UNKNOWN,SCOPED_PARTIAL,DEFINITE,False,False,False,False,0.875,谐波指标合格,谐波指标合格
+llm_only+v2,IND-032-r1,,,C1,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,10kV母线（BUS-10KV-01）电能质量检测结果：
+llm_only+v2,IND-032-r1,,,C3,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,3次 1.2%
+llm_only+v2,IND-032-r1,,,C4,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,5次 2.1%
+llm_only+v2,IND-032-r1,,,C5,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,7次 1.5%
+llm_only+v2,IND-032-r1,,,C6,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,11次 0.8%
+llm_only+v2,IND-032-r1,,,C7,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,13次 0.6%
+llm_only+v2,IND-032-r1,,,C8,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,根据电能质量标准，380V及以下低压系统 THD 限值为 5%
+llm_only+v2,IND-032-r1,,,C12,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,运行稳定
+llm_only+v2,IND-032-r1,,,C13,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,近24小时 THD 最高 4.2%
+llm_only+v2,IND-032-r1,,,C14,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,平均 3.3%
+llm_only+v2,IND-032-r1,,,C16,extra_pred,,,SUPPORT,,HEDGED,,,,,,,建议持续关注
+llm_only+v2,IND-033-r1,,g1,C1,similarity,0.6,SUPPORT,SUPPORT,DEFINITE,DEFINITE,False,False,False,False,0.6667,当前温度 102℃,RXT-03 反应釜当前温度 102℃
+llm_only+v2,IND-033-r1,,g2,C3,similarity,0.6863,SUPPORT,SUPPORT,HEDGED,DEFINITE,False,False,False,False,0.6667,工艺参数卡（R2版本），该配方反应温度控制范围为 85-95℃（建议值）,该配方反应温度控制范围为 85-95℃（建议值）
+llm_only+v2,IND-033-r1,,g3,C5,similarity,1.0,SUPPORT,SUPPORT,SCOPED_PARTIAL,DEFINITE,False,False,False,False,0.6667,偏高约 7℃,偏高约 7℃
+llm_only+v2,IND-033-r1,,g4,C6,similarity,0.9655,UNKNOWN,SUPPORT,DEFINITE,DEFINITE,False,False,True,False,0.6667,超过 98℃ 的降速搅拌警戒线,且超过 98℃ 的降速搅拌警戒线
+llm_only+v2,IND-033-r1,,g5,C7,similarity,0.8,MISSING_RULE,MISSING_RULE,HEDGED,DEFINITE,True,False,False,False,0.6667,建议立即将温度回调至 95℃ 以内，并降低搅拌转速至安全范围,建议立即将温度回调至 95℃ 以内
+llm_only+v2,IND-033-r1,,g6,C4,similarity,1.0,MISSING_RULE,SUPPORT,DEFINITE,DEFINITE,False,False,True,False,0.6667,当前温度 102℃ 已超过建议上限 95℃,当前温度 102℃ 已超过建议上限 95℃
+llm_only+v2,IND-033-r1,,,C2,extra_pred,,,SUPPORT,,DEFINITE,,,,,,,根据工艺参数卡（R2版本）
+llm_only+v2,IND-033-r1,,,C8,extra_pred,,,MISSING_RULE,,DEFINITE,,,,,,,并降低搅拌转速至安全范围
+llm_only+v2,IND-033-r1,,,C9,extra_pred,,,MISSING_RULE,,HEDGED,,,,,,,如温度持续偏高请检查加热系统控制回路

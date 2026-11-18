@@ -1,0 +1,653 @@
+{
+  "scorecard_version": "07a-scorecard-v2",
+  "rule_version": "2.1.0",
+  "policy_version": "2.1.0",
+  "policy_status": "PROVISIONAL",
+  "policy_sha256": "f6a12bb2d19e5a3951f4048022ac07f146bd5aef15074754e8b283b2f65db86f",
+  "run_id": "c5d6e7f8-5353-4c53-a353-b3b4b5b6b7b8",
+  "case_id": "INS-A53",
+  "upstream_versions": {
+    "graph_version": "INS-A53-evidence-graph-v1",
+    "plan_version": "INS-A53-supplementary-plan-v1",
+    "answer_version": null,
+    "answer_sha256": "84ca9cbd7e6b1072",
+    "proposal_status": "proposed"
+  },
+  "source": {
+    "method": "rule",
+    "engine": "01A-egraph",
+    "adapter": "egraph_v1",
+    "adapter_version": "1.0.0",
+    "log_record_available": true,
+    "files": {
+      "graph": "INS-A53_graph.json",
+      "plan": "INS-A53_plan.json"
+    }
+  },
+  "question": "客户工伤后做了伤残鉴定，意外险伤残保险金能赔多少？",
+  "grade": "INSUFFICIENT",
+  "grade_label_zh": "证据不足",
+  "high_risk_alert": true,
+  "high_risk_alert_text": "CLM-008「伤残保险金 = 500」：高风险主结论在证据不足/缺规则/冲突时被写成确定结论",
+  "support_score": 0.1,
+  "coverage_score": 1.0,
+  "uncertainty_score": 0.1,
+  "overall": 0.325,
+  "overall_display": false,
+  "blockers": [
+    {
+      "code": "B2",
+      "claim_id": "CLM-008",
+      "text": "伤残保险金 = 500",
+      "severe": true,
+      "reason_zh": "高风险主结论以确定措辞表述，但上游状态为证据不足/缺规则/冲突",
+      "detail": "措辞 DEFINITE，状态 UNKNOWN；高风险依据 ['lexicon:保险金', 'goal_lexicon:保险金', 'sole_goal_main_claim']",
+      "gap_ids": []
+    }
+  ],
+  "qualifications": [
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-002",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-003",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-004",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-005",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-006",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-007",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-009",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q6_OVERCLAIM",
+      "claim_id": "CLM-010",
+      "goal_id": null,
+      "reason_zh": "确定措辞但证据未支持（非高风险、无 HIGH 缺口，未达阻断）",
+      "detail": "DEFINITE×UNKNOWN"
+    },
+    {
+      "code": "Q4_LEXICAL_FALLBACK",
+      "claim_id": null,
+      "goal_id": "GOAL-001",
+      "reason_zh": "目标与结论的关联由词面兜底得出，非上游关联",
+      "detail": "关联结论 ['CLM-008']"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "claims_without_checks=9"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "lexical_fallback_links=1"
+    },
+    {
+      "code": "Q5_BUILD_RISK",
+      "claim_id": null,
+      "goal_id": null,
+      "reason_zh": "存在建链风险（见 build_risks）",
+      "detail": "orphan_evidence=3"
+    }
+  ],
+  "severe_issues": [
+    {
+      "code": "SEVERE_OVERCLAIM",
+      "claim_id": "CLM-008",
+      "text": "伤残保险金 = 500",
+      "status": "UNKNOWN",
+      "expression": "DEFINITE",
+      "high_risk_basis": [
+        "lexicon:保险金",
+        "goal_lexicon:保险金",
+        "sole_goal_main_claim"
+      ],
+      "reason_zh": "高风险主结论在证据不足/缺规则/冲突时被写成确定结论"
+    }
+  ],
+  "dimensions": {
+    "support": {
+      "numerator": 1,
+      "denominator": 10,
+      "value": 0.1,
+      "breakdown": {
+        "SUPPORT": 1,
+        "REFUTE": 0,
+        "UNKNOWN": 9,
+        "CONFLICT": 0,
+        "MISSING_RULE": 0,
+        "excluded_declared_unknown": 0
+      },
+      "rule": "分母=措辞为 DEFINITE/HEDGED/SCOPED_PARTIAL 的结论数；分子=其中上游状态为 SUPPORT 的条数。UNKNOWN 不给半分。DECLARED_UNKNOWN 不计入。",
+      "weight": 0.5
+    },
+    "coverage": {
+      "numerator": 1,
+      "denominator": 1,
+      "value": 1.0,
+      "breakdown": {
+        "ADDRESSED_SUPPORTED": 0,
+        "ADDRESSED_DECLARED_UNKNOWN": 0,
+        "ADDRESSED_UNSUPPORTED": 1,
+        "NOT_ADDRESSED": 0,
+        "lexical_fallback_goals": 1
+      },
+      "rule": "分母=用户目标数；分子=有关联结论（DEFINITE/HEDGED/SCOPED_PARTIAL）或明确声明无法确定（DECLARED_UNKNOWN）的目标数。关联优先用上游 related_goals/covers_goals/边，退化为词面匹配时标 lexical_fallback。",
+      "weight": 0.25
+    },
+    "uncertainty": {
+      "numerator": 1.0,
+      "denominator": 10,
+      "value": 0.1,
+      "breakdown": {
+        "judgements": {
+          "APPROPRIATE": 1,
+          "OVERCLAIM": 9
+        },
+        "cells": {
+          "DEFINITE×SUPPORT": 1,
+          "DEFINITE×UNKNOWN": 9
+        },
+        "unchecked_default_unknown": 9,
+        "checked_only": {
+          "numerator": 1.0,
+          "denominator": 1,
+          "value": 1.0
+        }
+      },
+      "rule": "对每条结论按 policy.expression_matrix 的 (措辞×状态) 查表得分，分母=全部结论。如实声明无法确定（DECLARED_UNKNOWN×UNKNOWN/MISSING_RULE/CONFLICT）得满分。breakdown.checked_only 仅供参考：排除了“未被任何 check 命中而默认 UNKNOWN”的结论。",
+      "weight": 0.25
+    }
+  },
+  "review_sequence": [
+    "CLM-008",
+    "CLM-002",
+    "CLM-003",
+    "CLM-004",
+    "CLM-005",
+    "CLM-006",
+    "CLM-007",
+    "CLM-009",
+    "CLM-010"
+  ],
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "text": "保单 ACC-260520-7745 有效",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "SUPPORT",
+      "status_zh": "已支持",
+      "status_source": "01A",
+      "verdict_reason": "现有证据条件全部满足",
+      "checked": true,
+      "main_basis": [
+        {
+          "check_id": "CHK-001",
+          "kind": "field_restatement",
+          "verdict": "SUPPORT",
+          "evidence_id": "MAT-001",
+          "run_id": "c5d6e7f8-5353-4c53-a353-b3b4b5b6b7b8",
+          "event_id": "c1",
+          "json_path": "trace[c1].result.policy_id",
+          "pointer": "/trace/0/result/policy_id",
+          "excerpt": "字段 policy_id=ACC-260520-7745 与结论复述的 ACC-260520-7745 逐字一致"
+        }
+      ],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 1.0,
+        "judgement": "APPROPRIATE",
+        "cell": "DEFINITE×SUPPORT"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-002",
+      "text": "伤残保险金保额 50 万元",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:保额",
+        "lexicon:保险金"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-003",
+      "text": "本案存在两份伤残鉴定报告：深圳市劳动能力鉴定委员会评为九级（依据《劳动能力鉴定标准》）",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-004",
+      "text": "中山大学法医鉴定中心评为十级（依据《人身保险伤残评定标准》）",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-005",
+      "text": "劳动能力鉴定委员会不属于上述两类机构",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-006",
+      "text": "因此仅司法鉴定中心的十级鉴定符合条款要求",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-007",
+      "text": "按十级伤残赔付比例 5% 计算",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:reading"
+      ],
+      "upstream_strength": "reading",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:赔付"
+      ],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-008",
+      "text": "伤残保险金 = 500",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [
+        "GOAL-001"
+      ],
+      "linkage_method": "lexical_fallback",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": true,
+      "is_high_risk": true,
+      "high_risk_basis": [
+        "lexicon:保险金",
+        "goal_lexicon:保险金",
+        "sole_goal_main_claim"
+      ],
+      "severe": true,
+      "severe_code": "SEVERE_OVERCLAIM",
+      "blocker_codes": [
+        "B2"
+      ],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-009",
+      "text": "000 × 5% = 25",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:reading"
+      ],
+      "upstream_strength": "reading",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    },
+    {
+      "claim_id": "CLM-010",
+      "text": "000 元",
+      "expression": "DEFINITE",
+      "expression_zh": "确定断言",
+      "expression_hits": [
+        "upstream:assertion"
+      ],
+      "upstream_strength": "assertion",
+      "status": "UNKNOWN",
+      "status_zh": "证据不足",
+      "status_source": "01A",
+      "verdict_reason": "日志未给出足以判定的依据，按规则保留未知",
+      "checked": false,
+      "main_basis": [],
+      "missing_or_conflicting": [],
+      "gap_ids": [],
+      "affected_goals": [],
+      "linkage_method": "none",
+      "actions": [],
+      "uncertainty": {
+        "score": 0.0,
+        "judgement": "OVERCLAIM",
+        "cell": "DEFINITE×UNKNOWN"
+      },
+      "is_main": false,
+      "is_high_risk": false,
+      "high_risk_basis": [],
+      "severe": false,
+      "severe_code": null,
+      "blocker_codes": [],
+      "review_status": "proposed"
+    }
+  ],
+  "goals": [
+    {
+      "goal_id": "GOAL-001",
+      "text": "客户工伤后做了伤残鉴定，意外险伤残保险金能赔多少",
+      "question_type": "value_query",
+      "coverage_state": "ADDRESSED_UNSUPPORTED",
+      "coverage_state_zh": "已回应但未获支持",
+      "linked_claims": [
+        "CLM-008"
+      ],
+      "linkage_method": "lexical_fallback",
+      "upstream_answered": false
+    }
+  ],
+  "gaps": [],
+  "build_risks": {
+    "unmapped_sentences": {
+      "count": 0,
+      "items": []
+    },
+    "goals_without_claims": [],
+    "goals_lexical_fallback": [
+      "GOAL-001"
+    ],
+    "lexical_fallback_links": 1,
+    "orphan_evidence": [
+      "MAT-002",
+      "MAT-003",
+      "MAT-004"
+    ],
+    "claims_without_checks": [
+      "CLM-002",
+      "CLM-003",
+      "CLM-004",
+      "CLM-005",
+      "CLM-006",
+      "CLM-007",
+      "CLM-008",
+      "CLM-009",
+      "CLM-010"
+    ],
+    "unchecked_default_unknown": [
+      "CLM-002",
+      "CLM-003",
+      "CLM-004",
+      "CLM-005",
+      "CLM-006",
+      "CLM-007",
+      "CLM-008",
+      "CLM-009",
+      "CLM-010"
+    ],
+    "review_status": {
+      "proposed_nodes": 11,
+      "unresolved_nodes": 0,
+      "proposed_edges": 0,
+      "unresolved_edges": 0,
+      "proposed_claims": 10
+    },
+    "gap_missing_condition_not_node": [],
+    "dangling_action_gap_refs": [],
+    "recommendations_unscored": [],
+    "b_review_unmatched": [],
+    "scope_statement": "本成绩单只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。"
+  },
+  "supplement": {
+    "plan_action_count": 0,
+    "executable": 0,
+    "needs_confirmation": 0,
+    "manual": 0,
+    "actions": []
+  },
+  "scope_note": "本成绩单只评价上游（01A 建图 / 02B 审核）已建模的结论、证据与缺口；结论状态由上游给出，07A 不重新判断。未被抽取的结论、未被发现的规则与日志外事实不在评价范围内。",
+  "score_semantics": "本成绩单的分数是“基于现有日志的证据审核结果”，不是回答正确的概率；未经独立标注数据校准前不得解读为正确率。等级只覆盖已建模条件，不能证明证据图完整或已发现全部适用规则。",
+  "notes": [],
+  "generated_by": {
+    "package": "confidence_07a",
+    "package_version": "2.1.0",
+    "scorecard_version": "07a-scorecard-v2",
+    "adapter": "egraph_v1",
+    "model_called": false
+  }
+}

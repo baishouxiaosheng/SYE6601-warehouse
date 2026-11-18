@@ -1,0 +1,191 @@
+{
+  "case_id": "IND-017",
+  "run_id": "IND-017-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1326,
+    "completion_tokens": 7804,
+    "total_tokens": 9130
+  },
+  "latency_seconds": 41.921,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-017-r1",
+      "case_id": "IND-017",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "受限空间作业证当前能否发放"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "三号储罐清淤的受限空间作业证（CS-261114-001）目前还发不了。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[0].status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.test_status"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.excerpt"
+              }
+            ],
+            "reason": "c1 显示 permit status=PENDING_GAS_TEST，c2 显示 test_status=NOT_PERFORMED，c3 规定签发前必须完成气体检测合格；气体检测未完成，因此当前不能发放。"
+          },
+          {
+            "id": "C2",
+            "text": "系统显示气体检测状态为待检测",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.permits[0].status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.test_status"
+              }
+            ],
+            "reason": "c1 permits[0].status=PENDING_GAS_TEST，c2 test_status=NOT_PERFORMED，表明气体检测尚未完成/待检测。"
+          },
+          {
+            "id": "C3",
+            "text": "还没有做气体检测记录",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.last_test"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.note"
+              }
+            ],
+            "reason": "c2 last_test=null 且 note=气体检测尚未安排，说明没有气体检测记录。"
+          },
+          {
+            "id": "C4",
+            "text": "按规程要求，发证前还需要完成通风确认、监护人到位和应急设备到位等确认",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.excerpt"
+              }
+            ],
+            "reason": "c3 摘录明确列出签发前必须完成通风措施确认、监护人到位确认、应急救援设备到位确认。"
+          },
+          {
+            "id": "C5",
+            "text": "这些条件目前还没有查询到状态记录",
+            "status": "UNKNOWN",
+            "expression": "DECLARED_UNKNOWN",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [],
+            "reason": "trace 中只有许可查询、气体检测查询和规程检索，未返回通风措施、监护人到位、应急救援设备到位的状态字段，因此这些条件状态未知。"
+          },
+          {
+            "id": "C6",
+            "text": "建议先安排气体检测，然后逐项完成其余确认。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.test_status"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.excerpt"
+              }
+            ],
+            "reason": "c2 显示气体检测未进行，c3 要求气体检测合格及其他确认，因此建议先安排气体检测并逐项完成其余确认。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C5"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少三号储罐受限空间作业对应的通风措施确认、监护人到位确认、应急救援设备到位确认的状态记录。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C5"
+            ],
+            "tool": null,
+            "arguments": {
+              "site": "华东一厂",
+              "location": "三号储罐",
+              "permit_id": "CS-261114-001"
+            },
+            "pending_arguments": {
+              "tool_name": "待确认的通风/监护人/应急设备状态查询工具"
+            },
+            "success_criterion": "返回通风措施、监护人到位、应急救援设备到位的明确状态、时间、人员或设备记录，可判断是否满足 c3 所列条件。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 41.921
+}

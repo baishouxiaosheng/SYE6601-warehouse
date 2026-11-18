@@ -1,0 +1,316 @@
+{
+  "case_id": "IND-029",
+  "run_id": "IND-029-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1515,
+    "completion_tokens": 12443,
+    "total_tokens": 13958
+  },
+  "latency_seconds": 118.656,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-029-r1",
+      "case_id": "IND-029",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "工单 WO-28520 需要的特种合金板采购了吗？"
+          },
+          {
+            "id": "G2",
+            "text": "什么时候能到？"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "工单 WO-28520 所需的 Inconel 625 合金板（δ=12mm）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.required_material"
+              }
+            ],
+            "reason": "c1.required_material 为 Inconel 625 合金板 δ=12mm。"
+          },
+          {
+            "id": "C2",
+            "text": "已下单采购",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].status"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].note"
+              }
+            ],
+            "reason": "c1.purchase_orders[0].status 为 NOT_YET_CREATED，note 为待供应商确认，未显示已下单采购。"
+          },
+          {
+            "id": "C3",
+            "text": "采购订单号 PO-261112-055",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].po_id"
+              }
+            ],
+            "reason": "c1.purchase_orders[0].po_id 为 PO-261112-055。"
+          },
+          {
+            "id": "C4",
+            "text": "下单日期为 11月12日",
+            "status": "REFUTE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].request_date"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].status"
+              }
+            ],
+            "reason": "日志仅有 request_date=2026-11-12，且 PO status=NOT_YET_CREATED，无下单日期字段，不能认定为下单日期。"
+          },
+          {
+            "id": "C5",
+            "text": "根据供应商常规交期（15-20天）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.typical_lead_time_days"
+              }
+            ],
+            "reason": "c2.typical_lead_time_days 为 15-20。"
+          },
+          {
+            "id": "C6",
+            "text": "预计 11月21日前后可以到货。",
+            "status": "UNKNOWN",
+            "expression": "HEDGED",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].request_date"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.typical_lead_time_days"
+              }
+            ],
+            "reason": "日志无实际下单日期、发货日期或 ETA；仅有申请日期和常规交期，不能确定 11月21日前后到货。"
+          },
+          {
+            "id": "C7",
+            "text": "当前库内无该材料库存。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.on_hand"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.available"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.quality_hold"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.last_receipt"
+              }
+            ],
+            "reason": "c3.on_hand=0、available=0、quality_hold=0、last_receipt=null。"
+          },
+          {
+            "id": "C8",
+            "text": "工单计划开工日期 11月25日",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.planned_start"
+              }
+            ],
+            "reason": "c4.planned_start 为 2026-11-25。"
+          },
+          {
+            "id": "C9",
+            "text": "到货后可满足生产排程。",
+            "status": "UNKNOWN",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.planned_start"
+              },
+              {
+                "event_id": "c4",
+                "json_path": "trace[c4].result.required_qty_kg"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].status"
+              }
+            ],
+            "reason": "缺少实际到货日期、采购数量、质量放行等字段，且 PO 未创建，无法判断是否满足生产排程。"
+          },
+          {
+            "id": "C10",
+            "text": "建议与供应商确认具体发货时间。",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.purchase_orders[0].note"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.preferred_supplier"
+              }
+            ],
+            "reason": "c1.note 为待供应商确认，c2.preferred_supplier 为上海镍基合金有限公司，建议与供应商确认有依据。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_EVIDENCE",
+            "affects": [
+              "C6",
+              "C9"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少 PO 实际创建/下单日期、发货日期、预计到货日期、采购数量和质量放行状态，无法核验到货时间和是否满足生产排程。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "MEDIUM",
+            "description": "缺少判断“满足生产排程”的规则，例如到货日期需早于计划开工、数量需覆盖需求、质量需合格等。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C6",
+              "C9"
+            ],
+            "tool": "procurement.po_lookup",
+            "arguments": {
+              "work_order": "WO-28520"
+            },
+            "pending_arguments": {
+              "po_id": "PO-261112-055",
+              "fields": [
+                "status",
+                "order_date",
+                "ship_date",
+                "eta",
+                "qty_kg",
+                "quality_status"
+              ]
+            },
+            "success_criterion": "返回 PO 的实际状态及 order_date/ship_date/eta/qty_kg 等字段，可确定是否已下单和预计到货时间。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": null,
+            "arguments": {},
+            "pending_arguments": {
+              "rule": "生产排程满足条件（到货日期、数量、质量放行）"
+            },
+            "success_criterion": "获得明确规则或阈值，可据此判断到货后是否满足 WO-28520 生产排程。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 118.656
+}

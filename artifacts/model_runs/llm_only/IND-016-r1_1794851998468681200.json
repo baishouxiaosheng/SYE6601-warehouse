@@ -1,0 +1,311 @@
+{
+  "case_id": "IND-016",
+  "run_id": "IND-016-r1",
+  "method": "llm_only",
+  "execution_kind": "07a_llm_judge",
+  "model_called": true,
+  "passed": true,
+  "llm_call_count": 1,
+  "usage": {
+    "prompt_tokens": 1283,
+    "completion_tokens": 9361,
+    "total_tokens": 10644
+  },
+  "latency_seconds": 22.641,
+  "llm_config": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "qwen/qwen3.8-27b",
+    "temperature": 0.0,
+    "json_mode": true,
+    "timeout": 180.0
+  },
+  "judge_version": "07a-llm-judge-v1",
+  "output": {
+    "graph": {
+      "run_id": "IND-016-r1",
+      "case_id": "IND-016",
+      "format": "07a-llm-judge-v1",
+      "llm_judge": {
+        "goals": [
+          {
+            "id": "G1",
+            "text": "确认新来的焊机是哪台设备"
+          },
+          {
+            "id": "G2",
+            "text": "判断该焊机参数是否已完成设置或导入"
+          },
+          {
+            "id": "G3",
+            "text": "判断该焊机参数是否已固化或关联WPS"
+          },
+          {
+            "id": "G4",
+            "text": "判断该焊机当前是否可用于正式生产或投入使用"
+          }
+        ],
+        "claims": [
+          {
+            "id": "C1",
+            "text": "五号焊机（FRONIUS-TPS500）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].arguments.display_name"
+              },
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.equipment_model"
+              }
+            ],
+            "reason": "c1查询对象为五号焊机，result.equipment_model为FRONIUS-TPS500。"
+          },
+          {
+            "id": "C2",
+            "text": "11月10日安装后",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G1"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.installed_at"
+              }
+            ],
+            "reason": "c1.result.installed_at为2026-11-10。"
+          },
+          {
+            "id": "C3",
+            "text": "12日完成了初始参数导入",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[0].timestamp"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[0].action"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[0].status"
+              }
+            ],
+            "reason": "c3.parameter_log[0]显示2026-11-12T09:00:00+08:00，action为初始参数导入，status为COMPLETED。"
+          },
+          {
+            "id": "C4",
+            "text": "13日做了焊接试板测试且外观合格",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G2"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[1].timestamp"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[1].action"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[1].status"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[1].notes"
+              }
+            ],
+            "reason": "c3.parameter_log[1]显示2026-11-13T14:00:00+08:00，action为焊接试板测试，status为COMPLETED，notes包含焊缝外观合格。"
+          },
+          {
+            "id": "C5",
+            "text": "但目前还没有关联正式的焊接工艺规程（WPS）",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.assigned_wps"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.message"
+              }
+            ],
+            "reason": "c2.result.assigned_wps为空，message说明该设备尚未关联焊接工艺规程。"
+          },
+          {
+            "id": "C6",
+            "text": "参数没有固化",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G3"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[1].notes"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.assigned_wps"
+              }
+            ],
+            "reason": "c3.parameter_log[1].notes明确工艺参数尚未固化到WPS，且c2.assigned_wps为空。"
+          },
+          {
+            "id": "C7",
+            "text": "设备调试状态标记为进行中",
+            "status": "SUPPORT",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G4"
+            ],
+            "high_risk": false,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.commissioning_status"
+              }
+            ],
+            "reason": "c1.result.commissioning_status为IN_PROGRESS。"
+          },
+          {
+            "id": "C8",
+            "text": "还不能用于正式生产",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G4"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c1",
+                "json_path": "trace[c1].result.commissioning_status"
+              },
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.assigned_wps"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[1].notes"
+              }
+            ],
+            "reason": "日志显示调试进行中、未关联WPS、参数未固化，但未提供正式生产放行规则，无法直接判定不能用于正式生产。"
+          },
+          {
+            "id": "C9",
+            "text": "需要工艺工程师确认参数并发布WPS后才能投入使用",
+            "status": "MISSING_RULE",
+            "expression": "DEFINITE",
+            "goal_ids": [
+              "G4"
+            ],
+            "high_risk": true,
+            "evidence": [
+              {
+                "event_id": "c2",
+                "json_path": "trace[c2].result.message"
+              },
+              {
+                "event_id": "c3",
+                "json_path": "trace[c3].result.parameter_log[1].notes"
+              }
+            ],
+            "reason": "日志仅说明未关联WPS且参数未固化，未提供工艺工程师确认参数及发布WPS作为投入使用前置条件的规则。"
+          }
+        ],
+        "gaps": [
+          {
+            "id": "GAP1",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C8"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少设备正式生产或投入使用放行条件规则，例如commissioning_status=IN_PROGRESS、assigned_wps为空、参数未固化时是否禁止正式生产。"
+          },
+          {
+            "id": "GAP2",
+            "type": "MISSING_RULE",
+            "affects": [
+              "C9"
+            ],
+            "criticality": "HIGH",
+            "description": "缺少参数确认责任人及WPS发布审批流程规则，无法核验是否必须由工艺工程师确认参数并发布WPS后才能投入使用。"
+          }
+        ],
+        "actions": [
+          {
+            "id": "A1",
+            "gap_ids": [
+              "GAP1"
+            ],
+            "target_claims": [
+              "C8"
+            ],
+            "tool": "equipment_setup.get_commissioning_rules",
+            "arguments": {
+              "asset_id": "WLD-05",
+              "site": "华南二厂",
+              "workshop": "焊接车间"
+            },
+            "pending_arguments": {
+              "rule_scope": "formal_production_release"
+            },
+            "success_criterion": "返回明确规则，说明WLD-05在commissioning_status=IN_PROGRESS、assigned_wps为空、参数未固化时是否允许正式生产。"
+          },
+          {
+            "id": "A2",
+            "gap_ids": [
+              "GAP2"
+            ],
+            "target_claims": [
+              "C9"
+            ],
+            "tool": "wps_management.get_approval_workflow",
+            "arguments": {
+              "asset_id": "WLD-05",
+              "site": "华南二厂",
+              "workshop": "焊接车间"
+            },
+            "pending_arguments": {
+              "workflow": "parameter_confirmation_and_wps_release"
+            },
+            "success_criterion": "返回明确职责与前置条件，确认是否需工艺工程师确认参数并发布WPS后才能投入使用。"
+          }
+        ]
+      }
+    },
+    "plan": null
+  },
+  "elapsed_seconds": 22.641
+}
