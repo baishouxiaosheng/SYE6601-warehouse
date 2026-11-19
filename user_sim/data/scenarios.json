@@ -1,0 +1,3896 @@
+[
+  {
+    "scenario_id": "IND-001",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "动力车间"
+    },
+    "entities": [
+      {
+        "id": "三号锅炉",
+        "kind": "asset",
+        "label": "三号锅炉"
+      },
+      {
+        "id": "BLR-03",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "排烟温度",
+    "intent_hints": [
+      "diagnosis"
+    ],
+    "tools": [
+      "asset_registry.find",
+      "plant_monitor.get_exhaust_temp",
+      "plant_monitor.get_combustion_params",
+      "knowledge_base.search",
+      "plant_monitor.get_flue_dp"
+    ],
+    "risk": "high",
+    "style_ref": "三号锅炉排烟温度偏高了，看看怎么回事。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-002",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "制冷站"
+    },
+    "entities": [
+      {
+        "id": "二号冷水机组",
+        "kind": "asset",
+        "label": "二号冷水机组"
+      },
+      {
+        "id": "CH-02",
+        "kind": "asset",
+        "label": ""
+      },
+      {
+        "id": "WO-28501",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "开机检查",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "asset_registry.find",
+      "maintenance_workorders.get",
+      "maintenance_workorders.get_signoff",
+      "plant_monitor.get_chiller_status"
+    ],
+    "risk": "high",
+    "style_ref": "二号冷水机组做完保养了，能开机吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-003",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "SMT车间"
+    },
+    "entities": [
+      {
+        "id": "B线贴片机",
+        "kind": "asset",
+        "label": "B线贴片机"
+      },
+      {
+        "id": "PnP-02",
+        "kind": "asset",
+        "label": ""
+      },
+      {
+        "id": "PNP-02",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "质量检验",
+    "intent_hints": [],
+    "tools": [
+      "asset_registry.find",
+      "plant_monitor.get_placement_stats",
+      "plant_monitor.get_nozzle_detail",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "B线贴片机抛料率太高了，查一下。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-004",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "灌装车间"
+    },
+    "entities": [
+      {
+        "id": "BT-261114-A01",
+        "kind": "batch",
+        "label": ""
+      },
+      {
+        "id": "BT-261114-A02",
+        "kind": "batch",
+        "label": ""
+      }
+    ],
+    "topic": "质量检验",
+    "intent_hints": [
+      "status",
+      "decision"
+    ],
+    "tools": [
+      "production_log.find_batches",
+      "quality_inspection.get_results",
+      "quality_release.check_status"
+    ],
+    "risk": "high",
+    "style_ref": "上午A线灌装的批次检完了吗？能放行吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-005",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "总装车间"
+    },
+    "entities": [
+      {
+        "id": "BOLT-SS-M12-50",
+        "kind": "material",
+        "label": ""
+      },
+      {
+        "id": "BOLT-SS-M12-80",
+        "kind": "material",
+        "label": ""
+      }
+    ],
+    "topic": "库存余量",
+    "intent_hints": [
+      "value",
+      "aggregate"
+    ],
+    "tools": [
+      "inventory.search",
+      "production_plan.get_tomorrow",
+      "inventory.get_reserved"
+    ],
+    "risk": "normal",
+    "style_ref": "库房还有多少M12的不锈钢螺栓？够明天用的吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-006",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "注塑车间"
+    },
+    "entities": [],
+    "topic": "能源消耗",
+    "intent_hints": [],
+    "tools": [
+      "energy_meter.get_monthly",
+      "production_summary.get_monthly"
+    ],
+    "risk": "normal",
+    "style_ref": "上月注塑车间电费是不是比之前高很多？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-007",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "化工车间"
+    },
+    "entities": [
+      {
+        "id": "一号反应釜",
+        "kind": "asset",
+        "label": "一号反应釜"
+      },
+      {
+        "id": "RXT-01",
+        "kind": "asset",
+        "label": ""
+      },
+      {
+        "id": "REC-204",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "配方核对",
+    "intent_hints": [],
+    "tools": [
+      "asset_registry.find",
+      "recipe_management.get_active",
+      "recipe_management.get_change_log"
+    ],
+    "risk": "normal",
+    "style_ref": "反应釜配方切换到R3版本了没有？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-008",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "维修车间"
+    },
+    "entities": [],
+    "topic": "作业许可",
+    "intent_hints": [],
+    "tools": [
+      "permit_system.find_permits"
+    ],
+    "risk": "high",
+    "style_ref": "今天动火作业许可证批了没有？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-009",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "环保站"
+    },
+    "entities": [
+      {
+        "id": "WW-OUT-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "排放数据",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "env_monitor.get_latest_readings",
+      "env_monitor.get_calibration_status"
+    ],
+    "risk": "normal",
+    "style_ref": "排放口废水COD在线数据正常吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-010",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "总装车间"
+    },
+    "entities": [
+      {
+        "id": "A线",
+        "kind": "asset",
+        "label": "A线"
+      },
+      {
+        "id": "PLC-FAB-01",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "FAB-01",
+        "kind": "line",
+        "label": ""
+      },
+      {
+        "id": "ASM-A",
+        "kind": "line",
+        "label": ""
+      }
+    ],
+    "topic": "供料状态",
+    "intent_hints": [
+      "diagnosis"
+    ],
+    "tools": [
+      "asset_registry.find",
+      "plant_monitor.get_line_events",
+      "plant_monitor.get_material_flow"
+    ],
+    "risk": "high",
+    "style_ref": "A线停机是不是因为上游供料断了？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-011",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "配电室"
+    },
+    "entities": [
+      {
+        "id": "一号变压器",
+        "kind": "asset",
+        "label": "一号变压器"
+      },
+      {
+        "id": "XFMR-01",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "设备诊断",
+    "intent_hints": [
+      "diagnosis"
+    ],
+    "tools": [
+      "asset_registry.find",
+      "plant_monitor.get_transformer_data",
+      "maintenance_records.search",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "一号变压器有异响，帮我查查有什么记录。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-012",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "热处理车间"
+    },
+    "entities": [
+      {
+        "id": "HT-261114-005",
+        "kind": "batch",
+        "label": ""
+      }
+    ],
+    "topic": "热处理报告",
+    "intent_hints": [
+      "status",
+      "progress"
+    ],
+    "tools": [
+      "production_log.find_batch",
+      "quality_inspection.get_results",
+      "quality_inspection.get_lab_queue"
+    ],
+    "risk": "normal",
+    "style_ref": "这批零件的热处理报告拿到了吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-013",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "机加工车间"
+    },
+    "entities": [
+      {
+        "id": "QC-261112-038",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "QC-261113-022",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "质量检验",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "quality_inspection.search",
+      "quality_inspection.get_results"
+    ],
+    "risk": "normal",
+    "style_ref": "上次送检的三批铝合金件结果怎么样？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-014",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "维修车间"
+    },
+    "entities": [
+      {
+        "id": "SF1234567890",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "PO-261108-037",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "库存余量",
+    "intent_hints": [
+      "progress"
+    ],
+    "tools": [
+      "purchase_orders.find_urgent",
+      "logistics.get_tracking",
+      "warehouse.get_receiving_log"
+    ],
+    "risk": "normal",
+    "style_ref": "车间急用的那个备件到货了没？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-015",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "动力车间"
+    },
+    "entities": [
+      {
+        "id": "二号燃气表",
+        "kind": "asset",
+        "label": "二号燃气表"
+      },
+      {
+        "id": "GM-02",
+        "kind": "asset",
+        "label": ""
+      },
+      {
+        "id": "GM-02B",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "设备校准",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "asset_registry.find",
+      "meter_calibration.get_status",
+      "plant_monitor.get_meter_readings",
+      "plant_monitor.get_cross_check"
+    ],
+    "risk": "normal",
+    "style_ref": "二号燃气表这个月读数准不准？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-016",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "焊接车间"
+    },
+    "entities": [
+      {
+        "id": "五号焊机",
+        "kind": "asset",
+        "label": "五号焊机"
+      },
+      {
+        "id": "WLD-05",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "焊机调试",
+    "intent_hints": [],
+    "tools": [
+      "asset_registry.find",
+      "wps_management.get_assigned",
+      "equipment_setup.get_parameter_log"
+    ],
+    "risk": "normal",
+    "style_ref": "新来的那台焊机参数设好了没有？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-017",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "化工车间"
+    },
+    "entities": [
+      {
+        "id": "CS-261114-001",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "作业许可",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "permit_system.find_permits",
+      "gas_detection.get_latest",
+      "knowledge_base.search"
+    ],
+    "risk": "high",
+    "style_ref": "受限空间作业证能发了吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-018",
+    "domain": "industrial",
+    "context": {
+      "site": "华东一厂",
+      "workshop": "储运车间"
+    },
+    "entities": [
+      {
+        "id": "三号储罐",
+        "kind": "asset",
+        "label": "三号储罐"
+      },
+      {
+        "id": "TK-03",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "储罐液位",
+    "intent_hints": [],
+    "tools": [
+      "asset_registry.find",
+      "plant_monitor.get_tank_level"
+    ],
+    "risk": "normal",
+    "style_ref": "三号储罐液位传感器好像有问题，看看数据。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-019",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "收货区"
+    },
+    "entities": [
+      {
+        "id": "RCV-261114-008",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "质量检验",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "inventory.get_incoming",
+      "quality_inspection.get_iqc"
+    ],
+    "risk": "normal",
+    "style_ref": "这批原材料的质检报告能不能发给我？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-020",
+    "domain": "industrial",
+    "context": {
+      "site": "华南二厂",
+      "workshop": "总装车间"
+    },
+    "entities": [],
+    "topic": "质量检验",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "production_stats.get_yield",
+      "production_stats.get_reject_detail"
+    ],
+    "risk": "normal",
+    "style_ref": "最近一周C线良率怎么样？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-021",
+    "domain": "industrial",
+    "context": {
+      "site": "华东化工基地",
+      "workshop": "压缩车间"
+    },
+    "entities": [
+      {
+        "id": "CMP-01A",
+        "kind": "asset",
+        "label": ""
+      },
+      {
+        "id": "CMP-01B",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "设备诊断",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "asset.registry.lookup",
+      "ops.vibration_monitor",
+      "ops.alarm_history",
+      "knowledge_base.search",
+      "maintenance.recent_work_order"
+    ],
+    "risk": "normal",
+    "style_ref": "帮我查一下压缩机 CMP-01A 的振动情况，刚才现场感觉声音不太对。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-022",
+    "domain": "industrial",
+    "context": {
+      "site": "精密电子厂区",
+      "workshop": "总装车间"
+    },
+    "entities": [
+      {
+        "id": "LINE-B",
+        "kind": "line",
+        "label": ""
+      }
+    ],
+    "topic": "产线产量",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "production.output_query",
+      "production.shift_calendar",
+      "production.yield_rate",
+      "production.line_utilization"
+    ],
+    "risk": "normal",
+    "style_ref": "B线昨天（11月13日）夜班产量是多少？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-023",
+    "domain": "industrial",
+    "context": {
+      "site": "石化储罐区",
+      "workshop": "罐区运维组"
+    },
+    "entities": [
+      {
+        "id": "GD-05",
+        "kind": "asset",
+        "label": "MultiRAE Lite"
+      }
+    ],
+    "topic": "作业许可",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "maintenance.calibration_record",
+      "maintenance.work_order_lookup",
+      "knowledge_base.search",
+      "asset.registry.lookup"
+    ],
+    "risk": "high",
+    "style_ref": "气体检测仪 GD-05 标定了吗？今天有限空间作业要用。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-024",
+    "domain": "industrial",
+    "context": {
+      "site": "锻造工厂",
+      "workshop": "液压成型车间"
+    },
+    "entities": [
+      {
+        "id": "HP-03",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "压力监测",
+    "intent_hints": [
+      "status",
+      "value"
+    ],
+    "tools": [
+      "ops.sensor_reading",
+      "knowledge_base.search",
+      "ops.alarm_history",
+      "ops.sensor_trend"
+    ],
+    "risk": "high",
+    "style_ref": "液压机 HP-03 的压力读数是多少？正常吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-025",
+    "domain": "industrial",
+    "context": {
+      "site": "特钢生产基地",
+      "workshop": "质检中心"
+    },
+    "entities": [
+      {
+        "id": "BT-261113-C07",
+        "kind": "batch",
+        "label": ""
+      }
+    ],
+    "topic": "质量检验",
+    "intent_hints": [
+      "status",
+      "decision",
+      "progress"
+    ],
+    "tools": [
+      "quality.inspection_result",
+      "quality.release_check",
+      "quality.lab_schedule",
+      "production.batch_trace"
+    ],
+    "risk": "high",
+    "style_ref": "批次 BT-261113-C07 的质检结果出来了吗？能放行吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-026",
+    "domain": "industrial",
+    "context": {
+      "site": "热处理中心",
+      "workshop": "退火车间"
+    },
+    "entities": [
+      {
+        "id": "F-02",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "设备冷却",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "ops.cooling_system_monitor",
+      "ops.alarm_history",
+      "knowledge_base.search",
+      "ops.furnace_status"
+    ],
+    "risk": "normal",
+    "style_ref": "F-02 炉子的冷却系统都正常吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-027",
+    "domain": "industrial",
+    "context": {
+      "site": "乙烯裂解装置",
+      "workshop": "压缩工段"
+    },
+    "entities": [
+      {
+        "id": "K-102",
+        "kind": "asset",
+        "label": ""
+      },
+      {
+        "id": "XV-102-INTAKE",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "设备诊断",
+    "intent_hints": [
+      "diagnosis"
+    ],
+    "tools": [
+      "ops.event_log",
+      "ops.vibration_monitor",
+      "ops.valve_status",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "压缩机 K-102 刚才跳车了，什么原因？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-028",
+    "domain": "industrial",
+    "context": {
+      "site": "净化车间",
+      "workshop": "仓储管理"
+    },
+    "entities": [
+      {
+        "id": "FC-200",
+        "kind": "material",
+        "label": ""
+      }
+    ],
+    "topic": "库存余量",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "inventory.stock_query",
+      "inventory.pending_orders",
+      "inventory.consumption_rate",
+      "inventory.issuance_history"
+    ],
+    "risk": "normal",
+    "style_ref": "滤芯 FC-200 现在库房还有多少可以领用的？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-029",
+    "domain": "industrial",
+    "context": {
+      "site": "压力容器制造厂",
+      "workshop": "采购部"
+    },
+    "entities": [
+      {
+        "id": "WO-28520",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "INCONEL625-12",
+        "kind": "material",
+        "label": ""
+      }
+    ],
+    "topic": "采购进度",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "procurement.po_lookup",
+      "procurement.supplier_info",
+      "inventory.stock_query",
+      "production.work_order_detail"
+    ],
+    "risk": "normal",
+    "style_ref": "工单 WO-28520 需要的特种合金板采购了吗？什么时候能到？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-030",
+    "domain": "industrial",
+    "context": {
+      "site": "航空装配厂",
+      "workshop": "紧固件库"
+    },
+    "entities": [],
+    "topic": "库存余量",
+    "intent_hints": [],
+    "tools": [
+      "inventory.search",
+      "inventory.material_category_lookup",
+      "warehouse.location_check"
+    ],
+    "risk": "normal",
+    "style_ref": "库房里有没有 M8 的钛合金螺栓？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-031",
+    "domain": "industrial",
+    "context": {
+      "site": "重型机械厂",
+      "workshop": "焊接车间"
+    },
+    "entities": [],
+    "topic": "能源消耗",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "energy.consumption_query",
+      "energy.tariff_lookup",
+      "energy.billing_history",
+      "energy.sub_meter_breakdown"
+    ],
+    "risk": "normal",
+    "style_ref": "焊接车间这个月电费大概多少？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-032",
+    "domain": "industrial",
+    "context": {
+      "site": "化工园区",
+      "workshop": "供电所"
+    },
+    "entities": [
+      {
+        "id": "BUS-10KV-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "电能质量",
+    "intent_hints": [
+      "status",
+      "compliance"
+    ],
+    "tools": [
+      "ops.power_quality_monitor",
+      "knowledge_base.search",
+      "ops.power_quality_trend"
+    ],
+    "risk": "normal",
+    "style_ref": "10kV母线的电能质量怎么样？谐波合格吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-033",
+    "domain": "industrial",
+    "context": {
+      "site": "精细化工车间",
+      "workshop": "合成工段"
+    },
+    "entities": [
+      {
+        "id": "RXT-03",
+        "kind": "asset",
+        "label": ""
+      },
+      {
+        "id": "R2",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "温度监测",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "ops.process_monitor",
+      "recipe.management",
+      "knowledge_base.search",
+      "ops.alarm_history"
+    ],
+    "risk": "high",
+    "style_ref": "RXT-03 反应釜现在温度 102℃，这个温度正常吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-034",
+    "domain": "industrial",
+    "context": {
+      "site": "甲醇合成装置",
+      "workshop": "高压工段"
+    },
+    "entities": [
+      {
+        "id": "PV-301",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "压力监测",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "ops.dcs_parameter",
+      "document.sop_lookup",
+      "maintenance.inspection_record",
+      "knowledge_base.search"
+    ],
+    "risk": "high",
+    "style_ref": "PV-301 容器的安全操作压力上限是多少？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-035",
+    "domain": "industrial",
+    "context": {
+      "site": "涂装生产线",
+      "workshop": "质检工位"
+    },
+    "entities": [
+      {
+        "id": "BT-261114-D01",
+        "kind": "batch",
+        "label": ""
+      },
+      {
+        "id": "EP-301",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "质量检验",
+    "intent_hints": [
+      "status",
+      "compliance"
+    ],
+    "tools": [
+      "quality.coating_thickness",
+      "quality.batch_status",
+      "quality.spray_parameters",
+      "quality.historical_thickness"
+    ],
+    "risk": "normal",
+    "style_ref": "BT-261114-D01 批次的涂膜厚度测了吗？合格吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-036",
+    "domain": "industrial",
+    "context": {
+      "site": "聚丙烯装置",
+      "workshop": "反应区"
+    },
+    "entities": [
+      {
+        "id": "HW-261114-005",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "RXT-01",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "作业许可",
+    "intent_hints": [
+      "progress"
+    ],
+    "tools": [
+      "safety.permit_query",
+      "ops.equipment_status",
+      "knowledge_base.search",
+      "ops.nearby_equipment"
+    ],
+    "risk": "high",
+    "style_ref": "HW-261114-005 动火作业证能办下来吗？反应器区域的。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-037",
+    "domain": "industrial",
+    "context": {
+      "site": "油品储运区",
+      "workshop": "罐区操作组"
+    },
+    "entities": [
+      {
+        "id": "TK-05",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "作业许可",
+    "intent_hints": [
+      "status",
+      "decision"
+    ],
+    "tools": [
+      "safety.gas_detection",
+      "safety.permit_query",
+      "knowledge_base.search",
+      "ops.tank_status"
+    ],
+    "risk": "high",
+    "style_ref": "TK-05 储罐有限空间作业，气体检测做了吗？能进吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-038",
+    "domain": "industrial",
+    "context": {
+      "site": "化工污水处理厂",
+      "workshop": "出水监测站"
+    },
+    "entities": [
+      {
+        "id": "OUTLET-01",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "INLET-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "排放数据",
+    "intent_hints": [
+      "value",
+      "compliance"
+    ],
+    "tools": [
+      "environmental.emission_monitor",
+      "environmental.compliance_check",
+      "environmental.upstream_load",
+      "ops.treatment_process"
+    ],
+    "risk": "normal",
+    "style_ref": "废水排放口 COD 现在多少？超标了没？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-039",
+    "domain": "industrial",
+    "context": {
+      "site": "精细化工园区",
+      "workshop": "精馏车间"
+    },
+    "entities": [],
+    "topic": "设备诊断",
+    "intent_hints": [],
+    "tools": [
+      "safety.incident_log",
+      "ops.air_quality_monitor",
+      "ops.equipment_leak_check"
+    ],
+    "risk": "high",
+    "style_ref": "我们车间有股怪味，听说隔壁车间有泄漏，是不是那边传过来的？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-040",
+    "domain": "industrial",
+    "context": {
+      "site": "半导体封装厂",
+      "workshop": "生产调度中心"
+    },
+    "entities": [
+      {
+        "id": "FAB-02",
+        "kind": "line",
+        "label": ""
+      },
+      {
+        "id": "ASM-B",
+        "kind": "line",
+        "label": ""
+      },
+      {
+        "id": "FAB-02-PLC",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "供料状态",
+    "intent_hints": [],
+    "tools": [
+      "ops.line_status",
+      "ops.buffer_level",
+      "production.throughput_history",
+      "ops.network_diagnostic"
+    ],
+    "risk": "normal",
+    "style_ref": "上游 FAB-02 产线能加量吗？下游 ASM-B 的缓冲快满了。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-041",
+    "domain": "industrial",
+    "context": {
+      "site": "江南化工基地",
+      "workshop": "酸碱车间"
+    },
+    "entities": [
+      {
+        "id": "P-201",
+        "kind": "asset",
+        "label": "清水输送泵"
+      },
+      {
+        "id": "P-202",
+        "kind": "asset",
+        "label": "酸液输送泵"
+      }
+    ],
+    "topic": "设备诊断",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "ops.maintenance_history",
+      "ops.asset_registry"
+    ],
+    "risk": "high",
+    "style_ref": "P-201泵的密封泄漏历史情况怎样？最近有没有维修记录？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-042",
+    "domain": "industrial",
+    "context": {
+      "site": "北方石化园区",
+      "workshop": "压缩工段"
+    },
+    "entities": [
+      {
+        "id": "C-105",
+        "kind": "asset",
+        "label": ""
+      }
+    ],
+    "topic": "大修进度",
+    "intent_hints": [
+      "status",
+      "progress"
+    ],
+    "tools": [
+      "ops.work_order_status",
+      "ops.maintenance_history"
+    ],
+    "risk": "high",
+    "style_ref": "C-105压缩机大修进度怎么样了？什么时候能重新启动？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-043",
+    "domain": "industrial",
+    "context": {
+      "site": "华东电子厂",
+      "workshop": "总装车间"
+    },
+    "entities": [
+      {
+        "id": "Line-D",
+        "kind": "line",
+        "label": ""
+      }
+    ],
+    "topic": "产线产量",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "production.daily_output"
+    ],
+    "risk": "normal",
+    "style_ref": "D线昨天的产量是多少？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-044",
+    "domain": "industrial",
+    "context": {
+      "site": "精密机械加工厂",
+      "workshop": "数控车间"
+    },
+    "entities": [],
+    "topic": "工单积压",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "ops.work_orders",
+      "ops.equipment_list"
+    ],
+    "risk": "normal",
+    "style_ref": "CNC机床现在有多少待处理的工单？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-045",
+    "domain": "industrial",
+    "context": {
+      "site": "精密机械加工厂",
+      "workshop": "质检中心"
+    },
+    "entities": [
+      {
+        "id": "CMM-01",
+        "kind": "other",
+        "label": "三坐标测量仪"
+      }
+    ],
+    "topic": "设备校准",
+    "intent_hints": [
+      "compliance"
+    ],
+    "tools": [
+      "quality.calibration_records",
+      "quality.instrument_registry"
+    ],
+    "risk": "normal",
+    "style_ref": "CMM-01三坐标测量仪现在还能用吗？校准有没有过期？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-046",
+    "domain": "industrial",
+    "context": {
+      "site": "华东表面处理厂",
+      "workshop": "电镀车间"
+    },
+    "entities": [
+      {
+        "id": "BT-ST-20261114-001",
+        "kind": "batch",
+        "label": ""
+      }
+    ],
+    "topic": "质量检验",
+    "intent_hints": [
+      "status",
+      "compliance"
+    ],
+    "tools": [
+      "quality.inspection_report",
+      "production.batch_info"
+    ],
+    "risk": "normal",
+    "style_ref": "这批500件零件的表面处理质量怎么样？都合格吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-047",
+    "domain": "industrial",
+    "context": {
+      "site": "江南化工基地",
+      "workshop": "设备科"
+    },
+    "entities": [
+      {
+        "id": "GS-500",
+        "kind": "material",
+        "label": ""
+      }
+    ],
+    "topic": "采购进度",
+    "intent_hints": [],
+    "tools": [
+      "inventory.supplier_database",
+      "inventory.stock_level"
+    ],
+    "risk": "normal",
+    "style_ref": "GS-500特种垫片现在有没有替代供应商？原来的供货跟不上了。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-048",
+    "domain": "industrial",
+    "context": {
+      "site": "北方石化园区",
+      "workshop": "维修班组"
+    },
+    "entities": [
+      {
+        "id": "SKF-6205",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "WO-M-20261115",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "库存余量",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "inventory.stock_level",
+      "ops.work_orders"
+    ],
+    "risk": "normal",
+    "style_ref": "SKF-6205轴承还有多少库存？明天维修要用。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-049",
+    "domain": "industrial",
+    "context": {
+      "site": "华东电子厂",
+      "workshop": "厂部"
+    },
+    "entities": [],
+    "topic": "能源消耗",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "energy.monthly_report",
+      "production.monthly_summary",
+      "energy.cost_breakdown",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "十月份每件产品的能耗成本是多少？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-050",
+    "domain": "industrial",
+    "context": {
+      "site": "精密机械加工厂",
+      "workshop": "机加工车间"
+    },
+    "entities": [],
+    "topic": "能源消耗",
+    "intent_hints": [
+      "status",
+      "value"
+    ],
+    "tools": [
+      "energy.submeter_data",
+      "energy.monthly_report",
+      "ops.maintenance_log"
+    ],
+    "risk": "normal",
+    "style_ref": "上个月车间换了LED灯之后节能效果怎么样？省了多少电？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-051",
+    "domain": "industrial",
+    "context": {
+      "site": "华东表面处理厂",
+      "workshop": "涂装车间"
+    },
+    "entities": [],
+    "topic": "配方核对",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "process.mes_recipe",
+      "knowledge_base.search",
+      "process.change_log"
+    ],
+    "risk": "high",
+    "style_ref": "产品X的固化温度应该设多少度？两个地方查到的不一样。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-052",
+    "domain": "industrial",
+    "context": {
+      "site": "江南化工基地",
+      "workshop": "配料车间"
+    },
+    "entities": [
+      {
+        "id": "BT-261114-E03",
+        "kind": "batch",
+        "label": ""
+      }
+    ],
+    "topic": "配方核对",
+    "intent_hints": [
+      "status",
+      "decision"
+    ],
+    "tools": [
+      "process.batch_recipe",
+      "quality.lab_test"
+    ],
+    "risk": "high",
+    "style_ref": "BT-261114-E03批次的新添加剂用量确认了吗？可以开始投料了吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-053",
+    "domain": "industrial",
+    "context": {
+      "site": "北方石化园区",
+      "workshop": "安装工段"
+    },
+    "entities": [
+      {
+        "id": "CRANE-02",
+        "kind": "asset",
+        "label": "20吨桥式起重机"
+      },
+      {
+        "id": "LP-2026-1114-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "吊装放行",
+    "intent_hints": [
+      "status",
+      "decision"
+    ],
+    "tools": [
+      "safety.equipment_inspection",
+      "ops.lift_plan",
+      "safety.permit_check"
+    ],
+    "risk": "high",
+    "style_ref": "今天要吊装一个18吨的设备，行车检验过了吗？可以吊吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-054",
+    "domain": "industrial",
+    "context": {
+      "site": "江南化工基地",
+      "workshop": "反应釜区"
+    },
+    "entities": [
+      {
+        "id": "VLV-301",
+        "kind": "other",
+        "label": "进料调节阀(3号反应釜)"
+      },
+      {
+        "id": "VLV-405",
+        "kind": "other",
+        "label": "排料截止阀(4号反应釜)"
+      }
+    ],
+    "topic": "阀门操作",
+    "intent_hints": [],
+    "tools": [
+      "safety.incident_records",
+      "ops.valve_status"
+    ],
+    "risk": "high",
+    "style_ref": "4号釜排料阀VLV-405，上次老张操作时出过事故，现在安全吗？我要去操作它。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-055",
+    "domain": "industrial",
+    "context": {
+      "site": "华东表面处理厂",
+      "workshop": "喷漆车间"
+    },
+    "entities": [
+      {
+        "id": "PM2.5",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "空气质量",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "environment.sensor_data"
+    ],
+    "risk": "normal",
+    "style_ref": "喷漆车间的空气质量怎么样？VOC和PM2.5数据正常吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-056",
+    "domain": "industrial",
+    "context": {
+      "site": "北方石化园区",
+      "workshop": "安环部"
+    },
+    "entities": [],
+    "topic": "噪声合规",
+    "intent_hints": [
+      "value",
+      "compliance"
+    ],
+    "tools": [
+      "environment.sensor_data",
+      "knowledge_base.search",
+      "environment.compliance_config"
+    ],
+    "risk": "normal",
+    "style_ref": "厂区边界测到的噪声是82分贝，这个数值合规吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-057",
+    "domain": "industrial",
+    "context": {
+      "site": "精密机械加工厂",
+      "workshop": "焊接车间"
+    },
+    "entities": [
+      {
+        "id": "ROB-03",
+        "kind": "asset",
+        "label": "KUKA KR 16-2"
+      },
+      {
+        "id": "ROB-01",
+        "kind": "asset",
+        "label": "KUKA KR 16-2"
+      }
+    ],
+    "topic": "设备保养",
+    "intent_hints": [],
+    "tools": [
+      "ops.maintenance_history",
+      "ops.asset_registry"
+    ],
+    "risk": "normal",
+    "style_ref": "ROB-03机器人手臂的维护历史是什么？需要做关节检查吗？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-058",
+    "domain": "industrial",
+    "context": {
+      "site": "华东电子厂",
+      "workshop": "自动化工程部"
+    },
+    "entities": [
+      {
+        "id": "Line-E",
+        "kind": "line",
+        "label": ""
+      }
+    ],
+    "topic": "开机检查",
+    "intent_hints": [
+      "status",
+      "decision",
+      "progress"
+    ],
+    "tools": [
+      "ops.project_status",
+      "production.line_status"
+    ],
+    "risk": "high",
+    "style_ref": "E线的自动化升级改造完成了吗？能不能恢复生产了？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-059",
+    "domain": "industrial",
+    "context": {
+      "site": "华东电子厂",
+      "workshop": "总装车间"
+    },
+    "entities": [
+      {
+        "id": "Line-A",
+        "kind": "line",
+        "label": ""
+      },
+      {
+        "id": "M-A03",
+        "kind": "asset",
+        "label": "冲压模具A-03"
+      }
+    ],
+    "topic": "质量检验",
+    "intent_hints": [
+      "diagnosis"
+    ],
+    "tools": [
+      "production.events",
+      "production.yield_data",
+      "ops.equipment_status"
+    ],
+    "risk": "normal",
+    "style_ref": "A线今天上午良率突然下降了，是什么原因？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "IND-060",
+    "domain": "industrial",
+    "context": {
+      "site": "精密机械加工厂",
+      "workshop": "数控车间"
+    },
+    "entities": [
+      {
+        "id": "CNC-CK6140-03",
+        "kind": "asset",
+        "label": "CK6140"
+      }
+    ],
+    "topic": "故障诊断",
+    "intent_hints": [
+      "diagnosis"
+    ],
+    "tools": [
+      "knowledge_base.search",
+      "ops.equipment_registry"
+    ],
+    "risk": "normal",
+    "style_ref": "CK6140数控车床报了E-407错误代码，是什么意思？怎么处理？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "INS-A03",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261114-045",
+      "policy_id": "HC-260115-2201"
+    },
+    "entities": [
+      {
+        "id": "CLM-261114-045",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HC-260115-2201",
+        "kind": "policy",
+        "label": "安心住院医疗保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "claims_database.get_expense_breakdown",
+      "hospital_registry.verify"
+    ],
+    "risk": "normal",
+    "style_ref": "客户住院花了十二天，病历都交齐了，这笔能正常赔吧？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "INS-A04",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261114-058",
+      "policy_id": "CI-260701-4521"
+    },
+    "entities": [
+      {
+        "id": "CLM-261114-058",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CI-260701-4521",
+        "kind": "policy",
+        "label": "安心重大疾病保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "medical_records.get_pathology_report",
+      "medical_records.get_attending_diagnosis"
+    ],
+    "risk": "high",
+    "style_ref": "这个重疾险理赔申请能赔吗？病理报告说可能是恶性肿瘤。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "INS-A05",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261114-063",
+      "policy_id": "CI-260801-5567"
+    },
+    "entities": [
+      {
+        "id": "CLM-261114-063",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CI-260801-5567",
+        "kind": "policy",
+        "label": "守护重疾险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "hospital_registry.verify"
+    ],
+    "risk": "normal",
+    "style_ref": "客户确诊急性心梗了，重疾险保单帮我看看能不能赔。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "INS-A06",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261114-071",
+      "policy_id": "HC-260501-3344"
+    },
+    "entities": [
+      {
+        "id": "CLM-261114-071",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HC-260501-3344",
+        "kind": "policy",
+        "label": "安心住院医疗保险"
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "claims_database.get_expense_breakdown",
+      "expense_calculation_engine.run"
+    ],
+    "risk": "normal",
+    "style_ref": "住院花了三万多，社保报了一部分，商业险这边还能报多少？",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "INS-A07",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261114-092"
+    },
+    "entities": [
+      {
+        "id": "CLM-261114-092",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CI-260315-2218",
+        "kind": "policy",
+        "label": "全护重疾险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_policy_details",
+      "knowledge_base.search",
+      "hospital_registry.verify",
+      "medical_records.get_diagnosis_report"
+    ],
+    "risk": "high",
+    "style_ref": "帮我查一下这个重疾险理赔，客户说确诊肺癌了。",
+    "data_date": "2026-11-14"
+  },
+  {
+    "scenario_id": "INS-A08",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261115-203",
+      "policy_id": "ACC-260520-8817"
+    },
+    "entities": [
+      {
+        "id": "CLM-261115-203",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ACC-260520-8817",
+        "kind": "policy",
+        "label": "综合交通意外险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "medical_records.get_admission_report",
+      "hospital_registry.verify",
+      "police_report.get",
+      "expense_calculation_engine.run"
+    ],
+    "risk": "normal",
+    "style_ref": "客户出差路上出了交通事故住院了，意外险能赔吧？",
+    "data_date": "2026-11-15"
+  },
+  {
+    "scenario_id": "INS-A09",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261115-178"
+    },
+    "entities": [
+      {
+        "id": "CLM-261115-178",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "AUTO-260412-3056",
+        "kind": "policy",
+        "label": ""
+      }
+    ],
+    "topic": "定损进度",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "loss_survey.get_damage_photos",
+      "claims_database.get_damage_assessment",
+      "repair_shop.verify_qualification"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的车被追尾了，后保险杠和后备箱都凹进去了，定损能做吗？",
+    "data_date": "2026-11-15"
+  },
+  {
+    "scenario_id": "INS-A10",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261115-315",
+      "policy_id": "TERM-260315-6640"
+    },
+    "entities": [
+      {
+        "id": "CLM-261115-315",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "TERM-260315-6640",
+        "kind": "policy",
+        "label": ""
+      },
+      {
+        "id": "TERM-240601-4417",
+        "kind": "policy",
+        "label": "守护定期寿险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_policy_details",
+      "policy_database.search_by_insured",
+      "knowledge_base.search",
+      "claims_database.get_claim_history"
+    ],
+    "risk": "normal",
+    "style_ref": "定期寿险保单的被保人去世了，能不能赔？",
+    "data_date": "2026-11-15"
+  },
+  {
+    "scenario_id": "INS-A11",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261115-402",
+      "policy_id": "PL-260201-9923"
+    },
+    "entities": [
+      {
+        "id": "CLM-261115-402",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PL-260201-9923",
+        "kind": "policy",
+        "label": "公众责任险"
+      },
+      {
+        "id": "FP-COV-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_document_store.get_endorsement",
+      "business_license.verify_batch",
+      "health_department.get_incident_report"
+    ],
+    "risk": "normal",
+    "style_ref": "商场里好几个顾客食物中毒了，公众责任险保单看一下，食物中毒能赔吗？",
+    "data_date": "2026-11-15"
+  },
+  {
+    "scenario_id": "INS-A12",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261115-518",
+      "policy_id": "CAR-260301-7745"
+    },
+    "entities": [
+      {
+        "id": "CLM-261115-518",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CAR-260301-7745",
+        "kind": "policy",
+        "label": "建筑工程一切险"
+      },
+      {
+        "id": "GEO-COND-02",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "ADJ-BLDG-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_document_store.get_endorsement",
+      "loss_survey.get_latest_report",
+      "construction_documents.get_geotechnical_report",
+      "construction_documents.get_adjacent_building_survey"
+    ],
+    "risk": "normal",
+    "style_ref": "施工工地的基坑塌了，旁边居民楼墙体开裂，工程险保单能赔吗？",
+    "data_date": "2026-11-15"
+  },
+  {
+    "scenario_id": "INS-A13",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-087",
+      "policy_id": "CARGO-260801-4419"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-087",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CARGO-260801-4419",
+        "kind": "policy",
+        "label": "海洋运输货物保险"
+      },
+      {
+        "id": "VOY-2611",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "marine_survey.get_preliminary_report",
+      "weather_service.get_voyage_weather"
+    ],
+    "risk": "normal",
+    "style_ref": "集装箱船遇到台风，一箱精密设备进水了，货运险保单能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A14",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-112",
+      "policy_id": "FLY-261015-2287"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-112",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "FLY-261015-2287",
+        "kind": "policy",
+        "label": "航空旅行综合保险"
+      },
+      {
+        "id": "CA1523",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "flight_status.get_actual_times",
+      "flight_delay_cache.get_record",
+      "flight_delay_cache.search_by_route"
+    ],
+    "risk": "normal",
+    "style_ref": "客户航班延误了 6 个多小时，航班延误险能赔多少？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A15",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-156",
+      "policy_id": "PET-260601-5530"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-156",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PET-260601-5530",
+        "kind": "policy",
+        "label": "宠物医疗保险"
+      },
+      {
+        "id": "BREED-EX-02",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_document_store.get_endorsement",
+      "vet_records.get_treatment_report"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的金毛犬做了髋关节手术，宠物医疗险能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A16",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-198",
+      "policy_id": "SMED-260215-6673"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-198",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "SMED-260215-6673",
+        "kind": "policy",
+        "label": "补充医疗保险"
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "medical_records.get_historical_visits",
+      "hospital_registry.verify",
+      "claims_database.get_social_insurance_settlement"
+    ],
+    "risk": "normal",
+    "style_ref": "客户做了膝关节置换手术，补充医疗险能报多少？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A17",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-245",
+      "policy_id": "PROP-260301-8812"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-245",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PROP-260301-8812",
+        "kind": "policy",
+        "label": "企业财产保险"
+      },
+      {
+        "id": "WH-DG-02",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "库存余量",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "loss_survey.get_latest_report",
+      "fire_safety.get_sprinkler_inspection",
+      "claims_database.get_similar_claims"
+    ],
+    "risk": "normal",
+    "style_ref": "工厂仓库着火了，库存损失不小，财产险保单看一下能赔多少。",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A18",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-301",
+      "policy_id": "ANN-260115-3358"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-301",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ANN-260115-3358",
+        "kind": "policy",
+        "label": "稳享终身年金保险"
+      }
+    ],
+    "topic": "年金领取",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "claims.get_annuity_application",
+      "policy_database.get_annuity_details",
+      "knowledge_base.search",
+      "annuity_calculation_engine.run",
+      "policy_database.get_beneficiary"
+    ],
+    "risk": "high",
+    "style_ref": "客户要领取年金了，帮我算一下每月能领多少。",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A19",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-334",
+      "policy_id": "CRED-260401-5571"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-334",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CRED-260401-5571",
+        "kind": "policy",
+        "label": "国内短期贸易信用保险"
+      }
+    ],
+    "topic": "采购进度",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "claims_database.get_collection_records",
+      "debtor_registry.get_credit_status"
+    ],
+    "risk": "normal",
+    "style_ref": "供应商货款拖欠了，信用保证保险保单能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A20",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-378",
+      "policy_id": "HULL-260201-7729"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-378",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HULL-260201-7729",
+        "kind": "policy",
+        "label": "船舶保险（远洋）"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "voyage_registry.get_declaration",
+      "weather_service.get_ocean_weather",
+      "marine_survey.get_vessel_damage_report"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的渔船在远洋作业时遇到风暴受损了，船舶险保单看一下能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A21",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-412",
+      "policy_id": "DNO-260115-9934"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-412",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "DNO-260115-9934",
+        "kind": "policy",
+        "label": "董事及高级管理人员责任保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "claims_database.get_prior_notice_records",
+      "policy_database.get_circumstances_disclosure"
+    ],
+    "risk": "normal",
+    "style_ref": "公司被客户起诉索赔 200 万，董责险保单能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A22",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-456",
+      "policy_id": "AGRI-260301-6618"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-456",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "AGRI-260301-6618",
+        "kind": "policy",
+        "label": "种植业保险（脐橙）"
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "agri_survey.get_field_report",
+      "weather_service.get_hail_event",
+      "agri_registry.get_crop_stage"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的果园被冰雹砸了，农业险保单看一下能赔多少。",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A23",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-501",
+      "policy_id": "GACC-260401-2247"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-501",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "GACC-260401-2247",
+        "kind": "policy",
+        "label": "团体意外伤害保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_database.get_beneficiary",
+      "death_records.get_certificate",
+      "knowledge_base.search"
+    ],
+    "risk": "high",
+    "style_ref": "团体意外险的被保人在工地意外身故了，受益人要来领赔款，帮我确认一下。",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A24",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-534",
+      "policy_id": "TRL-260501-8843"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-534",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "TRL-260501-8843",
+        "kind": "policy",
+        "label": "旅行社责任保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "exchange_rate.get_rate",
+      "medical_records.get_overseas_treatment"
+    ],
+    "risk": "high",
+    "style_ref": "旅游团的客人在泰国突发阑尾炎住院了，旅行社责任险能报销医疗费吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A25",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-578",
+      "policy_id": "PROD-260215-3391"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-578",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PROD-260215-3391",
+        "kind": "policy",
+        "label": "产品责任保险"
+      },
+      {
+        "id": "BN-260815",
+        "kind": "batch",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "production_registry.get_batch_info",
+      "product_safety.get_complaint_records",
+      "claims_database.get_third_party_injury_assessment"
+    ],
+    "risk": "normal",
+    "style_ref": "我们卖出去的那批电热水壶有好几个客户投诉漏电，产品责任险保单能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A26",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-612",
+      "policy_id": "REINS-260101-1156"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-612",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "REINS-260101-1156",
+        "kind": "policy",
+        "label": ""
+      },
+      {
+        "id": "TRT-260101-008",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "claims.get_reinsurance_claim",
+      "reinsurance_database.get_treaty_details",
+      "reinsurance_database.get_claims_history",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "原保险那边赔了 300 万，我们的再保险合约能摊回多少？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A27",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-645",
+      "policy_id": "CYBER-260301-4467"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-645",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CYBER-260301-4467",
+        "kind": "policy",
+        "label": "网络安全综合保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "cyber_forensics.get_incident_report",
+      "cyber_security.get_compliance_check"
+    ],
+    "risk": "high",
+    "style_ref": "我们公司被黑客攻击了，客户数据泄露被索赔，网络安全险保单能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A28",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-689",
+      "policy_id": "ART-260901-5528"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-689",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ART-260901-5528",
+        "kind": "policy",
+        "label": "艺术品综合保险"
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "art_appraisal.get_damage_assessment"
+    ],
+    "risk": "normal",
+    "style_ref": "展览会上客户送展的一幅油画被损坏了，艺术品保险能赔多少？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A29",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-723",
+      "policy_id": "ENV-260401-6635"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-723",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ENV-260401-6635",
+        "kind": "policy",
+        "label": "环境污染责任保险"
+      }
+    ],
+    "topic": "排放数据",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "environmental_agency.get_incident_report",
+      "environmental_agency.get_factory_history"
+    ],
+    "risk": "normal",
+    "style_ref": "化工厂的废水排到河里了，下游鱼塘死了不少鱼，环境责任险保单看一下。",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A30",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-756",
+      "policy_id": "GUA-260501-7742"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-756",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "GUA-260501-7742",
+        "kind": "policy",
+        "label": "贷款保证保险"
+      },
+      {
+        "id": "FM-EX-01",
+        "kind": "other",
+        "label": ""
+      },
+      {
+        "id": "LN-260301-8821",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "policy_document_store.get_endorsement",
+      "weather_service.get_typhoon_warning",
+      "borrower_registry.get_force_majeure_filing"
+    ],
+    "risk": "normal",
+    "style_ref": "客户贷款逾期三个月了，说是因为台风导致工厂停产才还不上，保证保险能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A31",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-789",
+      "policy_id": "MEDLIAB-260201-8856"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-789",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "MEDLIAB-260201-8856",
+        "kind": "policy",
+        "label": "医疗责任保险"
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "medical_malpractice.get_expert_review",
+      "doctor_registry.get_credentials",
+      "claims_database.get_patient_claim_detail"
+    ],
+    "risk": "normal",
+    "style_ref": "医院的医生手术中操作失误导致病人伤残了，医疗责任险保单看看能赔多少。",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A32",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-823",
+      "policy_id": "HMED-260601-9967"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-823",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HMED-260601-9967",
+        "kind": "policy",
+        "label": "百万医疗保险"
+      },
+      {
+        "id": "HMED-250601-6643",
+        "kind": "policy",
+        "label": ""
+      }
+    ],
+    "topic": "续保状态",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "claims_database.get_expense_breakdown",
+      "policy_database.get_prior_year_claims"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的百万医疗险今年又续保了，这次住院的自费药能报吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A33",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-901",
+      "policy_id": "AUTO-260301-2278"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-901",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "AUTO-260301-2278",
+        "kind": "policy",
+        "label": ""
+      },
+      {
+        "id": "LE4ZG5KB6NL012345",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "loss_survey.get_damage_photos",
+      "vehicle_valuation.get_market_value",
+      "claims_database.get_damage_assessment"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的奔驰在停车场被剐蹭了，右侧车门和叶子板都花了，车损险能赔多少？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A34",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-934",
+      "policy_id": "PROP-260301-4456"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-934",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PROP-260301-4456",
+        "kind": "policy",
+        "label": "企业财产保险"
+      },
+      {
+        "id": "RAINSTORM-COV-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_document_store.get_endorsement",
+      "policy_database.get_location_endorsement",
+      "weather_service.get_rainfall_warning",
+      "loss_survey.get_latest_report"
+    ],
+    "risk": "normal",
+    "style_ref": "公司仓库昨晚被暴雨淹了，货物损失不小，财产险保单能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A35",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-967",
+      "policy_id": "ACC-260520-6613"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-967",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ACC-260520-6613",
+        "kind": "policy",
+        "label": "综合意外伤害保险"
+      },
+      {
+        "id": "EBIKE-EX-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_document_store.get_endorsement",
+      "policy_database.get_vehicle_declaration",
+      "hospital_registry.verify",
+      "medical_records.get_admission_report"
+    ],
+    "risk": "normal",
+    "style_ref": "客户骑电动车上班路上摔伤了，骨折住院了，意外险能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A36",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-890",
+      "policy_id": "AUTO-260401-8834"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-890",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "AUTO-260401-8834",
+        "kind": "policy",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "loss_survey.get_damage_photos",
+      "claims_database.get_damage_assessment",
+      "police_report.get",
+      "auto_claim_calculation_engine.run"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的货车在高速上追尾了，车头变形严重，交强险和商业险怎么赔？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A37",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261116-845",
+      "policy_id": "HOME-260601-3347"
+    },
+    "entities": [
+      {
+        "id": "CLM-261116-845",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HOME-260601-3347",
+        "kind": "policy",
+        "label": "家庭财产综合保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "loss_survey.get_latest_report",
+      "fire_department.get_report",
+      "appliance_registry.get_age_info"
+    ],
+    "risk": "normal",
+    "style_ref": "客户家的热水器爆炸了，厨房被烧了，家财险保单能赔吗？",
+    "data_date": "2026-11-16"
+  },
+  {
+    "scenario_id": "INS-A38",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-012",
+      "policy_id": "AUTO-260315-5501"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-012",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "AUTO-260315-5501",
+        "kind": "policy",
+        "label": ""
+      },
+      {
+        "id": "LBVNU19A2PY012345",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "vehicle_valuation.get_market_value",
+      "loss_survey.get_damage_photos",
+      "claims_database.get_damage_assessment",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的宝马被大货车侧翻压了，基本报废，车损险按全损还是部分损失赔？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A39",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-034",
+      "policy_id": "AUTO-260501-7723"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-034",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "AUTO-260501-7723",
+        "kind": "policy",
+        "label": ""
+      }
+    ],
+    "topic": "定损进度",
+    "intent_hints": [
+      "status",
+      "progress"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "loss_survey.get_damage_photos",
+      "claims_database.get_damage_assessment",
+      "repair_shop.get_quotation"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的奥迪 A6 在停车场被砸了，天窗碎了车身也凹了，定损出来了吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A40",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-056",
+      "policy_id": "LIFE-260201-3389"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-056",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "LIFE-260201-3389",
+        "kind": "policy",
+        "label": "鑫享终身寿险"
+      }
+    ],
+    "topic": "保单贷款",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "claims.get_loan_application",
+      "policy_database.get_cash_value",
+      "knowledge_base.search",
+      "loan_calculation_engine.run"
+    ],
+    "risk": "normal",
+    "style_ref": "客户想用终身寿险保单做保单贷款，能贷多少？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A41",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-078",
+      "policy_id": "HMED-260601-4478"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-078",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HMED-260601-4478",
+        "kind": "policy",
+        "label": ""
+      }
+    ],
+    "topic": "续保状态",
+    "intent_hints": [
+      "status"
+    ],
+    "tools": [
+      "claims.get_renewal_application",
+      "policy_database.get_renewal_health_declaration",
+      "knowledge_base.search",
+      "medical_records.get_health_check_report",
+      "policy_database.get_prior_claims"
+    ],
+    "risk": "normal",
+    "style_ref": "客户续保百万医疗，去年体检查出了甲状腺结节 4a 类，还能正常续保吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A42",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-095",
+      "policy_id": "ACC-260520-9956"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-095",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ACC-260520-9956",
+        "kind": "policy",
+        "label": "综合交通意外险"
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "disability_assessment.get_report",
+      "knowledge_base.search",
+      "claims_database.get_medical_expense_summary"
+    ],
+    "risk": "normal",
+    "style_ref": "客户在工地上被钢筋砸伤了，左腿骨折还做了手术，意外险伤残能赔多少？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A43",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-112",
+      "policy_id": "CARGO-260801-5547"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-112",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CARGO-260801-5547",
+        "kind": "policy",
+        "label": "海洋运输货物保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "maritime_security.get_incident_report",
+      "policy_database.check_war_risk_endorsement"
+    ],
+    "risk": "normal",
+    "style_ref": "客户从深圳发往也门亚丁港的那批货，海运途中遇到海盗被劫了，货运险保单能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A44",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-134",
+      "policy_id": "PROP-260301-6678"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-134",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PROP-260301-6678",
+        "kind": "policy",
+        "label": "企业财产保险（综合）"
+      },
+      {
+        "id": "EQ-COV-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_document_store.get_endorsement",
+      "seismology_service.get_earthquake_data",
+      "loss_survey.get_latest_report",
+      "claim_calculation_engine.run"
+    ],
+    "risk": "normal",
+    "style_ref": "客户工厂昨晚地震了，厂房和设备都有损坏，财产险保单看一下能赔多少。",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A45",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-156",
+      "policy_id": "END-260201-7789"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-156",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "END-260201-7789",
+        "kind": "policy",
+        "label": "鑫享两全保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_policy_details",
+      "knowledge_base.search",
+      "death_records.get_certificate",
+      "medical_records.get_pre_existing_conditions"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的两全保险保单刚买了不到一年，被保人就因病去世了，能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A46",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-178",
+      "policy_id": "PROFL-260115-8823"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-178",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PROFL-260115-8823",
+        "kind": "policy",
+        "label": "职业责任保险（会计师）"
+      },
+      {
+        "id": "PROFL-2026-A",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "claims_database.get_related_claims",
+      "policy_database.get_prior_policy_retroactive_date"
+    ],
+    "risk": "normal",
+    "style_ref": "客户职业责任险保单的追溯期是 2024 年 1 月，被诉的失职行为发生在 2023 年 9 月，能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A47",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-198",
+      "policy_id": "HMED-260601-1134"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-198",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HMED-260601-1134",
+        "kind": "policy",
+        "label": "百万医疗保险（有社保版）"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "claims_database.get_social_insurance_settlement",
+      "claims_database.get_expense_breakdown"
+    ],
+    "risk": "normal",
+    "style_ref": "客户百万医疗险住院花了 20 万，社保报了 12 万，剩下 8 万能全报吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A48",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-212",
+      "policy_id": "CI-260801-2267"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-212",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "CI-260801-2267",
+        "kind": "policy",
+        "label": "全能保重疾险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "medical_records.get_diagnosis_report"
+    ],
+    "risk": "high",
+    "style_ref": "客户的重疾险刚买 90 天就确诊了甲状腺癌，等待期到底是 90 天还是 180 天？能不能赔？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A49",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-234",
+      "policy_id": "LIFE-260201-3378"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-234",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "LIFE-260201-3378",
+        "kind": "policy",
+        "label": "定期寿险"
+      },
+      {
+        "id": "CI-260201-3379",
+        "kind": "policy",
+        "label": "全能保重疾险"
+      },
+      {
+        "id": "CLM-260815-178",
+        "kind": "claim",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_policy_details",
+      "claims_database.get_claim_detail",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "客户同时有寿险和重疾险，确诊癌症后身故了，两张保单都能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A50",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-256",
+      "policy_id": "PROP-260301-4491"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-256",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PROP-260301-4491",
+        "kind": "policy",
+        "label": "企业财产保险"
+      },
+      {
+        "id": "FAC-DG-02",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "fire_safety.get_inspection_records",
+      "loss_survey.get_preliminary_report"
+    ],
+    "risk": "normal",
+    "style_ref": "客户工厂的消防验收还没做完就开工了，现在火灾了，财产险保单能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A51",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-278",
+      "policy_id": "HMED-260601-5523"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-278",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HMED-260601-5523",
+        "kind": "policy",
+        "label": "尊享百万医疗险"
+      }
+    ],
+    "topic": "理赔限额",
+    "intent_hints": [
+      "decision",
+      "aggregate"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "claims_database.get_prior_claims_current_year",
+      "claims_database.get_social_insurance_settlement",
+      "claim_calculation_engine.run"
+    ],
+    "risk": "normal",
+    "style_ref": "客户百万医疗险今年已经报了两次了，这次住院还能报吗？累计限额还有剩吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A52",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-298",
+      "policy_id": "PROP-260301-6634"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-298",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PROP-260301-6634",
+        "kind": "policy",
+        "label": "企业财产保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "loss_survey.get_preliminary_report",
+      "knowledge_base.search",
+      "fire_department.get_report",
+      "policy_database.get_underwriting_file"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的仓库投保时申报的是普通货物，但实际存了危化品，现在火灾了能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A53",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-312",
+      "policy_id": "ACC-260520-7745"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-312",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ACC-260520-7745",
+        "kind": "policy",
+        "label": "综合意外伤害保险"
+      }
+    ],
+    "topic": "理赔金额",
+    "intent_hints": [
+      "value",
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "medical_records.get_disability_assessment",
+      "knowledge_base.search"
+    ],
+    "risk": "high",
+    "style_ref": "客户工伤后做了伤残鉴定，意外险伤残保险金能赔多少？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A54",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-334",
+      "policy_id": "AUTO-260401-8856"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-334",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "AUTO-260401-8856",
+        "kind": "policy",
+        "label": "车险综合保障"
+      },
+      {
+        "id": "MED-EXT-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "续保状态",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_document_store.get_endorsement",
+      "policy_database.get_endorsement_renewal_status",
+      "claims_database.get_medical_expense_breakdown",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的车险去年续保时加了医保外用药扩展条款，这次事故用了进口药，能报吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A55",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-356",
+      "policy_id": "PL-260201-9967"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-356",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PL-260201-9967",
+        "kind": "policy",
+        "label": "公众责任保险"
+      }
+    ],
+    "topic": "理赔限额",
+    "intent_hints": [
+      "aggregate"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "claims_database.get_prior_claims_current_year",
+      "loss_survey.get_preliminary_report",
+      "claims_database.get_pending_claims"
+    ],
+    "risk": "normal",
+    "style_ref": "客户公众责任险保单期限内已经赔了三次了，这次又出了事故，累计限额还够吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A56",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-378",
+      "policy_id": "PROP-260301-5512"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-378",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "PROP-260301-5512",
+        "kind": "policy",
+        "label": "企业财产保险"
+      }
+    ],
+    "topic": "设备诊断",
+    "intent_hints": [
+      "diagnosis"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "fire_department.get_report",
+      "loss_survey.get_preliminary_report",
+      "knowledge_base.search"
+    ],
+    "risk": "normal",
+    "style_ref": "客户仓库着火，消防说是电气线路故障，但客户说是隔壁蔓延过来的，到底按什么原因定？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A57",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-398",
+      "policy_id": "ANN-260115-4489"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-398",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ANN-260115-4489",
+        "kind": "policy",
+        "label": "幸福人生年金保险"
+      }
+    ],
+    "topic": "年金领取",
+    "intent_hints": [
+      "value"
+    ],
+    "tools": [
+      "claims.get_annuity_application",
+      "policy_database.get_annuity_details",
+      "knowledge_base.search",
+      "annuity_calculation_engine.run",
+      "policy_database.get_beneficiary"
+    ],
+    "risk": "high",
+    "style_ref": "客户投保了年金险，到了领取年龄开始领年金了，每月能领多少？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A58",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-412",
+      "policy_id": "AUTO-260401-9923"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-412",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "AUTO-260401-9923",
+        "kind": "policy",
+        "label": "机动车损失保险"
+      },
+      {
+        "id": "WATER-DAMAGE-01",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "policy_document_store.get_endorsement",
+      "loss_survey.get_preliminary_report"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的车辆在暴雨中被水淹了，发动机进水损坏，车损险能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A59",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-434",
+      "policy_id": "EL-260901-6654"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-434",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "EL-260901-6654",
+        "kind": "policy",
+        "label": "雇主责任保险"
+      },
+      {
+        "id": "EL-2026-A",
+        "kind": "other",
+        "label": ""
+      }
+    ],
+    "topic": "续保状态",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "policy_database.get_prior_policy",
+      "knowledge_base.search",
+      "policy_database.check_retroactive_coverage"
+    ],
+    "risk": "normal",
+    "style_ref": "客户的雇主责任险保单去年到期后脱保了两个月才续保，员工在脱保期间受伤了但续保后才报案，能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A60",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-456",
+      "policy_id": "ACC-260901-7788"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-456",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "ACC-260901-7788",
+        "kind": "policy",
+        "label": "航空意外伤害保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_policy_details",
+      "knowledge_base.search",
+      "civil_registry.get_family_members"
+    ],
+    "risk": "high",
+    "style_ref": "客户的航意险保单受益人写的是'法定'，被保险人意外身故了，赔款怎么分配？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A61",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-478",
+      "policy_id": "TRV-261001-8834"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-478",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "TRV-261001-8834",
+        "kind": "policy",
+        "label": "境外旅行综合保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [
+      "decision"
+    ],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "policy_database.check_endorsement",
+      "police_report.verify"
+    ],
+    "risk": "normal",
+    "style_ref": "客户在境外旅游时手机被偷了，旅行险里的随身物品保障能赔吗？",
+    "data_date": "2026-11-17"
+  },
+  {
+    "scenario_id": "INS-A62",
+    "domain": "insurance",
+    "context": {
+      "claim_id": "CLM-261117-498",
+      "policy_id": "HMED-260601-9912"
+    },
+    "entities": [
+      {
+        "id": "CLM-261117-498",
+        "kind": "claim",
+        "label": ""
+      },
+      {
+        "id": "HMED-260601-9912",
+        "kind": "policy",
+        "label": "尊享百万医疗险"
+      },
+      {
+        "id": "MED-260301-5567",
+        "kind": "policy",
+        "label": "中端医疗保险"
+      }
+    ],
+    "topic": "理赔责任",
+    "intent_hints": [],
+    "tools": [
+      "claims.get_first_notice",
+      "policy_database.get_effective_schedule",
+      "knowledge_base.search",
+      "claims_database.get_social_insurance_settlement",
+      "claims_database.get_other_insurance_claims"
+    ],
+    "risk": "normal",
+    "style_ref": "客户买了两份医疗险，一份百万医疗一份中端医疗，这次住院两张保单怎么赔？会不会重复赔？",
+    "data_date": "2026-11-17"
+  }
+]

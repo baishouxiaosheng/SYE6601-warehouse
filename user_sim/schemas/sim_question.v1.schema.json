@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "用户模拟 Agent 对外记录 v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "case_id", "run_id", "domain", "user_question", "visible_context", "persona", "intent", "scenario_id", "grounding", "generator", "created_at"],
+  "properties": {
+    "schema": {"const": "sim-question.v1"},
+    "case_id": {"type": "string", "pattern": "^SIM-(IND|INS)-[0-9]{8}-[0-9]{6}-[0-9a-f]{4,}$"},
+    "run_id": {"type": "string", "pattern": "^SIM-(IND|INS)-[0-9]{8}-[0-9]{6}-[0-9a-f]{4,}-r1$"},
+    "domain": {"enum": ["industrial", "insurance"]},
+    "scenario_id": {"type": "string", "minLength": 1},
+    "user_question": {"type": "string", "minLength": 8, "maxLength": 70},
+    "created_at": {"$ref": "#/$defs/shanghaiTime"},
+    "visible_context": {
+      "type": "object",
+      "required": ["received_at"],
+      "properties": {"received_at": {"$ref": "#/$defs/shanghaiTime"}}
+    },
+    "persona": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "label_zh"],
+      "properties": {
+        "id": {"enum": ["novice", "expert", "speculator", "reporter"]},
+        "label_zh": {"type": "string", "minLength": 1}
+      }
+    },
+    "intent": {"enum": ["status", "value", "decision", "diagnosis", "compliance", "aggregate", "progress"]},
+    "grounding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["entities", "suggested_tools", "risk"],
+      "properties": {
+        "entities": {"type": "array", "maxItems": 8, "items": {"$ref": "#/$defs/entity"}},
+        "suggested_tools": {"type": "array", "items": {"type": "string"}},
+        "risk": {"enum": ["normal", "high"]}
+      }
+    },
+    "generator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mode", "model", "quantization", "provider", "prompt_version", "seed", "attempts", "latency_s", "usage", "note"],
+      "properties": {
+        "mode": {"enum": ["llm", "offline_fallback"]},
+        "model": {"type": "string"}, "quantization": {"type": "string"}, "provider": {"type": "string"},
+        "prompt_version": {"const": "user-sim-prompt-v1"},
+        "seed": {"type": ["integer", "null"]},
+        "attempts": {"type": "integer", "minimum": 0, "maximum": 2},
+        "latency_s": {"type": "number", "minimum": 0},
+        "usage": {
+          "type": "object", "additionalProperties": false,
+          "required": ["prompt_tokens", "completion_tokens"],
+          "properties": {
+            "prompt_tokens": {"type": "integer", "minimum": 0},
+            "completion_tokens": {"type": "integer", "minimum": 0}
+          }
+        },
+        "note": {"type": "string"}
+      }
+    }
+  },
+  "if": {"properties": {"domain": {"const": "industrial"}}},
+  "then": {
+    "properties": {
+      "case_id": {"pattern": "^SIM-IND-"}, "run_id": {"pattern": "^SIM-IND-"},
+      "scenario_id": {"pattern": "^IND-[0-9]+$"},
+      "visible_context": {
+        "required": ["site", "workshop"], "additionalProperties": false,
+        "properties": {"received_at": {}, "site": {"type": "string"}, "workshop": {"type": "string"}}
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "case_id": {"pattern": "^SIM-INS-"}, "run_id": {"pattern": "^SIM-INS-"},
+      "scenario_id": {"pattern": "^INS-A[0-9]+$"},
+      "visible_context": {
+        "required": ["claim_id"], "additionalProperties": false,
+        "properties": {"received_at": {}, "claim_id": {"type": "string"}, "policy_id": {"type": "string"}}
+      }
+    }
+  },
+  "$defs": {
+    "shanghaiTime": {"type": "string", "format": "date-time", "pattern": "\\+08:00$"},
+    "entity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "label"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["asset", "line", "batch", "material", "policy", "claim", "other"]},
+        "label": {"type": "string"}
+      }
+    }
+  }
+}
